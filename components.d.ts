@@ -9,12 +9,27 @@ declare module "@vue/runtime-core" {
   export interface GlobalComponents {
     Authorization: typeof import("./src/components/Authorization.vue")["default"];
     BaseSide: typeof import("./src/components/BaseSide.vue")["default"];
+    ElButton: typeof import("element-plus/es")["ElButton"];
+    ElCheckbox: typeof import("element-plus/es")["ElCheckbox"];
+    ElCheckboxGroup: typeof import("element-plus/es")["ElCheckboxGroup"];
+    ElCol: typeof import("element-plus/es")["ElCol"];
+    ElDatePicker: typeof import("element-plus/es")["ElDatePicker"];
+    ElForm: typeof import("element-plus/es")["ElForm"];
+    ElFormItem: typeof import("element-plus/es")["ElFormItem"];
     ElIcon: typeof import("element-plus/es")["ElIcon"];
     ElInput: typeof import("element-plus/es")["ElInput"];
     ElMenu: typeof import("element-plus/es")["ElMenu"];
     ElMenuItem: typeof import("element-plus/es")["ElMenuItem"];
     ElMenuItemGroup: typeof import("element-plus/es")["ElMenuItemGroup"];
+    ElOption: typeof import("element-plus/es")["ElOption"];
+    ElRadio: typeof import("element-plus/es")["ElRadio"];
+    ElRadioButton: typeof import("element-plus/es")["ElRadioButton"];
+    ElRadioGroup: typeof import("element-plus/es")["ElRadioGroup"];
+    ElSelect: typeof import("element-plus/es")["ElSelect"];
+    ElSelectV2: typeof import("element-plus/es")["ElSelectV2"];
     ElSubMenu: typeof import("element-plus/es")["ElSubMenu"];
+    ElSwitch: typeof import("element-plus/es")["ElSwitch"];
+    ElTimePicker: typeof import("element-plus/es")["ElTimePicker"];
     FormAuthorization: typeof import("./src/components/FormAuthorization.vue")["default"];
     HelloWorld: typeof import("./src/components/HelloWorld.vue")["default"];
     IconCommunity: typeof import("./src/components/icons/IconCommunity.vue")["default"];
@@ -25,6 +40,7 @@ declare module "@vue/runtime-core" {
     RouterLink: typeof import("vue-router")["RouterLink"];
     RouterView: typeof import("vue-router")["RouterView"];
     TheWelcome: typeof import("./src/components/TheWelcome.vue")["default"];
+    UiForm: typeof import("./src/components/ui-kit/form/UiForm.vue")["default"];
     UiInput: typeof import("./src/components/ui-kit/form/input/UiInput.vue")["default"];
     WelcomeItem: typeof import("./src/components/WelcomeItem.vue")["default"];
   }
