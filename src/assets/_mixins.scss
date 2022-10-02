@@ -1,0 +1,17 @@
+@mixin startPageGridItems($selector, $grid-area, $background-color: white) {
+  #{$selector}#{$grid-area} {
+    grid-area: $grid-area;
+    background-color: $background-color;
+    display: grid;
+    align-items: center;
+    @content;
+  }
+}
+
+@mixin iconMixin($selector, $color: black, $width: 100%) {
+  .icon-#{$selector}{
+    color: $color;
+    width: $width;
+  }
+}
+

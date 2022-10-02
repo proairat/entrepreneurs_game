@@ -1,32 +1,33 @@
 :root {
 
   /* Primary */
-  --white: #ffffff;
-  --gray: #9393A3;
+  --white: #FFFFFF;
   --gray-5: #FAFAFF;
   --gray-10: #F5F5FF;
   --gray-20: #E6E6F0;
   --gray-40: #BCBCCC;
+  --gray: #9393A3;
   --gray-80: #67677A;
   --gray-90: #3E3E52;
   --black: #000000;
-  --blue: #007BFC;
   --blue-5: #F0F4FF;
   --blue-10: #E6EDFF;
+  --blue-15: #c9e2fd;
   --blue-20: #97C8FC;
   --blue-40: #65AEFC;
-  --blue-80: #0066FF;
+  --blue: #007BFC;
+  --blue-80: #0064FA;
 
   /* Secondary */
-  --rose: #F9DEE0;
   --rose-5: #FAEBEC;
+  --rose: #F9DEE0;
   --rose-20: #FFADB3;
   --rose-40: #FF858D;
   --rose-60: #FF525D;
-  --rose-80: #E62532;
+  --rose-80: #E52532;
 
-  --green: #D6FCC3;
   --green-5: #E8FCDE;
+  --green: #D6FCC3;
   --green-20: #A8E58A;
   --green-40: #7ACC52;
   --green-60: #36A300;
@@ -44,7 +45,6 @@
   --shadow-4dp: 0 8px 24px -8px rgba(147, 147, 163, 0.48), 0 2px 8px -2px rgba(147, 147, 163, 0.24);
 
   --color-primary: var(--blue);
-
   --color-success: var(--green-60);
   --color-warning: var(--sun-80);
   --color-danger: var(--rose-60);
@@ -70,7 +70,6 @@
   --box-shadow-0dp: var(--shadow-0dp);
   --box-shadow-2dp: var(--shadow-2dp);
   --box-shadow-4dp: var(--shadow-4dp);
-
 }
 
 /* Primary */
@@ -86,8 +85,10 @@ $black: var(--black);
 $blue: var(--blue);
 $blue-5: var(--blue-5);
 $blue-10: var(--blue-10);
+$blue-15: var(--blue-15);
 $blue-20: var(--blue-20);
 $blue-40: var(--blue-40);
+$blue-60: var(--blue-60);
 $blue-80: var(--blue-80);
 
 /* Secondary */
@@ -110,8 +111,6 @@ $sun-20: var(--sun-20);
 $sun-40: var(--sun-40);
 $sun-60: var(--sun-60);
 $sun-80: var(--sun-80);
-
-/* Будут добавляться по мере заполнения */
 
 /* Brand Color */
 $color-primary: var(--color-primary);
@@ -143,7 +142,6 @@ $border-color-warning: var(--border-color-warning);
 $border-color-info: var(--border-color-info);
 
 /* Box-shadow */
-
 $box-shadow: var(--shadow);
 $box-shadow-0dp: var(--box-shadow-0dp);
 $box-shadow-2dp: var(--box-shadow-2dp);

@@ -1,14 +1,15 @@
 <template>
-  <Authorization />
+  <LayoutContainer />
+  <!--<BoxShadow />-->
   <!--<BaseSide />-->
-  Authorization text
 </template>
 
 <!-- <RouterView /> -->
 
 <script setup lang="ts">
 // import { RouterLink, RouterView } from "vue-router";
-import Authorization from "@/components/FormAuthorization.vue";
+import LayoutContainer from "@/components/LayoutContainer.vue";
+// import BoxShadow from "./components/BoxShadow.vue";
 // import BaseSide from "./components/BaseSide.vue";
 </script>
 
