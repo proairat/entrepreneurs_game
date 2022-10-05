@@ -4,12 +4,20 @@
   </div>
 </template>
 
+<script lang="ts">
+export default {
+  name: "WebServicesIcons",
+};
+</script>
+
 <script setup lang="ts">
 import { ref } from "vue";
 
 function getImageUrl(name: string) {
-  return new URL(`./../assets/services_icons/${name}.svg`, import.meta.url)
-    .href;
+  return new URL(
+    `./../../../assets/services_icons/${name}.svg`,
+    import.meta.url
+  ).href;
 }
 
 const icons = ref([
@@ -30,7 +38,6 @@ $padding: 22px;
   height: 30px;
   display: flex;
   justify-content: center;
-  padding-bottom: $padding;
 }
 
 .icons {

@@ -2,18 +2,19 @@
   <div class="container">
     <div class="welcomeWindow boxShadow">
       <div id="TheDescription">
-        <TheDescription />
+        <slot name="TheDescription"></slot>
       </div>
       <div id="TheForm">
-        <TheForm />
+        <slot name="TheForm"></slot>
       </div>
     </div>
   </div>
 </template>
 
-<script setup lang="ts">
-import TheDescription from "@/components/TheDescription.vue";
-import TheForm from "@/components/TheForm.vue";
+<script lang="ts">
+export default {
+  name: "LayoutContainer",
+};
 </script>
 
 <style scoped lang="scss">
@@ -22,7 +23,7 @@ import TheForm from "@/components/TheForm.vue";
   align-items: center;
   justify-content: center;
   height: 100vh;
-  background-color: $blue-10;
+  background-color: $blue-5;
   min-width: 960px;
   min-height: 560px;
 }
@@ -45,7 +46,7 @@ import TheForm from "@/components/TheForm.vue";
   border-radius: 10px 0 0 10px;
 }
 
-@include startPageGridItems("#", "TheForm", $blue-15) {
+@include startPageGridItems("#", "TheForm", $blue-10) {
   border-radius: 0 10px 10px 0;
 }
 </style>

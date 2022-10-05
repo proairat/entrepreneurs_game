@@ -1,6 +1,6 @@
 import { createRouter, createWebHistory } from "vue-router";
+
 import { useAuthStore, useAlertStore } from "@/stores";
-// import HomeView from "../views/HomeView.vue";
 import { AppHome } from "@/views";
 import accountRoutes from "./account.routes";
 import usersRoutes from "./users.routes";
@@ -8,40 +8,11 @@ import usersRoutes from "./users.routes";
 export const router = createRouter({
   history: createWebHistory(import.meta.env.BASE_URL),
   linkActiveClass: "active",
-  /*routes: [
-    {
-      path: "/",
-      name: "home",
-      component: HomeView,
-    },
-    {
-      path: "/about",
-      name: "about",
-      // route level code-splitting
-      // this generates a separate chunk (About.[hash].js) for this route
-      // which is lazy-loaded when the route is visited.
-      component: () => import("../views/AboutView.vue"),
-    },
-    { ...accountRoutes },
-    { ...usersRoutes },
-    { path: '/:pathMatch(.*)*', redirect: '/' }
-  ],*/
   routes: [
-    {
-      path: "/",
-      name: "home",
-      component: AppHome,
-    },
-    {
-      path: "/about",
-      name: "about",
-      // route level code-splitting
-      // this generates a separate chunk (About.[hash].js) for this route
-      // which is lazy-loaded when the route is visited.
-      component: () => import("../views/AboutView.vue"),
-    },
+    { path: "/", component: AppHome },
     { ...accountRoutes },
     { ...usersRoutes },
+    // catch all redirect to home page
     { path: "/:pathMatch(.*)*", redirect: "/" },
   ],
 });
