@@ -1,16 +1,18 @@
 <template>
-  <LayoutContainer />
-  <!--<BoxShadow />-->
   <!--<BaseSide />-->
+  <div :class="authStore.user && 'bg-light'">
+    <AppNav />
+    <AppAlert />
+    <router-view />
+  </div>
 </template>
-
-<!-- <RouterView /> -->
 
 <script setup lang="ts">
 // import { RouterLink, RouterView } from "vue-router";
-import LayoutContainer from "@/components/LayoutContainer.vue";
-// import BoxShadow from "./components/BoxShadow.vue";
+import { AppNav, AppAlert } from "@/components";
+import { useAuthStore } from "@/stores";
 // import BaseSide from "./components/BaseSide.vue";
+const authStore = useAuthStore();
 </script>
 
 <style lang="scss">
