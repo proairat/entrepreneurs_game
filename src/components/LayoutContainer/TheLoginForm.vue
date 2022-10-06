@@ -9,8 +9,12 @@
       :status-icon="true"
       class="theForm"
     >
-      <el-form-item prop="login">
-        <el-input v-model="formModel.login" type="text" placeholder="Логин" />
+      <el-form-item prop="username">
+        <el-input
+          v-model="formModel.username"
+          type="text"
+          placeholder="Логин"
+        />
       </el-form-item>
       <el-form-item prop="password">
         <el-input
@@ -52,12 +56,12 @@ const formSize = ref("large");
 const loading = ref(false);
 const ruleFormRef = ref<FormInstance>();
 const formModel = reactive({
-  login: "",
+  username: "",
   password: "",
 });
 
 const rules = reactive<FormRules>({
-  login: [
+  username: [
     {
       required: true,
       message: "Пожалуйста, введите логин",
@@ -79,7 +83,7 @@ const submitForm = async (formEl: FormInstance | undefined) => {
     if (valid) {
       loading.value = true;
       const authStore = useAuthStore();
-      await authStore.login(formModel.login, formModel.password);
+      await authStore.login(formModel.username, formModel.password);
       loading.value = false;
     } else {
       console.log("error submit!", fields);

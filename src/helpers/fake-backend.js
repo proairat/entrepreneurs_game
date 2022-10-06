@@ -1,3 +1,4 @@
+import { removeObjectProperty } from "./commonFunctions";
 export { fakeBackend };
 
 // array in local storage for registered users
@@ -41,7 +42,6 @@ function fakeBackend() {
           (x) => x.username === username && x.password === password
         );
 
-        // if (!user) return error("Неверный логин или пароль");
         if (!user) return error("Неверный логин или пароль");
 
         return ok({
@@ -53,7 +53,7 @@ function fakeBackend() {
       function register() {
         const user = body();
 
-        console.log("fake-backend -> register", user);
+        console.log("fake-backend.js -> register(), user", user);
 
         if (users.find((x) => x.username === user.username)) {
           return error('Имя пользователя "' + user.username + '" уже занято');
@@ -134,8 +134,11 @@ function fakeBackend() {
       }
 
       function basicDetails(user) {
+        /* console.log("fake-backend.js -> basicDetails, user", user);
         const { id, username, firstName, lastName } = user;
         return { id, username, firstName, lastName };
+        */
+        return removeObjectProperty("password")(user);
       }
 
       function isAuthenticated() {
