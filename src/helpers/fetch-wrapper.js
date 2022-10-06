@@ -41,7 +41,11 @@ async function handleResponse(response) {
     ?.includes("application/json");
   const data = isJson ? await response.json() : null;
 
-  console.log("data!", data);
+  console.log("fetch-wrapper.js -> data, data = ", data);
+  console.log(
+    "fetch-wrapper.js -> handleResponse(response), response = ",
+    response
+  );
 
   // check for error response
   if (!response.ok) {
