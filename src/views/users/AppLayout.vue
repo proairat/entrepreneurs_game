@@ -1,7 +1,4 @@
 <template>
-  <div class="p-4">
-    <div class="container">
-      <router-view />
-    </div>
-  </div>
+  <h1>user/AppLayout</h1>
+  <router-view />
 </template>

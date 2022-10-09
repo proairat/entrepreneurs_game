@@ -9,8 +9,8 @@
  *  name: 'John Smith',
  *  password: 'password'
  * }
- * const removePassword = removeProperty('password')
- * removePassword(user) //=> { id: 100, name: 'John Smith' }
+ *
+ * removeObjectProperty('password')(user) //=> { id: 100, name: 'John Smith' }
  */
 const removeObjectProperty =
   (prop: string): Record<string, any> =>

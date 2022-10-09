@@ -10,7 +10,7 @@ function fakeBackend() {
   window.fetch = function (url, opts) {
     return new Promise((resolve, reject) => {
       // wrap in timeout to simulate server api call
-      setTimeout(handleRoute, 500);
+      setTimeout(handleRoute, 1000);
 
       function handleRoute() {
         switch (true) {
@@ -37,9 +37,9 @@ function fakeBackend() {
       // route functions
 
       function authenticate() {
-        const { username, password } = body();
+        const { login, password } = body();
         const user = users.find(
-          (x) => x.username === username && x.password === password
+          (x) => x.login === login && x.password === password
         );
 
         if (!user) return error("Неверный логин или пароль");
@@ -55,8 +55,8 @@ function fakeBackend() {
 
         console.log("fake-backend.js -> register(), user", user);
 
-        if (users.find((x) => x.username === user.username)) {
-          return error('Имя пользователя "' + user.username + '" уже занято');
+        if (users.find((x) => x.login === user.login)) {
+          return error('Имя пользователя "' + user.login + '" уже занято');
         }
 
         user.id = users.length ? Math.max(...users.map((x) => x.id)) + 1 : 1;
@@ -88,12 +88,12 @@ function fakeBackend() {
           delete params.password;
         }
 
-        // if username changed check if taken
+        // if login changed check if taken
         if (
-          params.username !== user.username &&
-          users.find((x) => x.username === params.username)
+          params.login !== user.login &&
+          users.find((x) => x.login === params.login)
         ) {
-          return error('Имя пользователя "' + params.username + '" уже занято');
+          return error('Имя пользователя "' + params.login + '" уже занято');
         }
 
         // update and save user
@@ -135,8 +135,8 @@ function fakeBackend() {
 
       function basicDetails(user) {
         /* console.log("fake-backend.js -> basicDetails, user", user);
-        const { id, username, firstName, lastName } = user;
-        return { id, username, firstName, lastName };
+        const { id, login, firstName, lastName } = user;
+        return { id, login, firstName, lastName };
         */
         return removeObjectProperty("password")(user);
       }

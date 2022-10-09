@@ -15,3 +15,18 @@
   }
 }
 
+@mixin alertMixin($height: 30px, $background-color: $gray-10, $color: $gray, $outline-color: $gray-20){
+  background-color: $background-color;
+  color: $color;
+  outline: 1px solid $outline-color;
+  z-index: 1e3;
+
+  &:deep(.el-alert__close-btn) {
+    position: absolute;
+    top: 0;
+    height: $height;
+    line-height: $height;
+    color: $color;
+  }
+}
+

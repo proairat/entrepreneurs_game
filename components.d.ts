@@ -51,7 +51,6 @@ declare module "@vue/runtime-core" {
     TheRegistrationForm: typeof import("./src/components/LayoutContainer/TheRegistrationForm.vue")["default"];
     TheWelcome: typeof import("./src/components/TheWelcome.vue")["default"];
     UiForm: typeof import("./src/components/ui-kit/form/UiForm.vue")["default"];
-    UiInput: typeof import("./src/components/ui-kit/form/input/UiInput.vue")["default"];
     WebServicesIcons: typeof import("./src/components/LayoutContainer/WebServicesIcons/index.vue")["default"];
     WelcomeItem: typeof import("./src/components/WelcomeItem.vue")["default"];
   }

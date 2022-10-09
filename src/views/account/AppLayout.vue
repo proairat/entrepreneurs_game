@@ -1,4 +1,8 @@
-<script setup>
+<template>
+  <router-view />
+</template>
+
+<script setup lang="ts">
 import { useAuthStore } from "@/stores";
 import { router } from "@/router";
 
@@ -8,7 +12,3 @@ if (authStore.user) {
   router.push("/");
 }
 </script>
-
-<template>
-  <router-view />
-</template>
