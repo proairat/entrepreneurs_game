@@ -1,15 +1,14 @@
 <template>
   <!--<BaseSide />-->
-  <div :class="authStore.user && 'bg-light'">
+  <div :class="authStore.user">
     <AppNav />
-    <AppAlert />
     <router-view />
   </div>
 </template>
 
 <script setup lang="ts">
 // import { RouterLink, RouterView } from "vue-router";
-import { AppNav, AppAlert } from "@/components";
+import { AppNav } from "@/components";
 import { useAuthStore } from "@/stores";
 // import BaseSide from "./components/BaseSide.vue";
 const authStore = useAuthStore();

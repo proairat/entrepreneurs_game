@@ -1,9 +1,3 @@
-<script setup>
-import { useAuthStore } from "@/stores";
-
-const authStore = useAuthStore();
-</script>
-
 <template>
   <nav v-show="authStore.user" class="navbar navbar-expand navbar-dark bg-dark">
     <div class="navbar-nav">
@@ -18,3 +12,9 @@ const authStore = useAuthStore();
     </div>
   </nav>
 </template>
+
+<script setup lang="ts">
+import { useAuthStore } from "@/stores";
+
+const authStore = useAuthStore();
+</script>

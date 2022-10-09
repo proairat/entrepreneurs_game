@@ -1,6 +1,9 @@
 <template>
   <div class="container">
     <div class="welcomeWindow boxShadow">
+      <div id="AppAlert">
+        <slot name="AppAlert"></slot>
+      </div>
       <div id="TheDescription">
         <slot name="TheDescription"></slot>
       </div>
@@ -27,11 +30,13 @@ export default {
   min-width: 960px;
   min-height: 560px;
 }
+
 .welcomeWindow {
   display: grid;
   grid-template-areas: "TheDescription TheForm";
   grid-template-rows: 1fr;
   grid-template-columns: 1.5fr 1fr;
+  position: relative;
   width: 960px;
   height: 560px;
   border-radius: 10px;
@@ -41,12 +46,18 @@ export default {
   box-shadow: $box-shadow-4dp;
 }
 
-@include startPageGridItems("#", "TheDescription", $white) {
+#AppAlert {
+  position: absolute;
+  width: calc(100% - 20px);
+  margin: 10px;
+}
+
+@include startPageGridItems("#", TheDescription, $white) {
   text-align: center;
   border-radius: 10px 0 0 10px;
 }
 
-@include startPageGridItems("#", "TheForm", $blue-10) {
+@include startPageGridItems("#", TheForm, $blue-10) {
   border-radius: 0 10px 10px 0;
 }
 </style>

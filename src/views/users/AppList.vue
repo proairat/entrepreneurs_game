@@ -1,6 +1,5 @@
-<script setup>
+<script setup lang="ts">
 import { storeToRefs } from "pinia";
-
 import { useUsersStore } from "@/stores";
 
 const usersStore = useUsersStore();
@@ -17,18 +16,18 @@ usersStore.getAll();
   <table class="table table-striped">
     <thead>
       <tr>
-        <th style="width: 30%">First Name</th>
-        <th style="width: 30%">Last Name</th>
-        <th style="width: 30%">Username</th>
+        <th style="width: 30%">Surname</th>
+        <th style="width: 30%">Name</th>
+        <th style="width: 30%">login</th>
         <th style="width: 10%"></th>
       </tr>
     </thead>
     <tbody>
       <template v-if="users.length">
         <tr v-for="user in users" :key="user.id">
-          <td>{{ user.firstName }}</td>
-          <td>{{ user.lastName }}</td>
-          <td>{{ user.username }}</td>
+          <td>{{ user.surname }}</td>
+          <td>{{ user.name }}</td>
+          <td>{{ user.login }}</td>
           <td style="white-space: nowrap">
             <router-link
               :to="`/users/edit/${user.id}`"

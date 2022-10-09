@@ -9,12 +9,8 @@
       :status-icon="true"
       class="theForm"
     >
-      <el-form-item prop="username">
-        <el-input
-          v-model="formModel.username"
-          type="text"
-          placeholder="Логин"
-        />
+      <el-form-item prop="login">
+        <el-input v-model="formModel.login" type="text" placeholder="Логин" />
       </el-form-item>
       <el-form-item prop="password">
         <el-input
@@ -31,8 +27,8 @@
           @click="submitForm(ruleFormRef)"
           :loading="loading"
         >
-          Войти</el-button
-        >
+          Войти
+        </el-button>
       </el-form-item>
       <el-divider>Войти через веб-сервисы</el-divider>
       <WebServicesIcons />
@@ -56,12 +52,12 @@ const formSize = ref("large");
 const loading = ref(false);
 const ruleFormRef = ref<FormInstance>();
 const formModel = reactive({
-  username: "",
+  login: "",
   password: "",
 });
 
 const rules = reactive<FormRules>({
-  username: [
+  login: [
     {
       required: true,
       message: "Пожалуйста, введите логин",
@@ -83,7 +79,7 @@ const submitForm = async (formEl: FormInstance | undefined) => {
     if (valid) {
       loading.value = true;
       const authStore = useAuthStore();
-      await authStore.login(formModel.username, formModel.password);
+      await authStore.login(formModel.login, formModel.password);
       loading.value = false;
     } else {
       console.log("error submit!", fields);
@@ -117,6 +113,13 @@ $margin: 22px;
   &:hover {
     background-color: $blue;
   }
+  &:deep(.el-icon.is-loading) {
+    position: absolute;
+    left: calc(50% - 45px);
+    & + span {
+      margin-left: 0;
+    }
+  }
 }
 
 .registrationButton {
@@ -139,7 +142,7 @@ $margin: 22px;
 }
 
 .el-input {
-  background-color: white;
+  background-color: transparent;
   &:deep(.el-input__inner:-webkit-autofill) {
     -webkit-box-shadow: inset 0 0 0 50px #fff;
     box-shadow: inset 0 0 0 50px #fff;

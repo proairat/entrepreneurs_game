@@ -26,12 +26,8 @@
           placeholder="Отчество"
         />
       </el-form-item>
-      <el-form-item prop="username">
-        <el-input
-          v-model="formModel.username"
-          type="text"
-          placeholder="Логин"
-        />
+      <el-form-item prop="login">
+        <el-input v-model="formModel.login" type="text" placeholder="Логин" />
       </el-form-item>
       <el-form-item prop="password">
         <el-input
@@ -67,7 +63,7 @@ const formModel = reactive({
   surname: "",
   name: "",
   patronymic: "",
-  username: "",
+  login: "",
   password: "",
 });
 
@@ -93,7 +89,7 @@ const rules = reactive<FormRules>({
       trigger: "change",
     },
   ],
-  username: [
+  login: [
     {
       required: true,
       message: "Пожалуйста, введите логин",

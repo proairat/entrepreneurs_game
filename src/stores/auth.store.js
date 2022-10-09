@@ -1,5 +1,4 @@
 import { defineStore } from "pinia";
-
 import { fetchWrapper } from "@/helpers";
 import { router } from "@/router";
 import { useAlertStore } from "@/stores";
@@ -14,10 +13,10 @@ export const useAuthStore = defineStore({
     returnUrl: null,
   }),
   actions: {
-    async login(username, password) {
+    async login(login, password) {
       try {
         const user = await fetchWrapper.post(`${baseUrl}/authenticate`, {
-          username,
+          login,
           password,
         });
 
