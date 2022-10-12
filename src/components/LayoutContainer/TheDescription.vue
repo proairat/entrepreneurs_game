@@ -3,9 +3,6 @@
     <h3 class="primaryContent">
       ИГРОВАЯ ПЛАТФОРМА<br />ПО РАЗВИТИЮ ПРЕДПРИНИМАТЕЛЬСТВА
     </h3>
-    <!--<el-icon :size="100" class="icon-check">
-      <Check />
-    </el-icon>-->
     <el-icon :size="100" class="icon-trophyBase">
       <TrophyBase />
     </el-icon>
@@ -18,7 +15,7 @@
 </template>
 
 <script setup lang="ts">
-// import { StarFilled, TrophyBase } from "@element-plus/icons-vue";
+// import { TrophyBase } from "@element-plus/icons-vue";
 </script>
 
 <style scoped lang="scss">
@@ -34,6 +31,5 @@
   margin: 0;
 }
 
-// @include iconMixin("check", $sun-80, 100%);
 @include iconMixin("trophyBase", $sun-80, 100%);
 </style>

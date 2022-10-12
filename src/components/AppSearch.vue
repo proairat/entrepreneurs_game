@@ -5,7 +5,7 @@
         id="search"
         class="h-11 w-full pr-11 pl-4 text-gray-800 border-indigo-200 rounded-md focus:border-indigo-200 focus:ring focus:ring-opacity-40 focus:ring-indigo-200"
         type="text"
-        placeholder="Поиск по курсам"
+        placeholder="Поиск"
         :value="search"
         @input="$emit('update:search', $event.target.value)"
       />

@@ -9,7 +9,7 @@
               <DisclosureButton
                 class="inline-flex items-center justify-center p-2 rounded-md text-indigo-900 hover:text-indigo-900 hover:bg-indigo-200 focus:outline-none focus:ring-2 focus:ring-inset focus:ring-indigo-200"
               >
-                <span class="sr-only">Open main menu</span>
+                <span class="sr-only">Открыть основное меню</span>
                 <Bars3Icon
                   v-if="!open"
                   class="block h-6 w-6"
@@ -87,27 +87,12 @@ export default {
 </script>
 
 <script setup lang="ts">
-import {
-  Disclosure,
-  DisclosureButton,
-  DisclosurePanel,
-  Menu,
-  MenuButton,
-  MenuItem,
-  MenuItems,
-} from "@headlessui/vue";
-import { BellIcon, XMarkIcon, Bars3Icon } from "@heroicons/vue/24/outline";
-import { reactive, ref, h, useAttrs } from "vue";
+import { Disclosure, DisclosureButton, DisclosurePanel } from "@headlessui/vue";
+import { XMarkIcon, Bars3Icon } from "@heroicons/vue/24/outline";
+import { ref, h } from "vue";
 import AppSearch from "@/components/AppSearch.vue";
 import AppCatalogButton from "@/components/AppCatalogButton.vue";
 import { getImageUrl } from "@/helpers/commonFunctions";
-import { eventListeners } from "@popperjs/core";
-
-const test = ref("click");
-
-function testFn() {
-  console.log("Call testFn");
-}
 
 const props = defineProps<{
   logout: any;
@@ -185,15 +170,6 @@ const navigation = [
     handlers: { click: props.logout },
   },
 ];
-
-// console.log('что это такое? { click: props.logout }', { click: props.logout() });
-
-const MenuMy = reactive([
-  { id: 1, text: "Your Profile" },
-  { id: 2, text: "Settings" },
-  { id: 3, text: "Что-то ещё" },
-  { id: 4, text: "Sign out" },
-]);
 
 const search = ref("");
 
