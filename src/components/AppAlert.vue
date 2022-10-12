@@ -48,10 +48,10 @@ watch(alert, () => {
   height: $height;
   border-radius: 10px;
   &--error {
-    @include alertMixin($height, $rose, $rose-60, $rose-20);
+    @include alertMixin($height, $rose, $rose-80, $rose-20);
   }
   &--success {
-    @include alertMixin($height, $green, $green-60, $green-20);
+    @include alertMixin($height, $green, $green-80, $green-20);
   }
   &:deep(.el-alert__title) {
     height: $height;

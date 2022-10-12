@@ -1,18 +1,6 @@
 <template>
-  <!--<BaseSide />-->
-  <div :class="authStore.user">
-    <AppNav />
-    <router-view />
-  </div>
+  <router-view />
 </template>
-
-<script setup lang="ts">
-// import { RouterLink, RouterView } from "vue-router";
-import { AppNav } from "@/components";
-import { useAuthStore } from "@/stores";
-// import BaseSide from "./components/BaseSide.vue";
-const authStore = useAuthStore();
-</script>
 
 <style lang="scss">
 // comment for work vite.config.ts,
