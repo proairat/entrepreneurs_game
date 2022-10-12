@@ -1,5 +1,5 @@
 <template>
-  <div class="container">
+  <div class="containerOuter">
     <div class="welcomeWindow boxShadow">
       <div id="AppAlert">
         <slot name="AppAlert"></slot>
@@ -21,7 +21,7 @@ export default {
 </script>
 
 <style scoped lang="scss">
-.container {
+.containerOuter {
   display: flex;
   align-items: center;
   justify-content: center;

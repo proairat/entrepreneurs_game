@@ -42,10 +42,12 @@
           type="primary"
           class="registrationButton"
           @click="submitForm(ruleFormRef)"
+          :loading="loading"
         >
           Регистрация</el-button
+        ><span class="cancellation">
+          <router-link to="login">Отмена</router-link></span
         >
-        <router-link to="login" class="btn btn-link">Отмена</router-link>
       </el-form-item>
     </el-form>
   </div>
@@ -58,6 +60,7 @@ import { useUsersStore, useAlertStore } from "@/stores";
 import { router } from "@/router";
 
 const formSize = ref("large");
+const loading = ref(false);
 const ruleFormRef = ref<FormInstance>();
 const formModel = reactive({
   surname: "",
@@ -112,9 +115,11 @@ const submitForm = async (formEl: FormInstance | undefined) => {
       const usersStore = useUsersStore();
       const alertStore = useAlertStore();
       try {
+        loading.value = true;
         await usersStore.register(formModel);
         await router.push("/account/login");
         alertStore.success("Регистрация прошла успешно!");
+        loading.value = false;
       } catch (error) {
         alertStore.error(error);
       }
@@ -149,10 +154,35 @@ $margin: 22px;
   &:hover {
     background-color: $blue;
   }
+
+  &:deep(.el-icon.is-loading) {
+    position: absolute;
+    left: calc(50% - 70px);
+    & + span {
+      margin-left: 0;
+    }
+  }
+}
+
+.cancellation {
+  color: $blue-80;
+  font-weight: $font-weight-bold;
+  &:hover {
+    color: $blue;
+  }
 }
 
 .el-input {
-  background-color: white;
+  background-color: transparent;
+
+  &:deep(.el-input__inner) {
+    padding-left: 0;
+    padding-right: 0;
+    &:focus {
+      box-shadow: none;
+    }
+  }
+
   &:deep(.el-input__inner:-webkit-autofill) {
     -webkit-box-shadow: inset 0 0 0 50px #fff;
     box-shadow: inset 0 0 0 50px #fff;

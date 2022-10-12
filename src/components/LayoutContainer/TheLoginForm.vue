@@ -34,7 +34,7 @@
       <WebServicesIcons />
       <div class="dontHaveAnAccount">
         Нет аккаунта?
-        <span class="registrationButton"
+        <span class="registration"
           ><router-link to="register">Регистрация</router-link></span
         >
       </div>
@@ -77,12 +77,16 @@ const submitForm = async (formEl: FormInstance | undefined) => {
   if (!formEl) return;
   await formEl.validate(async (valid, fields) => {
     if (valid) {
-      loading.value = true;
-      const authStore = useAuthStore();
-      await authStore.login(formModel.login, formModel.password);
-      loading.value = false;
+      try {
+        loading.value = true;
+        const authStore = useAuthStore();
+        await authStore.login(formModel.login, formModel.password);
+        loading.value = false;
+      } catch (error) {
+        console.log("try error TheLoginForm", error);
+      }
     } else {
-      console.log("error submit!", fields);
+      console.log("error TheLoginForm", fields);
     }
   });
 };
@@ -122,7 +126,7 @@ $margin: 22px;
   }
 }
 
-.registrationButton {
+.registration {
   color: $blue-80;
   font-weight: $font-weight-bold;
   &:hover {
@@ -135,14 +139,24 @@ $margin: 22px;
   &:deep(.el-divider__text) {
     font-weight: $font-weight-regular;
     color: $gray;
-    width: 50%;
+    width: 55%;
     text-align: center;
     background-color: $blue-10;
+    padding: 0;
   }
 }
 
 .el-input {
   background-color: transparent;
+
+  &:deep(.el-input__inner) {
+    padding-left: 0;
+    padding-right: 0;
+    &:focus {
+      box-shadow: none;
+    }
+  }
+
   &:deep(.el-input__inner:-webkit-autofill) {
     -webkit-box-shadow: inset 0 0 0 50px #fff;
     box-shadow: inset 0 0 0 50px #fff;

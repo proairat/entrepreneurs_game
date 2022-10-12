@@ -1,4 +1,4 @@
-@mixin startPageGridItems($selector, $grid-area, $background-color: white) {
+@mixin startPageGridItems($selector, $grid-area, $background-color: $white) {
   #{$selector}#{$grid-area} {
     grid-area: $grid-area;
     background-color: $background-color;
