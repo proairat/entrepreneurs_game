@@ -9,15 +9,10 @@ declare module "@vue/runtime-core" {
   export interface GlobalComponents {
     AppAlert: typeof import("./src/components/AppAlert.vue")["default"];
     AppCard: typeof import("./src/components/AppCard.vue")["default"];
-    AppCarousel: typeof import("./src/components/Carousel/AppCarousel.vue")["default"];
     AppCatalogButton: typeof import("./src/components/AppCatalogButton.vue")["default"];
-    AppDescription: typeof import("./src/components/AppDescription.vue")["default"];
-    AppNav: typeof import("./src/components/AppNav.vue")["default"];
     AppNavbar: typeof import("./src/components/AppNavbar/index.vue")["default"];
     AppSearch: typeof import("./src/components/AppSearch.vue")["default"];
-    AppTopics: typeof import("./src/components/AppTopics.vue")["default"];
     AppVideo: typeof import("./src/components/AppVideo.vue")["default"];
-    DescriptionAndCarousel: typeof import("./src/components/DescriptionAndCarousel.vue")["default"];
     ElAlert: typeof import("element-plus/es")["ElAlert"];
     ElAside: typeof import("element-plus/es")["ElAside"];
     ElButton: typeof import("element-plus/es")["ElButton"];
@@ -54,7 +49,6 @@ declare module "@vue/runtime-core" {
     IconTooling: typeof import("./src/components/icons/IconTooling.vue")["default"];
     LayoutContainer: typeof import("./src/components/LayoutContainer/index.vue")["default"];
     ListOfCards: typeof import("./src/components/ListOfCards.vue")["default"];
-    MyCard: typeof import("./src/components/MyCard.vue")["default"];
     Navbar: typeof import("./src/components/Navbar/index.vue")["default"];
     RouterLink: typeof import("vue-router")["RouterLink"];
     RouterView: typeof import("vue-router")["RouterView"];
@@ -62,7 +56,6 @@ declare module "@vue/runtime-core" {
     TheLoginForm: typeof import("./src/components/LayoutContainer/TheLoginForm.vue")["default"];
     TheRegistrationForm: typeof import("./src/components/LayoutContainer/TheRegistrationForm.vue")["default"];
     TheWelcome: typeof import("./src/components/TheWelcome.vue")["default"];
-    TopStories: typeof import("./src/components/TopStories.vue")["default"];
     UiForm: typeof import("./src/components/ui-kit/form/UiForm.vue")["default"];
     WebServicesIcons: typeof import("./src/components/LayoutContainer/WebServicesIcons/index.vue")["default"];
     WelcomeItem: typeof import("./src/components/WelcomeItem.vue")["default"];
