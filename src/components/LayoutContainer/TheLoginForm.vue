@@ -45,7 +45,6 @@
 <script setup lang="ts">
 import { reactive, ref } from "vue";
 import type { FormInstance, FormRules } from "element-plus";
-import WebServicesIcons from "./WebServicesIcons/index.vue";
 import { useAuthStore } from "@/stores";
 
 const formSize = ref("large");

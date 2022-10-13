@@ -17,12 +17,10 @@
 <script setup lang="ts">
 import { storeToRefs } from "pinia";
 import { useAuthStore } from "@/stores";
-import { AppNavbar } from "@/components";
 import AppVideo from "@/components/AppVideo.vue";
 import { createCards } from "@/helpers/createCards";
 import { FuzzySearch } from "@/helpers/commonFunctions";
 import { computed, reactive, ref } from "vue";
-import ListOfCards from "@/components/ListOfCards.vue";
 
 const cards = reactive(createCards());
 const search = ref("");
