@@ -90,8 +90,6 @@ export default {
 import { Disclosure, DisclosureButton, DisclosurePanel } from "@headlessui/vue";
 import { XMarkIcon, Bars3Icon } from "@heroicons/vue/24/outline";
 import { ref, h } from "vue";
-import AppSearch from "@/components/AppSearch.vue";
-import AppCatalogButton from "@/components/AppCatalogButton.vue";
 import { getImageUrl } from "@/helpers/commonFunctions";
 
 const props = defineProps<{
