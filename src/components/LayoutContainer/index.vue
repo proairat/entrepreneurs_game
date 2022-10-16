@@ -39,7 +39,7 @@ export default {
   position: relative;
   width: 960px;
   height: 560px;
-  border-radius: 10px;
+  border-radius: 0.625rem;
 }
 
 .boxShadow {
@@ -49,15 +49,15 @@ export default {
 #AppAlert {
   position: absolute;
   width: calc(100% - 20px);
-  margin: 10px;
+  margin: 0.625rem;
 }
 
 @include startPageGridItems("#", TheDescription, $white) {
   text-align: center;
-  border-radius: 10px 0 0 10px;
+  border-radius: 0.625rem 0 0 0.625rem;
 }
 
 @include startPageGridItems("#", TheForm, $blue-10) {
-  border-radius: 0 10px 10px 0;
+  border-radius: 0 0.625rem 0.625rem 0;
 }
 </style>

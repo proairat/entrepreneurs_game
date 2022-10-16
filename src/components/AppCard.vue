@@ -1,20 +1,20 @@
 <template>
-  <article class="card">
-    <header class="header">{{ props.title }}</header>
+  <li class="cardItem">
     <img class="poster" :src="props.src" :alt="props.alt" />
-    <div class="content">
-      <p>{{ props.text }}</p>
-    </div>
-    <footer class="footer">{{ props.footer }}</footer>
-  </article>
+    <div class="header">{{ props.header }}</div>
+    <div class="title">{{ props.title }}</div>
+    <div class="duration">Длительность: {{ props.duration }}</div>
+    <router-link class="footer" to="courses">{{ props.footer }}</router-link>
+  </li>
 </template>
 
 <script setup lang="ts">
 const props = defineProps<{
-  title: string;
   src: string;
   alt: string;
-  text: string;
+  header: string;
+  title: string;
+  duration: string;
   footer: string;
 }>();
 
@@ -27,44 +27,64 @@ defineEmits<{(e: 'subtract', id: number): void
 </script>
 
 <style scoped lang="scss">
-.card {
+.cardItem {
   display: grid;
-  grid-template-rows: max-content 200px 1fr;
-
-  & > .header {
-    font-size: 1.5rem;
-    text-align: center;
-    padding: 0.5em;
-    border-radius: 10px 10px 0 0;
-    border-top: 1px solid #999;
-    border-left: 1px solid #999;
-    border-right: 1px solid #999;
-    margin: 0;
-  }
+  grid-template-rows: 1fr 0.1fr 0.1fr 0.1fr 0.1fr;
+  grid-template-areas:
+    "poster"
+    "header"
+    "title"
+    "duration"
+    "footer";
+  background-color: $white;
+  box-shadow: $box-shadow-2dp;
+  border-radius: 0.625rem;
 
   & > .poster {
-    object-fit: cover;
+    grid-area: poster;
     width: 100%;
-    height: 100%;
-    max-width: 100%;
-    border-left: 1px solid #999;
-    border-right: 1px solid #999;
+    padding: 1rem;
   }
-  & > .content {
-    padding: 0.5rem;
-    border-left: 1px solid #999;
-    border-right: 1px solid #999;
+
+  & > .header {
+    grid-area: header;
+    padding: 0 1rem;
+    font-size: 1.25rem;
+    font-weight: $font-weight-bold;
+    color: $gray-80;
+    line-height: $line-height-m;
+    min-height: 3rem;
+  }
+
+  & > .title {
+    grid-area: title;
+    font-size: 1rem;
+    line-height: 1.5rem;
+    padding: 1rem 1rem 0 1rem;
+    color: $gray;
+    font-weight: $font-weight-bold;
+  }
+
+  & > .duration {
+    grid-area: duration;
+    font-size: $text-size-s;
+    line-height: 1.5rem;
+    padding: 0 1rem 1rem 1rem;
+    color: $gray;
   }
 
   & > .footer {
-    background-color: #333;
-    color: #fff;
+    grid-area: footer;
+    padding: 1rem;
+    margin: 0 1rem 1rem 1rem;
+    background-color: $sun-30;
+    // background-color: $blue-10;
+    color: $gray-80;
+    // color: $blue-80;
     text-align: center;
-    padding: 0.5rem;
-    border-radius: 0 0 10px 10px;
-    border-left: 1px solid #999;
-    border-right: 1px solid #999;
-    border-bottom: 1px solid #999;
+    &:hover {
+      background-color: $sun-20;
+    }
   }
 }
 </style>

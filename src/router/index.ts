@@ -1,8 +1,9 @@
 import { createRouter, createWebHistory } from "vue-router";
 import { useAuthStore, useAlertStore } from "@/stores";
-import { AppHome } from "@/views";
+import { ViewChoiceOfCourses } from "@/views";
 import accountRoutes from "./account.routes";
 import usersRoutes from "./users.routes";
+import coursesRoutes from "./courses.routes";
 
 export const router = createRouter({
   history: createWebHistory(import.meta.env.BASE_URL),
@@ -11,7 +12,7 @@ export const router = createRouter({
     {
       path: "/",
       name: "home",
-      component: AppHome,
+      component: ViewChoiceOfCourses,
     },
     {
       path: "/about",
@@ -23,6 +24,7 @@ export const router = createRouter({
     },
     { ...accountRoutes },
     { ...usersRoutes },
+    { ...coursesRoutes },
     // catch all redirect to home page
     { path: "/:pathMatch(.*)*", redirect: "/" },
   ],

@@ -1,8 +1,13 @@
-import { AppLayout, AppLogin, AppLogic, AppRegister } from "@/views/account";
+import {
+  ViewStartPage,
+  AppLogin,
+  AppLogic,
+  AppRegister,
+} from "@/views/account";
 
 export default {
   path: "/account",
-  component: AppLayout,
+  component: ViewStartPage,
   children: [
     { path: "", redirect: "login" },
     { path: "login", component: AppLogin },

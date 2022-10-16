@@ -1,62 +1,63 @@
 function createCards() {
   class Card {
-    constructor(title, src, alt, text, footer) {
-      this.title = title;
+    constructor(src, alt, header, title, duration, footer) {
       this.src = src;
       this.alt = alt;
-      this.text = text;
+      this.header = header;
+      this.title = title;
+      this.duration = duration;
       this.footer = footer;
     }
   }
 
   const cards = [
     new Card(
-      "заголовок 1",
       "https://www.spletnik.ru/img/__post/5d/5dc18cc037668240ad73b448eb464516_297.jpg",
-      "Title 1",
-      `But I must explain to you how all this mistaken idea of denouncing pleasure
-         the master - builder of human happiness.`,
-      "футер заголовка 1"
+      "Модуль 1",
+      "Основы предпринимательства",
+      "Модуль 1",
+      "2 часа",
+      "Изучить курс"
     ),
     new Card(
-      "title 2",
       "https://www.spletnik.ru/img/__post/5d/5dc18cc037668240ad73b448eb464516_297.jpg",
-      "Title 2",
-      `No one rejects, dislikes, or avoids pleasure itself, because it is pleasure,
-         consequences that are extremely painful.`,
-      "footer title 2"
+      "Модуль 2",
+      "Грантовое проектирование",
+      "Модуль 2",
+      "1 час 20 минут",
+      "Изучить курс"
     ),
     new Card(
-      "заголовок 3",
       "https://www.spletnik.ru/img/__post/5d/5dc18cc037668240ad73b448eb464516_297.jpg",
-      "Title 3",
-      `Nor again is there anyone who loves or pursues or desires to obtain pain of itself,
-         can procure him some great pleasure.`,
-      "футер заголовка 3"
+      "Модуль 3",
+      "Технологическое предпринимательство",
+      "Модуль 3",
+      "2 часа 15 минут",
+      "Изучить курс"
     ),
     new Card(
-      "title 4",
       "https://www.spletnik.ru/img/__post/5d/5dc18cc037668240ad73b448eb464516_297.jpg",
-      "Title 4",
-      `To take a trivial example, which of us ever undertakes laborious physical exercise,
-         except to obtain some`,
-      "footer title 4"
+      "Модуль 4",
+      "Массовое предпринимательство",
+      "Модуль 4",
+      "43 минуты",
+      "Изучить курс"
     ),
     new Card(
-      "title 5",
       "https://www.spletnik.ru/img/__post/5d/5dc18cc037668240ad73b448eb464516_297.jpg",
-      "Title 5",
-      `Advantage from it? a pain that produces no
-         resultant pleasure?`,
-      "footer title 5"
+      "Модуль 5",
+      "Креативные индустрии",
+      "Модуль 5",
+      "37 минут",
+      "Изучить курс"
     ),
     new Card(
-      "title 6",
       "https://www.spletnik.ru/img/__post/5d/5dc18cc037668240ad73b448eb464516_297.jpg",
-      "Title 6",
-      `Advantage from it? a pain that produces no
-         resultant pleasure?`,
-      "footer title 6"
+      "Модуль 6",
+      "Социальное предпринимательство",
+      "Модуль 6",
+      "2 часа 7 минут",
+      "Изучить курс"
     ),
   ];
 

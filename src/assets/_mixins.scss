@@ -30,3 +30,7 @@
   }
 }
 
+@mixin borderMixin($side, $color){
+  border-#{$side}: 1px solid $color;
+}
+
