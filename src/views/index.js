@@ -1,1 +1,1 @@
-export { default as AppHome } from "./AppHome.vue";
+export { default as ViewChoiceOfCourses } from "./ViewChoiceOfCourses.vue";

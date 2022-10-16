@@ -1,8 +1,8 @@
-import { AppLayout, AppList, AddEdit } from "@/views/users";
+import { ViewUserManagement, AppList, AddEdit } from "@/views/users";
 
 export default {
   path: "/users",
-  component: AppLayout,
+  component: ViewUserManagement,
   children: [
     { path: "", component: AppList },
     { path: "add", component: AddEdit },

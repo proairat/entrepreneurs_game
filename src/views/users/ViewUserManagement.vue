@@ -1,4 +1,4 @@
 <template>
-  <h1>user/AppLayout</h1>
+  <h1>user/ViewUserManagement</h1>
   <router-view />
 </template>
