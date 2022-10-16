@@ -1,6 +1,6 @@
 <template>
   <button
-    class="flex items-center justify-center h-11 px-2 text-indigo-900 transition-colors duration-200 transform bg-indigo-100 rounded-md focus:outline-none hover:bg-indigo-200 focus:bg-indigo-200 focus:ring focus:ring-indigo-200 focus:ring-opacity-40"
+    class="flex items-center justify-center h-11 px-2 transition-colors duration-200 transform bg-indigo-100 text-indigo-900 rounded-md focus:outline-none hover:bg-indigo-200 focus:bg-indigo-200 focus:ring focus:ring-indigo-200 focus:ring-opacity-40"
   >
     <svg
       xmlns="http://www.w3.org/2000/svg"

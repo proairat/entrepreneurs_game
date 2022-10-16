@@ -1,13 +1,3 @@
-<script setup lang="ts">
-import { storeToRefs } from "pinia";
-import { useUsersStore } from "@/stores";
-
-const usersStore = useUsersStore();
-const { users } = storeToRefs(usersStore);
-
-usersStore.getAll();
-</script>
-
 <template>
   <h1>Users</h1>
   <router-link to="/users/add" class="btn btn-sm btn-success mb-2"
@@ -61,3 +51,13 @@ usersStore.getAll();
     </tbody>
   </table>
 </template>
+
+<script setup lang="ts">
+import { storeToRefs } from "pinia";
+import { useUsersStore } from "@/stores";
+
+const usersStore = useUsersStore();
+const { users } = storeToRefs(usersStore);
+
+usersStore.getAll();
+</script>

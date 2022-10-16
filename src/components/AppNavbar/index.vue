@@ -1,8 +1,8 @@
 <template>
-  <nav class="navbar">
-    <div class="min-w-[40rem]">
-      <Disclosure as="nav" v-slot="{ open }" class="bg-gray-50">
-        <div class="max-w-7xl mx-auto px-3">
+  <nav class="navbar fixed top-0 z-50 w-full">
+    <div class="min-w-[35rem]">
+      <Disclosure as="nav" v-slot="{ open }">
+        <div class="max-w-6xl mx-auto px-6">
           <div class="flex flex-wrap items-center justify-start h-16">
             <div class="flex items-center sh-960:hidden h-[inherit] order-1">
               <!-- Mobile menu button-->
@@ -56,8 +56,8 @@
             </div>
           </div>
         </div>
-        <div class="bg-gray-50 h-[56px] sh-960:hidden"></div>
-        <DisclosurePanel class="min-w-[40rem] sh-960:hidden">
+        <div class="h-[56px] sh-960:hidden"></div>
+        <DisclosurePanel class="min-w-[35rem] sh-960:hidden">
           <div class="px-2 pt-2 pb-3 space-y-1 bg-gray-50">
             <DisclosureButton
               v-for="item in navigation"
@@ -176,3 +176,9 @@ function updateSearch(value: string) {
   console.log("search", search.value);
 }
 </script>
+
+<style scoped lang="scss">
+.navbar {
+  background-color: $white;
+}
+</style>

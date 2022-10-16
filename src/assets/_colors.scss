@@ -35,11 +35,23 @@
 
   --sun-10: #FFFAE0;
   --sun-20: #FFF1AD;
+  --sun-30: #FFEC8E;
   --sun-40: #FFE97A;
   --sun-60: #FFDD33;
   --sun-80: #FAD000;
 
-  --shadow: 0 2px 12px rgba(53, 121, 245, 0.06);
+  --indigo-5: #EEF2FF;
+  --indigo-10: #E0E7FF;
+  --indigo-20: #C7D2FE;
+  --indigo-30: #A5B4FC;
+  --indigo-40: #818CF8;
+  --indigo-50: #6366F1;
+  --indigo-60: #4F46E5;
+  --indigo-70: #4338CA;
+  --indigo-80: #3730A3;
+  --indigo-90: #312E81;
+
+    --shadow: 0 2px 12px rgba(53, 121, 245, 0.06);
   --shadow-0dp: 0 1px 4px rgba(147, 147, 163, 0.2), 0 1px 1px rgba(147, 147, 163, 0.05);
   --shadow-2dp: 0 4px 8px -2px rgba(147, 147, 163, 0.24), 0 1px 4px -1px rgba(147, 147, 163, 0.08); 
   --shadow-4dp: 0 8px 24px -8px rgba(147, 147, 163, 0.48), 0 2px 8px -2px rgba(147, 147, 163, 0.24);
@@ -108,9 +120,21 @@ $green-80: var(--green-80);
 
 $sun-10: var(--sun-10);
 $sun-20: var(--sun-20);
+$sun-30: var(--sun-30);
 $sun-40: var(--sun-40);
 $sun-60: var(--sun-60);
 $sun-80: var(--sun-80);
+
+$indigo-5: var(--indigo-5);
+$indigo-10: var(--indigo-10);
+$indigo-20: var(--indigo-20);
+$indigo-30: var(--indigo-30);
+$indigo-40: var(--indigo-40);
+$indigo-50: var(--indigo-50);
+$indigo-60: var(--indigo-60);
+$indigo-70: var(--indigo-70);
+$indigo-80: var(--indigo-80);
+$indigo-90: var(--indigo-90);
 
 /* Brand Color */
 $color-primary: var(--color-primary);
