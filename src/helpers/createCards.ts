@@ -1,6 +1,23 @@
 function createCards() {
   class Card {
-    constructor(src, alt, header, title, duration, footer) {
+    id: number;
+    src: string;
+    alt: string;
+    header: string;
+    title: string;
+    duration: string;
+    footer: string;
+
+    constructor(
+      id: number,
+      src: string,
+      alt: string,
+      header: string,
+      title: string,
+      duration: string,
+      footer: string
+    ) {
+      this.id = id;
       this.src = src;
       this.alt = alt;
       this.header = header;
@@ -12,6 +29,7 @@ function createCards() {
 
   const cards = [
     new Card(
+      1,
       "https://www.spletnik.ru/img/__post/5d/5dc18cc037668240ad73b448eb464516_297.jpg",
       "Модуль 1",
       "Основы предпринимательства",
@@ -20,6 +38,7 @@ function createCards() {
       "Изучить курс"
     ),
     new Card(
+      2,
       "https://www.spletnik.ru/img/__post/5d/5dc18cc037668240ad73b448eb464516_297.jpg",
       "Модуль 2",
       "Грантовое проектирование",
@@ -28,6 +47,7 @@ function createCards() {
       "Изучить курс"
     ),
     new Card(
+      3,
       "https://www.spletnik.ru/img/__post/5d/5dc18cc037668240ad73b448eb464516_297.jpg",
       "Модуль 3",
       "Технологическое предпринимательство",
@@ -36,6 +56,7 @@ function createCards() {
       "Изучить курс"
     ),
     new Card(
+      4,
       "https://www.spletnik.ru/img/__post/5d/5dc18cc037668240ad73b448eb464516_297.jpg",
       "Модуль 4",
       "Массовое предпринимательство",
@@ -44,6 +65,7 @@ function createCards() {
       "Изучить курс"
     ),
     new Card(
+      5,
       "https://www.spletnik.ru/img/__post/5d/5dc18cc037668240ad73b448eb464516_297.jpg",
       "Модуль 5",
       "Креативные индустрии",
@@ -52,6 +74,7 @@ function createCards() {
       "Изучить курс"
     ),
     new Card(
+      6,
       "https://www.spletnik.ru/img/__post/5d/5dc18cc037668240ad73b448eb464516_297.jpg",
       "Модуль 6",
       "Социальное предпринимательство",

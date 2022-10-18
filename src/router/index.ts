@@ -1,6 +1,5 @@
 import { createRouter, createWebHistory } from "vue-router";
 import { useAuthStore, useAlertStore } from "@/stores";
-import { ViewChoiceOfCourses } from "@/views";
 import accountRoutes from "./account.routes";
 import usersRoutes from "./users.routes";
 import coursesRoutes from "./courses.routes";
@@ -9,11 +8,6 @@ export const router = createRouter({
   history: createWebHistory(import.meta.env.BASE_URL),
   linkActiveClass: "active",
   routes: [
-    {
-      path: "/",
-      name: "home",
-      component: ViewChoiceOfCourses,
-    },
     {
       path: "/about",
       name: "about",
@@ -26,7 +20,7 @@ export const router = createRouter({
     { ...usersRoutes },
     { ...coursesRoutes },
     // catch all redirect to home page
-    { path: "/:pathMatch(.*)*", redirect: "/" },
+    { path: "/:pathMatch(.*)*", name: "redirectCourses", redirect: "/courses" },
   ],
 });
 
@@ -36,7 +30,7 @@ router.beforeEach(async (to) => {
   alertStore.clear();
 
   // redirect to login page if not logged in and trying to access a restricted page
-  const publicPages = ["/account/login", "/account/register", "/account/logic"];
+  const publicPages = ["/account/login", "/account/register"];
   const authRequired = !publicPages.includes(to.path);
   const authStore = useAuthStore();
   // возможно, нужно const { user } = storeToRefs(authStore); реализовать
