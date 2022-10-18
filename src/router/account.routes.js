@@ -7,11 +7,12 @@ import {
 
 export default {
   path: "/account",
+  name: "ViewStartPage",
   component: ViewStartPage,
   children: [
-    { path: "", redirect: "login" },
-    { path: "login", component: AppLogin },
-    { path: "logic", component: AppLogic },
-    { path: "register", component: AppRegister },
+    { path: "", name: "redirectLogin", redirect: "login" },
+    { path: "login", name: "AppLogin", component: AppLogin },
+    { path: "logic", name: "AppLogic", component: AppLogic },
+    { path: "register", name: "AppRegister", component: AppRegister },
   ],
 };

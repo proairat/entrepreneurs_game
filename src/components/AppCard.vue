@@ -4,12 +4,22 @@
     <div class="header">{{ props.header }}</div>
     <div class="title">{{ props.title }}</div>
     <div class="duration">Длительность: {{ props.duration }}</div>
-    <router-link class="footer" to="courses">{{ props.footer }}</router-link>
+    <!--<router-link class="footer" :to="`/courses/${props.id}`">{{ props.footer }}</router-link>-->
+    <router-link
+      class="footer"
+      :to="{
+        path: `/courses`,
+        name: 'AppCourse',
+        params: { id: props.id },
+      }"
+      >{{ props.footer }}</router-link
+    >
   </li>
 </template>
 
 <script setup lang="ts">
 const props = defineProps<{
+  id: number;
   src: string;
   alt: string;
   header: string;

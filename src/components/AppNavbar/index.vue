@@ -1,8 +1,8 @@
 <template>
-  <nav class="navbar fixed top-0 z-50 w-full">
+  <nav class="navbar fixed z-50 top-0 w-full">
     <div class="min-w-[35rem]">
       <Disclosure as="nav" v-slot="{ open }">
-        <div class="max-w-6xl mx-auto px-6">
+        <div class="px-6 max-w-6xl mx-auto">
           <div class="flex flex-wrap items-center justify-start h-16">
             <div class="flex items-center sh-960:hidden h-[inherit] order-1">
               <!-- Mobile menu button-->
@@ -95,18 +95,6 @@ import { getImageUrl } from "@/helpers/commonFunctions";
 const props = defineProps<{
   logout: any;
 }>();
-
-/*<template v-if="item.handlers">
-  <a
-    :href="item.href"
-    class="hidden lg:flex mr-1.5 rounded-md text-sm font-medium items-center text-slate-800"
-    :aria-current="item.current ? 'page' : undefined"
-  >{{ item.name }}</a
-  >
-</template>
-<template v-else>
-  <div>Что за дела?</div>
-</template>*/
 
 const render = (params: any) => {
   function constructObj() {
