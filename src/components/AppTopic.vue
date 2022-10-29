@@ -1,12 +1,20 @@
 <template>
   <li class="topic-item">
     <div class="topic-item__state-icon" :class="stateClasses"></div>
-    <div class="topic-item__title">{{ props.title }}</div>
+    <router-link
+      class="topic-item__title"
+      :to="{
+        path: `/tests/:test`,
+        name: 'AppTest',
+        params: { test: 1 },
+      }"
+      >{{ props.title }}</router-link
+    >
   </li>
 </template>
 
 <script setup lang="ts">
-import { computed, ref } from "vue";
+import { computed } from "vue";
 import { TopicItemState } from "@/types/enums/topic-item-state";
 
 const props = defineProps<{
@@ -42,6 +50,12 @@ const stateClasses = computed(() => ({
   }
   &_test {
     background-color: $sun-60;
+  }
+}
+.topic-item__title {
+  font-weight: $font-weight-regular;
+  &:hover {
+    text-decoration: underline;
   }
 }
 </style>

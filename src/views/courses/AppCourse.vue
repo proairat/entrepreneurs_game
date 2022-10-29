@@ -1,15 +1,16 @@
 <template>
-  <AppBreadcrumbs>
-    <el-breadcrumb-item :to="{ path: '/' }">Все курсы</el-breadcrumb-item>
-    <el-breadcrumb-item>{{ map.get(route.params.id) }}</el-breadcrumb-item>
-    <el-breadcrumb-item></el-breadcrumb-item>
-  </AppBreadcrumbs>
+  <AppTitleLine>
+    <template #backButton>yes</template>
+    <template #title>
+      {{ map.get(Number(route.params.id)) }}
+    </template>
+  </AppTitleLine>
   <div class="outer-part">
     <div class="max-w-6xl mx-auto">
       <div class="main-part">
         <AppProgress />
         <AppVideo />
-        <AppListOfTopics />
+        <AppListOfTopics :topicId="Number(route.params.id)" />
         <AppVideoDescription />
         <AppTopicDescription />
       </div>
@@ -26,12 +27,12 @@ const route = useRoute();
  * ВНИМАНИЕ! Это макет, его нужно обязательно изменить с использованием Pinia
  */
 const map = new Map([
-  ["1", "Основы предпринимательства"],
-  ["2", "Грантовое проектирование"],
-  ["3", "Технологическое предпринимательство"],
-  ["4", "Массовое предпринимательство"],
-  ["5", "Креативные индустрии"],
-  ["6", "Социальное предпринимательство"],
+  [1, "Основы предпринимательства"],
+  [2, "Грантовое проектирование"],
+  [3, "Технологическое предпринимательство"],
+  [4, "Массовое предпринимательство"],
+  [5, "Креативные индустрии"],
+  [6, "Социальное предпринимательство"],
 ]);
 </script>
 

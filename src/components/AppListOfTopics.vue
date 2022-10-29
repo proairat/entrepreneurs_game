@@ -6,65 +6,13 @@
 
 <script setup lang="ts">
 import { ref } from "vue";
+import { createTopicList } from "@/helpers/commonFunctions";
 
-const topics = ref([
-  {
-    id: 1,
-    state: "active",
-    title:
-      "abaaasdf asdffsdaf sad ff w wf8798asdf adsf87fdsa adsf0 adsfads dfa89adf 0adsf dasf09adf a dsdfasdf",
-  },
-  {
-    id: 2,
-    state: "default",
-    title: "two",
-  },
-  {
-    id: 3,
-    state: "default",
-    title: "sdfg",
-  },
-  {
-    id: 4,
-    state: "default",
-    title: "fghjfhj",
-  },
-  {
-    id: 5,
-    state: "default",
-    title: "zxcv",
-  },
-  {
-    id: 6,
-    state: "default",
-    title: "345345",
-  },
-  {
-    id: 7,
-    state: "default",
-    title: "7",
-  },
-  {
-    id: 8,
-    state: "test",
-    title: "asdf",
-  },
-  {
-    id: 9,
-    state: "default",
-    title: "234",
-  },
-  {
-    id: 10,
-    state: "default",
-    title: "десять",
-  },
-  {
-    id: 11,
-    state: "default",
-    title: "фываолжцзгук",
-  },
-]);
+const props = defineProps<{
+  topicId: number;
+}>();
+
+const topics = ref(createTopicList(props.topicId));
 </script>
 
 <style scoped lang="scss">
@@ -74,6 +22,7 @@ const topics = ref([
   top: -1.5rem;
   height: calc(100% + 1.5rem);
   background-color: $white;
+  overflow-y: auto;
   border-radius: 0.625rem;
   box-shadow: $box-shadow-2dp;
   padding: 1rem;
