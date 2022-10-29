@@ -28,5 +28,5 @@
 
 <script setup lang="ts">
 defineProps<{ search: string }>();
-defineEmits<{ (e: "update:search", value: string): void }>();
+// defineEmits<{ (e: "update:search", value: string): void }>();
 </script>

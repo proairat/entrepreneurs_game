@@ -1,4 +1,9 @@
-import { ViewChoiceOfCourses, AppCourses, AppCourse } from "@/views/courses";
+import {
+  ViewChoiceOfCourses,
+  AppCourses,
+  AppCourse,
+  AppTest,
+} from "@/views/courses";
 
 export default {
   path: "/courses",
@@ -7,5 +12,6 @@ export default {
   children: [
     { path: "", name: "AppCourses", component: AppCourses },
     { path: ":id", name: "AppCourse", component: AppCourse },
+    { path: ":id/tests/:test", name: "AppTest", component: AppTest },
   ],
 };

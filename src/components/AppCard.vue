@@ -4,7 +4,6 @@
     <div class="header">{{ props.header }}</div>
     <div class="title">{{ props.title }}</div>
     <div class="duration">Длительность: {{ props.duration }}</div>
-    <!--<router-link class="footer" :to="`/courses/${props.id}`">{{ props.footer }}</router-link>-->
     <router-link
       class="footer"
       :to="{
@@ -61,7 +60,7 @@ defineEmits<{(e: 'subtract', id: number): void
     padding: 0 1rem;
     font-size: 1.25rem;
     font-weight: $font-weight-bold;
-    color: $gray-80;
+    color: $gray-90;
     line-height: $line-height-m;
     min-height: 3rem;
   }
@@ -89,8 +88,7 @@ defineEmits<{(e: 'subtract', id: number): void
     margin: 0 1rem 1rem 1rem;
     background-color: $sun-30;
     // background-color: $blue-10;
-    color: $gray-80;
-    // color: $blue-80;
+    color: $gray-90;
     text-align: center;
     &:hover {
       background-color: $sun-20;

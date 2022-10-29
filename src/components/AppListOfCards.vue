@@ -14,8 +14,7 @@
 
 <script setup lang="ts">
 import { computed, reactive, ref } from "vue";
-import { createCards } from "@/helpers/createCards";
-import { FuzzySearch } from "@/helpers/commonFunctions";
+import { FuzzySearch, createCards } from "@/helpers/commonFunctions";
 
 const search = ref("");
 const cards = reactive(createCards());

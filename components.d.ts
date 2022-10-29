@@ -8,7 +8,7 @@ export {};
 declare module "@vue/runtime-core" {
   export interface GlobalComponents {
     AppAlert: typeof import("./src/components/AppAlert.vue")["default"];
-    AppBreadcrumbs: typeof import("./src/components/AppBreadcrumbs.vue")["default"];
+    AppBackButton: typeof import("./src/components/AppBackButton.vue")["default"];
     AppCard: typeof import("./src/components/AppCard.vue")["default"];
     AppCatalogButton: typeof import("./src/components/AppCatalogButton.vue")["default"];
     AppFooter: typeof import("./src/components/AppFooter.vue")["default"];
@@ -17,13 +17,13 @@ declare module "@vue/runtime-core" {
     AppNavbar: typeof import("./src/components/AppNavbar/index.vue")["default"];
     AppProgress: typeof import("./src/components/AppProgress.vue")["default"];
     AppSearch: typeof import("./src/components/AppSearch.vue")["default"];
+    AppTitle: typeof import("./src/components/AppTitle.vue")["default"];
+    AppTitleLine: typeof import("./src/components/AppTitleLine.vue")["default"];
     AppTopic: typeof import("./src/components/AppTopic.vue")["default"];
     AppTopicDescription: typeof import("./src/components/AppTopicDescription.vue")["default"];
     AppVideo: typeof import("./src/components/AppVideo.vue")["default"];
     AppVideoDescription: typeof import("./src/components/AppVideoDescription.vue")["default"];
     ElAlert: typeof import("element-plus/es")["ElAlert"];
-    ElBreadcrumb: typeof import("element-plus/es")["ElBreadcrumb"];
-    ElBreadcrumbItem: typeof import("element-plus/es")["ElBreadcrumbItem"];
     ElButton: typeof import("element-plus/es")["ElButton"];
     ElDivider: typeof import("element-plus/es")["ElDivider"];
     ElForm: typeof import("element-plus/es")["ElForm"];

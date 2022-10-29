@@ -1,7 +1,7 @@
 <template>
-  <AppBreadcrumbs>
-    <el-breadcrumb-item :to="{ path: '/' }">Все курсы</el-breadcrumb-item>
-    <el-breadcrumb-item></el-breadcrumb-item>
-  </AppBreadcrumbs>
+  <AppTitleLine>
+    <template #backButton></template>
+    <template #title> Все курсы </template>
+  </AppTitleLine>
   <AppListOfCards />
 </template>

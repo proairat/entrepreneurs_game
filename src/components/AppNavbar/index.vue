@@ -18,42 +18,27 @@
                 <XMarkIcon v-else class="block h-6 w-6" aria-hidden="true" />
               </DisclosureButton>
             </div>
-            <div class="flex items-center justify-center h-[inherit] order-2">
-              <div class="flex px-3">
+            <router-link
+              class="flex items-center justify-center h-[inherit] order-2"
+              :to="{
+                path: `/courses`,
+                name: 'AppCourses',
+              }"
+              ><div class="flex px-3">
                 <img
                   class="h-11 w-[105px]"
                   :src="getImageUrl('academic-cap')"
                   alt="Логотип"
                 />
               </div>
-            </div>
+            </router-link>
             <AppCatalogButton class="flex order-3" />
             <AppSearch
               :search="search"
               @update:search="updateSearch"
               class="order-5 basis-full sh-960:flex-1 sh-960:order-4"
             />
-            <div class="flex order-4 sh-960:order-5 ml-auto">
-              <div
-                class="flex items-center h-11 hover:bg-slate-200 mx-2 cursor-pointer rounded-md"
-                v-for="item in navigation"
-                :key="item.name"
-              >
-                <img class="h-7 w-5 mx-1" :src="item.src" :alt="item.alt" />
-                <render :item="item" />
-                <!--<template v-if="item.handlers">
-                  <a
-                    :href="item.href"
-                    class="hidden lg:flex mr-1.5 rounded-md text-sm font-medium items-center text-slate-800"
-                    :aria-current="item.current ? 'page' : undefined"
-                  >{{ item.name }}</a
-                  >
-                </template>
-                <template v-else>
-                  <div>Что за дела?</div>
-                </template>-->
-              </div>
-            </div>
+            <NavbarNavigation />
           </div>
         </div>
         <div class="h-[56px] sh-960:hidden"></div>
@@ -63,7 +48,7 @@
               v-for="item in navigation"
               :key="item.name"
               as="a"
-              :href="item.href"
+              :to="item.to"
               :class="[
                 item.current
                   ? 'bg-indigo-100 text-indigo-900'
@@ -89,73 +74,93 @@ export default {
 <script setup lang="ts">
 import { Disclosure, DisclosureButton, DisclosurePanel } from "@headlessui/vue";
 import { XMarkIcon, Bars3Icon } from "@heroicons/vue/24/outline";
-import { ref, h } from "vue";
+import { ref, h, reactive, resolveComponent } from "vue";
 import { getImageUrl } from "@/helpers/commonFunctions";
+import type { INavigation } from "@/types/interfaces";
 
 const props = defineProps<{
   logout: any;
 }>();
 
-const render = (params: any) => {
-  function constructObj() {
-    return Object.fromEntries(
-      Object.entries(params.item.handlers).map(([key, value]) => [
-        "on" + key[0].toUpperCase() + key.substring(1),
-        value,
-      ])
-    );
+function NavbarNavigation() {
+  function constructObj(
+    item: INavigation & {
+      handlers?: undefined | { click: () => any };
+    }
+  ): { [k: string]: () => number } | undefined {
+    if (item.handlers) {
+      return Object.fromEntries(
+        Object.entries(item.handlers).map(([key, value]) => [
+          "on" + key[0].toUpperCase() + key.substring(1),
+          value,
+        ])
+      );
+    }
   }
 
-  return h("div", [
-    params.item.handlers
-      ? h(
-          "a",
-          {
-            href: params.item.href,
-            class:
-              "hidden lg:flex mr-1.5 rounded-md text-sm font-medium items-center text-slate-800",
-            ariaCurrent: params.item.current ? "page" : undefined,
-            ...constructObj(),
-          },
-          params.item.name
-        )
-      : h(
-          "a",
-          {
-            href: params.item.href,
-            class:
-              "hidden lg:flex mr-1.5 rounded-md text-sm font-medium items-center text-slate-800",
-            ariaCurrent: params.item.current ? "page" : undefined,
-          },
-          params.item.name
-        ),
-  ]);
-};
+  return h(
+    "div",
+    {
+      class: "flex order-4 sh-960:order-5 ml-auto",
+    },
+    navigation.map((item) => {
+      return h(
+        "div",
+        {
+          class:
+            "flex items-center h-11 hover:bg-slate-200 mx-2 cursor-pointer rounded-md",
+          key: item.name,
+          ...constructObj(item),
+        },
+        [
+          h("img", {
+            class: "h-7 w-5 mx-1",
+            src: item.src,
+            alt: item.alt,
+          }),
+          h(
+            resolveComponent("router-link"),
+            {
+              to: { path: item.to, name: item.componentName },
+              class:
+                "hidden lg:flex mr-1.5 rounded-md text-sm font-medium items-center text-slate-800",
+              ariaCurrent: item.current ? "page" : undefined,
+            },
+            () => item.name
+          ),
+        ]
+      );
+    })
+  );
+}
 
-const navigation = [
+const navigation = reactive([
   {
     name: "Бонусы",
-    href: "#",
+    to: "login",
+    componentName: "AppLogin",
     current: true,
     src: getImageUrl("star"),
     alt: "Бонусы",
   },
   {
     name: "Настройки",
-    href: "#",
+    to: "login",
+    componentName: "AppLogin",
     current: false,
     src: getImageUrl("settings"),
     alt: "Настройки",
   },
   {
     name: "Выход",
-    href: "#",
+    to: "login",
+    componentName: "AppLogin",
     current: false,
     src: getImageUrl("exit"),
     alt: "Выход",
     handlers: { click: props.logout },
   },
-];
+]);
 
 const search = ref("");
 
