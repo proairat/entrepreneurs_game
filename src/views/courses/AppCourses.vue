@@ -1,7 +1,6 @@
 <template>
   <AppTitleLine>
-    <template #backButton></template>
-    <template #title> Все курсы </template>
+    <AppTitle> Разделы курса </AppTitle>
   </AppTitleLine>
   <AppListOfCards />
 </template>

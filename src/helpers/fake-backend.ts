@@ -6,7 +6,7 @@ const usersKey = "regUser";
 let users = JSON.parse(localStorage.getItem(usersKey)) || [];
 
 function fakeBackend() {
-  let realFetch = window.fetch;
+  const realFetch = window.fetch;
   window.fetch = function (url, opts) {
     return new Promise((resolve, reject) => {
       // wrap in timeout to simulate server api call
@@ -80,8 +80,8 @@ function fakeBackend() {
       function updateUser() {
         if (!isAuthenticated()) return unauthorized();
 
-        let params = body();
-        let user = users.find((x) => x.id === idFromUrl());
+        const params = body();
+        const user = users.find((x) => x.id === idFromUrl());
 
         // only update password if entered
         if (!params.password) {

@@ -12,7 +12,7 @@ export const useAuthStore = defineStore("auth", {
     returnUrl: null,
   }),
   actions: {
-    async login(login, password) {
+    async login(login: string, password: string) {
       try {
         const user = await fetchWrapper.post(`${baseUrl}/authenticate`, {
           login,

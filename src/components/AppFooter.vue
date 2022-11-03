@@ -6,7 +6,7 @@
           <div class="">
             <img
               class="h-11 w-[105px] academicCap m-auto"
-              :src="getImageUrl('academic-cap')"
+              :src="logo"
               alt="Логотип"
             />
             <h6
@@ -151,6 +151,7 @@
 
 <script setup lang="ts">
 import { getImageUrl } from "@/helpers/commonFunctions";
+const logo = await getImageUrl("academic-cap");
 </script>
 
 <style scoped lang="scss">

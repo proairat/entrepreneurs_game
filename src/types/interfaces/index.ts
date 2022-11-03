@@ -7,4 +7,10 @@ interface INavigation {
   alt: string;
 }
 
-export type { INavigation };
+interface ITopic {
+  id: number;
+  state: string;
+  title: string;
+}
+
+export type { INavigation, ITopic };

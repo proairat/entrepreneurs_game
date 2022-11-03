@@ -1,39 +1,66 @@
 <template>
   <AppTitleLine>
-    <template #backButton>yes</template>
-    <template #title>
-      {{ map.get(Number(route.params.id)) }}
-    </template>
+    <AppBackButton v-bind="backTo"></AppBackButton>
+    <AppTitle>
+      {{ getCourseHeader.get(Number(route.params.id)) }}
+    </AppTitle>
   </AppTitleLine>
   <div class="outer-part">
     <div class="max-w-6xl mx-auto">
       <div class="main-part">
-        <AppProgress />
-        <AppVideo />
-        <AppListOfTopics :topicId="Number(route.params.id)" />
-        <AppVideoDescription />
-        <AppTopicDescription />
+        <div class="left-side">
+          <AppProgress />
+          <AppListOfTopics :courseId="Number(route.params.id)" />
+        </div>
+        <div class="right-side">
+          <AppVideo />
+          <AppTheme> {{ getActiveTopic?.title }} </AppTheme>
+          <el-tabs type="border-card">
+            <el-tab-pane label="Описание темы">
+              <AppTabs>
+                Статья 1. Законодательство Российской Федерации о налогах и
+                сборах, законодательство субъектов Российской Федерации о
+                налогах и сборах, нормативные правовые акты представительных
+                органов муниципальных образований о налогах и сборах,
+                нормативные правовые акты представительного органа федеральной
+                территории "Сириус" о местных налогах и сборах Статья 1.
+                Законодательство Российской Федерации о налогах и сборах,
+                законодательство субъектов Российской Федерации о налогах и
+                сборах, нормативные правовые акты представительных органов
+                муниципальных образований о налогах и сборах, нормативные
+                правовые акты представительного органа федеральной территории
+                "Сириус" о местных налогах и сборах
+              </AppTabs>
+            </el-tab-pane>
+            <el-tab-pane label="Ключевые навыки">
+              <AppTabs>
+                <div>Навык 1</div>
+                <div>Навык 2</div>
+                <div>Навык 3</div>
+              </AppTabs>
+            </el-tab-pane>
+          </el-tabs>
+        </div>
       </div>
     </div>
   </div>
+  <!--<router-view />-->
 </template>
 
 <script setup lang="ts">
 import { useRoute } from "vue-router";
+import { storeToRefs } from "pinia";
+import { useCoursesStore } from "@/stores";
+import { reactive } from "vue";
 
 const route = useRoute();
+const coursesStore = useCoursesStore();
+const { getCourseHeader, getActiveTopic } = storeToRefs(coursesStore);
 
-/**
- * ВНИМАНИЕ! Это макет, его нужно обязательно изменить с использованием Pinia
- */
-const map = new Map([
-  [1, "Основы предпринимательства"],
-  [2, "Грантовое проектирование"],
-  [3, "Технологическое предпринимательство"],
-  [4, "Массовое предпринимательство"],
-  [5, "Креативные индустрии"],
-  [6, "Социальное предпринимательство"],
-]);
+const backTo = reactive({
+  path: `/courses`,
+  name: "AppCourses",
+});
 </script>
 
 <style scoped lang="scss">
@@ -43,16 +70,17 @@ const map = new Map([
 }
 .main-part {
   display: grid;
-  grid-template-columns: 1fr 1fr 1fr 1fr;
-  grid-template-rows: 8rem 10rem 10rem 10rem 2rem 2rem 2rem;
-  grid-template-areas:
-    "progress video video video"
-    "topics video video video"
-    "topics video video video"
-    "topics video_description video_description video_description"
-    "topics topic_description topic_description topic_description"
-    "topics topic_description topic_description topic_description"
-    "topics topic_description topic_description topic_description";
+  grid-template-columns: 1fr 3fr;
+  grid-template-areas: "left-side right-side";
   background-color: $gray-10;
+  margin: 0 1.5rem;
+}
+
+.left-side {
+  grid-area: left-side;
+  margin-right: 1.5rem;
+}
+.right-side {
+  grid-area: right-side;
 }
 </style>

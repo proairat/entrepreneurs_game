@@ -5,10 +5,10 @@ export const useAlertStore = defineStore("alert", {
     alert: null,
   }),
   actions: {
-    success(message) {
+    success(message: string) {
       this.alert = { message, type: "success" };
     },
-    error(message) {
+    error(message: unknown) {
       this.alert = { message, type: "error" };
     },
     clear() {

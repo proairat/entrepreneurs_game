@@ -12,20 +12,14 @@ export default {
 
 <script setup lang="ts">
 import { ref } from "vue";
-
-function getImageUrl(name: string) {
-  return new URL(
-    `./../../../assets/services_icons/${name}.svg`,
-    import.meta.url
-  ).href;
-}
+import { getImageUrl } from "@/helpers/commonFunctions";
 
 const icons = ref([
-  { id: 1, src: getImageUrl("gosuslugi") },
-  { id: 2, src: getImageUrl("vk") },
+  { id: 1, src: await getImageUrl("gosuslugi") },
+  { id: 2, src: await getImageUrl("vk") },
   {
     id: 3,
-    src: getImageUrl("google"),
+    src: await getImageUrl("google"),
   },
 ]);
 </script>
