@@ -25,11 +25,7 @@
                 name: 'AppCourses',
               }"
               ><div class="flex px-3">
-                <img
-                  class="h-11 w-[105px]"
-                  :src="getImageUrl('academic-cap')"
-                  alt="Логотип"
-                />
+                <img class="h-11 w-[105px]" :src="logo" alt="Логотип" />
               </div>
             </router-link>
             <AppCatalogButton class="flex order-3" />
@@ -38,7 +34,7 @@
               @update:search="updateSearch"
               class="order-5 basis-full sh-960:flex-1 sh-960:order-4"
             />
-            <NavbarNavigation />
+            <NavbarNavigation /><!-- render function -->
           </div>
         </div>
         <div class="h-[56px] sh-960:hidden"></div>
@@ -81,6 +77,7 @@ import type { INavigation } from "@/types/interfaces";
 const props = defineProps<{
   logout: any;
 }>();
+const logo = await getImageUrl("academic-cap");
 
 function NavbarNavigation() {
   function constructObj(
@@ -140,7 +137,7 @@ const navigation = reactive([
     to: "login",
     componentName: "AppLogin",
     current: true,
-    src: getImageUrl("star"),
+    src: await getImageUrl("star"),
     alt: "Бонусы",
   },
   {
@@ -148,7 +145,7 @@ const navigation = reactive([
     to: "login",
     componentName: "AppLogin",
     current: false,
-    src: getImageUrl("settings"),
+    src: await getImageUrl("settings"),
     alt: "Настройки",
   },
   {
@@ -156,7 +153,7 @@ const navigation = reactive([
     to: "login",
     componentName: "AppLogin",
     current: false,
-    src: getImageUrl("exit"),
+    src: await getImageUrl("exit"),
     alt: "Выход",
     handlers: { click: props.logout },
   },

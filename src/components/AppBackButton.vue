@@ -1,27 +1,27 @@
 <template>
   <div class="backButton">
-    <template v-if="hasContentDefaultSlot">
-      <router-link
-        class="flex"
-        :to="{
-          path: `/courses`,
-          name: 'AppCourses',
-        }"
-      >
-        <el-icon><Back /></el-icon>
-        <span class="inscription">Назад</span>
-      </router-link>
-    </template>
+    <router-link
+      class="flex"
+      :to="{
+        path: props.path,
+        name: props.name,
+      }"
+    >
+      <el-icon><Back /></el-icon>
+      <span class="inscription">Назад</span>
+    </router-link>
   </div>
 </template>
 
 <script setup lang="ts">
 import { Back } from "@element-plus/icons-vue";
-import { computed, useSlots, ref } from "vue";
 
-const slots = useSlots();
-const children = ref(slots.default()[0].children);
-const hasContentDefaultSlot = computed(() => children.value?.length);
+const props = defineProps<{
+  path: string;
+  name: string;
+}>();
+
+console.log("AppBackButton component, props", props);
 </script>
 
 <style scoped lang="scss">

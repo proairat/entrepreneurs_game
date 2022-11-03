@@ -2,23 +2,23 @@
   <div class="min-w-[35rem] outer-part">
     <div class="cards max-w-6xl mx-auto">
       <ul>
-        <AppCard
-          v-for="(post, index) in filteredList"
-          :key="index"
-          v-bind="post"
-        />
+        <AppCard v-for="(card, index) in cards" :key="index" v-bind="card" />
       </ul>
     </div>
   </div>
 </template>
 
 <script setup lang="ts">
-import { computed, reactive, ref } from "vue";
-import { FuzzySearch, createCards } from "@/helpers/commonFunctions";
+import { reactive, ref } from "vue";
+import { createCards } from "@/helpers/commonFunctions";
 
 const search = ref("");
 const cards = reactive(createCards());
-const filteredList = computed(() => FuzzySearch(search.value, cards, "title"));
+
+console.log("1 cards", cards);
+console.log("cards[1]", cards[1]);
+
+// const filteredList = computed(() => FuzzySearch(search.value, cards, "title"));
 </script>
 
 <style scoped lang="scss">

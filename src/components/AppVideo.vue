@@ -13,8 +13,6 @@
 
 <style scoped lang="scss">
 .video {
-  grid-area: video;
-  margin-right: 1.5rem;
   & > video {
     width: 100%;
   }

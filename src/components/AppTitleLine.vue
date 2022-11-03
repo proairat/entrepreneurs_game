@@ -3,12 +3,7 @@
     <div
       class="mt-[calc(7rem+8px)] sh-960:mt-[4rem] max-w-6xl min-w-[35rem] mx-auto line"
     >
-      <AppBackButton>
-        <slot name="backButton"></slot>
-      </AppBackButton>
-      <AppTitle>
-        <slot name="title"></slot>
-      </AppTitle>
+      <slot></slot>
     </div>
   </div>
 </template>

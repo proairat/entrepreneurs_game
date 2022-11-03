@@ -89,19 +89,20 @@ function deepClone(value: any): any {
 /**
  * Функция для получения пути к изображению по названию изображения
  *
- * @name {string} prop - свойство объекта, которое следует удалить
- * @returns {URL} объект без свойства prop
+ * @name {string} prop - название файла с изображением
+ * @extenstion {string} prop - расширение файла
+ * @returns {string | undefined} путь к файлу изображения
  *
- * const user = {
- *  id: 100,
- *  name: 'John Smith',
- *  password: 'password'
- * }
- *
- * getImageUrl('user')
+ * getImageUrl('academic-cap')
  */
-function getImageUrl(name: string) {
-  return new URL(`./../assets/img/${name}.svg`, import.meta.url).href;
+async function getImageUrl(name: string, extension: string = "svg") {
+  let dynamicImport;
+  try {
+    dynamicImport = await import(`@/assets/img/${name}.${extension}`);
+    return dynamicImport.default;
+  } catch (err) {
+    console.error("We are know about error and try to address it", err);
+  }
 }
 
 function createCards() {
@@ -141,7 +142,7 @@ function createCards() {
       "Основы предпринимательства",
       "Модуль 1",
       "2 часа",
-      "Изучить курс"
+      "Изучить модуль"
     ),
     new Card(
       2,
@@ -150,7 +151,7 @@ function createCards() {
       "Грантовое проектирование",
       "Модуль 2",
       "1 час 20 минут",
-      "Изучить курс"
+      "Изучить модуль"
     ),
     new Card(
       3,
@@ -159,7 +160,7 @@ function createCards() {
       "Технологическое предпринимательство",
       "Модуль 3",
       "2 часа 15 минут",
-      "Изучить курс"
+      "Изучить модуль"
     ),
     new Card(
       4,
@@ -168,7 +169,7 @@ function createCards() {
       "Массовое предпринимательство",
       "Модуль 4",
       "43 минуты",
-      "Изучить курс"
+      "Изучить модуль"
     ),
     new Card(
       5,
@@ -177,7 +178,7 @@ function createCards() {
       "Креативные индустрии",
       "Модуль 5",
       "37 минут",
-      "Изучить курс"
+      "Изучить модуль"
     ),
     new Card(
       6,
@@ -186,14 +187,32 @@ function createCards() {
       "Социальное предпринимательство",
       "Модуль 6",
       "2 часа 7 минут",
-      "Изучить курс"
+      "Изучить модуль"
     ),
   ];
 
   return cards;
 }
 
-function createTopicList(courseId: number) {
+const shuffle = (array: any) => {
+  let currentIndex = array.length,
+    randomIndex;
+  while (currentIndex != 0) {
+    randomIndex = Math.floor(Math.random() * currentIndex);
+    currentIndex--;
+    [array[currentIndex], array[randomIndex]] = [
+      array[randomIndex],
+      array[currentIndex],
+    ];
+  }
+  return array;
+};
+
+function getTopicList(courseId: number) {
+  return createTopicList().get(courseId);
+}
+
+function createTopicList() {
   const fakeTopicList = new Map();
 
   fakeTopicList.set(1, [
@@ -284,6 +303,56 @@ function createTopicList(courseId: number) {
     },
     {
       id: 18,
+      state: "default",
+      title: "одиннадцать 1",
+    },
+    {
+      id: 19,
+      state: "default",
+      title: "1",
+    },
+    {
+      id: 20,
+      state: "default",
+      title: "11",
+    },
+    {
+      id: 21,
+      state: "default",
+      title: "111",
+    },
+    {
+      id: 22,
+      state: "default",
+      title: "1e4 1",
+    },
+    {
+      id: 23,
+      state: "default",
+      title: "1e5 1",
+    },
+    {
+      id: 24,
+      state: "default",
+      title: "1е6 1",
+    },
+    {
+      id: 25,
+      state: "default",
+      title: "1e7 1",
+    },
+    {
+      id: 26,
+      state: "default",
+      title: "1e8 1",
+    },
+    {
+      id: 27,
+      state: "default",
+      title: "1e9 1",
+    },
+    {
+      id: 28,
       state: "test",
       title: "Тестирование 1",
     },
@@ -555,7 +624,7 @@ function createTopicList(courseId: number) {
     },
   ]);
 
-  return fakeTopicList.get(courseId);
+  return fakeTopicList;
 }
 
 export {
@@ -567,7 +636,7 @@ export {
   deepClone,
   getImageUrl,
   createCards,
-  createTopicList,
+  getTopicList,
+  removeObjectProperty,
+  shuffle,
 };
-
-export { removeObjectProperty };
