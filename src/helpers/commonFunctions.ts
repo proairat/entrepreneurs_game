@@ -1,5 +1,8 @@
 // import { computed } from "vue";
 
+import { number } from "yup";
+import type { Tfns } from "@/types/types";
+
 /**
  * Функция для удаления свойства из объекта
  *
@@ -89,8 +92,8 @@ function deepClone(value: any): any {
 /**
  * Функция для получения пути к изображению по названию изображения
  *
- * @name {string} prop - название файла с изображением
- * @extenstion {string} prop - расширение файла
+ * @param {string} name - название файла с изображением
+ * @param {string} extension - расширение файла
  * @returns {string | undefined} путь к файлу изображения
  *
  * getImageUrl('academic-cap')
@@ -105,93 +108,113 @@ async function getImageUrl(name: string, extension: string = "svg") {
   }
 }
 
-function createCards() {
-  class Card {
-    id: number;
-    src: string;
-    alt: string;
-    header: string;
-    title: string;
-    duration: string;
-    footer: string;
+/**
+ * const square = (x) => x * x;
+ * const times2 = (x) => x * 2;
+ * const sum = (a, b) => a + b;
+ *
+ * Композиция функций
+ *
+ * @param {Tfns<number>} fns - array of functions
+ *
+ * @returns {number | number[]} active item
+ *
+ * compose(square, times2)(2) === square(times2(2)));
+ * compose(square, times2, sum)(3, 4) === square(times2(sum(3, 4))));
+ */
 
-    constructor(
-      id: number,
-      src: string,
-      alt: string,
-      header: string,
-      title: string,
-      duration: string,
-      footer: string
-    ) {
-      this.id = id;
-      this.src = src;
-      this.alt = alt;
-      this.header = header;
-      this.title = title;
-      this.duration = duration;
-      this.footer = footer;
-    }
-  }
+function compose(...fns: Tfns<number>) {
+  return (...params: Array<number>) => {
+    return fns.reduceRight((parameters: Array<number> | number, current) => {
+      return current.apply(
+        null,
+        Array.isArray(parameters) ? parameters : [parameters]
+      );
+    }, params);
+  };
+}
 
-  const cards = [
-    new Card(
-      1,
-      "https://www.spletnik.ru/img/__post/5d/5dc18cc037668240ad73b448eb464516_297.jpg",
-      "Модуль 1",
-      "Основы предпринимательства",
-      "Модуль 1",
-      "2 часа",
-      "Изучить модуль"
-    ),
-    new Card(
-      2,
-      "https://www.spletnik.ru/img/__post/5d/5dc18cc037668240ad73b448eb464516_297.jpg",
-      "Модуль 2",
-      "Грантовое проектирование",
-      "Модуль 2",
-      "1 час 20 минут",
-      "Изучить модуль"
-    ),
-    new Card(
-      3,
-      "https://www.spletnik.ru/img/__post/5d/5dc18cc037668240ad73b448eb464516_297.jpg",
-      "Модуль 3",
-      "Технологическое предпринимательство",
-      "Модуль 3",
-      "2 часа 15 минут",
-      "Изучить модуль"
-    ),
-    new Card(
-      4,
-      "https://www.spletnik.ru/img/__post/5d/5dc18cc037668240ad73b448eb464516_297.jpg",
-      "Модуль 4",
-      "Массовое предпринимательство",
-      "Модуль 4",
-      "43 минуты",
-      "Изучить модуль"
-    ),
-    new Card(
-      5,
-      "https://www.spletnik.ru/img/__post/5d/5dc18cc037668240ad73b448eb464516_297.jpg",
-      "Модуль 5",
-      "Креативные индустрии",
-      "Модуль 5",
-      "37 минут",
-      "Изучить модуль"
-    ),
-    new Card(
-      6,
-      "https://www.spletnik.ru/img/__post/5d/5dc18cc037668240ad73b448eb464516_297.jpg",
-      "Модуль 6",
-      "Социальное предпринимательство",
-      "Модуль 6",
-      "2 часа 7 минут",
-      "Изучить модуль"
-    ),
-  ];
+function getListOfCards() {
+  const fakeCardsList = [];
 
-  return cards;
+  fakeCardsList.push({
+    id: 1,
+    src: "https://www.spletnik.ru/img/__post/5d/5dc18cc037668240ad73b448eb464516_297.jpg",
+    alt: "Модуль 1",
+    header: "Основы предпринимательства",
+    title: "Модуль 1",
+    duration: "2 часа",
+    footer: "Изучить модуль",
+    state: "active",
+  });
+
+  fakeCardsList.push({
+    id: 2,
+    src: "https://www.spletnik.ru/img/__post/5d/5dc18cc037668240ad73b448eb464516_297.jpg",
+    alt: "Модуль 2",
+    header: "Грантовое проектирование",
+    title: "Модуль 2",
+    duration: "1 час 20 минут",
+    footer: "Изучить модуль",
+    state: "default",
+  });
+
+  fakeCardsList.push({
+    id: 3,
+    src: "https://www.spletnik.ru/img/__post/5d/5dc18cc037668240ad73b448eb464516_297.jpg",
+    alt: "Модуль 3",
+    header: "Технологическое предпринимательство",
+    title: "Модуль 3",
+    duration: "2 часа 15 минут",
+    footer: "Изучить модуль",
+    state: "default",
+  });
+
+  fakeCardsList.push({
+    id: 4,
+    src: "https://www.spletnik.ru/img/__post/5d/5dc18cc037668240ad73b448eb464516_297.jpg",
+    alt: "Модуль 4",
+    header: "Массовое предпринимательство",
+    title: "Модуль 4",
+    duration: "43 минуты",
+    footer: "Изучить модуль",
+    state: "default",
+  });
+
+  fakeCardsList.push({
+    id: 5,
+    src: "https://www.spletnik.ru/img/__post/5d/5dc18cc037668240ad73b448eb464516_297.jpg",
+    alt: "Модуль 5",
+    header: "Креативные индустрии",
+    title: "Модуль 5",
+    duration: "37 минут",
+    footer: "Изучить модуль",
+    state: "default",
+  });
+
+  fakeCardsList.push({
+    id: 6,
+    src: "https://www.spletnik.ru/img/__post/5d/5dc18cc037668240ad73b448eb464516_297.jpg",
+    alt: "Модуль 6",
+    header: "Социальное предпринимательство",
+    title: "Модуль 6",
+    duration: "2 часа 7 минут",
+    footer: "Изучить модуль",
+    state: "default",
+  });
+
+  fakeCardsList.push({
+    id: 7,
+    src: "https://www.spletnik.ru/img/__post/5d/5dc18cc037668240ad73b448eb464516_297.jpg",
+    alt: "Модуль 7",
+    header: "Итоговое тестирование",
+    title: "Модуль 7",
+    duration: "30 минут",
+    footer: "Изучить модуль",
+    state: "default",
+  });
+
+  return fakeCardsList;
 }
 
 const shuffle = (array: any) => {
@@ -208,11 +231,11 @@ const shuffle = (array: any) => {
   return array;
 };
 
-function getTopicList(courseId: number) {
-  return createTopicList().get(courseId);
+function getTopicsByCourseId(courseId: number) {
+  return getListOfTopics().get(courseId);
 }
 
-function createTopicList() {
+function getListOfTopics() {
   const fakeTopicList = new Map();
 
   fakeTopicList.set(1, [
@@ -635,8 +658,9 @@ export {
   // getValueFromStore,
   deepClone,
   getImageUrl,
-  createCards,
-  getTopicList,
+  getListOfCards,
+  getTopicsByCourseId,
   removeObjectProperty,
   shuffle,
+  compose,
 };
