@@ -10,10 +10,10 @@
 
 <script setup lang="ts">
 import { reactive, ref } from "vue";
-import { createCards } from "@/helpers/commonFunctions";
+import { getListOfCards } from "@/helpers/commonFunctions";
 
 const search = ref("");
-const cards = reactive(createCards());
+const cards = reactive(getListOfCards());
 
 console.log("1 cards", cards);
 console.log("cards[1]", cards[1]);

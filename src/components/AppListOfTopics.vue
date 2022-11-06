@@ -5,9 +5,9 @@
 </template>
 
 <script setup lang="ts">
-import { ref } from "vue";
-import { getTopicList } from "@/helpers/commonFunctions";
-import { TopicItemState } from "@/types/enums/topic-item-state";
+import { reactive } from "vue";
+import { getTopicsByCourseId } from "@/helpers/commonFunctions";
+import { TopicState } from "@/types/enums";
 import { useCoursesStore } from "@/stores";
 
 const props = defineProps<{
@@ -15,11 +15,11 @@ const props = defineProps<{
 }>();
 
 const coursesStore = useCoursesStore();
-const topics = ref(getTopicList(props.courseId));
+const topics = reactive(getTopicsByCourseId(props.courseId));
+console.log("Oupics topics", topics);
 const { setActiveTopic } = coursesStore;
-const activeTopic = topics.value.find(
-  (item: { state: TopicItemState }): boolean =>
-    item.state === TopicItemState.Active
+const activeTopic = topics.find(
+  (item: { state: TopicState }) => item.state === TopicState.Active
 );
 
 setActiveTopic(activeTopic);

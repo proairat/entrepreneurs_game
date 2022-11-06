@@ -1,7 +1,10 @@
 import { defineStore } from "pinia";
 import { computed, ref } from "vue";
-import type { ITopic } from "@/types/interfaces";
-import { getTopicList } from "@/helpers/commonFunctions";
+import type { ITheme } from "@/types/interfaces";
+// import { getTopicsByCourseId, compose } from "@/helpers/commonFunctions";
+import type { IEduElementCourses, IEduElementThemes } from "@/types/interfaces";
+
+import { Creator, CoursesCreator, ThemesCreator } from "@/classes";
 
 export const useCoursesStore = defineStore("courses", () => {
   const courseHeader = ref(
@@ -14,23 +17,42 @@ export const useCoursesStore = defineStore("courses", () => {
       [6, "Социальное предпринимательство"],
     ])
   );
-  const activeTopic = ref<ITopic>();
+  const activeTopic = ref<ITheme>();
 
   const getCourseHeader = computed(() => courseHeader.value);
   const getActiveTopic = computed(() => activeTopic.value);
 
-  function setActiveTopic(topic: ITopic) {
-    activeTopic.value = topic;
+  /*
+  const square = (x: number) => x * x;
+  const times2 = (x: number) => x * 2;
+  const sum = () => 6;
+
+  const getActiveCourse = () => {};
+  const getActiveTheme = () => {};
+
+  console.log("Согреть", compose(square, times2, sum)());
+  */
+
+  function getEduElement(creator: Creator) {
+    return creator.getEduElement();
   }
 
-  /**
-   * Функция для получения значений из базы данных.
-   * На данный момент, используется модель структуры Map
-   * с последующей заменой на работу с базой данных.
-   * @returns
-   */
-  function getTopicList() {
-    return;
+  const eduElementCourses = getEduElement(
+    new CoursesCreator()
+  ) as IEduElementCourses;
+
+  console.log("client, ура!", eduElementCourses.getList());
+  console.log("client, ура! getActiveElem", eduElementCourses.getActiveElem());
+
+  const eduElementThemes = getEduElement(
+    new ThemesCreator()
+  ) as IEduElementThemes;
+
+  console.log("client, ура!", eduElementThemes.getList());
+  console.log("client, ура! getActiveElem", eduElementThemes.getActiveElem(3));
+
+  function setActiveTopic(topic: ITheme) {
+    activeTopic.value = topic;
   }
 
   return { getCourseHeader, getActiveTopic, setActiveTopic };

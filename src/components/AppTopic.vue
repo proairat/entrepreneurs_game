@@ -16,9 +16,9 @@
 
 <script setup lang="ts">
 import { computed, h, resolveComponent } from "vue";
-import { TopicItemState } from "@/types/enums/topic-item-state";
+import { TopicState } from "@/types/enums";
 
-// the existing interface ITopic is not used due to limitations with defineProps
+// the existing interface ITheme is not used due to limitations with defineProps
 const props = defineProps<{
   id: number;
   state: string;
@@ -27,20 +27,20 @@ const props = defineProps<{
 
 // due to the fact that backtics does not work correctly, let's leave it like that
 const stateClasses = computed(() => ({
-  "topic-item__state-icon_active": props.state === TopicItemState.Active,
-  "topic-item__state-icon_default": props.state === TopicItemState.Default,
-  "topic-item__state-icon_test": props.state === TopicItemState.Test,
+  "topic-item__state-icon_active": props.state === TopicState.Active,
+  "topic-item__state-icon_default": props.state === TopicState.Default,
+  "topic-item__state-icon_test": props.state === TopicState.Test,
 }));
 
 /*
 const obj = {
-  [TopicItemState.Active]:'topic',
-  [TopicItemState.Default]:'topic',
-  [TopicItemState.Test]:'test'
+  [TopicState.Active]:'topic',
+  [TopicState.Default]:'topic',
+  [TopicState.Test]:'test'
 }
 */
 
-console.log("+++ props", props);
+// console.log("+++ props", props);
 
 function render() {
   return h(
