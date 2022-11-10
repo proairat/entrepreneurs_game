@@ -10,11 +10,11 @@
       <div class="main-part">
         <div class="left-side">
           <AppProgress />
-          <AppListOfTopics :courseId="Number(route.params.id)" />
+          <AppListOfThemes :courseId="Number(route.params.id)" />
         </div>
         <div class="right-side">
           <AppVideo />
-          <AppTheme> {{ getActiveTopic?.title }} </AppTheme>
+          <AppThemeHeader><!--{{ getActiveTheme?.title }} --></AppThemeHeader>
           <el-tabs type="border-card">
             <el-tab-pane label="Описание темы">
               <AppTabs>
@@ -55,11 +55,11 @@ import { reactive } from "vue";
 
 const route = useRoute();
 const coursesStore = useCoursesStore();
-const { getCourseHeader, getActiveTopic } = storeToRefs(coursesStore);
+const { getCourseHeader, getActiveTheme } = storeToRefs(coursesStore);
 
 const backTo = reactive({
   path: `/courses`,
-  name: "AppCourses",
+  name: "AppModules",
 });
 </script>
 

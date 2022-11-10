@@ -22,7 +22,7 @@
               class="flex items-center justify-center h-[inherit] order-2"
               :to="{
                 path: `/courses`,
-                name: 'AppCourses',
+                name: 'AppModules',
               }"
               ><div class="flex px-3">
                 <img class="h-11 w-[105px]" :src="logo" alt="Логотип" />

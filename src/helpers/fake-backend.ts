@@ -134,10 +134,6 @@ function fakeBackend() {
       }
 
       function basicDetails(user) {
-        /* console.log("fake-backend.js -> basicDetails, user", user);
-        const { id, login, firstName, lastName } = user;
-        return { id, login, firstName, lastName };
-        */
         return removeObjectProperty("password")(user);
       }
 
