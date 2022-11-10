@@ -1,3 +1,5 @@
+import type { TThemesList } from "../types";
+
 interface INavigation {
   name: string;
   to: string;
@@ -9,12 +11,14 @@ interface INavigation {
 
 interface ITheme {
   id: number;
-  state: string;
+  type: "topic" | "test";
+  state: "active" | "default";
   title: string;
 }
 
 interface ICourse {
   id: number;
+  type: "module";
   src: string;
   alt: string;
   header: string;
@@ -26,7 +30,7 @@ interface ICourse {
 
 interface IEduElementCourses {
   createElem(): void;
-  getList(): void;
+  getList(): ICourse[] | TThemesList<number, ITheme> | undefined;
   deleteElem(): void;
   updateElem(): void;
   getElem(): void;
@@ -34,7 +38,7 @@ interface IEduElementCourses {
 }
 
 interface IEduElementThemes extends IEduElementCourses {
-  // getThemesByCourseId(courseId: number):  Array<ITheme> | undefined;
+  getThemesByCourseId(courseId: number): Array<ITheme> | undefined;
 }
 
 export type {

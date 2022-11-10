@@ -1,8 +1,11 @@
 <template>
-  <li class="cardItem">
+  <li class="module-item">
     <img class="poster" :src="props.src" :alt="props.alt" />
     <div class="header">{{ props.header }}</div>
-    <div class="title">{{ props.title }}</div>
+    <div class="title">
+      <div class="module-item__state-icon" :class="stateIcon"></div>
+      <div :class="stateTitle">{{ props.title }}</div>
+    </div>
     <div class="duration">Длительность: {{ props.duration }}</div>
     <router-link
       class="footer"
@@ -17,14 +20,21 @@
 </template>
 
 <script setup lang="ts">
+import { EntityState, EntityType } from "@/types/enums";
+import { computed } from "vue";
+/**
+ * Due to the limitations of defineProps in TS, no "ICourse" interface is used
+ * */
 const props = defineProps<{
   id: number;
+  type: "module";
   src: string;
   alt: string;
   header: string;
   title: string;
   duration: string;
   footer: string;
+  state: string;
 }>();
 
 /*
@@ -33,10 +43,25 @@ defineEmits<{(e: 'subtract', id: number): void
   (e: 'remove', id: number): void
 }>();
 */
+
+// due to the fact that backtics does not work correctly, let's leave it like that
+const stateIcon = computed(() => ({
+  "module-item__state-icon_active":
+    props.type === EntityType.Module && props.state === EntityState.Active,
+  "module-item__state-icon_default":
+    props.type === EntityType.Module && props.state === EntityState.Default,
+}));
+
+const stateTitle = computed(() => ({
+  "module-item__state-title_active":
+    props.type === EntityType.Module && props.state === EntityState.Active,
+  "module-item__state-title_default":
+    props.type === EntityType.Module && props.state === EntityState.Default,
+}));
 </script>
 
 <style scoped lang="scss">
-.cardItem {
+.module-item {
   display: grid;
   grid-template-rows: 1fr 0.1fr 0.1fr 0.1fr 0.1fr;
   grid-template-areas:
@@ -67,11 +92,11 @@ defineEmits<{(e: 'subtract', id: number): void
 
   & > .title {
     grid-area: title;
+    display: flex;
+    align-items: center;
     font-size: 1rem;
     line-height: 1.5rem;
     padding: 1rem 1rem 0 1rem;
-    color: $gray;
-    font-weight: $font-weight-bold;
   }
 
   & > .duration {
@@ -93,6 +118,21 @@ defineEmits<{(e: 'subtract', id: number): void
     &:hover {
       background-color: $sun-20;
     }
+  }
+}
+
+.module-item__state-icon {
+  @include stateIcon($green-40, $gray-40) {
+    margin-right: 0.5rem;
+  }
+}
+
+.module-item__state-title {
+  &_active {
+    color: $green-60;
+  }
+  &_default {
+    color: $gray-90;
   }
 }
 </style>

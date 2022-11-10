@@ -22,7 +22,6 @@ function request(method) {
 }
 
 // helper functions
-
 function authHeader(url) {
   // return auth header with jwt if user is logged in and request is to the api url
   const { user } = useAuthStore();
@@ -40,12 +39,6 @@ async function handleResponse(response) {
     ?.get("content-type")
     ?.includes("application/json");
   const data = isJson ? await response.json() : null;
-
-  console.log("fetch-wrapper.js -> data, data = ", data);
-  console.log(
-    "fetch-wrapper.js -> handleResponse(response), response = ",
-    response
-  );
 
   // check for error response
   if (!response.ok) {

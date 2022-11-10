@@ -1,13 +1,13 @@
-enum CourseState {
+enum EntityState {
   Active = "active",
   Default = "default",
   Close = "close",
 }
 
-enum TopicState {
-  Active = "active",
-  Default = "default",
+enum EntityType {
+  Topic = "topic",
   Test = "test",
+  Module = "module",
 }
 
-export { CourseState, TopicState };
+export { EntityState, EntityType };

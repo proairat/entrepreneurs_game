@@ -2,5 +2,5 @@
   <AppTitleLine>
     <AppTitle> Разделы курса </AppTitle>
   </AppTitleLine>
-  <AppListOfCards />
+  <AppListOfModules />
 </template>
