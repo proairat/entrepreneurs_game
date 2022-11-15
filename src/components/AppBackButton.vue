@@ -20,8 +20,6 @@ const props = defineProps<{
   path: string;
   name: string;
 }>();
-
-console.log("AppBackButton component, props", props);
 </script>
 
 <style scoped lang="scss">

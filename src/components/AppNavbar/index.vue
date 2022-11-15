@@ -21,8 +21,8 @@
             <router-link
               class="flex items-center justify-center h-[inherit] order-2"
               :to="{
-                path: `/courses`,
-                name: 'AppModules',
+                path: `/modules`,
+                name: 'ViewModules',
               }"
               ><div class="flex px-3">
                 <img class="h-11 w-[105px]" :src="logo" alt="Логотип" />

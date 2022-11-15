@@ -7,27 +7,21 @@
       <div :class="stateTitle">{{ props.title }}</div>
     </div>
     <div class="duration">Длительность: {{ props.duration }}</div>
-    <router-link
-      class="footer"
-      :to="{
-        path: `/courses`,
-        name: 'AppCourse',
-        params: { id: props.id },
-      }"
-      >{{ props.footer }}</router-link
-    >
+    <AppRouterLink />
   </li>
 </template>
 
 <script setup lang="ts">
 import { EntityState, EntityType } from "@/types/enums";
-import { computed } from "vue";
+import { computed, h, resolveComponent } from "vue";
+import { useCoursesStore } from "@/stores";
+
 /**
  * Due to the limitations of defineProps in TS, no "ICourse" interface is used
  * */
 const props = defineProps<{
   id: number;
-  type: "module";
+  type: "modules";
   src: string;
   alt: string;
   header: string;
@@ -37,27 +31,55 @@ const props = defineProps<{
   state: string;
 }>();
 
-/*
-defineEmits<{(e: 'subtract', id: number): void
-  (e: 'add', id: number): void
-  (e: 'remove', id: number): void
+const emits = defineEmits<{
+  (e: "changeActiveItem", moduleId: number): void;
 }>();
-*/
 
-// due to the fact that backtics does not work correctly, let's leave it like that
+const coursesStore = useCoursesStore();
+const { getActiveTheme } = coursesStore;
+
+function getPath(courseId: number) {
+  const activeElem = getActiveTheme(courseId);
+  return `/modules/${courseId}/${activeElem?.type}/${activeElem?.id}`;
+}
+
+function getParams(courseId: number) {
+  const activeElem = getActiveTheme(courseId);
+  return { courseId, themeType: activeElem?.type, themeId: activeElem?.id };
+}
+
+// Due to the fact that backtics does not work correctly, let's leave it like that
 const stateIcon = computed(() => ({
   "module-item__state-icon_active":
-    props.type === EntityType.Module && props.state === EntityState.Active,
+    props.type === EntityType.Modules && props.state === EntityState.Active,
   "module-item__state-icon_default":
-    props.type === EntityType.Module && props.state === EntityState.Default,
+    props.type === EntityType.Modules && props.state === EntityState.Default,
 }));
 
 const stateTitle = computed(() => ({
   "module-item__state-title_active":
-    props.type === EntityType.Module && props.state === EntityState.Active,
+    props.type === EntityType.Modules && props.state === EntityState.Active,
   "module-item__state-title_default":
-    props.type === EntityType.Module && props.state === EntityState.Default,
+    props.type === EntityType.Modules && props.state === EntityState.Default,
 }));
+
+function AppRouterLink() {
+  return h(
+    resolveComponent("router-link"),
+    {
+      onClick() {
+        emits("changeActiveItem", props.id);
+      },
+      class: "footer",
+      to: {
+        path: getPath(props.id),
+        name: "ViewModule",
+        params: getParams(props.id),
+      },
+    },
+    () => props.footer
+  );
+}
 </script>
 
 <style scoped lang="scss">

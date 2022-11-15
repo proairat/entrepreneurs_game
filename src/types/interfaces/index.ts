@@ -11,14 +11,14 @@ interface INavigation {
 
 interface ITheme {
   id: number;
-  type: "topic" | "test";
+  type: "topics" | "tests";
   state: "active" | "default";
   title: string;
 }
 
 interface ICourse {
   id: number;
-  type: "module";
+  type: "modules";
   src: string;
   alt: string;
   header: string;
@@ -29,11 +29,14 @@ interface ICourse {
 }
 
 interface IEduElementCourses {
-  createElem(): void;
+  createList(): TThemesList<number, ITheme> | ICourse[];
+  addToList(): void;
   getList(): ICourse[] | TThemesList<number, ITheme> | undefined;
-  deleteElem(): void;
-  updateElem(): void;
-  getElem(): void;
+  updateActiveElem(
+    moduleId: number,
+    elems: ICourse[] | ITheme[],
+    themeId?: number
+  ): void;
   getActiveElem(courseId?: number): ITheme | ICourse | undefined;
 }
 
