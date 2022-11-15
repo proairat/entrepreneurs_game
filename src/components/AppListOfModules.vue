@@ -6,6 +6,7 @@
           v-for="(module, index) in modules"
           :key="index"
           v-bind="module"
+          @change-active-item="changeActiveItemHandler"
         />
       </ul>
     </div>
@@ -14,18 +15,25 @@
 
 <script setup lang="ts">
 import { ref } from "vue";
-import { storeToRefs } from "pinia";
 import { useCoursesStore } from "@/stores";
 import type { ICourse } from "@/types/interfaces";
 
 const coursesStore = useCoursesStore();
-const { getModules } = coursesStore;
-const search = ref("");
+const { getModulesList, updateActiveModule } = coursesStore;
 const modules = ref<ICourse[]>([]);
-const getModule = getModules();
+const list = getModulesList();
+// const search = ref("");
 
-if (Array.isArray(getModule)) {
-  modules.value = getModule;
+if (Array.isArray(list)) {
+  modules.value = list;
+}
+
+/**
+ * Update active module in Pinia
+ * @param {number} moduleId - module identifier
+ */
+function changeActiveItemHandler(moduleId: number) {
+  updateActiveModule(moduleId, modules.value);
 }
 
 // const filteredList = computed(() => FuzzySearch(search.value, modules, "title"));

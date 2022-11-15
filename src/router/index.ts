@@ -2,7 +2,7 @@ import { createRouter, createWebHistory } from "vue-router";
 import { useAuthStore, useAlertStore } from "@/stores";
 import accountRoutes from "./account.routes";
 import usersRoutes from "./users.routes";
-import coursesRoutes from "./courses.routes";
+import coursesRoutes from "./modules.routes";
 
 export const router = createRouter({
   history: createWebHistory(import.meta.env.BASE_URL),
@@ -20,7 +20,7 @@ export const router = createRouter({
     { ...usersRoutes },
     { ...coursesRoutes },
     // catch all redirect to home page
-    { path: "/:pathMatch(.*)*", name: "redirectCourses", redirect: "/courses" },
+    { path: "/:pathMatch(.*)*", name: "redirectCourses", redirect: "/modules" },
   ],
 });
 

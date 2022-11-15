@@ -5,9 +5,9 @@ enum EntityState {
 }
 
 enum EntityType {
-  Topic = "topic",
-  Test = "test",
-  Module = "module",
+  Topics = "topics",
+  Tests = "tests",
+  Modules = "modules",
 }
 
 export { EntityState, EntityType };

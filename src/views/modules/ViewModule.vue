@@ -2,7 +2,7 @@
   <AppTitleLine>
     <AppBackButton v-bind="backTo"></AppBackButton>
     <AppTitle>
-      {{ getCourseHeader.get(Number(route.params.id)) }}
+      {{ getCourseHeader }}
     </AppTitle>
   </AppTitleLine>
   <div class="outer-part">
@@ -10,11 +10,11 @@
       <div class="main-part">
         <div class="left-side">
           <AppProgress />
-          <AppListOfThemes :courseId="Number(route.params.id)" />
+          <AppListOfThemes :courseId="getModuleId" />
         </div>
         <div class="right-side">
           <AppVideo />
-          <AppThemeHeader><!--{{ getActiveTheme?.title }} --></AppThemeHeader>
+          <AppThemeHeader>{{ getThemeTitle }}</AppThemeHeader>
           <el-tabs type="border-card">
             <el-tab-pane label="Описание темы">
               <AppTabs>
@@ -44,22 +44,32 @@
       </div>
     </div>
   </div>
-  <!--<router-view />-->
 </template>
 
 <script setup lang="ts">
-import { useRoute } from "vue-router";
-import { storeToRefs } from "pinia";
 import { useCoursesStore } from "@/stores";
-import { reactive } from "vue";
+import { computed, ref } from "vue";
+import { storeToRefs } from "pinia";
 
-const route = useRoute();
 const coursesStore = useCoursesStore();
-const { getCourseHeader, getActiveTheme } = storeToRefs(coursesStore);
+const { activeTheme, activeModule } = storeToRefs(coursesStore);
+const backTo = ref({
+  path: `/modules`,
+  name: "ViewModules",
+});
 
-const backTo = reactive({
-  path: `/courses`,
-  name: "AppModules",
+// const filteredList = computed(() => FuzzySearch(search.value, modules, "title"));
+
+const getCourseHeader = computed(() => {
+  return activeModule.value.header;
+});
+
+const getModuleId = computed(() => {
+  return activeModule.value.id;
+});
+
+const getThemeTitle = computed(() => {
+  return activeTheme.value.title;
 });
 </script>
 
