@@ -1,8 +1,7 @@
-import type { ICourse, IEduElementCourses } from "@/types/interfaces";
-import { BaseEduElement } from "./BaseEduElement";
+import type { IEduCommonElement, ICourse } from "@/types/interfaces";
 
-class Courses extends BaseEduElement implements IEduElementCourses {
-  list: Array<ICourse> | undefined;
+class Courses implements IEduCommonElement {
+  list: ICourse[] | undefined;
 
   public createList() {
     if (this.list === undefined) {
@@ -99,27 +98,6 @@ class Courses extends BaseEduElement implements IEduElementCourses {
   }
   public getList() {
     return this.list;
-  }
-  public updateActiveElem(moduleId: number, elems: ICourse[]): void {
-    if (Array.isArray(this.list)) {
-      const md = elems;
-      const activeElem = this.getActiveElem();
-
-      if (Array.isArray(md) && activeElem !== undefined) {
-        const activeModuleIndex = super.findIndex(md, activeElem.id);
-        const clickModuleIndex = super.findIndex(md, moduleId);
-
-        if (activeModuleIndex !== undefined && clickModuleIndex !== undefined) {
-          md[activeModuleIndex]["state"] = "default";
-          md[clickModuleIndex]["state"] = "active";
-        }
-      }
-    }
-  }
-  public getActiveElem(): ICourse | undefined {
-    if (Array.isArray(this.list)) {
-      return super.find(this.list);
-    }
   }
 }
 

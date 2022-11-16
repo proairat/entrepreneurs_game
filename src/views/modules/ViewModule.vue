@@ -10,7 +10,7 @@
       <div class="main-part">
         <div class="left-side">
           <AppProgress />
-          <AppListOfThemes :courseId="getModuleId" />
+          <AppListOfThemes :moduleId="getModuleId" />
         </div>
         <div class="right-side">
           <AppVideo />

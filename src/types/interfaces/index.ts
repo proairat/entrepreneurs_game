@@ -1,4 +1,4 @@
-import type { TThemesList } from "../types";
+import type { TElemsList } from "../types";
 
 interface INavigation {
   name: string;
@@ -7,13 +7,6 @@ interface INavigation {
   current: boolean;
   src: string;
   alt: string;
-}
-
-interface ITheme {
-  id: number;
-  type: "topics" | "tests";
-  state: "active" | "default";
-  title: string;
 }
 
 interface ICourse {
@@ -28,26 +21,60 @@ interface ICourse {
   state: string;
 }
 
-interface IEduElementCourses {
-  createList(): TThemesList<number, ITheme> | ICourse[];
-  addToList(): void;
-  getList(): ICourse[] | TThemesList<number, ITheme> | undefined;
-  updateActiveElem(
-    moduleId: number,
-    elems: ICourse[] | ITheme[],
-    themeId?: number
-  ): void;
-  getActiveElem(courseId?: number): ITheme | ICourse | undefined;
+interface ITheme {
+  id: number;
+  type: "topics" | "tests";
+  state: "active" | "default";
+  title: string;
 }
 
-interface IEduElementThemes extends IEduElementCourses {
-  getThemesByCourseId(courseId: number): Array<ITheme> | undefined;
+interface IVideo {
+  id: number;
+  type: "videos";
+  src: string;
+  videoType: string;
+  duration?: number;
+  state: string;
+  title: string;
+}
+
+interface IEduCommonElement {
+  createList():
+    | ICourse[]
+    | TElemsList<number, ITheme>
+    | TElemsList<number, IVideo>;
+  addToList(): void;
+  getList():
+    | ICourse[]
+    | TElemsList<number, ITheme>
+    | TElemsList<number, IVideo>
+    | undefined;
+}
+
+interface IEduElementCourses {
+  updateActiveElem(moduleId: number, elems: ICourse[]): void;
+  getActiveElem(): ICourse | undefined;
+}
+
+interface IEduElementThemes {
+  updateActiveElem(moduleId: number, elems: ITheme[], themeId: number): void;
+  getActiveElem(moduleId: number): ITheme | undefined;
+  getThemesByModuleId(moduleId: number): ITheme[] | undefined;
+}
+
+interface IEduElementVideos {
+  updateActiveElem(moduleId: number, elems: IVideo[], videoId: number): void;
+  getActiveElem(moduleId: number): IVideo | undefined;
+  getVideosByModuleId(moduleId: number): IVideo[] | undefined;
 }
 
 export type {
   INavigation,
   ITheme,
   ICourse,
+  IVideo,
+  IEduCommonElement,
   IEduElementCourses,
   IEduElementThemes,
+  IEduElementVideos,
 };

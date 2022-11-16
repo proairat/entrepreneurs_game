@@ -4,36 +4,64 @@ import type {
   ICourse,
   IEduElementCourses,
   IEduElementThemes,
+  IEduElementVideos,
   ITheme,
+  IVideo,
 } from "@/types/interfaces";
-import { Creator, CoursesCreator, ThemesCreator } from "@/classes";
+import {
+  Creator,
+  CoursesCreator,
+  ThemesCreator,
+  CreatorExtended,
+  CoursesCreatorExtended,
+  ThemesCreatorExtended,
+  VideosCreator,
+  VideosCreatorExtended,
+} from "@/classes";
+import type { TElemsList } from "@/types/types";
 
 function getEduElement(creator: Creator) {
-  return creator.getEduElement();
+  const eduElement = creator.getEduElement();
+  eduElement.createList();
+  eduElement.addToList();
+  return eduElement;
 }
 
-const eduElementCourses = getEduElement(
-  new CoursesCreator()
+function getEduElementExtended(creator: CreatorExtended) {
+  const eduElement = creator.getEduElement();
+  return eduElement;
+}
+
+const eduElementCourses = getEduElement(new CoursesCreator());
+const eduElementThemes = getEduElement(new ThemesCreator());
+const eduElementVideos = getEduElement(new VideosCreator());
+
+const eduElementCoursesExtended = getEduElementExtended(
+  new CoursesCreatorExtended(eduElementCourses.getList() as ICourse[])
 ) as IEduElementCourses;
 
-const eduElementThemes = getEduElement(
-  new ThemesCreator()
+const eduElementThemesExtended = getEduElementExtended(
+  new ThemesCreatorExtended(
+    eduElementThemes.getList() as TElemsList<number, ITheme>
+  )
 ) as IEduElementThemes;
 
-eduElementCourses.createList();
-eduElementCourses.addToList();
-
-eduElementThemes.createList();
-eduElementThemes.addToList();
+const eduElementVideosExtended = getEduElementExtended(
+  new VideosCreatorExtended(
+    eduElementVideos.getList() as TElemsList<number, IVideo>
+  )
+) as IEduElementVideos;
 
 export const useCoursesStore = defineStore("modules", () => {
   const activeModule = ref(getActiveModule());
   const activeTheme = ref(getActiveTheme(activeModule.value.id));
+  const activeVideo = ref(getActiveVideo(activeModule.value.id));
 
   function updateActiveModule(moduleId: number, elems: ICourse[]): void {
-    eduElementCourses.updateActiveElem(moduleId, elems);
+    eduElementCoursesExtended.updateActiveElem(moduleId, elems);
     activeModule.value = getActiveModule();
     activeTheme.value = getActiveTheme(moduleId);
+    activeVideo.value = getActiveVideo(moduleId);
   }
 
   function updateActiveTheme(
@@ -41,24 +69,52 @@ export const useCoursesStore = defineStore("modules", () => {
     themes: ITheme[],
     themeId: number
   ) {
-    eduElementThemes.updateActiveElem(moduleId, themes, themeId);
+    eduElementThemesExtended.updateActiveElem(moduleId, themes, themeId);
     activeTheme.value = getActiveTheme(moduleId);
   }
 
-  function getThemesByCourseId(moduleId: number) {
-    return eduElementThemes.getThemesByCourseId(moduleId);
+  function updateActiveVideo(
+    moduleId: number,
+    videos: IVideo[],
+    videoId: number
+  ) {
+    console.log(
+      "Call updateActiveVideo moduleId",
+      moduleId,
+      "videoId",
+      videoId
+    );
+    eduElementVideosExtended.updateActiveElem(moduleId, videos, videoId);
+    activeVideo.value = getActiveVideo(moduleId);
+    console.log("activeVideo???", activeVideo.value);
+  }
+
+  function getThemesByModuleId(moduleId: number) {
+    return eduElementThemesExtended.getThemesByModuleId(moduleId);
+  }
+
+  function getVideosByModuleId(moduleId: number) {
+    return eduElementVideosExtended.getVideosByModuleId(moduleId);
   }
 
   function getActiveModule() {
-    return eduElementCourses.getActiveElem() as ICourse;
+    return eduElementCoursesExtended.getActiveElem() as ICourse;
   }
 
   function getActiveTheme(moduleId: number) {
-    return eduElementThemes.getActiveElem(moduleId) as ITheme;
+    return eduElementThemesExtended.getActiveElem(moduleId) as ITheme;
   }
 
   function getModulesList() {
     return eduElementCourses.getList();
+  }
+
+  function getVideosList() {
+    return eduElementVideos.getList();
+  }
+
+  function getActiveVideo(moduleId: number) {
+    return eduElementVideosExtended.getActiveElem(moduleId) as IVideo;
   }
 
   /*
@@ -71,10 +127,14 @@ export const useCoursesStore = defineStore("modules", () => {
   return {
     activeModule,
     activeTheme,
+    activeVideo,
     getActiveTheme,
-    getThemesByCourseId,
+    getThemesByModuleId,
+    getVideosByModuleId,
     getModulesList,
+    getVideosList,
     updateActiveTheme,
     updateActiveModule,
+    updateActiveVideo,
   };
 });

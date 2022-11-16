@@ -19,7 +19,7 @@ const props = defineProps<{
 }>();
 
 const emits = defineEmits<{
-  (e: "changeActiveItem", themeId: number): void;
+  (e: "changeActiveItem", themeId: number, videoId: number): void;
 }>();
 
 // Due to the fact that backtics does not work correctly, let's leave it like that
@@ -50,7 +50,7 @@ function AppRouterLink() {
     resolveComponent("router-link"),
     {
       onClick() {
-        emits("changeActiveItem", props.id);
+        emits("changeActiveItem", props.id, props.id);
       },
       class: stateTitle.value,
       to: (() => {

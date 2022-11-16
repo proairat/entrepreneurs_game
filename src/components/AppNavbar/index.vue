@@ -133,12 +133,13 @@ function NavbarNavigation() {
 
 const navigation = reactive([
   {
-    name: "Бонусы",
+    name: "10",
     to: "login",
     componentName: "AppLogin",
     current: true,
-    src: await getImageUrl("star"),
-    alt: "Бонусы",
+    //src: await getImageUrl("star"),
+    src: await getImageUrl("starFilled"),
+    alt: "10 Бонусов",
   },
   {
     name: "Настройки",
