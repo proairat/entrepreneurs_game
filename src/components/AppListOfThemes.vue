@@ -12,27 +12,40 @@
 <script setup lang="ts">
 import { ref } from "vue";
 import { useCoursesStore } from "@/stores";
-import type { ITheme } from "@/types/interfaces";
+import type { ITheme, IVideo } from "@/types/interfaces";
 
 const props = defineProps<{
-  courseId: number;
+  moduleId: number;
 }>();
 
 const coursesStore = useCoursesStore();
-const { getThemesByCourseId, updateActiveTheme } = coursesStore;
+const {
+  getThemesByModuleId,
+  updateActiveTheme,
+  updateActiveVideo,
+  getVideosByModuleId,
+} = coursesStore;
 const themes = ref<ITheme[]>([]);
-const themesByCourseId = getThemesByCourseId(props.courseId);
+const themesByModuleId = getThemesByModuleId(props.moduleId);
 
-if (Array.isArray(themesByCourseId)) {
-  themes.value = themesByCourseId;
+const videos = ref<IVideo[]>([]);
+const videosByModuleId = getVideosByModuleId(props.moduleId);
+
+if (Array.isArray(themesByModuleId)) {
+  themes.value = themesByModuleId;
+}
+
+if (Array.isArray(videosByModuleId)) {
+  videos.value = videosByModuleId;
 }
 
 /**
  * Update active theme in Pinia
  * @param {number} themeId - theme identifier
  */
-function changeActiveItemHandler(themeId: number) {
-  updateActiveTheme(props.courseId, themes.value, themeId);
+function changeActiveItemHandler(themeId: number, videoId: number) {
+  updateActiveTheme(props.moduleId, themes.value, themeId);
+  updateActiveVideo(props.moduleId, videos.value, videoId);
 }
 </script>
 

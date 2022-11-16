@@ -1,8 +1,7 @@
-import type { IEduElementCourses, IEduElementThemes } from "@/types/interfaces";
+import type { IEduCommonElement } from "@/types/interfaces";
 
 abstract class Creator {
-  public abstract factoryMethod(): IEduElementCourses | IEduElementThemes;
-
+  public abstract factoryMethod(): IEduCommonElement;
   public getEduElement() {
     const eduElement = this.factoryMethod();
     return eduElement;

@@ -1,9 +1,8 @@
-import type { IEduElementThemes, ITheme } from "@/types/interfaces";
-import type { TThemesList } from "@/types/types";
-import { BaseEduElement } from "./BaseEduElement";
+import type { IEduCommonElement, ITheme } from "@/types/interfaces";
+import type { TElemsList } from "@/types/types";
 
-class Themes extends BaseEduElement implements IEduElementThemes {
-  list: TThemesList<number, ITheme> | undefined;
+class Themes implements IEduCommonElement {
+  list: TElemsList<number, ITheme> | undefined;
 
   public createList() {
     if (this.list === undefined) {
@@ -516,39 +515,6 @@ class Themes extends BaseEduElement implements IEduElementThemes {
   }
   public getList() {
     return this.list;
-  }
-  public updateActiveElem(
-    moduleId: number,
-    elems: ITheme[],
-    themeId: number
-  ): void {
-    if (this.list instanceof Map) {
-      const th = elems;
-      const activeElem = this.getActiveElem(moduleId);
-
-      if (Array.isArray(th) && activeElem !== undefined) {
-        const activeThemeIndex = super.findIndex(th, activeElem.id);
-        const clickThemeIndex = super.findIndex(th, themeId);
-
-        if (activeThemeIndex !== undefined && clickThemeIndex !== undefined) {
-          th[activeThemeIndex]["state"] = "default";
-          th[clickThemeIndex]["state"] = "active";
-        }
-      }
-    }
-  }
-  public getActiveElem(courseId: number): ITheme | undefined {
-    if (this.list instanceof Map) {
-      const list = this.getThemesByCourseId(courseId);
-      if (Array.isArray(list)) {
-        return super.find(list);
-      }
-    }
-  }
-  public getThemesByCourseId(courseId: number): Array<ITheme> | undefined {
-    if (this.list instanceof Map) {
-      return this.list.get(courseId);
-    }
   }
 }
 

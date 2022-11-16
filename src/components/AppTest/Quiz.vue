@@ -1,3 +1,6 @@
+<!--45 - 59 - 1 star-->
+<!--60 - 79 - 2 star-->
+<!--80 - 100 - 3 star-->
 <template>
   <Loader v-if="store.loading"></Loader>
   <div

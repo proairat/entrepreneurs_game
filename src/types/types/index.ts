@@ -1,5 +1,5 @@
 type Tfn<T> = (...params: Array<T>) => T;
 type Tfns<T> = Array<Tfn<T>>;
-type TThemesList<K, V> = Map<K, Array<V>>;
+type TElemsList<K, V> = Map<K, Array<V>>;
 
-export type { Tfns, TThemesList };
+export type { Tfns, TElemsList };

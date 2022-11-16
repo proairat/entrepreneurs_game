@@ -30,8 +30,8 @@
           Войти
         </el-button>
       </el-form-item>
-      <el-divider>Войти через веб-сервисы</el-divider>
-      <WebServicesIcons />
+      <!--<el-divider>Войти через веб-сервисы</el-divider>
+      <WebServicesIcons />-->
       <div class="dontHaveAnAccount">
         Нет аккаунта?
         <span class="registration"
@@ -95,10 +95,15 @@ const submitForm = async (formEl: FormInstance | undefined) => {
 $padding: 22px;
 $margin: 22px;
 
-.entryLoginAndPassword,
-.dontHaveAnAccount {
+.entryLoginAndPassword {
   color: $gray-80;
   padding: $padding;
+  text-align: center;
+  font-size: $text-size-h5;
+}
+.dontHaveAnAccount {
+  color: $gray-80;
+  padding: 0 $padding $padding $padding;
   text-align: center;
   font-size: $text-size-h5;
 }

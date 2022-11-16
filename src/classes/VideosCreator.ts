@@ -1,11 +1,11 @@
 import type { IEduCommonElement } from "@/types/interfaces";
 import { Creator } from "./Creator";
-import { Courses } from "./Courses";
+import { Videos } from "./Videos";
 
-class CoursesCreator extends Creator {
+class VideosCreator extends Creator {
   public factoryMethod(): IEduCommonElement {
-    return new Courses();
+    return new Videos();
   }
 }
 
-export { CoursesCreator };
+export { VideosCreator };

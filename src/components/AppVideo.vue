@@ -1,15 +1,21 @@
 <template>
   <div class="video">
-    <video controls="controls">
+    <video controls>
       <source
-        src="https://www.youtube.com/watch?v=S4pcP6eYnBE&list=PLsfiCXqrxftlugGQ-uo_QlMeJNMx5Kc4q&index=1"
-        type='video/ogg; codecs="theora, vorbis"'
+        :src="activeVideo?.src"
+        type='video/ogg; codecs=\"theora, vorbis\"'
       />
     </video>
   </div>
 </template>
 
-<script setup lang="ts"></script>
+<script setup lang="ts">
+import { useCoursesStore } from "@/stores";
+import { storeToRefs } from "pinia";
+
+const coursesStore = useCoursesStore();
+const { activeVideo, activeModule, activeTheme } = storeToRefs(coursesStore);
+</script>
 
 <style scoped lang="scss">
 .video {

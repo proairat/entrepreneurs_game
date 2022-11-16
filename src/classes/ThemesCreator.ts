@@ -1,9 +1,9 @@
-import type { IEduElementThemes } from "@/types/interfaces";
+import type { IEduCommonElement } from "@/types/interfaces";
 import { Creator } from "./Creator";
 import { Themes } from "./Themes";
 
 class ThemesCreator extends Creator {
-  public factoryMethod(): IEduElementThemes {
+  public factoryMethod(): IEduCommonElement {
     return new Themes();
   }
 }
