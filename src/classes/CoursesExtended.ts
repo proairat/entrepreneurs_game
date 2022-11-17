@@ -17,7 +17,7 @@ class CoursesExtended extends BaseEduElement implements IEduElementCourses {
         const activeModuleIndex = super.findIndex(md, activeElem.id);
         const clickModuleIndex = super.findIndex(md, moduleId);
 
-        if (activeModuleIndex !== undefined && clickModuleIndex !== undefined) {
+        if (activeModuleIndex !== -1 && clickModuleIndex !== -1) {
           md[activeModuleIndex]["state"] = "default";
           md[clickModuleIndex]["state"] = "active";
         }

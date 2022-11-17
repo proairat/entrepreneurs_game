@@ -22,7 +22,7 @@ class ThemesExtended extends BaseEduElement implements IEduElementThemes {
         const activeThemeIndex = super.findIndex(th, activeElem.id);
         const clickThemeIndex = super.findIndex(th, themeId);
 
-        if (activeThemeIndex !== undefined && clickThemeIndex !== undefined) {
+        if (activeThemeIndex !== -1 && clickThemeIndex !== -1) {
           th[activeThemeIndex]["state"] = "default";
           th[clickThemeIndex]["state"] = "active";
         }

@@ -9,7 +9,7 @@
     <div class="max-w-6xl mx-auto">
       <div class="main-part">
         <div class="left-side">
-          <AppProgress />
+          <AppProgress type="topics" />
           <AppListOfThemes :moduleId="getModuleId" />
         </div>
         <div class="right-side">
@@ -32,11 +32,13 @@
                 "Сириус" о местных налогах и сборах
               </AppTabs>
             </el-tab-pane>
-            <el-tab-pane label="Ключевые навыки">
+            <el-tab-pane label="Авторы темы">
               <AppTabs>
-                <div>Навык 1</div>
-                <div>Навык 2</div>
-                <div>Навык 3</div>
+                <div>Иванов И.И.</div>
+                <div>Калмыков К. К.</div>
+                <div>Бахча Б. Б.</div>
+                <div>Савушкин С.С.</div>
+                <div>Гагаладзе Г.Г.</div>
               </AppTabs>
             </el-tab-pane>
           </el-tabs>

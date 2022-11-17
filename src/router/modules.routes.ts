@@ -1,8 +1,10 @@
 import {
   ViewRenderModules,
   ViewModules,
-  ViewModule,
+  ViewModuleTopics,
+  ViewModuleTests,
   ViewRenderThemes,
+  ViewRenderTests,
 } from "@/views/modules";
 
 export default {
@@ -12,14 +14,26 @@ export default {
   children: [
     { path: "", name: "ViewModules", component: ViewModules },
     {
-      path: ":courseId/:themeType/:themeId",
+      path: ":moduleId/:themeType/:themeId",
       name: "ViewRenderThemes",
       component: ViewRenderThemes,
       children: [
         {
           path: "",
-          name: "ViewModule",
-          component: ViewModule,
+          name: "ViewModuleTopics",
+          component: ViewModuleTopics,
+        },
+      ],
+    },
+    {
+      path: ":moduleId/:themeType/:themeId",
+      name: "ViewRenderTests",
+      component: ViewRenderTests,
+      children: [
+        {
+          path: "",
+          name: "ViewModuleTests",
+          component: ViewModuleTests,
         },
       ],
     },

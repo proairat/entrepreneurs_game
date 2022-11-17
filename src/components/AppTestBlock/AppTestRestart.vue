@@ -1,14 +1,15 @@
 <template>
-  <div
-    class="text-gray-700 w/11-12 mx-auto flex flex-col items-center justify-center h-screen"
-  >
+  <div class="text-gray-700 flex flex-col items-center justify-center pt-6">
     <div class="pb-20 flex flex-col items-center">
-      <h1 class="mb-8 text-center text-lg font-medium">
-        У вас {{ store.score }} из {{ store.questionCount }} вопросов отвечены
-        верно
+      <h1 class="mb-4 text-center text-lg font-medium">
+        У вас {{getPercent()}} % верных ответов
       </h1>
+      <AppTestResult class="mb-4" :percent="getPercent()"/>
       <button
-        @click="store.restartQuiz()"
+        @click="
+          store.restartQuiz();
+          init();
+        "
         class="bg-gray-200 rounded-lg px-12 py-4 transition md:text-lg hover:bg-gray-300 transition"
       >
         <div class="flex items-center">
@@ -32,12 +33,18 @@
 </template>
 
 <script setup lang="ts">
-import { store } from "../../store";
-export default {
-  data() {
-    return {
-      store,
-    };
-  },
-};
+import { store } from "./store";
+import { useTestsStore } from "@/stores";
+import { storeToRefs } from "pinia";
+
+const testsStore = useTestsStore();
+const { progressValue } = storeToRefs(testsStore);
+
+function init() {
+  progressValue.value = 0;
+}
+
+function getPercent(){
+  return Math.ceil(store.score * 100 / store.questionCount);
+}
 </script>

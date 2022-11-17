@@ -1,15 +1,41 @@
 <template>
   <div class="progress-box">
-    <div class="progress-box__caption">Текущий прогресс</div>
+    <div class="progress-box__caption">{{ progressCaption }}</div>
     <el-progress
       class="progress-box__progress"
       :text-inside="true"
       :stroke-width="24"
-      :percentage="30"
+      :percentage="progressValue"
       status="success"
     />
   </div>
 </template>
+
+<script setup lang="ts">
+import type { IProgressCaption } from "@/types/interfaces";
+import { computed } from "vue";
+import { useTestsStore } from "@/stores";
+import { storeToRefs } from "pinia";
+
+const testsStore = useTestsStore();
+const { progressValue } = storeToRefs(testsStore);
+
+/**
+ * Due to the limitations of defineProps in TS, no interface is used
+ * */
+const props = defineProps<{
+  type: string;
+}>();
+
+const caption: IProgressCaption = {
+  topics: "Текущий прогресс темы",
+  tests: "Текущий прогресс теста",
+};
+
+const progressCaption = computed(() => {
+  return caption[props.type as keyof IProgressCaption];
+});
+</script>
 
 <style scoped lang="scss">
 .progress-box {

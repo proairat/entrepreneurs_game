@@ -68,6 +68,11 @@ interface IEduElementVideos {
   getVideosByModuleId(moduleId: number): IVideo[] | undefined;
 }
 
+interface IProgressCaption {
+  topics: string;
+  tests: string;
+}
+
 export type {
   INavigation,
   ITheme,
@@ -77,4 +82,5 @@ export type {
   IEduElementCourses,
   IEduElementThemes,
   IEduElementVideos,
+  IProgressCaption,
 };
