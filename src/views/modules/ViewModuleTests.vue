@@ -14,6 +14,7 @@
         </div>
         <div class="right-side">
           <AppThemeHeader>{{ getThemeTitle }}</AppThemeHeader>
+          <AppBlock />
         </div>
       </div>
     </div>
@@ -24,6 +25,7 @@
 import { useCoursesStore } from "@/stores";
 import { computed, ref } from "vue";
 import { storeToRefs } from "pinia";
+import AppBlock from "@/components/AppTestBlock/AppBlock.vue";
 
 const coursesStore = useCoursesStore();
 const { activeTheme, activeModule } = storeToRefs(coursesStore);

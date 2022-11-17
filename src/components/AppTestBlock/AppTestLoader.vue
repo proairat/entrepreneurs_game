@@ -13,10 +13,6 @@
   </div>
 </template>
 
-<script setup lang="ts">
-import { store } from "../../store";
-</script>
-
 <style scoped lang="scss">
 @keyframes rotating {
   from {
