@@ -4,7 +4,8 @@
       v-for="theme in themes"
       :key="theme.id"
       v-bind="theme"
-      @change-active-item="changeActiveItemHandler"
+      @change-active-theme="changeActiveThemeHandler"
+      @change-active-video="changeActiveVideoHandler"
     />
   </ul>
 </template>
@@ -43,8 +44,14 @@ if (Array.isArray(videosByModuleId)) {
  * Update active theme in Pinia
  * @param {number} themeId - theme identifier
  */
-function changeActiveItemHandler(themeId: number, videoId: number) {
+function changeActiveThemeHandler(themeId: number) {
   updateActiveTheme(props.moduleId, themes.value, themeId);
+}
+/**
+ * Update active video in Pinia
+ * @param {number} videoId - video identifier
+ */
+function changeActiveVideoHandler(videoId: number) {
   updateActiveVideo(props.moduleId, videos.value, videoId);
 }
 </script>

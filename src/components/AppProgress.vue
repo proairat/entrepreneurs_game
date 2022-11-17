@@ -1,6 +1,6 @@
 <template>
   <div class="progress-box">
-    <div class="progress-box__caption">Текущий прогресс</div>
+    <div class="progress-box__caption">{{ progressCaption }}</div>
     <el-progress
       class="progress-box__progress"
       :text-inside="true"
@@ -10,6 +10,27 @@
     />
   </div>
 </template>
+
+<script setup lang="ts">
+import type { IProgressCaption } from "@/types/interfaces";
+import { computed } from "vue";
+
+/**
+ * Due to the limitations of defineProps in TS, no interface is used
+ * */
+const props = defineProps<{
+  type: string;
+}>();
+
+const caption: IProgressCaption = {
+  topics: "Текущий прогресс темы",
+  tests: "Текущий прогресс теста",
+};
+
+const progressCaption = computed(() => {
+  return caption[props.type as keyof IProgressCaption];
+});
+</script>
 
 <style scoped lang="scss">
 .progress-box {

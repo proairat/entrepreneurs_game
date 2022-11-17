@@ -19,7 +19,8 @@ const props = defineProps<{
 }>();
 
 const emits = defineEmits<{
-  (e: "changeActiveItem", themeId: number, videoId: number): void;
+  (e: "changeActiveTheme", themeId: number): void;
+  (e: "changeActiveVideo", videoId: number): void;
 }>();
 
 // Due to the fact that backtics does not work correctly, let's leave it like that
@@ -50,21 +51,22 @@ function AppRouterLink() {
     resolveComponent("router-link"),
     {
       onClick() {
-        emits("changeActiveItem", props.id, props.id);
+        emits("changeActiveTheme", props.id);
+        emits("changeActiveVideo", props.id);
       },
       class: stateTitle.value,
       to: (() => {
         if (props.type === EntityType.Tests) {
           return {
             path: "",
-            name: "ViewModule",
-            params: { themeType: "test", themeId: props.id },
+            name: "ViewModuleTests",
+            params: { themeType: "tests", themeId: props.id },
           };
         }
         if (props.type === EntityType.Topics) {
           return {
             path: "",
-            name: "ViewModule",
+            name: "ViewModuleTopics",
             params: { themeType: "topics", themeId: props.id },
           };
         }

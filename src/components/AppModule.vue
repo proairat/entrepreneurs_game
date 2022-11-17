@@ -38,14 +38,26 @@ const emits = defineEmits<{
 const coursesStore = useCoursesStore();
 const { getActiveTheme } = coursesStore;
 
-function getPath(courseId: number) {
-  const activeElem = getActiveTheme(courseId);
-  return `/modules/${courseId}/${activeElem?.type}/${activeElem?.id}`;
+function getName(moduleId: number) {
+  const activeElem = getActiveTheme(moduleId);
+
+  if (activeElem.type === "topics") {
+    return "ViewModuleTopics";
+  }
+  if (activeElem.type === "tests") {
+    return "ViewModuleTests";
+  }
 }
 
-function getParams(courseId: number) {
-  const activeElem = getActiveTheme(courseId);
-  return { courseId, themeType: activeElem?.type, themeId: activeElem?.id };
+function getPath(moduleId: number) {
+  const activeElem = getActiveTheme(moduleId);
+  return `modules/${moduleId}/${activeElem.type}/${activeElem.id}`;
+}
+
+function getParams(moduleId: number) {
+  const activeElem = getActiveTheme(moduleId);
+
+  return { moduleId, themeType: activeElem.type, themeId: activeElem.id };
 }
 
 // Due to the fact that backtics does not work correctly, let's leave it like that
@@ -73,7 +85,7 @@ function AppRouterLink() {
       class: "footer",
       to: {
         path: getPath(props.id),
-        name: "ViewModule",
+        name: getName(props.id),
         params: getParams(props.id),
       },
     },

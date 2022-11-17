@@ -78,15 +78,8 @@ export const useCoursesStore = defineStore("modules", () => {
     videos: IVideo[],
     videoId: number
   ) {
-    console.log(
-      "Call updateActiveVideo moduleId",
-      moduleId,
-      "videoId",
-      videoId
-    );
     eduElementVideosExtended.updateActiveElem(moduleId, videos, videoId);
     activeVideo.value = getActiveVideo(moduleId);
-    console.log("activeVideo???", activeVideo.value);
   }
 
   function getThemesByModuleId(moduleId: number) {

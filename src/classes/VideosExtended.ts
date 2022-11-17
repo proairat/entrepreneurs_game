@@ -22,7 +22,7 @@ class VideosExtended extends BaseEduElement implements IEduElementVideos {
         const activeVideoIndex = super.findIndex(vid, activeElem.id);
         const clickVideoIndex = super.findIndex(vid, videoId);
 
-        if (activeVideoIndex !== undefined && clickVideoIndex !== undefined) {
+        if (activeVideoIndex !== -1 && clickVideoIndex !== -1) {
           vid[activeVideoIndex]["state"] = "default";
           vid[clickVideoIndex]["state"] = "active";
         }
