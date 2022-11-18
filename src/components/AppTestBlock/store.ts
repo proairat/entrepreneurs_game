@@ -176,9 +176,6 @@ export const store = reactive({
     this.currentQuestion += 1;
     this.showAnswer = false;
   },
-  /*getQuestionCount(){
-    this.questionCount
-  }*/
   startQuiz(payload) {
     this.options = payload;
     this.step = 1;

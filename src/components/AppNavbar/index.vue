@@ -73,6 +73,13 @@ import { XMarkIcon, Bars3Icon } from "@heroicons/vue/24/outline";
 import { ref, h, reactive, resolveComponent } from "vue";
 import { getImageUrl } from "@/helpers/commonFunctions";
 import type { INavigation } from "@/types/interfaces";
+import { useNavbarStore } from "@/stores";
+import { storeToRefs } from "pinia";
+
+const testsStore = useNavbarStore();
+const { starsSmth } = storeToRefs(testsStore);
+
+console.log("starsSmth navbar navbar", starsSmth.value);
 
 const props = defineProps<{
   logout: any;
@@ -133,13 +140,13 @@ function NavbarNavigation() {
 
 const navigation = reactive([
   {
-    name: "10",
+    name: ref(starsSmth),
     to: "login",
     componentName: "AppLogin",
     current: true,
-    //src: await getImageUrl("star"),
+    // src: await getImageUrl("star"),
     src: await getImageUrl("starFilled"),
-    alt: "10 Бонусов",
+    alt: ref(starsSmth),
   },
   {
     name: "Настройки",

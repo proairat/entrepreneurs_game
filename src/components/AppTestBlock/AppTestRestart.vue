@@ -2,9 +2,9 @@
   <div class="text-gray-700 flex flex-col items-center justify-center pt-6">
     <div class="pb-20 flex flex-col items-center">
       <h1 class="mb-4 text-center text-lg font-medium">
-        У вас {{getPercent()}} % верных ответов
+        У вас {{ getPercent() }} % верных ответов
       </h1>
-      <AppTestResult class="mb-4" :percent="getPercent()"/>
+      <AppTestResult class="mb-4" :percent="getPercent()" />
       <button
         @click="
           store.restartQuiz();
@@ -44,7 +44,7 @@ function init() {
   progressValue.value = 0;
 }
 
-function getPercent(){
-  return Math.ceil(store.score * 100 / store.questionCount);
+function getPercent() {
+  return Math.ceil((store.score * 100) / store.questionCount);
 }
 </script>
