@@ -1,6 +1,7 @@
+import { EEntityType } from "@/types/enums";
 import type { IEduCommonElement, ICourse } from "@/types/interfaces";
 
-class Courses implements IEduCommonElement {
+class Modules implements IEduCommonElement {
   list: ICourse[] | undefined;
 
   public createList() {
@@ -13,7 +14,7 @@ class Courses implements IEduCommonElement {
     if (Array.isArray(this.list) && this.list.length === 0) {
       this.list.push({
         id: 1,
-        type: "modules",
+        type: EEntityType.Modules,
         src: "https://www.spletnik.ru/img/__post/5d/5dc18cc037668240ad73b448eb464516_297.jpg",
         alt: "Модуль 1",
         header: "Основы предпринимательства",
@@ -25,7 +26,7 @@ class Courses implements IEduCommonElement {
 
       this.list.push({
         id: 2,
-        type: "modules",
+        type: EEntityType.Modules,
         src: "https://www.spletnik.ru/img/__post/5d/5dc18cc037668240ad73b448eb464516_297.jpg",
         alt: "Модуль 2",
         header: "Грантовое проектирование",
@@ -37,7 +38,7 @@ class Courses implements IEduCommonElement {
 
       this.list.push({
         id: 3,
-        type: "modules",
+        type: EEntityType.Modules,
         src: "https://www.spletnik.ru/img/__post/5d/5dc18cc037668240ad73b448eb464516_297.jpg",
         alt: "Модуль 3",
         header: "Технологическое предпринимательство",
@@ -49,7 +50,7 @@ class Courses implements IEduCommonElement {
 
       this.list.push({
         id: 4,
-        type: "modules",
+        type: EEntityType.Modules,
         src: "https://www.spletnik.ru/img/__post/5d/5dc18cc037668240ad73b448eb464516_297.jpg",
         alt: "Модуль 4",
         header: "Массовое предпринимательство",
@@ -61,7 +62,7 @@ class Courses implements IEduCommonElement {
 
       this.list.push({
         id: 5,
-        type: "modules",
+        type: EEntityType.Modules,
         src: "https://www.spletnik.ru/img/__post/5d/5dc18cc037668240ad73b448eb464516_297.jpg",
         alt: "Модуль 5",
         header: "Креативные индустрии",
@@ -73,7 +74,7 @@ class Courses implements IEduCommonElement {
 
       this.list.push({
         id: 6,
-        type: "modules",
+        type: EEntityType.Modules,
         src: "https://www.spletnik.ru/img/__post/5d/5dc18cc037668240ad73b448eb464516_297.jpg",
         alt: "Модуль 6",
         header: "Социальное предпринимательство",
@@ -85,7 +86,7 @@ class Courses implements IEduCommonElement {
 
       this.list.push({
         id: 7,
-        type: "modules",
+        type: EEntityType.Modules,
         src: "https://www.spletnik.ru/img/__post/5d/5dc18cc037668240ad73b448eb464516_297.jpg",
         alt: "Модуль 7",
         header: "Итоговое тестирование",
@@ -101,4 +102,4 @@ class Courses implements IEduCommonElement {
   }
 }
 
-export { Courses };
+export { Modules };

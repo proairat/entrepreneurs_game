@@ -1,17 +1,18 @@
+import type { EEntityState, EEntityType } from "../enums";
 import type { TElemsList } from "../types";
 
 interface INavigation {
+  id: number;
   name: string;
-  to: string;
-  componentName: string;
   current: boolean;
+  href: string;
   src: string;
   alt: string;
 }
 
 interface ICourse {
   id: number;
-  type: "modules";
+  type: EEntityType.Modules;
   src: string;
   alt: string;
   header: string;
@@ -23,18 +24,18 @@ interface ICourse {
 
 interface ITheme {
   id: number;
-  type: "topics" | "tests";
-  state: "active" | "default";
+  type: EEntityType.Topics | EEntityType.Tests;
+  state: EEntityState.Active | EEntityState.Default;
   title: string;
 }
 
 interface IVideo {
   id: number;
-  type: "videos";
+  type: EEntityType.Videos;
   src: string;
   videoType: string;
   duration?: number;
-  state: string;
+  state: EEntityState.Active | EEntityState.Default;
   title: string;
 }
 

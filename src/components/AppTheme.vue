@@ -7,7 +7,7 @@
 
 <script setup lang="ts">
 import { computed, h, resolveComponent } from "vue";
-import { EntityState, EntityType } from "@/types/enums";
+import { EEntityState, EEntityType } from "@/types/enums";
 /**
  * Due to the limitations of defineProps in TS, no "ITheme" interface is used
  * */
@@ -26,24 +26,24 @@ const emits = defineEmits<{
 // Due to the fact that backtics does not work correctly, let's leave it like that
 const stateIcon = computed(() => ({
   "topic-item__state-icon topic-item__state-icon_active":
-    props.type === EntityType.Topics && props.state === EntityState.Active,
+    props.type === EEntityType.Topics && props.state === EEntityState.Active,
   "topic-item__state-icon topic-item__state-icon_default":
-    props.type === EntityType.Topics && props.state === EntityState.Default,
+    props.type === EEntityType.Topics && props.state === EEntityState.Default,
   "test-item__state-icon test-item__state-icon_active":
-    props.type === EntityType.Tests && props.state === EntityState.Active,
+    props.type === EEntityType.Tests && props.state === EEntityState.Active,
   "test-item__state-icon test-item__state-icon_default":
-    props.type === EntityType.Tests && props.state === EntityState.Default,
+    props.type === EEntityType.Tests && props.state === EEntityState.Default,
 }));
 
 const stateTitle = computed(() => ({
   "theme-item__title topic-item__state-title_active":
-    props.type === EntityType.Topics && props.state === EntityState.Active,
+    props.type === EEntityType.Topics && props.state === EEntityState.Active,
   "theme-item__title topic-item__state-title_default":
-    props.type === EntityType.Topics && props.state === EntityState.Default,
+    props.type === EEntityType.Topics && props.state === EEntityState.Default,
   "theme-item__title test-item__state-title_active":
-    props.type === EntityType.Tests && props.state === EntityState.Active,
+    props.type === EEntityType.Tests && props.state === EEntityState.Active,
   "theme-item__title test-item__state-title_default":
-    props.type === EntityType.Tests && props.state === EntityState.Default,
+    props.type === EEntityType.Tests && props.state === EEntityState.Default,
 }));
 
 function AppRouterLink() {
@@ -56,14 +56,14 @@ function AppRouterLink() {
       },
       class: stateTitle.value,
       to: (() => {
-        if (props.type === EntityType.Tests) {
+        if (props.type === EEntityType.Tests) {
           return {
             path: "",
             name: "ViewModuleTests",
             params: { themeType: "tests", themeId: props.id },
           };
         }
-        if (props.type === EntityType.Topics) {
+        if (props.type === EEntityType.Topics) {
           return {
             path: "",
             name: "ViewModuleTopics",
