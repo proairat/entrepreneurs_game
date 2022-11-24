@@ -12,7 +12,7 @@
 </template>
 
 <script setup lang="ts">
-import { EntityState, EntityType } from "@/types/enums";
+import { EEntityState, EEntityType } from "@/types/enums";
 import { computed, h, resolveComponent } from "vue";
 import { useCoursesStore } from "@/stores";
 
@@ -63,16 +63,16 @@ function getParams(moduleId: number) {
 // Due to the fact that backtics does not work correctly, let's leave it like that
 const stateIcon = computed(() => ({
   "module-item__state-icon_active":
-    props.type === EntityType.Modules && props.state === EntityState.Active,
+    props.type === EEntityType.Modules && props.state === EEntityState.Active,
   "module-item__state-icon_default":
-    props.type === EntityType.Modules && props.state === EntityState.Default,
+    props.type === EEntityType.Modules && props.state === EEntityState.Default,
 }));
 
 const stateTitle = computed(() => ({
   "module-item__state-title_active":
-    props.type === EntityType.Modules && props.state === EntityState.Active,
+    props.type === EEntityType.Modules && props.state === EEntityState.Active,
   "module-item__state-title_default":
-    props.type === EntityType.Modules && props.state === EntityState.Default,
+    props.type === EEntityType.Modules && props.state === EEntityState.Default,
 }));
 
 function AppRouterLink() {

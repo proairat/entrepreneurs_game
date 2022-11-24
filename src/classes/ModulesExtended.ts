@@ -1,7 +1,7 @@
 import type { ICourse, IEduElementCourses } from "@/types/interfaces";
 import { BaseEduElement } from "./BaseEduElement";
 
-class CoursesExtended extends BaseEduElement implements IEduElementCourses {
+class ModulesExtended extends BaseEduElement implements IEduElementCourses {
   list: ICourse[];
 
   constructor(list: ICourse[]) {
@@ -31,4 +31,4 @@ class CoursesExtended extends BaseEduElement implements IEduElementCourses {
   }
 }
 
-export { CoursesExtended };
+export { ModulesExtended };

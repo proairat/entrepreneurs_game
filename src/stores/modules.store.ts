@@ -10,10 +10,10 @@ import type {
 } from "@/types/interfaces";
 import {
   Creator,
-  CoursesCreator,
+  ModulesCreator,
   ThemesCreator,
   CreatorExtended,
-  CoursesCreatorExtended,
+  ModulesCreatorExtended,
   ThemesCreatorExtended,
   VideosCreator,
   VideosCreatorExtended,
@@ -32,12 +32,12 @@ function getEduElementExtended(creator: CreatorExtended) {
   return eduElement;
 }
 
-const eduElementCourses = getEduElement(new CoursesCreator());
+const eduElementCourses = getEduElement(new ModulesCreator());
 const eduElementThemes = getEduElement(new ThemesCreator());
 const eduElementVideos = getEduElement(new VideosCreator());
 
 const eduElementCoursesExtended = getEduElementExtended(
-  new CoursesCreatorExtended(eduElementCourses.getList() as ICourse[])
+  new ModulesCreatorExtended(eduElementCourses.getList() as ICourse[])
 ) as IEduElementCourses;
 
 const eduElementThemesExtended = getEduElementExtended(

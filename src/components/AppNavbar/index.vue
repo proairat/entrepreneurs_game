@@ -34,7 +34,7 @@
               @update:search="updateSearch"
               class="order-5 basis-full sh-960:flex-1 sh-960:order-4"
             />
-            <NavbarNavigation /><!-- render function -->
+            <render /><!-- render function -->
           </div>
         </div>
         <div class="h-[56px] sh-960:hidden"></div>
@@ -42,16 +42,17 @@
           <div class="px-2 pt-2 pb-3 space-y-1 bg-gray-50">
             <DisclosureButton
               v-for="item in navigation"
-              :key="item.name"
+              :key="item.id"
               as="a"
-              :to="item.to"
+              :href="item.href"
               :class="[
                 item.current
-                  ? 'bg-indigo-100 text-indigo-900'
+                  ? 'bg-slate-400 text-indigo-900 currentA'
                   : 'hover:bg-slate-200',
                 'block px-3 py-2 rounded-md text-base font-medium text-slate-800',
               ]"
               :aria-current="item.current ? 'page' : undefined"
+              @click.stop.prevent="disclosureHandler(item.name)"
               >{{ item.name }}</DisclosureButton
             >
           </div>
@@ -70,25 +71,60 @@ export default {
 <script setup lang="ts">
 import { Disclosure, DisclosureButton, DisclosurePanel } from "@headlessui/vue";
 import { XMarkIcon, Bars3Icon } from "@heroicons/vue/24/outline";
-import { ref, h, reactive, resolveComponent } from "vue";
+import { ref, h, watch } from "vue";
 import { getImageUrl } from "@/helpers/commonFunctions";
 import type { INavigation } from "@/types/interfaces";
 import { useNavbarStore } from "@/stores";
 import { storeToRefs } from "pinia";
-
-const testsStore = useNavbarStore();
-const { starsSmth } = storeToRefs(testsStore);
-
-console.log("starsSmth navbar navbar", starsSmth.value);
+import { RouterLink } from "vue-router";
 
 const props = defineProps<{
   logout: any;
 }>();
-const logo = await getImageUrl("academic-cap");
 
-function NavbarNavigation() {
+const navbarStore = useNavbarStore();
+const { coins } = storeToRefs(navbarStore);
+const logo = await getImageUrl("academic-cap");
+const search = ref("");
+const navigation = ref([
+  {
+    id: 1,
+    name: String(coins.value),
+    href: "#",
+    current: true,
+    src: await getImageUrl("coin"),
+    alt: String(coins.value),
+  },
+  {
+    id: 2,
+    name: "Настройки",
+    href: "#",
+    current: false,
+    src: await getImageUrl("settings"),
+    alt: "Настройки",
+  },
+  {
+    id: 3,
+    name: "Выход",
+    to: "login",
+    href: "#",
+    componentName: "AppLogin",
+    current: false,
+    src: await getImageUrl("exit"),
+    alt: "Выход",
+    handlers: { click: props.logout },
+  },
+]);
+
+watch(coins, () => {
+  navigation.value[0].name = String(coins.value);
+});
+
+const render = () => {
   function constructObj(
     item: INavigation & {
+      to?: string;
+      componentName?: string;
       handlers?: undefined | { click: () => any };
     }
   ): { [k: string]: () => number } | undefined {
@@ -107,14 +143,16 @@ function NavbarNavigation() {
     {
       class: "flex order-4 sh-960:order-5 ml-auto",
     },
-    navigation.map((item) => {
+    navigation.value.map((item) => {
+      const constructObjResult = constructObj(item);
+
       return h(
         "div",
         {
           class:
             "flex items-center h-11 hover:bg-slate-200 mx-2 cursor-pointer rounded-md",
-          key: item.name,
-          ...constructObj(item),
+          key: item.id,
+          ...constructObjResult,
         },
         [
           h("img", {
@@ -122,52 +160,40 @@ function NavbarNavigation() {
             src: item.src,
             alt: item.alt,
           }),
-          h(
-            resolveComponent("router-link"),
-            {
-              to: { path: item.to, name: item.componentName },
-              class:
-                "hidden lg:flex mr-1.5 rounded-md text-sm font-medium items-center text-slate-800",
-              ariaCurrent: item.current ? "page" : undefined,
-            },
-            () => item.name
-          ),
+          [
+            constructObjResult === undefined
+              ? h(() =>
+                  h(
+                    "span",
+                    {
+                      class:
+                        "hidden lg:flex mr-1.5 rounded-md text-sm font-medium items-center text-slate-800",
+                    },
+                    item.name
+                  )
+                )
+              : h(
+                  RouterLink,
+                  {
+                    to: { path: item.to, name: item.componentName },
+                    class:
+                      "hidden lg:flex mr-1.5 rounded-md text-sm font-medium items-center text-slate-800",
+                    ariaCurrent: item.current ? "page" : undefined,
+                  },
+                  () => item.name
+                ),
+          ],
         ]
       );
     })
   );
+};
+
+function disclosureHandler(item: string) {
+  if (item === "Выход") {
+    props.logout();
+  }
 }
-
-const navigation = reactive([
-  {
-    name: ref(starsSmth),
-    to: "login",
-    componentName: "AppLogin",
-    current: true,
-    // src: await getImageUrl("star"),
-    src: await getImageUrl("starFilled"),
-    alt: ref(starsSmth),
-  },
-  {
-    name: "Настройки",
-    to: "login",
-    componentName: "AppLogin",
-    current: false,
-    src: await getImageUrl("settings"),
-    alt: "Настройки",
-  },
-  {
-    name: "Выход",
-    to: "login",
-    componentName: "AppLogin",
-    current: false,
-    src: await getImageUrl("exit"),
-    alt: "Выход",
-    handlers: { click: props.logout },
-  },
-]);
-
-const search = ref("");
 
 function updateSearch(value: string) {
   search.value = value;
@@ -178,5 +204,8 @@ function updateSearch(value: string) {
 <style scoped lang="scss">
 .navbar {
   background-color: $white;
+}
+.currentA {
+  background-color: #e0e7ff;
 }
 </style>

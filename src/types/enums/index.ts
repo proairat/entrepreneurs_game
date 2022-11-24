@@ -1,13 +1,29 @@
-enum EntityState {
+enum EEntityState {
   Active = "active",
   Default = "default",
   Close = "close",
 }
 
-enum EntityType {
+enum EEntityType {
   Topics = "topics",
   Tests = "tests",
   Modules = "modules",
+  Videos = "videos",
 }
 
-export { EntityState, EntityType };
+enum EPercent {
+  OneCoinLowBoundary = 45,
+  OneCoinHighBoundary = 59,
+  TwoCoinLowBoundary = 60,
+  TwoCoinHighBoundary = 79,
+  ThreeCoinLowBoundary = 80,
+  ThreeCoinHighBoundary = 100,
+}
+
+enum EGuessed {
+  Right = "right",
+  Wrong = "wrong",
+  Undefined = "undefined",
+}
+
+export { EEntityState, EEntityType, EPercent, EGuessed };
