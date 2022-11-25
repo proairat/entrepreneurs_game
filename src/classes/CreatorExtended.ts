@@ -1,12 +1,12 @@
 import type {
-  IEduElementCourses,
+  IEduElementModules,
   IEduElementThemes,
   IEduElementVideos,
 } from "@/types/interfaces";
 
 abstract class CreatorExtended {
   public abstract factoryMethod():
-    | IEduElementCourses
+    | IEduElementModules
     | IEduElementThemes
     | IEduElementVideos;
   public getEduElement() {

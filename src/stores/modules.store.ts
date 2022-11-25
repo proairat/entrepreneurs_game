@@ -1,8 +1,8 @@
 import { defineStore } from "pinia";
 import { ref } from "vue";
 import type {
-  ICourse,
-  IEduElementCourses,
+  IModule,
+  IEduElementModules,
   IEduElementThemes,
   IEduElementVideos,
   ITheme,
@@ -32,13 +32,13 @@ function getEduElementExtended(creator: CreatorExtended) {
   return eduElement;
 }
 
-const eduElementCourses = getEduElement(new ModulesCreator());
+const eduElementModules = getEduElement(new ModulesCreator());
 const eduElementThemes = getEduElement(new ThemesCreator());
 const eduElementVideos = getEduElement(new VideosCreator());
 
-const eduElementCoursesExtended = getEduElementExtended(
-  new ModulesCreatorExtended(eduElementCourses.getList() as ICourse[])
-) as IEduElementCourses;
+const eduElementModulesExtended = getEduElementExtended(
+  new ModulesCreatorExtended(eduElementModules.getList() as IModule[])
+) as IEduElementModules;
 
 const eduElementThemesExtended = getEduElementExtended(
   new ThemesCreatorExtended(
@@ -52,13 +52,13 @@ const eduElementVideosExtended = getEduElementExtended(
   )
 ) as IEduElementVideos;
 
-export const useCoursesStore = defineStore("modules", () => {
+export const useModulesStore = defineStore("modules", () => {
   const activeModule = ref(getActiveModule());
   const activeTheme = ref(getActiveTheme(activeModule.value.id));
   const activeVideo = ref(getActiveVideo(activeModule.value.id));
 
-  function updateActiveModule(moduleId: number, elems: ICourse[]): void {
-    eduElementCoursesExtended.updateActiveElem(moduleId, elems);
+  function updateActiveModule(moduleId: number, elems: IModule[]): void {
+    eduElementModulesExtended.updateActiveElem(moduleId, elems);
     activeModule.value = getActiveModule();
     activeTheme.value = getActiveTheme(moduleId);
     activeVideo.value = getActiveVideo(moduleId);
@@ -91,7 +91,7 @@ export const useCoursesStore = defineStore("modules", () => {
   }
 
   function getActiveModule() {
-    return eduElementCoursesExtended.getActiveElem() as ICourse;
+    return eduElementModulesExtended.getActiveElem() as IModule;
   }
 
   function getActiveTheme(moduleId: number) {
@@ -99,7 +99,7 @@ export const useCoursesStore = defineStore("modules", () => {
   }
 
   function getModulesList() {
-    return eduElementCourses.getList();
+    return eduElementModules.getList();
   }
 
   function getVideosList() {

@@ -1,16 +1,16 @@
-import type { IEduElementCourses, ICourse } from "@/types/interfaces";
+import type { IEduElementModules, IModule } from "@/types/interfaces";
 import { CreatorExtended } from "./CreatorExtended";
 import { ModulesExtended } from "./ModulesExtended";
 
 class ModulesCreatorExtended extends CreatorExtended {
-  list: ICourse[];
+  list: IModule[];
 
-  constructor(list: ICourse[]) {
+  constructor(list: IModule[]) {
     super();
     this.list = list;
   }
 
-  public factoryMethod(): IEduElementCourses {
+  public factoryMethod(): IEduElementModules {
     return new ModulesExtended(this.list);
   }
 }

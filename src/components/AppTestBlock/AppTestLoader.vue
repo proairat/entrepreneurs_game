@@ -1,5 +1,5 @@
 <template>
-  <div class="w-full h-screen flex justify-center items-center">
+  <div class="w-full flex justify-center items-center pt-6">
     <svg
       class="rotating w-10 h-10"
       xmlns="http://www.w3.org/2000/svg"

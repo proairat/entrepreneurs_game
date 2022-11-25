@@ -1,14 +1,14 @@
-import type { ICourse, IEduElementCourses } from "@/types/interfaces";
+import type { IModule, IEduElementModules } from "@/types/interfaces";
 import { BaseEduElement } from "./BaseEduElement";
 
-class ModulesExtended extends BaseEduElement implements IEduElementCourses {
-  list: ICourse[];
+class ModulesExtended extends BaseEduElement implements IEduElementModules {
+  list: IModule[];
 
-  constructor(list: ICourse[]) {
+  constructor(list: IModule[]) {
     super();
     this.list = list;
   }
-  public updateActiveElem(moduleId: number, elems: ICourse[]): void {
+  public updateActiveElem(moduleId: number, elems: IModule[]): void {
     if (Array.isArray(this.list)) {
       const md = elems;
       const activeElem = this.getActiveElem();
@@ -24,7 +24,7 @@ class ModulesExtended extends BaseEduElement implements IEduElementCourses {
       }
     }
   }
-  public getActiveElem(): ICourse | undefined {
+  public getActiveElem(): IModule | undefined {
     if (Array.isArray(this.list)) {
       return super.find(this.list);
     }
