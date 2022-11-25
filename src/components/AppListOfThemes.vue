@@ -12,20 +12,20 @@
 
 <script setup lang="ts">
 import { ref } from "vue";
-import { useCoursesStore } from "@/stores";
+import { useModulesStore } from "@/stores";
 import type { ITheme, IVideo } from "@/types/interfaces";
 
 const props = defineProps<{
   moduleId: number;
 }>();
 
-const coursesStore = useCoursesStore();
+const modulesStore = useModulesStore();
 const {
   getThemesByModuleId,
   updateActiveTheme,
   updateActiveVideo,
   getVideosByModuleId,
-} = coursesStore;
+} = modulesStore;
 const themes = ref<ITheme[]>([]);
 const themesByModuleId = getThemesByModuleId(props.moduleId);
 

@@ -14,10 +14,10 @@
 <script setup lang="ts">
 import { EEntityState, EEntityType } from "@/types/enums";
 import { computed, h, resolveComponent } from "vue";
-import { useCoursesStore } from "@/stores";
+import { useModulesStore } from "@/stores";
 
 /**
- * Due to the limitations of defineProps in TS, no "ICourse" interface is used
+ * Due to the limitations of defineProps in TS, no "IModule" interface is used
  * */
 const props = defineProps<{
   id: number;
@@ -35,8 +35,8 @@ const emits = defineEmits<{
   (e: "changeActiveItem", moduleId: number): void;
 }>();
 
-const coursesStore = useCoursesStore();
-const { getActiveTheme } = coursesStore;
+const modulesStore = useModulesStore();
+const { getActiveTheme } = modulesStore;
 
 function getName(moduleId: number) {
   const activeElem = getActiveTheme(moduleId);

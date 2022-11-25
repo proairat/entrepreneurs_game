@@ -1,8 +1,8 @@
 import { EEntityType } from "@/types/enums";
-import type { IEduCommonElement, ICourse } from "@/types/interfaces";
+import type { IEduCommonElement, IModule } from "@/types/interfaces";
 
 class Modules implements IEduCommonElement {
-  list: ICourse[] | undefined;
+  list: IModule[] | undefined;
 
   public createList() {
     if (this.list === undefined) {

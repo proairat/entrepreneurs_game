@@ -1,12 +1,12 @@
 <template>
-  <AppTestLoader v-if="loading"></AppTestLoader>
+  <AppTestLoader v-if="isLoading"></AppTestLoader>
   <div v-else class="testContent text-gray-600">
     <div
       class="items-center justify-between rounded-lg flex flex-col items-center"
     >
       <div class="flex my-6 checkProba">
         <div
-          v-for="item in data.results"
+          v-for="item in data"
           :key="item.id"
           class="w-3 h-3 rounded text-white mx-1 text-center text-xs flex items-center justify-center"
           :class="{
@@ -20,22 +20,18 @@
         class="border-2 border-gray-400 w-full rounded-lg flex items-center justify-center p-5 mb-6"
       >
         <h1 class="text-center font-medium md:text-lg">
-          {{ data.results[currentQuestion].question }}
+          {{ data[currentQuestion].question }}
         </h1>
       </div>
     </div>
     <div class="flex flex-col justify-center">
       <div class="grid grid-cols-1 gap-4 md:gap-4 md:grid-cols-2">
         <AppTestAnswer
-          v-for="answer in data.results[currentQuestion].shuffled_answers"
+          v-for="answer in data[currentQuestion].shuffled_answers"
           :key="answer"
           :text="answer"
-          :is-valid-answer="
-            answer == data.results[currentQuestion].correct_answer
-          "
-          :is-invalid-answer="
-            answer != data.results[currentQuestion].correct_answer
-          "
+          :is-valid-answer="answer == data[currentQuestion].correct_answer"
+          :is-invalid-answer="answer != data[currentQuestion].correct_answer"
           @disableAnswer="proslushka"
         ></AppTestAnswer>
       </div>
@@ -45,11 +41,11 @@
         <button
           @click="
             getNextQuestion();
-            inc();
+            incrementProgressValue();
           "
-          class="px-12 py-4 bg-gray-600 mt-6 text-white text-lg rounded-lg hover:bg-gray-700 transition w-full md:w-1/3"
+          class="px-12 py-4 bg-gray-600 mt-6 text-white text-lg rounded-lg hover:bg-gray-700 transition"
         >
-          Дальше
+          {{ getTheLabelOnTheButton() }}
         </button>
       </Transition>
     </div>
@@ -63,23 +59,26 @@ import { storeToRefs } from "pinia";
 
 const testsStore = useTestsStore();
 const {
-  progressValue,
   data,
-  loading,
+  isLoading,
   currentQuestion,
-  showAnswer,
+  isOptionSelected,
+
   questionCount,
 } = storeToRefs(testsStore);
-const { getData, getNextQuestion } = testsStore;
+const { getData, getNextQuestion, incrementProgressValue } = testsStore;
 
 getData();
 
-function inc() {
-  progressValue.value += Math.ceil(100 / questionCount.value);
-}
-
 function proslushka() {
   console.log("Прослушка функция работает");
+}
+
+function getTheLabelOnTheButton() {
+  console.log("getTheLabelOnTheButton");
+  console.log("isOptionSelected", isOptionSelected.value);
+  // if (isOptionSelected
+  return "Выберите вариант ответа";
 }
 </script>
 

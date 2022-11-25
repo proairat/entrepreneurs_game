@@ -6,9 +6,9 @@
       toogleDisabled();
     "
     :class="{
-      'bg-red-200': showAnswer && props.isInvalidAnswer,
-      'bg-green-200': showAnswer && props.isValidAnswer,
-      'hover:bg-gray-300': !showAnswer,
+      'bg-red-200': isShowAnswer && props.isInvalidAnswer,
+      'bg-green-200': isShowAnswer && props.isValidAnswer,
+      'hover:bg-gray-300': !isShowAnswer,
     }"
   >
     {{ props.text }}
@@ -30,7 +30,7 @@ const emits = defineEmits<{
 }>();
 
 const testsStore = useTestsStore();
-const { showAnswer } = storeToRefs(testsStore);
+const { isShowAnswer } = storeToRefs(testsStore);
 const { checkAnswer } = testsStore;
 
 function toogleDisabled() {
@@ -38,5 +38,5 @@ function toogleDisabled() {
   emits("disableAnswer");
 }
 
-console.log("showAnswer", showAnswer.value);
+console.log("isShowAnswer", isShowAnswer.value);
 </script>

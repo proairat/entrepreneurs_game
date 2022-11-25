@@ -1,5 +1,5 @@
 <template>
-  <AppTestLoader v-if="loading"></AppTestLoader>
+  <AppTestLoader v-if="isLoading"></AppTestLoader>
 </template>
 
 <script setup lang="ts">
@@ -8,7 +8,7 @@ import { useTestsStore } from "@/stores";
 import { storeToRefs } from "pinia";
 
 const testsStore = useTestsStore();
-const { loading } = storeToRefs(testsStore);
+const { isLoading } = storeToRefs(testsStore);
 const { startTest } = testsStore;
 
 startTest();

@@ -15,12 +15,12 @@
 
 <script setup lang="ts">
 import { ref } from "vue";
-import { useCoursesStore } from "@/stores";
-import type { ICourse } from "@/types/interfaces";
+import { useModulesStore } from "@/stores";
+import type { IModule } from "@/types/interfaces";
 
-const coursesStore = useCoursesStore();
-const { getModulesList, updateActiveModule } = coursesStore;
-const modules = ref<ICourse[]>([]);
+const modulesStore = useModulesStore();
+const { getModulesList, updateActiveModule } = modulesStore;
+const modules = ref<IModule[]>([]);
 const list = getModulesList();
 // const search = ref("");
 

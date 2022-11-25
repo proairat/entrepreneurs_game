@@ -2,7 +2,7 @@
   <AppTitleLine>
     <AppBackButton v-bind="backTo"></AppBackButton>
     <AppTitle>
-      {{ getCourseHeader }}
+      {{ getModuleHeader }}
     </AppTitle>
   </AppTitleLine>
   <div class="outer-part">
@@ -22,12 +22,12 @@
 </template>
 
 <script setup lang="ts">
-import { useCoursesStore } from "@/stores";
+import { useModulesStore } from "@/stores";
 import { computed, ref } from "vue";
 import { storeToRefs } from "pinia";
 
-const coursesStore = useCoursesStore();
-const { activeTheme, activeModule } = storeToRefs(coursesStore);
+const modulesStore = useModulesStore();
+const { activeTheme, activeModule } = storeToRefs(modulesStore);
 const backTo = ref({
   path: `/modules`,
   name: "ViewModules",
@@ -35,7 +35,7 @@ const backTo = ref({
 
 // const filteredList = computed(() => FuzzySearch(search.value, modules, "title"));
 
-const getCourseHeader = computed(() => {
+const getModuleHeader = computed(() => {
   return activeModule.value.header;
 });
 

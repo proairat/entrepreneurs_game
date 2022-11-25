@@ -1,4 +1,4 @@
-import type { EEntityState, EEntityType } from "../enums";
+import type { EEntityState, EEntityType, EGuessed } from "../enums";
 import type { TElemsList } from "../types";
 
 interface INavigation {
@@ -10,7 +10,7 @@ interface INavigation {
   alt: string;
 }
 
-interface ICourse {
+interface IModule {
   id: number;
   type: EEntityType.Modules;
   src: string;
@@ -39,22 +39,33 @@ interface IVideo {
   title: string;
 }
 
+interface ITest {
+  id: number;
+  category: string;
+  type: string;
+  difficulty: string;
+  question: string;
+  correct_answer: string;
+  incorrect_answers: string[];
+  guessed: EGuessed.Right | EGuessed.Wrong | EGuessed.Undefined;
+}
+
 interface IEduCommonElement {
   createList():
-    | ICourse[]
+    | IModule[]
     | TElemsList<number, ITheme>
     | TElemsList<number, IVideo>;
   addToList(): void;
   getList():
-    | ICourse[]
+    | IModule[]
     | TElemsList<number, ITheme>
     | TElemsList<number, IVideo>
     | undefined;
 }
 
-interface IEduElementCourses {
-  updateActiveElem(moduleId: number, elems: ICourse[]): void;
-  getActiveElem(): ICourse | undefined;
+interface IEduElementModules {
+  updateActiveElem(moduleId: number, elems: IModule[]): void;
+  getActiveElem(): IModule | undefined;
 }
 
 interface IEduElementThemes {
@@ -77,10 +88,11 @@ interface IProgressCaption {
 export type {
   INavigation,
   ITheme,
-  ICourse,
+  IModule,
   IVideo,
+  ITest,
   IEduCommonElement,
-  IEduElementCourses,
+  IEduElementModules,
   IEduElementThemes,
   IEduElementVideos,
   IProgressCaption,

@@ -10,11 +10,11 @@
 </template>
 
 <script setup lang="ts">
-import { useCoursesStore } from "@/stores";
+import { useModulesStore } from "@/stores";
 import { storeToRefs } from "pinia";
 
-const coursesStore = useCoursesStore();
-const { activeVideo, activeModule, activeTheme } = storeToRefs(coursesStore);
+const modulesStore = useModulesStore();
+const { activeVideo, activeModule, activeTheme } = storeToRefs(modulesStore);
 </script>
 
 <style scoped lang="scss">
