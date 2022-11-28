@@ -3,10 +3,10 @@
     <div class="progress-box__caption">{{ progressCaption }}</div>
     <el-progress
       class="progress-box__progress"
-      :text-inside="true"
-      :stroke-width="24"
+      :text-inside="false"
+      :stroke-width="20"
       :percentage="progressValue"
-      status="success"
+      :color="color"
     />
   </div>
 </template>
@@ -31,7 +31,7 @@ const caption: IProgressCaption = {
   topics: "Текущий прогресс темы",
   tests: "Текущий прогресс теста",
 };
-
+const color = "#FFE97A"; // $sun-40
 const progressCaption = computed(() => {
   return caption[props.type as keyof IProgressCaption];
 });
@@ -50,5 +50,9 @@ const progressCaption = computed(() => {
     text-align: center;
     margin-bottom: 8px;
   }
+}
+
+:deep(.el-progress__text) {
+  font-size: $text-base-size !important;
 }
 </style>

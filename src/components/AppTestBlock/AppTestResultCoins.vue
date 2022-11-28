@@ -52,8 +52,6 @@ const countCoins = computed(() => {
   return count;
 });
 
-console.log("Check countCoins", countCoins.value);
-
 coins.value += countCoins.value;
 
 function msg() {

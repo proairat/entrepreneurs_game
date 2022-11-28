@@ -1,42 +1,52 @@
 <template>
   <button
-    class="w-full bg-gray-200 rounded-lg p-4 transition md:text-lg md:p-6"
+    class="w-full bg-gray-100 transition p-6 answerText"
     @click="
-      checkAnswer(props.text);
-      toogleDisabled();
+      checkAnswer(props.idAnswer);
+      clickAnswer();
     "
     :class="{
-      'bg-red-200': isShowAnswer && props.isInvalidAnswer,
-      'bg-green-200': isShowAnswer && props.isValidAnswer,
-      'hover:bg-gray-300': !isShowAnswer,
+      'bg-red-200': !isCorrectAnswer && show,
+      'bg-green-200': isCorrectAnswer && show,
+      'hover:bg-gray-200': props.state === EEntityState.Unlocked,
     }"
+    :disabled="props.state === EEntityState.Blocked"
   >
-    {{ props.text }}
+    {{ props.answer }}
   </button>
 </template>
 
 <script setup lang="ts">
 import { useTestsStore } from "@/stores";
-import { storeToRefs } from "pinia";
+import { EEntityState } from "@/types/enums";
+import { computed } from "vue";
+import { ref } from "vue";
 
 const props = defineProps<{
-  text: string;
-  isValidAnswer: boolean;
-  isInvalidAnswer: boolean;
+  idAnswer: number;
+  answer: string;
+  state: EEntityState.Unlocked | EEntityState.Blocked;
 }>();
 
 const emits = defineEmits<{
-  (e: "disableAnswer"): void;
+  (e: "clickAnswer"): void;
 }>();
 
 const testsStore = useTestsStore();
-const { isShowAnswer } = storeToRefs(testsStore);
-const { checkAnswer } = testsStore;
+const { checkAnswer, isAnswerIsCorrect } = testsStore;
+const show = ref(false);
+const isCorrectAnswer = computed(() => isAnswerIsCorrect(props.idAnswer));
 
-function toogleDisabled() {
-  console.log("toggle disabled");
-  emits("disableAnswer");
+function clickAnswer() {
+  emits("clickAnswer");
+  show.value = true;
 }
-
-console.log("isShowAnswer", isShowAnswer.value);
 </script>
+
+<style scoped lang="scss">
+.answerText {
+  color: $gray-90;
+  border-radius: 0.625rem;
+  font-size: $text-size-h5;
+}
+</style>

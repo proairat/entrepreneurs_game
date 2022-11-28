@@ -133,9 +133,9 @@ function compose(...fns: Tfns<number>) {
   };
 }
 
-const shuffle = (array: any) => {
-  let currentIndex = array.length,
-    randomIndex;
+const shuffle = (array: { id: number; answer: string }[]) => {
+  let currentIndex = array.length;
+  let randomIndex;
   while (currentIndex != 0) {
     randomIndex = Math.floor(Math.random() * currentIndex);
     currentIndex--;
@@ -144,7 +144,6 @@ const shuffle = (array: any) => {
       array[currentIndex],
     ];
   }
-  return array;
 };
 
 export {

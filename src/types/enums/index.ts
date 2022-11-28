@@ -2,6 +2,8 @@ enum EEntityState {
   Active = "active",
   Default = "default",
   Close = "close",
+  Unlocked = "unlocked",
+  Blocked = "blocked",
 }
 
 enum EEntityType {
@@ -24,6 +26,7 @@ enum EGuessed {
   Right = "right",
   Wrong = "wrong",
   Undefined = "undefined",
+  Active = "active",
 }
 
 export { EEntityState, EEntityType, EPercent, EGuessed };

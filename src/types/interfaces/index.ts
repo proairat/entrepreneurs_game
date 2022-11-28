@@ -19,7 +19,7 @@ interface IModule {
   title: string;
   duration: string;
   footer: string;
-  state: string;
+  state: EEntityState.Active | EEntityState.Default;
 }
 
 interface ITheme {
@@ -46,7 +46,7 @@ interface ITest {
   difficulty: string;
   question: string;
   correct_answer: string;
-  incorrect_answers: string[];
+  answers: string[];
   guessed: EGuessed.Right | EGuessed.Wrong | EGuessed.Undefined;
 }
 

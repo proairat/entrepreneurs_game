@@ -1,3 +1,4 @@
+import { EEntityState } from "@/types/enums";
 import type { IModule, IEduElementModules } from "@/types/interfaces";
 import { BaseEduElement } from "./BaseEduElement";
 
@@ -18,8 +19,8 @@ class ModulesExtended extends BaseEduElement implements IEduElementModules {
         const clickModuleIndex = super.findIndex(md, moduleId);
 
         if (activeModuleIndex !== -1 && clickModuleIndex !== -1) {
-          md[activeModuleIndex]["state"] = "default";
-          md[clickModuleIndex]["state"] = "active";
+          md[activeModuleIndex]["state"] = EEntityState.Default;
+          md[clickModuleIndex]["state"] = EEntityState.Active;
         }
       }
     }
