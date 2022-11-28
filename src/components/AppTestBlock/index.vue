@@ -27,5 +27,6 @@ const { step } = storeToRefs(testsStore);
   border-radius: 0.625rem;
   box-shadow: $box-shadow-2dp;
   padding: 0 1.5rem 1.5rem 1.5rem;
+  user-select: none;
 }
 </style>

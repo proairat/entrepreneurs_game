@@ -1,5 +1,5 @@
 import { shuffle } from "@/helpers/commonFunctions";
-import { EGuessed } from "@/types/enums";
+import { EEntityState, EGuessed } from "@/types/enums";
 import { defineStore } from "pinia";
 import { ref } from "vue";
 
@@ -9,20 +9,24 @@ export const useTestsStore = defineStore("tests", () => {
   const questionCount = ref(0);
   const isOptionSelected = ref(false);
   const isTestEnded = ref(false);
-  const isShowAnswer = ref(false);
   const data = ref([]);
   const options = ref(null);
   const isLoading = ref(true);
-  const currentQuestion = ref(0);
+  const questionNumber = ref(0);
   const step = ref(0);
 
+  function getQuestion() {
+    return data.value[questionNumber.value].question;
+  }
+
   function getNextQuestion() {
-    if (currentQuestion.value >= data.value.length - 1) {
+    if (questionNumber.value >= data.value.length - 1) {
       isTestEnded.value = true;
       step.value = 2;
+    } else {
+      questionNumber.value += 1;
+      setGuessed(EGuessed.Active);
     }
-    currentQuestion.value += 1;
-    isShowAnswer.value = false;
   }
 
   function startTest(payload) {
@@ -30,14 +34,22 @@ export const useTestsStore = defineStore("tests", () => {
     step.value = 1;
   }
 
-  function checkAnswer(answer: any) {
-    console.log("checkAnswer answer", answer);
-    if (data.value[currentQuestion.value].correct_answer === answer) {
+  function isAnswerIsCorrect(idAnswer: number) {
+    return data.value[questionNumber.value].idAnswerCorrect === idAnswer
+      ? true
+      : false;
+  }
+
+  function setGuessed(value: EGuessed) {
+    data.value[questionNumber.value].guessed = value;
+  }
+
+  function checkAnswer(idAnswer: number) {
+    if (isAnswerIsCorrect(idAnswer)) {
       incrementScore();
-      data.value[currentQuestion.value].guessed = EGuessed.Right;
-      return;
+      setGuessed(EGuessed.Right);
     } else {
-      data.value[currentQuestion.value].guessed = EGuessed.Wrong;
+      setGuessed(EGuessed.Wrong);
     }
   }
 
@@ -45,147 +57,264 @@ export const useTestsStore = defineStore("tests", () => {
     isLoading.value = true;
     const result = [
       {
-        id: 1,
+        idQuestion: 1,
         category: "Общие знания",
         type: "multiple",
         difficulty: "medium",
         question: "Год основания федеральной налоговой службы?",
-        correct_answer: "2004",
-        incorrect_answers: ["1998", "2000", "2002"],
-        guessed: "undefined",
+        idAnswerCorrect: 1,
+        answers: [
+          { idAnswer: 1, answer: "2004", state: EEntityState.Unlocked },
+          { idAnswer: 2, answer: "1998", state: EEntityState.Unlocked },
+          { idAnswer: 3, answer: "2000", state: EEntityState.Unlocked },
+          { idAnswer: 4, answer: "2002", state: EEntityState.Unlocked },
+        ],
+        guessed: "active",
       },
       {
-        id: 2,
+        idQuestion: 2,
         category: "Общие знания",
         type: "multiple",
         difficulty: "easy",
         question: "Какой режим налогообложения НЕ существует?",
-        correct_answer: "налог на оборот",
-        incorrect_answers: [
-          "основная система налогообложения",
-          "упрощенная система налогообложения",
-          " единый сельскохозяйственный налог",
-          "патентная система налогообложения",
-          "налог на профессиональный доход",
+        idAnswerCorrect: 5,
+        answers: [
+          {
+            idAnswer: 5,
+            answer: "налог на оборот",
+            state: EEntityState.Unlocked,
+          },
+          {
+            idAnswer: 6,
+            answer: "основная система налогообложения",
+            state: EEntityState.Unlocked,
+          },
+          {
+            idAnswer: 7,
+            answer: "упрощенная система налогообложения",
+            state: EEntityState.Unlocked,
+          },
+          {
+            idAnswer: 8,
+            answer: " единый сельскохозяйственный налог",
+            state: EEntityState.Unlocked,
+          },
+          {
+            idAnswer: 9,
+            answer: "патентная система налогообложения",
+            state: EEntityState.Unlocked,
+          },
+          {
+            idAnswer: 10,
+            answer: "налог на профессиональный доход",
+            state: EEntityState.Unlocked,
+          },
         ],
         guessed: "undefined",
       },
       {
-        id: 3,
+        idQuestion: 3,
         category: "Общие знания",
         type: "multiple",
         difficulty: "medium",
         question:
           "В упрощённой системе налогообложения для юридических лиц налоговая ставка в процентах?",
-        correct_answer: "6%",
-        incorrect_answers: ["8%", "4%", "10%"],
+        idAnswerCorrect: 11,
+        answers: [
+          { idAnswer: 11, answer: "6%", state: EEntityState.Unlocked },
+          { idAnswer: 12, answer: "8%", state: EEntityState.Unlocked },
+          { idAnswer: 13, answer: "4%", state: EEntityState.Unlocked },
+          { idAnswer: 14, answer: "10%", state: EEntityState.Unlocked },
+        ],
         guessed: "undefined",
       },
       {
-        id: 4,
+        idQuestion: 4,
         category: "Общие знания",
         type: "multiple",
         difficulty: "medium",
         question:
           "Для какой категории граждан введён налог на профессиональный доход ",
-        correct_answer: "самозанятых",
-        incorrect_answers: ["наёмных работников", "сезонных работников"],
+        idAnswerCorrect: 17,
+        answers: [
+          {
+            idAnswer: 15,
+            answer: "наёмных работников",
+            state: EEntityState.Unlocked,
+          },
+          {
+            idAnswer: 16,
+            answer: "сезонных работников",
+            state: EEntityState.Unlocked,
+          },
+          { idAnswer: 17, answer: "самозанятых", state: EEntityState.Unlocked },
+        ],
         guessed: "undefined",
-      } /*
+      },
       {
-        id: 5,
+        idQuestion: 5,
         category: "Общие знания",
         type: "boolean",
         difficulty: "easy",
         question: "Срок уплаты транспортного налога физическим лицом",
-        correct_answer: "не позднее 1 декабря",
-        incorrect_answers: [
-          "не позднее 1 октября",
-          "не позднее 1 ноября",
-          "не позднее 1 января",
+        idAnswerCorrect: 21,
+        answers: [
+          {
+            idAnswer: 18,
+            answer: "не позднее 1 октября",
+            state: EEntityState.Unlocked,
+          },
+          {
+            idAnswer: 19,
+            answer: "не позднее 1 ноября",
+            state: EEntityState.Unlocked,
+          },
+          {
+            idAnswer: 20,
+            answer: "не позднее 1 января",
+            state: EEntityState.Unlocked,
+          },
+          {
+            idAnswer: 21,
+            answer: "не позднее 1 декабря",
+            state: EEntityState.Unlocked,
+          },
         ],
-        guessed: 'undefined',
+        guessed: "undefined",
       },
       {
-        id: 6,
+        idQuestion: 6,
         category: "Общие знания",
         type: "multiple",
         difficulty: "hard",
         question:
           "Может ли иное лицо осуществить уплату государственной пошлины за плательщика?",
-        correct_answer: "Да",
-        incorrect_answers: ["Нет"],
-        guessed: 'undefined',
+        idAnswerCorrect: 23,
+        answers: [
+          { idAnswer: 22, answer: "Нет", state: EEntityState.Unlocked },
+          { idAnswer: 23, answer: "Да", state: EEntityState.Unlocked },
+        ],
+        guessed: "undefined",
       },
       {
-        id: 7,
+        idQuestion: 7,
         category: "Общие знания",
         type: "multiple",
         difficulty: "easy",
         question:
           "С какого момента и до какого момента применяется налоговый вычет для соглашения о защите и поощрении капиталовложений (СЗПК)?",
-        correct_answer:
-          "Начиная с налогового периода, следующего за годом представления уведомления о налоговом вычете для СЗПК",
-        incorrect_answers: [
-          "Начиная с налогового периода, следующего за полугодом представления уведомления о налоговом вычете для СЗПК",
-          "Начиная с налогового периода, следующего за месяцем представления уведомления о налоговом вычете для СЗПК",
+        idAnswerCorrect: 26,
+        answers: [
+          {
+            idAnswer: 24,
+            answer:
+              "Начиная с налогового периода, следующего за полугодом представления уведомления о налоговом вычете для СЗПК",
+            state: EEntityState.Unlocked,
+          },
+          {
+            idAnswer: 25,
+            answer:
+              "Начиная с налогового периода, следующего за месяцем представления уведомления о налоговом вычете для СЗПК",
+            state: EEntityState.Unlocked,
+          },
+          {
+            idAnswer: 26,
+            answer:
+              "Начиная с налогового периода, следующего за годом представления уведомления о налоговом вычете для СЗПК",
+            state: EEntityState.Unlocked,
+          },
         ],
-        guessed: 'undefined',
+        guessed: "undefined",
       },
       {
-        id: 8,
+        idQuestion: 8,
         category: "Общие знания",
         type: "multiple",
         difficulty: "medium",
         question:
           "Размер страховых взносов для общества с ограниченной ответственностью?",
-        correct_answer:
-          "На пенсионное страхование - 22%, на медицинское страхование - 5.1%, на социальное страхование - 2,9%, взносы за травматизм - от 0.2, до 8.5%",
-        incorrect_answers: [
-          "На пенсионное страхование - 27%, на медицинское страхование - 9.1%, на социальное страхование - 0,9%, взносы за травматизм - от 0.2, до 8.5%",
-          "На пенсионное страхование - 20%, на медицинское страхование - 5.1%, на социальное страхование - 2,9%, взносы за травматизм - от 2.2, до 5.5%",
-          "На пенсионное страхование - 18%, на медицинское страхование - 7%, на социальное страхование - 2,3%, взносы за травматизм - от 0.2, до 8.5%",
-          "На пенсионное страхование - 17%, на медицинское страхование - 3.1%, на социальное страхование - 1,9%, взносы за травматизм - от 2.7, до 6.5%",
+        idAnswerCorrect: 29,
+        answers: [
+          {
+            idAnswer: 27,
+            answer:
+              "На пенсионное страхование - 27%, на медицинское страхование - 9.1%, на социальное страхование - 0,9%, взносы за травматизм - от 0.2, до 8.5%",
+            state: EEntityState.Unlocked,
+          },
+          {
+            idAnswer: 28,
+            answer:
+              "На пенсионное страхование - 20%, на медицинское страхование - 5.1%, на социальное страхование - 2,9%, взносы за травматизм - от 2.2, до 5.5%",
+            state: EEntityState.Unlocked,
+          },
+          {
+            idAnswer: 29,
+            answer:
+              "На пенсионное страхование - 22%, на медицинское страхование - 5.1%, на социальное страхование - 2,9%, взносы за травматизм - от 0.2, до 8.5%",
+            state: EEntityState.Unlocked,
+          },
+          {
+            idAnswer: 30,
+            answer:
+              "На пенсионное страхование - 18%, на медицинское страхование - 7%, на социальное страхование - 2,3%, взносы за травматизм - от 0.2, до 8.5%",
+            state: EEntityState.Unlocked,
+          },
+          {
+            idAnswer: 31,
+            answer:
+              "На пенсионное страхование - 17%, на медицинское страхование - 3.1%, на социальное страхование - 1,9%, взносы за травматизм - от 2.7, до 6.5%",
+            state: EEntityState.Unlocked,
+          },
         ],
-        guessed: 'undefined',
+        guessed: "undefined",
       },
       {
-        id: 9,
+        idQuestion: 9,
         category: "Общие знания",
         type: "multiple",
         difficulty: "hard",
         question:
           "Может ли физическое лицо, не являющееся индивидуальным предпринимателем, являться налогоплательщиком НДС?",
-        correct_answer: "Нет",
-        incorrect_answers: ["Да"],
-        guessed: 'undefined',
+        idAnswerCorrect: 33,
+        answers: [
+          { idAnswer: 32, answer: "Да", state: EEntityState.Unlocked },
+          { idAnswer: 33, answer: "Нет", state: EEntityState.Unlocked },
+        ],
+        guessed: "undefined",
       },
       {
-        id: 10,
+        idQuestion: 10,
         category: "Общие знания",
         type: "boolean",
         difficulty: "medium",
         question:
           "Какие страховые взносы Не платит индивидуальный предприниматель?",
-        correct_answer: "В фонд добровольного медицинского страхования",
-        incorrect_answers: [
-          "В пенсионный фонд",
-          "В фон обязательного медицинского страхования",
+        idAnswerCorrect: 36,
+        answers: [
+          {
+            idAnswer: 34,
+            answer: "В пенсионный фонд",
+            state: EEntityState.Unlocked,
+          },
+          {
+            idAnswer: 35,
+            answer: "В фонд обязательного медицинского страхования",
+            state: EEntityState.Unlocked,
+          },
+          {
+            idAnswer: 36,
+            answer: "В фонд добровольного медицинского страхования",
+            state: EEntityState.Unlocked,
+          },
         ],
-        guessed: 'undefined',
-      },*/,
+        guessed: "undefined",
+      },
     ];
 
-    result.map((item) => {
-      item.shuffled_answers = shuffle([
-        item.correct_answer,
-        ...item.incorrect_answers,
-      ]);
-      delete item.incorrect_answers;
-    });
+    result.forEach((item) => shuffle(item.answers));
+
     data.value = result;
-    currentQuestion.value = 0;
-    isShowAnswer.value = false;
+    questionNumber.value = 0;
     questionCount.value = data.value.length;
     isLoading.value = false;
   }
@@ -208,8 +337,11 @@ export const useTestsStore = defineStore("tests", () => {
   }
 
   function incrementProgressValue() {
-    console.log("incrementProgressValue from store");
     progressValue.value += Math.ceil(100 / questionCount.value);
+  }
+
+  function toggleIsOptionSelected(value: boolean) {
+    isOptionSelected.value = value;
   }
 
   return {
@@ -218,11 +350,10 @@ export const useTestsStore = defineStore("tests", () => {
     questionCount,
     isOptionSelected,
     isTestEnded,
-    isShowAnswer,
     data,
     options,
     isLoading,
-    currentQuestion,
+    questionNumber,
     step,
     getNextQuestion,
     startTest,
@@ -232,5 +363,8 @@ export const useTestsStore = defineStore("tests", () => {
     restartTest,
     incrementScore,
     incrementProgressValue,
+    toggleIsOptionSelected,
+    isAnswerIsCorrect,
+    getQuestion,
   };
 });

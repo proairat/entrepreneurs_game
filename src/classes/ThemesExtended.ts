@@ -1,3 +1,4 @@
+import { EEntityState } from "@/types/enums";
 import type { IEduElementThemes, ITheme } from "@/types/interfaces";
 import type { TElemsList } from "@/types/types";
 import { BaseEduElement } from "./BaseEduElement";
@@ -23,8 +24,8 @@ class ThemesExtended extends BaseEduElement implements IEduElementThemes {
         const clickThemeIndex = super.findIndex(th, themeId);
 
         if (activeThemeIndex !== -1 && clickThemeIndex !== -1) {
-          th[activeThemeIndex]["state"] = "default";
-          th[clickThemeIndex]["state"] = "active";
+          th[activeThemeIndex]["state"] = EEntityState.Default;
+          th[clickThemeIndex]["state"] = EEntityState.Active;
         }
       }
     }

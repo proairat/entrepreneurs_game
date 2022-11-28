@@ -1,3 +1,4 @@
+import { EEntityState } from "@/types/enums";
 import type { IEduElementVideos, IVideo } from "@/types/interfaces";
 import type { TElemsList } from "@/types/types";
 import { BaseEduElement } from "./BaseEduElement";
@@ -23,8 +24,8 @@ class VideosExtended extends BaseEduElement implements IEduElementVideos {
         const clickVideoIndex = super.findIndex(vid, videoId);
 
         if (activeVideoIndex !== -1 && clickVideoIndex !== -1) {
-          vid[activeVideoIndex]["state"] = "default";
-          vid[clickVideoIndex]["state"] = "active";
+          vid[activeVideoIndex]["state"] = EEntityState.Default;
+          vid[clickVideoIndex]["state"] = EEntityState.Active;
         }
       }
     }
