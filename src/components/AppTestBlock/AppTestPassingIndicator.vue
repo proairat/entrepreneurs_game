@@ -1,11 +1,11 @@
 <template>
   <div class="flex items-center justify-between">
-    <div>{{ questionNumber + 1 }}/{{ questionCount }}</div>
+    <div class="w-24">{{ questionNumber + 1 }}/{{ questionCount }}</div>
     <div class="flex my-6">
       <div
         v-for="item in data"
         :key="item.idQuestion"
-        class="w-5 h-5 rounded-[0.625rem] text- mx-1 text-center text-xs flex items-center justify-center"
+        class="w-5 h-5 rounded-md text- mx-1 text-center text-xs flex items-center justify-center"
         :class="{
           'bg-green-200': item.guessed === EGuessed.Right,
           'bg-red-200': item.guessed === EGuessed.Wrong,
@@ -17,7 +17,7 @@
       </div>
     </div>
     <div
-      class="w-20 text-center"
+      class="w-24 text-center rounded-md"
       :class="{
         'bg-green-200': data[questionNumber].guessed === EGuessed.Right,
         'bg-red-200': data[questionNumber].guessed === EGuessed.Wrong,

@@ -1,6 +1,7 @@
 import { defineStore } from "pinia";
 import { fetchWrapper } from "@/helpers";
 import { useAuthStore } from "@/stores";
+import type { IUser } from "@/types/interfaces";
 
 const baseUrl = `${import.meta.env.VITE_API_URL}/users`;
 
@@ -11,8 +12,7 @@ export const useUsersStore = defineStore({
     user: {},
   }),
   actions: {
-    async register(user) {
-      console.log("users.store.js -> register(user), user = ", user);
+    async register(user: IUser) {
       await fetchWrapper.post(`${baseUrl}/register`, user);
     },
     async getAll() {
@@ -23,7 +23,7 @@ export const useUsersStore = defineStore({
         this.users = { error };
       }
     },
-    async getById(id) {
+    async getById(id: string | string[]) {
       this.user = { loading: true };
       try {
         this.user = await fetchWrapper.get(`${baseUrl}/${id}`);

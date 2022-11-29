@@ -25,7 +25,7 @@ const icons = ref([
 </script>
 
 <style scoped lang="scss">
-$padding: 22px;
+$padding: 1.375rem;
 
 .webServicesIcons {
   padding: 0 $padding;

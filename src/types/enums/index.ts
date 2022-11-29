@@ -1,3 +1,8 @@
+enum EAlert {
+  Success = "success",
+  Error = "error",
+}
+
 enum EEntityState {
   Active = "active",
   Default = "default",
@@ -29,4 +34,4 @@ enum EGuessed {
   Active = "active",
 }
 
-export { EEntityState, EEntityType, EPercent, EGuessed };
+export { EAlert, EEntityState, EEntityType, EPercent, EGuessed };

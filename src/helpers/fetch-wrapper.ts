@@ -7,7 +7,7 @@ export const fetchWrapper = {
   delete: request("DELETE"),
 };
 
-function request(method) {
+function request(method: string) {
   return (url, body) => {
     const requestOptions = {
       method,

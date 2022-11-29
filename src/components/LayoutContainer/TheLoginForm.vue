@@ -82,6 +82,7 @@ const submitForm = async (formEl: FormInstance | undefined) => {
         await authStore.login(formModel.login, formModel.password);
         loading.value = false;
       } catch (error) {
+        loading.value = false;
         console.log("try error TheLoginForm", error);
       }
     } else {
@@ -92,8 +93,8 @@ const submitForm = async (formEl: FormInstance | undefined) => {
 </script>
 
 <style scoped lang="scss">
-$padding: 22px;
-$margin: 22px;
+$padding: 1.375rem;
+$margin: 1.375rem;
 
 .entryLoginAndPassword {
   color: $gray-80;

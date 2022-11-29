@@ -52,11 +52,10 @@ function fakeBackend() {
 
       function register() {
         const user = body();
+        const result = users.find((x) => x.login === user.login);
 
-        console.log("fake-backend.js -> register(), user", user);
-
-        if (users.find((x) => x.login === user.login)) {
-          return error('Имя пользователя "' + user.login + '" уже занято');
+        if (result) {
+          return error(`Имя пользователя "${user.login}" уже занято`);
         }
 
         user.id = users.length ? Math.max(...users.map((x) => x.id)) + 1 : 1;
@@ -93,7 +92,7 @@ function fakeBackend() {
           params.login !== user.login &&
           users.find((x) => x.login === params.login)
         ) {
-          return error('Имя пользователя "' + params.login + '" уже занято');
+          return error(`Имя пользователя "${params.login}" уже занято`);
         }
 
         // update and save user
@@ -125,7 +124,7 @@ function fakeBackend() {
         });
       }
 
-      function error(message) {
+      function error(message: string) {
         resolve({
           status: 400,
           ...headers(),
@@ -154,7 +153,6 @@ function fakeBackend() {
         return {
           headers: {
             get(key) {
-              console.log("Call headers -> key", key);
               return ["application/json"];
             },
           },

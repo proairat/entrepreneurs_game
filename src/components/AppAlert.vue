@@ -19,6 +19,7 @@ import { useAlertStore } from "@/stores";
 const props = defineProps<{
   isDisappears: boolean;
 }>();
+
 const alertStore = useAlertStore();
 const { alert } = storeToRefs(alertStore);
 const flag = ref(false);
