@@ -1,5 +1,5 @@
 <template>
-  <div class="flex" :class="$attrs.class">
+  <div class="flex items-center">
     <img
       v-for="n in countCoins"
       :src="coin"

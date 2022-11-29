@@ -1,5 +1,18 @@
-import type { EEntityState, EEntityType, EGuessed } from "../enums";
+import type { EAlert, EEntityState, EEntityType, EGuessed } from "../enums";
 import type { TElemsList } from "../types";
+
+interface IUser {
+  surname: string;
+  name: string;
+  patronymic: string;
+  login: string;
+  password: string;
+}
+
+interface IAlert {
+  message: string;
+  type: EAlert.Success | EAlert.Error;
+}
 
 interface INavigation {
   id: number;
@@ -86,6 +99,8 @@ interface IProgressCaption {
 }
 
 export type {
+  IUser,
+  IAlert,
   INavigation,
   ITheme,
   IModule,

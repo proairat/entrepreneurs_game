@@ -121,6 +121,7 @@ const submitForm = async (formEl: FormInstance | undefined) => {
         alertStore.success("Регистрация прошла успешно!");
         loading.value = false;
       } catch (error) {
+        loading.value = false;
         alertStore.error(error);
       }
     } else {
@@ -131,8 +132,8 @@ const submitForm = async (formEl: FormInstance | undefined) => {
 </script>
 
 <style scoped lang="scss">
-$padding: 22px;
-$margin: 22px;
+$padding: 1.375rem;
+$margin: 1.375rem;
 
 .entryRegistrationData {
   color: $gray-80;

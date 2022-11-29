@@ -1,8 +1,8 @@
 <template>
   <div class="text-gray-700 flex flex-col items-center justify-center pt-6">
-    <div class="pb-20 flex flex-col items-center">
+    <div class="flex flex-col items-center">
       <AppTestPercentAnswers :percent="getPercent" />
-      <AppTestResultCoins class="mb-4" :percent="getPercent" />
+      <AppTestResultCoins :percent="getPercent" />
       <AppTestResultButton :percent="getPercent" />
     </div>
   </div>
