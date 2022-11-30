@@ -1,18 +1,12 @@
-import {
-  ViewStartPage,
-  AppLogin,
-  AppLogic,
-  AppRegister,
-} from "@/views/account";
+import { ViewRenderStartPage, ViewLogin, ViewRegister } from "@/views/account";
 
 export default {
   path: "/account",
-  name: "ViewStartPage",
-  component: ViewStartPage,
+  name: "ViewRenderStartPage",
+  component: ViewRenderStartPage,
   children: [
     { path: "", name: "redirectLogin", redirect: "login" },
-    { path: "login", name: "AppLogin", component: AppLogin },
-    { path: "logic", name: "AppLogic", component: AppLogic },
-    { path: "register", name: "AppRegister", component: AppRegister },
+    { path: "login", name: "ViewLogin", component: ViewLogin },
+    { path: "register", name: "ViewRegister", component: ViewRegister },
   ],
 };

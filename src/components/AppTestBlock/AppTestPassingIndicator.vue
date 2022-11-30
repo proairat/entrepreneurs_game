@@ -4,7 +4,7 @@
     <div class="flex my-6">
       <div
         v-for="item in data"
-        :key="item.idQuestion"
+        :key="item.id"
         class="w-5 h-5 rounded-md text- mx-1 text-center text-xs flex items-center justify-center"
         :class="{
           'bg-green-200': item.guessed === EGuessed.Right,
@@ -13,7 +13,7 @@
           yellowColor: item.guessed === EGuessed.Active,
         }"
       >
-        {{ item.idQuestion }}
+        {{ item.id }}
       </div>
     </div>
     <div

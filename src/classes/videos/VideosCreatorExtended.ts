@@ -1,6 +1,6 @@
 import type { IEduElementVideos, IVideo } from "@/types/interfaces";
 import type { TElemsList } from "@/types/types";
-import { CreatorExtended } from "./CreatorExtended";
+import { CreatorExtended } from "../CreatorExtended";
 import { VideosExtended } from "./VideosExtended";
 
 class VideosCreatorExtended extends CreatorExtended {

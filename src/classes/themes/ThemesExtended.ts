@@ -1,7 +1,7 @@
 import { EEntityState } from "@/types/enums";
 import type { IEduElementThemes, ITheme } from "@/types/interfaces";
 import type { TElemsList } from "@/types/types";
-import { BaseEduElement } from "./BaseEduElement";
+import { BaseEduElement } from "../BaseEduElement";
 
 class ThemesExtended extends BaseEduElement implements IEduElementThemes {
   list: TElemsList<number, ITheme>;
@@ -16,16 +16,15 @@ class ThemesExtended extends BaseEduElement implements IEduElementThemes {
     themeId: number
   ): void {
     if (this.list instanceof Map) {
-      const th = elems;
       const activeElem = this.getActiveElem(moduleId);
 
-      if (Array.isArray(th) && activeElem !== undefined) {
-        const activeThemeIndex = super.findIndex(th, activeElem.id);
-        const clickThemeIndex = super.findIndex(th, themeId);
+      if (Array.isArray(elems) && activeElem !== undefined) {
+        const activeThemeIndex = super.findIndex(elems, activeElem.id);
+        const clickThemeIndex = super.findIndex(elems, themeId);
 
         if (activeThemeIndex !== -1 && clickThemeIndex !== -1) {
-          th[activeThemeIndex]["state"] = EEntityState.Default;
-          th[clickThemeIndex]["state"] = EEntityState.Active;
+          elems[activeThemeIndex]["state"] = EEntityState.Default;
+          elems[clickThemeIndex]["state"] = EEntityState.Active;
         }
       }
     }

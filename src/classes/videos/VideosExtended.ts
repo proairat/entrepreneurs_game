@@ -1,7 +1,7 @@
 import { EEntityState } from "@/types/enums";
 import type { IEduElementVideos, IVideo } from "@/types/interfaces";
 import type { TElemsList } from "@/types/types";
-import { BaseEduElement } from "./BaseEduElement";
+import { BaseEduElement } from "../BaseEduElement";
 
 class VideosExtended extends BaseEduElement implements IEduElementVideos {
   list: TElemsList<number, IVideo>;
@@ -16,16 +16,15 @@ class VideosExtended extends BaseEduElement implements IEduElementVideos {
     videoId: number
   ): void {
     if (this.list instanceof Map) {
-      const vid = elems;
       const activeElem = this.getActiveElem(moduleId);
 
-      if (Array.isArray(vid) && activeElem !== undefined) {
-        const activeVideoIndex = super.findIndex(vid, activeElem.id);
-        const clickVideoIndex = super.findIndex(vid, videoId);
+      if (Array.isArray(elems) && activeElem !== undefined) {
+        const activeVideoIndex = super.findIndex(elems, activeElem.id);
+        const clickVideoIndex = super.findIndex(elems, videoId);
 
         if (activeVideoIndex !== -1 && clickVideoIndex !== -1) {
-          vid[activeVideoIndex]["state"] = EEntityState.Default;
-          vid[clickVideoIndex]["state"] = EEntityState.Active;
+          elems[activeVideoIndex]["state"] = EEntityState.Default;
+          elems[clickVideoIndex]["state"] = EEntityState.Active;
         }
       }
     }

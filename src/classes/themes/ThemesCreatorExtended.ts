@@ -1,6 +1,6 @@
 import type { IEduElementThemes, ITheme } from "@/types/interfaces";
 import type { TElemsList } from "@/types/types";
-import { CreatorExtended } from "./CreatorExtended";
+import { CreatorExtended } from "../CreatorExtended";
 import { ThemesExtended } from "./ThemesExtended";
 
 class ThemesCreatorExtended extends CreatorExtended {

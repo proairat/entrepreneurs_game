@@ -108,7 +108,7 @@ const navigation = ref([
     name: "Выход",
     to: "login",
     href: "#",
-    componentName: "AppLogin",
+    componentName: "ViewLogin",
     current: false,
     src: await getImageUrl("exit"),
     alt: "Выход",

@@ -65,17 +65,6 @@ function getURLPathNameDigit(url: string): string | null {
   return Array.isArray(result) ? result[0] : null;
 }
 
-/*
-  Получить значение по ключу из хранилища
-  getValueFromStore(ключ, хранилище)
-*/
-
-/*
-  function getValueFromStore(key: string, store: Store<any>) {
-    return computed(() => store.state[key]);
-  }
-*/
-
 function deepClone(value: any): any {
   if (Array.isArray(value)) {
     return value.map((child) => deepClone(child));
@@ -151,7 +140,6 @@ export {
   FulfillRequests,
   getURLParamValue,
   getURLPathNameDigit,
-  // getValueFromStore,
   deepClone,
   getImageUrl,
   removeObjectProperty,

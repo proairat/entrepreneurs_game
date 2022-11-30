@@ -46,6 +46,7 @@ const getModuleId = computed(() => {
 const getThemeTitle = computed(() => {
   return activeTheme.value.title;
 });
+console.log("Проверяем...activeTheme", activeTheme.value);
 </script>
 
 <style scoped lang="scss">

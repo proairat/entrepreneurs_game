@@ -1,5 +1,5 @@
 import type { IEduElementModules, IModule } from "@/types/interfaces";
-import { CreatorExtended } from "./CreatorExtended";
+import { CreatorExtended } from "../CreatorExtended";
 import { ModulesExtended } from "./ModulesExtended";
 
 class ModulesCreatorExtended extends CreatorExtended {
