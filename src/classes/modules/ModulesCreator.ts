@@ -1,5 +1,5 @@
 import type { IEduCommonElement } from "@/types/interfaces";
-import { Creator } from "./Creator";
+import { Creator } from "../Creator";
 import { Modules } from "./Modules";
 
 class ModulesCreator extends Creator {

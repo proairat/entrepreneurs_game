@@ -102,10 +102,6 @@ export const useModulesStore = defineStore("modules", () => {
     return eduElementModules.getList();
   }
 
-  function getVideosList() {
-    return eduElementVideos.getList();
-  }
-
   function getActiveVideo(moduleId: number) {
     return eduElementVideosExtended.getActiveElem(moduleId) as IVideo;
   }
@@ -125,7 +121,6 @@ export const useModulesStore = defineStore("modules", () => {
     getThemesByModuleId,
     getVideosByModuleId,
     getModulesList,
-    getVideosList,
     updateActiveTheme,
     updateActiveModule,
     updateActiveVideo,

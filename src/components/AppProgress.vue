@@ -28,6 +28,7 @@ const props = defineProps<{
 }>();
 
 const caption: IProgressCaption = {
+  entryTests: "Текущий прогресс входного тестирования",
   topics: "Текущий прогресс темы",
   tests: "Текущий прогресс теста",
 };
@@ -42,7 +43,6 @@ const progressCaption = computed(() => {
   background-color: $white;
   border-radius: 0.625rem;
   box-shadow: $box-shadow-2dp;
-  height: 5.5rem;
   padding: 1rem;
   margin-bottom: 1.5rem;
 

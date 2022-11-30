@@ -7,6 +7,7 @@ interface IUser {
   patronymic: string;
   login: string;
   password: string;
+  entranceTesting: boolean;
 }
 
 interface IAlert {
@@ -58,21 +59,43 @@ interface ITest {
   type: string;
   difficulty: string;
   question: string;
-  correct_answer: string;
-  answers: string[];
-  guessed: EGuessed.Right | EGuessed.Wrong | EGuessed.Undefined;
+  state: EEntityState.Active | EEntityState.Default;
+  idAnswerCorrect: number;
+  answers: IAnswer[];
+  guessed: EGuessed;
+}
+
+interface IAnswer {
+  idAnswer: number;
+  answer: string;
+  state: EEntityState;
+}
+
+interface IEntranceTest {
+  id: number;
+  category: string;
+  type: EEntityType.EntranceTests;
+  difficulty: string;
+  question: string;
+  idAnswerCorrect: number;
+  answers: IAnswer[];
+  guessed: EGuessed;
 }
 
 interface IEduCommonElement {
   createList():
     | IModule[]
     | TElemsList<number, ITheme>
-    | TElemsList<number, IVideo>;
+    | TElemsList<number, IVideo>
+    | IEntranceTest[]
+    | TElemsList<number, ITest>;
   addToList(): void;
   getList():
     | IModule[]
     | TElemsList<number, ITheme>
     | TElemsList<number, IVideo>
+    | IEntranceTest[]
+    | TElemsList<number, ITest>
     | undefined;
 }
 
@@ -93,22 +116,32 @@ interface IEduElementVideos {
   getVideosByModuleId(moduleId: number): IVideo[] | undefined;
 }
 
+interface IEduElementTests {
+  updateActiveElem(themeId: number, elems: ITest[], testId: number): void;
+  getActiveElem(themeId: number): ITest | undefined;
+  getTestsByThemeId(themeId: number): ITest[] | undefined;
+}
+
 interface IProgressCaption {
   topics: string;
   tests: string;
+  entryTests: string;
 }
 
 export type {
   IUser,
   IAlert,
   INavigation,
-  ITheme,
   IModule,
+  ITheme,
   IVideo,
   ITest,
+  IAnswer,
+  IEntranceTest,
   IEduCommonElement,
   IEduElementModules,
   IEduElementThemes,
   IEduElementVideos,
+  IEduElementTests,
   IProgressCaption,
 };

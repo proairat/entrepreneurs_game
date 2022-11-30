@@ -16,6 +16,7 @@ enum EEntityType {
   Tests = "tests",
   Modules = "modules",
   Videos = "videos",
+  EntranceTests = "entranceTests",
 }
 
 enum EPercent {

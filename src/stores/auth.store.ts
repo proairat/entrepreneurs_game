@@ -22,11 +22,24 @@ export const useAuthStore = defineStore("auth", {
         // update pinia state
         this.user = user;
 
+        console.log("this.user", this.user);
+
+        /*
+        const url = this.user.entranceTesting
+          ? "/modules"
+          : "/entrance-testing";
+        */
+
+        const url = this.user.entranceTesting
+          ? "/entrance-testing"
+          : "/modules";
+
+        console.log("login url", url);
         // store user details and jwt in local storage to keep user logged in between page refreshes
         localStorage.setItem("user", JSON.stringify(user));
 
         // redirect to previous url or default to home page
-        router.push(this.returnUrl || "/");
+        router.push(this.returnUrl || url);
       } catch (error) {
         const alertStore = useAlertStore();
         alertStore.error(error);

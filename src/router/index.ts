@@ -3,6 +3,7 @@ import { useAuthStore, useAlertStore } from "@/stores";
 import accountRoutes from "./account.routes";
 import usersRoutes from "./users.routes";
 import modulesRoutes from "./modules.routes";
+import testsRoutes from "./tests.routes";
 
 export const router = createRouter({
   history: createWebHistory(import.meta.env.BASE_URL),
@@ -19,6 +20,7 @@ export const router = createRouter({
     { ...accountRoutes },
     { ...usersRoutes },
     { ...modulesRoutes },
+    { ...testsRoutes },
     // catch all redirect to home page
     { path: "/:pathMatch(.*)*", name: "redirectModules", redirect: "/modules" },
   ],

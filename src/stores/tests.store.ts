@@ -3,6 +3,35 @@ import { EEntityState, EGuessed } from "@/types/enums";
 import { defineStore } from "pinia";
 import { ref } from "vue";
 
+import type { ITest, IEduElementTests } from "@/types/interfaces";
+import {
+  Creator,
+  TestsCreator,
+  CreatorExtended,
+  TestsCreatorExtended,
+} from "@/classes";
+import type { TElemsList } from "@/types/types";
+
+function getEduElement(creator: Creator) {
+  const eduElement = creator.getEduElement();
+  eduElement.createList();
+  eduElement.addToList();
+  return eduElement;
+}
+
+function getEduElementExtended(creator: CreatorExtended) {
+  const eduElement = creator.getEduElement();
+  return eduElement;
+}
+
+const eduElementTests = getEduElement(new TestsCreator());
+
+const eduElementTestsExtended = getEduElementExtended(
+  new TestsCreatorExtended(
+    eduElementTests.getList() as TElemsList<number, ITest>
+  )
+) as IEduElementTests;
+
 export const useTestsStore = defineStore("tests", () => {
   const progressValue = ref(0);
   const score = ref(0);
@@ -53,11 +82,15 @@ export const useTestsStore = defineStore("tests", () => {
     }
   }
 
+  function getTestsByThemeId(themeId: number) {
+    return eduElementTestsExtended.getTestsByThemeId(themeId);
+  }
+
   function getData() {
     isLoading.value = true;
     const result = [
       {
-        idQuestion: 1,
+        id: 1,
         category: "Общие знания",
         type: "multiple",
         difficulty: "medium",
@@ -72,7 +105,7 @@ export const useTestsStore = defineStore("tests", () => {
         guessed: "active",
       },
       {
-        idQuestion: 2,
+        id: 2,
         category: "Общие знания",
         type: "multiple",
         difficulty: "easy",
@@ -113,7 +146,7 @@ export const useTestsStore = defineStore("tests", () => {
         guessed: "undefined",
       },
       {
-        idQuestion: 3,
+        id: 3,
         category: "Общие знания",
         type: "multiple",
         difficulty: "medium",
@@ -129,7 +162,7 @@ export const useTestsStore = defineStore("tests", () => {
         guessed: "undefined",
       },
       {
-        idQuestion: 4,
+        id: 4,
         category: "Общие знания",
         type: "multiple",
         difficulty: "medium",
@@ -152,7 +185,7 @@ export const useTestsStore = defineStore("tests", () => {
         guessed: "undefined",
       },
       {
-        idQuestion: 5,
+        id: 5,
         category: "Общие знания",
         type: "boolean",
         difficulty: "easy",
@@ -183,7 +216,7 @@ export const useTestsStore = defineStore("tests", () => {
         guessed: "undefined",
       },
       {
-        idQuestion: 6,
+        id: 6,
         category: "Общие знания",
         type: "multiple",
         difficulty: "hard",
@@ -197,7 +230,7 @@ export const useTestsStore = defineStore("tests", () => {
         guessed: "undefined",
       },
       {
-        idQuestion: 7,
+        id: 7,
         category: "Общие знания",
         type: "multiple",
         difficulty: "easy",
@@ -227,7 +260,7 @@ export const useTestsStore = defineStore("tests", () => {
         guessed: "undefined",
       },
       {
-        idQuestion: 8,
+        id: 8,
         category: "Общие знания",
         type: "multiple",
         difficulty: "medium",
@@ -269,7 +302,7 @@ export const useTestsStore = defineStore("tests", () => {
         guessed: "undefined",
       },
       {
-        idQuestion: 9,
+        id: 9,
         category: "Общие знания",
         type: "multiple",
         difficulty: "hard",
@@ -283,7 +316,7 @@ export const useTestsStore = defineStore("tests", () => {
         guessed: "undefined",
       },
       {
-        idQuestion: 10,
+        id: 10,
         category: "Общие знания",
         type: "boolean",
         difficulty: "medium",
@@ -366,5 +399,6 @@ export const useTestsStore = defineStore("tests", () => {
     toggleIsOptionSelected,
     isAnswerIsCorrect,
     getQuestion,
+    getTestsByThemeId,
   };
 });

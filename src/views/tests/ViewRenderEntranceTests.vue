@@ -5,7 +5,6 @@
       <router-view />
     </div>
     <AppFooter />
-    <!--<router-link to="/users">Управление пользователями</router-link>-->
   </div>
 </template>
 
@@ -20,7 +19,7 @@ const { logout } = authStore;
 
 <style scoped lang="scss">
 .wrapper {
-  min-height: calc(100vh - 24rem);
+  min-height: calc(100vh - 20rem);
   background-color: $gray-10;
 }
 </style>

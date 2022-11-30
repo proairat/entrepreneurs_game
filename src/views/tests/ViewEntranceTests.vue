@@ -1,0 +1,41 @@
+<template>
+  <AppTitleLine>
+    <AppTitle> Входное тестирование </AppTitle>
+  </AppTitleLine>
+  <div class="outer-part">
+    <div class="max-w-6xl mx-auto">
+      <div class="main-part">
+        <div class="left-side">
+          <AppProgress type="entryTests" />
+        </div>
+        <div class="right-side">
+          <AppTestBlock />
+        </div>
+      </div>
+    </div>
+  </div>
+</template>
+
+<script setup lang="ts"></script>
+
+<style scoped lang="scss">
+.outer-part {
+  background-color: $gray-10;
+  padding-bottom: 1.5rem;
+}
+.main-part {
+  display: grid;
+  grid-template-columns: 1fr 3fr;
+  grid-template-areas: "left-side right-side";
+  background-color: $gray-10;
+  margin: 0 1.5rem;
+}
+
+.left-side {
+  grid-area: left-side;
+  margin-right: 1.5rem;
+}
+.right-side {
+  grid-area: right-side;
+}
+</style>
