@@ -90,6 +90,15 @@ interface IEntranceTest {
   guessed: EGuessed;
 }
 
+interface IEduCommonElement<T> {
+  createList(
+    param: T[] | TElemsList<number, T>
+  ): T[] | TElemsList<number, T> | undefined;
+  addToList(param: TElemsList<number, T>): void;
+  getList(): T[] | TElemsList<number, T> | undefined;
+}
+
+/*
 interface IEduCommonElement {
   createList():
     | IModule[]
@@ -98,7 +107,7 @@ interface IEduCommonElement {
     | IEntranceTest[]
     | TElemsList<number, ITestContent>
     | TElemsList<number, ITest>;
-  addToList(): void;
+  addToList(param: any): void;
   getList():
     | IModule[]
     | TElemsList<number, ITheme>
@@ -108,6 +117,7 @@ interface IEduCommonElement {
     | TElemsList<number, ITest>
     | undefined;
 }
+*/
 
 interface IEduElementModules {
   updateActiveElem(moduleId: number, elems: IModule[]): void;

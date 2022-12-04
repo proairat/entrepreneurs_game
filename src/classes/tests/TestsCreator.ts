@@ -1,10 +1,10 @@
-import type { IEduCommonElement } from "@/types/interfaces";
+import type { IEduCommonElement, ITest } from "@/types/interfaces";
 import { Creator } from "../Creator";
-import { Tests } from "./Tests";
+import { GenericEntityClass } from "@/classes/GenericEntityClass";
 
 class TestsCreator extends Creator {
-  public factoryMethod(): IEduCommonElement {
-    return new Tests();
+  public factoryMethod(): IEduCommonElement<ITest> {
+    return new GenericEntityClass<ITest>();
   }
 }
 

@@ -7,3 +7,4 @@ export * from "./videos";
 export * from "./tests";
 export * from "./testsContent";
 export * from "./entranceTests";
+export * from "./GenericEntityClass";
