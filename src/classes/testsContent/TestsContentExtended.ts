@@ -1,26 +1,29 @@
 import { EEntityState } from "@/types/enums";
-import type { IEduElementVideos, IVideo } from "@/types/interfaces";
+import type { IEduElementTestsContent, ITestContent } from "@/types/interfaces";
 import type { TElemsList } from "@/types/types";
 import { BaseEduElement } from "../BaseEduElement";
 
-class VideosExtended extends BaseEduElement implements IEduElementVideos {
-  list: TElemsList<number, IVideo>;
+class TestsContentExtended
+  extends BaseEduElement
+  implements IEduElementTestsContent
+{
+  list: TElemsList<number, ITestContent>;
 
-  constructor(list: TElemsList<number, IVideo>) {
+  constructor(list: TElemsList<number, ITestContent>) {
     super();
     this.list = list;
   }
   public updateActiveElem(
-    moduleId: number,
-    elems: IVideo[],
-    themeId: number
+    themeId: number,
+    elems: ITestContent[],
+    testId: number
   ): void {
     if (this.list instanceof Map) {
-      const activeElem = this.getActiveElem(moduleId);
+      const activeElem = this.getActiveElem(themeId);
 
       if (Array.isArray(elems) && activeElem !== undefined) {
         const activeIndex = super.findIndex(elems, activeElem.id);
-        const clickIndex = super.findIndex(elems, themeId);
+        const clickIndex = super.findIndex(elems, testId);
 
         if (activeIndex !== -1 && clickIndex !== -1) {
           elems[activeIndex]["state"] = EEntityState.Default;
@@ -29,19 +32,19 @@ class VideosExtended extends BaseEduElement implements IEduElementVideos {
       }
     }
   }
-  public getActiveElem(moduleId: number): IVideo | undefined {
+  public getActiveElem(themeId: number): ITestContent | undefined {
     if (this.list instanceof Map) {
-      const list = this.getVideosByModuleId(moduleId);
+      const list = this.getTestsByModuleId(themeId);
       if (Array.isArray(list)) {
         return super.find(list);
       }
     }
   }
-  public getVideosByModuleId(moduleId: number): IVideo[] | undefined {
+  public getTestsByModuleId(themeId: number): ITestContent[] | undefined {
     if (this.list instanceof Map) {
-      return this.list.get(moduleId);
+      return this.list.get(themeId);
     }
   }
 }
 
-export { VideosExtended };
+export { TestsContentExtended };

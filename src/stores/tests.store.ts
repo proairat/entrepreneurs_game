@@ -1,36 +1,7 @@
+import { defineStore } from "pinia";
 import { shuffle } from "@/helpers/commonFunctions";
 import { EEntityState, EGuessed } from "@/types/enums";
-import { defineStore } from "pinia";
 import { ref } from "vue";
-
-import type { ITest, IEduElementTests } from "@/types/interfaces";
-import {
-  Creator,
-  TestsCreator,
-  CreatorExtended,
-  TestsCreatorExtended,
-} from "@/classes";
-import type { TElemsList } from "@/types/types";
-
-function getEduElement(creator: Creator) {
-  const eduElement = creator.getEduElement();
-  eduElement.createList();
-  eduElement.addToList();
-  return eduElement;
-}
-
-function getEduElementExtended(creator: CreatorExtended) {
-  const eduElement = creator.getEduElement();
-  return eduElement;
-}
-
-const eduElementTests = getEduElement(new TestsCreator());
-
-const eduElementTestsExtended = getEduElementExtended(
-  new TestsCreatorExtended(
-    eduElementTests.getList() as TElemsList<number, ITest>
-  )
-) as IEduElementTests;
 
 export const useTestsStore = defineStore("tests", () => {
   const progressValue = ref(0);
@@ -39,7 +10,6 @@ export const useTestsStore = defineStore("tests", () => {
   const isOptionSelected = ref(false);
   const isTestEnded = ref(false);
   const data = ref([]);
-  const options = ref(null);
   const isLoading = ref(true);
   const questionNumber = ref(0);
   const step = ref(0);
@@ -58,8 +28,7 @@ export const useTestsStore = defineStore("tests", () => {
     }
   }
 
-  function startTest(payload) {
-    options.value = payload;
+  function startTest() {
     step.value = 1;
   }
 
@@ -80,10 +49,6 @@ export const useTestsStore = defineStore("tests", () => {
     } else {
       setGuessed(EGuessed.Wrong);
     }
-  }
-
-  function getTestsByThemeId(themeId: number) {
-    return eduElementTestsExtended.getTestsByThemeId(themeId);
   }
 
   function getData() {
@@ -384,7 +349,6 @@ export const useTestsStore = defineStore("tests", () => {
     isOptionSelected,
     isTestEnded,
     data,
-    options,
     isLoading,
     questionNumber,
     step,
@@ -399,6 +363,5 @@ export const useTestsStore = defineStore("tests", () => {
     toggleIsOptionSelected,
     isAnswerIsCorrect,
     getQuestion,
-    getTestsByThemeId,
   };
 });

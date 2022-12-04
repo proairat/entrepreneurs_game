@@ -55,6 +55,14 @@ interface IVideo {
 
 interface ITest {
   id: number;
+  type: EEntityType.Tests;
+  title: string;
+  description: string;
+  state: EEntityState.Active | EEntityState.Default;
+}
+
+interface ITestContent {
+  id: number;
   category: string;
   type: string;
   difficulty: string;
@@ -88,6 +96,7 @@ interface IEduCommonElement {
     | TElemsList<number, ITheme>
     | TElemsList<number, IVideo>
     | IEntranceTest[]
+    | TElemsList<number, ITestContent>
     | TElemsList<number, ITest>;
   addToList(): void;
   getList():
@@ -95,6 +104,7 @@ interface IEduCommonElement {
     | TElemsList<number, ITheme>
     | TElemsList<number, IVideo>
     | IEntranceTest[]
+    | TElemsList<number, ITestContent>
     | TElemsList<number, ITest>
     | undefined;
 }
@@ -111,15 +121,25 @@ interface IEduElementThemes {
 }
 
 interface IEduElementVideos {
-  updateActiveElem(moduleId: number, elems: IVideo[], videoId: number): void;
+  updateActiveElem(moduleId: number, elems: IVideo[], themeId: number): void;
   getActiveElem(moduleId: number): IVideo | undefined;
   getVideosByModuleId(moduleId: number): IVideo[] | undefined;
 }
 
 interface IEduElementTests {
-  updateActiveElem(themeId: number, elems: ITest[], testId: number): void;
-  getActiveElem(themeId: number): ITest | undefined;
-  getTestsByThemeId(themeId: number): ITest[] | undefined;
+  updateActiveElem(moduleId: number, elems: ITest[], themeId: number): void;
+  getActiveElem(moduleId: number): ITest | undefined;
+  getTestsByModuleId(moduleId: number): ITest[] | undefined;
+}
+
+interface IEduElementTestsContent {
+  updateActiveElem(
+    moduleId: number,
+    elems: ITestContent[],
+    themeId: number
+  ): void;
+  getActiveElem(moduleId: number): ITestContent | undefined;
+  getTestsByModuleId(moduleId: number): ITestContent[] | undefined;
 }
 
 interface IProgressCaption {
@@ -136,6 +156,7 @@ export type {
   ITheme,
   IVideo,
   ITest,
+  ITestContent,
   IAnswer,
   IEntranceTest,
   IEduCommonElement,
@@ -143,5 +164,6 @@ export type {
   IEduElementThemes,
   IEduElementVideos,
   IEduElementTests,
+  IEduElementTestsContent,
   IProgressCaption,
 };

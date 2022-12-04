@@ -11,35 +11,35 @@ class TestsExtended extends BaseEduElement implements IEduElementTests {
     this.list = list;
   }
   public updateActiveElem(
-    themeId: number,
+    moduleId: number,
     elems: ITest[],
-    testId: number
+    themeId: number
   ): void {
     if (this.list instanceof Map) {
-      const activeElem = this.getActiveElem(themeId);
+      const activeElem = this.getActiveElem(moduleId);
 
       if (Array.isArray(elems) && activeElem !== undefined) {
-        const activeThemeIndex = super.findIndex(elems, activeElem.id);
-        const clickThemeIndex = super.findIndex(elems, testId);
+        const activeIndex = super.findIndex(elems, activeElem.id);
+        const clickIndex = super.findIndex(elems, themeId);
 
-        if (activeThemeIndex !== -1 && clickThemeIndex !== -1) {
-          elems[activeThemeIndex]["state"] = EEntityState.Default;
-          elems[clickThemeIndex]["state"] = EEntityState.Active;
+        if (activeIndex !== -1 && clickIndex !== -1) {
+          elems[activeIndex]["state"] = EEntityState.Default;
+          elems[clickIndex]["state"] = EEntityState.Active;
         }
       }
     }
   }
-  public getActiveElem(themeId: number): ITest | undefined {
+  public getActiveElem(moduleId: number): ITest | undefined {
     if (this.list instanceof Map) {
-      const list = this.getTestsByThemeId(themeId);
+      const list = this.getTestsByModuleId(moduleId);
       if (Array.isArray(list)) {
         return super.find(list);
       }
     }
   }
-  public getTestsByThemeId(themeId: number): ITest[] | undefined {
+  public getTestsByModuleId(moduleId: number): ITest[] | undefined {
     if (this.list instanceof Map) {
-      return this.list.get(themeId);
+      return this.list.get(moduleId);
     }
   }
 }

@@ -6,15 +6,20 @@
         type='video/ogg; codecs=\"theora, vorbis\"'
       />
     </video>
+    <AppThemeHeader>{{ getVideoTitle }}</AppThemeHeader>
   </div>
 </template>
 
 <script setup lang="ts">
 import { useModulesStore } from "@/stores";
 import { storeToRefs } from "pinia";
+import { computed } from "vue";
 
 const modulesStore = useModulesStore();
-const { activeVideo, activeModule, activeTheme } = storeToRefs(modulesStore);
+const { activeVideo } = storeToRefs(modulesStore);
+const getVideoTitle = computed(() => {
+  return activeVideo.value.title;
+});
 </script>
 
 <style scoped lang="scss">

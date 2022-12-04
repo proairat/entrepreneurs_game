@@ -41,5 +41,6 @@ function changeOptionState() {
 <style scoped lang="scss">
 .testContent {
   display: grid;
+  padding: 0 1.5rem 1.5rem 1.5rem;
 }
 </style>

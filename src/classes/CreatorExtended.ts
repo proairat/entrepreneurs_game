@@ -1,6 +1,7 @@
 import type {
   IEduElementModules,
   IEduElementTests,
+  IEduElementTestsContent,
   IEduElementThemes,
   IEduElementVideos,
 } from "@/types/interfaces";
@@ -10,7 +11,8 @@ abstract class CreatorExtended {
     | IEduElementModules
     | IEduElementThemes
     | IEduElementVideos
-    | IEduElementTests;
+    | IEduElementTests
+    | IEduElementTestsContent;
   public getEduElement() {
     const eduElement = this.factoryMethod();
     return eduElement;

@@ -1,8 +1,4 @@
-import type {
-  IEduElementTests,
-  IEduElementThemes,
-  ITest,
-} from "@/types/interfaces";
+import type { IEduElementTests, ITest } from "@/types/interfaces";
 import type { TElemsList } from "@/types/types";
 import { CreatorExtended } from "../CreatorExtended";
 import { TestsExtended } from "./TestsExtended";
