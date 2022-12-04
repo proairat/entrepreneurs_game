@@ -1,7 +1,7 @@
 import type { IEduCommonElement } from "@/types/interfaces";
 import type { TElemsList } from "@/types/types";
 
-class GenericEntityClass<T> implements IEduCommonElement<T> {
+class Entity<T> implements IEduCommonElement<T> {
   list: T[] | TElemsList<number, T> | undefined;
 
   public createList(fromDB: T[] | TElemsList<number, T>) {
@@ -42,4 +42,4 @@ class GenericEntityClass<T> implements IEduCommonElement<T> {
   }
 }
 
-export { GenericEntityClass };
+export { Entity };

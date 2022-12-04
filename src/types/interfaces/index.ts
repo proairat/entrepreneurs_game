@@ -94,7 +94,7 @@ interface IEduCommonElement<T> {
   createList(
     param: T[] | TElemsList<number, T>
   ): T[] | TElemsList<number, T> | undefined;
-  addToList(param: TElemsList<number, T>): void;
+  addToList(param: T[] | TElemsList<number, T>): void;
   getList(): T[] | TElemsList<number, T> | undefined;
 }
 
