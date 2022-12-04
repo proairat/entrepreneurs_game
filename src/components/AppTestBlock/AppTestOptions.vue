@@ -9,7 +9,4 @@ import { storeToRefs } from "pinia";
 
 const testsStore = useTestsStore();
 const { isLoading } = storeToRefs(testsStore);
-const { startTest } = testsStore;
-
-startTest();
 </script>

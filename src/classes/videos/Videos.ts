@@ -13,6 +13,7 @@ class Videos implements IEduCommonElement {
   }
   public addToList(): void {
     if (this.list instanceof Map && this.list.size === 0) {
+      // module 1
       this.list.set(1, [
         {
           id: 1,
@@ -20,7 +21,7 @@ class Videos implements IEduCommonElement {
           src: "https://vk.com/video-30836025_456239619",
           videoType: 'video/ogg; codecs="theora, vorbis"',
           state: EEntityState.Active,
-          title: "module 1",
+          title: "video title module 1 videos id 1",
         },
         {
           id: 2,
@@ -28,7 +29,7 @@ class Videos implements IEduCommonElement {
           src: "https://www.youtube.com/watch?v=0ysi6DkeGmc",
           videoType: 'video/ogg; codecs="theora, vorbis"',
           state: EEntityState.Default,
-          title: "module 1",
+          title: "video title module 1 videos id 2",
         },
         {
           id: 3,
@@ -36,7 +37,7 @@ class Videos implements IEduCommonElement {
           src: "https://www.youtube.com/watch?v=0ysi6DkeGmc",
           videoType: 'video/ogg; codecs="theora, vorbis"',
           state: EEntityState.Default,
-          title: "module 1",
+          title: "video title module 1 videos id 3",
         },
         {
           id: 4,
@@ -44,7 +45,7 @@ class Videos implements IEduCommonElement {
           src: "https://www.youtube.com/watch?v=0ysi6DkeGmc",
           videoType: 'video/ogg; codecs="theora, vorbis"',
           state: EEntityState.Default,
-          title: "module 1",
+          title: "video title module 1 videos id 4",
         },
         {
           id: 5,
@@ -52,7 +53,7 @@ class Videos implements IEduCommonElement {
           src: "https://www.youtube.com/watch?v=0ysi6DkeGmc",
           videoType: 'video/ogg; codecs="theora, vorbis"',
           state: EEntityState.Default,
-          title: "module 1",
+          title: "video title module 1 videos id 5",
         },
         {
           id: 6,
@@ -60,15 +61,7 @@ class Videos implements IEduCommonElement {
           src: "https://www.youtube.com/watch?v=0ysi6DkeGmc",
           videoType: 'video/ogg; codecs="theora, vorbis"',
           state: EEntityState.Default,
-          title: "module 1",
-        },
-        {
-          id: 7,
-          type: EEntityType.Videos,
-          src: "https://www.youtube.com/watch?v=0ysi6DkeGmc",
-          videoType: 'video/ogg; codecs="theora, vorbis"',
-          state: EEntityState.Default,
-          title: "module 1",
+          title: "video title module 1 videos id 6",
         },
         {
           id: 8,
@@ -76,7 +69,7 @@ class Videos implements IEduCommonElement {
           src: "https://www.youtube.com/watch?v=0ysi6DkeGmc",
           videoType: 'video/ogg; codecs="theora, vorbis"',
           state: EEntityState.Default,
-          title: "module 1",
+          title: "video title module 1 videos id 8",
         },
         {
           id: 9,
@@ -84,7 +77,7 @@ class Videos implements IEduCommonElement {
           src: "https://www.youtube.com/watch?v=0ysi6DkeGmc",
           videoType: 'video/ogg; codecs="theora, vorbis"',
           state: EEntityState.Default,
-          title: "module 1",
+          title: "video title module 1 videos id 9",
         },
         {
           id: 10,
@@ -92,7 +85,7 @@ class Videos implements IEduCommonElement {
           src: "https://www.youtube.com/watch?v=0ysi6DkeGmc",
           videoType: 'video/ogg; codecs="theora, vorbis"',
           state: EEntityState.Default,
-          title: "module 1",
+          title: "video title module 1 videos id 10",
         },
         {
           id: 11,
@@ -100,7 +93,7 @@ class Videos implements IEduCommonElement {
           src: "https://www.youtube.com/watch?v=0ysi6DkeGmc",
           videoType: 'video/ogg; codecs="theora, vorbis"',
           state: EEntityState.Default,
-          title: "module 1",
+          title: "video title module 1 videos id 11",
         },
         {
           id: 12,
@@ -108,7 +101,7 @@ class Videos implements IEduCommonElement {
           src: "https://www.youtube.com/watch?v=0ysi6DkeGmc",
           videoType: 'video/ogg; codecs="theora, vorbis"',
           state: EEntityState.Default,
-          title: "module 1",
+          title: "video title module 1 videos id 12",
         },
         {
           id: 13,
@@ -116,15 +109,7 @@ class Videos implements IEduCommonElement {
           src: "https://www.youtube.com/watch?v=0ysi6DkeGmc",
           videoType: 'video/ogg; codecs="theora, vorbis"',
           state: EEntityState.Default,
-          title: "module 1",
-        },
-        {
-          id: 14,
-          type: EEntityType.Videos,
-          src: "https://www.youtube.com/watch?v=0ysi6DkeGmc",
-          videoType: 'video/ogg; codecs="theora, vorbis"',
-          state: EEntityState.Default,
-          title: "module 1",
+          title: "video title module 1 videos id 13",
         },
         {
           id: 15,
@@ -132,7 +117,7 @@ class Videos implements IEduCommonElement {
           src: "https://www.youtube.com/watch?v=0ysi6DkeGmc",
           videoType: 'video/ogg; codecs="theora, vorbis"',
           state: EEntityState.Default,
-          title: "module 1",
+          title: "video title module 1 videos id 15",
         },
         {
           id: 16,
@@ -140,7 +125,7 @@ class Videos implements IEduCommonElement {
           src: "https://www.youtube.com/watch?v=0ysi6DkeGmc",
           videoType: 'video/ogg; codecs="theora, vorbis"',
           state: EEntityState.Default,
-          title: "module 1",
+          title: "video title module 1 videos id 16",
         },
         {
           id: 17,
@@ -148,7 +133,7 @@ class Videos implements IEduCommonElement {
           src: "https://www.youtube.com/watch?v=0ysi6DkeGmc",
           videoType: 'video/ogg; codecs="theora, vorbis"',
           state: EEntityState.Default,
-          title: "module 1",
+          title: "video title module 1 videos id 17",
         },
         {
           id: 18,
@@ -156,7 +141,7 @@ class Videos implements IEduCommonElement {
           src: "https://www.youtube.com/watch?v=0ysi6DkeGmc",
           videoType: 'video/ogg; codecs="theora, vorbis"',
           state: EEntityState.Default,
-          title: "module 1",
+          title: "video title module 1 videos id 18",
         },
         {
           id: 19,
@@ -164,7 +149,7 @@ class Videos implements IEduCommonElement {
           src: "https://www.youtube.com/watch?v=0ysi6DkeGmc",
           videoType: 'video/ogg; codecs="theora, vorbis"',
           state: EEntityState.Default,
-          title: "module 1",
+          title: "video title module 1 videos id 19",
         },
         {
           id: 20,
@@ -172,7 +157,7 @@ class Videos implements IEduCommonElement {
           src: "https://www.youtube.com/watch?v=0ysi6DkeGmc",
           videoType: 'video/ogg; codecs="theora, vorbis"',
           state: EEntityState.Default,
-          title: "module 1",
+          title: "video title module 1 videos id 20",
         },
         {
           id: 21,
@@ -180,7 +165,7 @@ class Videos implements IEduCommonElement {
           src: "https://www.youtube.com/watch?v=0ysi6DkeGmc",
           videoType: 'video/ogg; codecs="theora, vorbis"',
           state: EEntityState.Default,
-          title: "module 1",
+          title: "video title module 1 videos id 21",
         },
         {
           id: 22,
@@ -188,7 +173,7 @@ class Videos implements IEduCommonElement {
           src: "https://www.youtube.com/watch?v=0ysi6DkeGmc",
           videoType: 'video/ogg; codecs="theora, vorbis"',
           state: EEntityState.Default,
-          title: "module 1",
+          title: "video title module 1 videos id 22",
         },
         {
           id: 23,
@@ -196,7 +181,7 @@ class Videos implements IEduCommonElement {
           src: "https://www.youtube.com/watch?v=0ysi6DkeGmc",
           videoType: 'video/ogg; codecs="theora, vorbis"',
           state: EEntityState.Default,
-          title: "module 1",
+          title: "video title module 1 videos id 23",
         },
         {
           id: 24,
@@ -204,7 +189,7 @@ class Videos implements IEduCommonElement {
           src: "https://www.youtube.com/watch?v=0ysi6DkeGmc",
           videoType: 'video/ogg; codecs="theora, vorbis"',
           state: EEntityState.Default,
-          title: "module 1",
+          title: "video title module 1 videos id 24",
         },
         {
           id: 25,
@@ -212,7 +197,7 @@ class Videos implements IEduCommonElement {
           src: "https://www.youtube.com/watch?v=0ysi6DkeGmc",
           videoType: 'video/ogg; codecs="theora, vorbis"',
           state: EEntityState.Default,
-          title: "module 1",
+          title: "video title module 1 videos id 25",
         },
         {
           id: 26,
@@ -220,7 +205,7 @@ class Videos implements IEduCommonElement {
           src: "https://www.youtube.com/watch?v=0ysi6DkeGmc",
           videoType: 'video/ogg; codecs="theora, vorbis"',
           state: EEntityState.Default,
-          title: "module 1",
+          title: "video title module 1 videos id 26",
         },
         {
           id: 27,
@@ -228,26 +213,19 @@ class Videos implements IEduCommonElement {
           src: "https://www.youtube.com/watch?v=0ysi6DkeGmc",
           videoType: 'video/ogg; codecs="theora, vorbis"',
           state: EEntityState.Default,
-          title: "module 1",
+          title: "video title module 1 videos id 27",
         },
       ]);
 
+      // module 2
       this.list.set(2, [
-        {
-          id: 28,
-          type: EEntityType.Videos,
-          src: "https://www.youtube.com/watch?v=0ysi6DkeGmc",
-          videoType: 'video/ogg; codecs="theora, vorbis"',
-          state: EEntityState.Active,
-          title: "module 2",
-        },
         {
           id: 29,
           type: EEntityType.Videos,
           src: "https://www.youtube.com/watch?v=0ysi6DkeGmc",
           videoType: 'video/ogg; codecs="theora, vorbis"',
-          state: EEntityState.Default,
-          title: "module 2",
+          state: EEntityState.Active,
+          title: "video title module 2 videos id 29",
         },
         {
           id: 30,
@@ -255,7 +233,7 @@ class Videos implements IEduCommonElement {
           src: "https://www.youtube.com/watch?v=0ysi6DkeGmc",
           videoType: 'video/ogg; codecs="theora, vorbis"',
           state: EEntityState.Default,
-          title: "module 2",
+          title: "video title module 2 videos id 30",
         },
         {
           id: 31,
@@ -263,7 +241,7 @@ class Videos implements IEduCommonElement {
           src: "https://www.youtube.com/watch?v=0ysi6DkeGmc",
           videoType: 'video/ogg; codecs="theora, vorbis"',
           state: EEntityState.Default,
-          title: "module 2",
+          title: "video title module 2 videos id 31",
         },
         {
           id: 32,
@@ -271,7 +249,7 @@ class Videos implements IEduCommonElement {
           src: "https://www.youtube.com/watch?v=0ysi6DkeGmc",
           videoType: 'video/ogg; codecs="theora, vorbis"',
           state: EEntityState.Default,
-          title: "module 2",
+          title: "video title module 2 videos id 32",
         },
         {
           id: 33,
@@ -279,7 +257,7 @@ class Videos implements IEduCommonElement {
           src: "https://www.youtube.com/watch?v=0ysi6DkeGmc",
           videoType: 'video/ogg; codecs="theora, vorbis"',
           state: EEntityState.Default,
-          title: "module 2",
+          title: "video title module 2 videos id 33",
         },
         {
           id: 34,
@@ -287,7 +265,7 @@ class Videos implements IEduCommonElement {
           src: "https://www.youtube.com/watch?v=0ysi6DkeGmc",
           videoType: 'video/ogg; codecs="theora, vorbis"',
           state: EEntityState.Default,
-          title: "module 2",
+          title: "video title module 2 videos id 34",
         },
         {
           id: 35,
@@ -295,7 +273,7 @@ class Videos implements IEduCommonElement {
           src: "https://www.youtube.com/watch?v=0ysi6DkeGmc",
           videoType: 'video/ogg; codecs="theora, vorbis"',
           state: EEntityState.Default,
-          title: "module 2",
+          title: "video title module 2 videos id 35",
         },
         {
           id: 36,
@@ -303,7 +281,7 @@ class Videos implements IEduCommonElement {
           src: "https://www.youtube.com/watch?v=0ysi6DkeGmc",
           videoType: 'video/ogg; codecs="theora, vorbis"',
           state: EEntityState.Default,
-          title: "module 2",
+          title: "video title module 2 videos id 36",
         },
         {
           id: 37,
@@ -311,34 +289,27 @@ class Videos implements IEduCommonElement {
           src: "https://www.youtube.com/watch?v=0ysi6DkeGmc",
           videoType: 'video/ogg; codecs="theora, vorbis"',
           state: EEntityState.Default,
-          title: "module 2",
+          title: "video title module 2 videos id 37",
         },
-      ]);
-
-      this.list.set(3, [
         {
           id: 38,
           type: EEntityType.Videos,
           src: "https://www.youtube.com/watch?v=0ysi6DkeGmc",
           videoType: 'video/ogg; codecs="theora, vorbis"',
-          state: EEntityState.Active,
-          title: "module 3 theme 1",
-        },
-        {
-          id: 39,
-          type: EEntityType.Videos,
-          src: "https://www.youtube.com/watch?v=0ysi6DkeGmc",
-          videoType: 'video/ogg; codecs="theora, vorbis"',
           state: EEntityState.Default,
-          title: "module 3 theme 2",
+          title: "video title module 2 videos id 38",
         },
+      ]);
+
+      // module 3
+      this.list.set(3, [
         {
           id: 40,
           type: EEntityType.Videos,
           src: "https://www.youtube.com/watch?v=0ysi6DkeGmc",
           videoType: 'video/ogg; codecs="theora, vorbis"',
-          state: EEntityState.Default,
-          title: "module 3 theme 3",
+          state: EEntityState.Active,
+          title: "video title module 3 videos theme 1 id 40",
         },
         {
           id: 41,
@@ -346,7 +317,7 @@ class Videos implements IEduCommonElement {
           src: "https://www.youtube.com/watch?v=0ysi6DkeGmc",
           videoType: 'video/ogg; codecs="theora, vorbis"',
           state: EEntityState.Default,
-          title: "module 3",
+          title: "video title module 3 videos theme 2 id 41",
         },
         {
           id: 42,
@@ -354,7 +325,7 @@ class Videos implements IEduCommonElement {
           src: "https://www.youtube.com/watch?v=0ysi6DkeGmc",
           videoType: 'video/ogg; codecs="theora, vorbis"',
           state: EEntityState.Default,
-          title: "module 3",
+          title: "video title module 3 videos theme 3 id 42",
         },
         {
           id: 43,
@@ -362,7 +333,7 @@ class Videos implements IEduCommonElement {
           src: "https://www.youtube.com/watch?v=0ysi6DkeGmc",
           videoType: 'video/ogg; codecs="theora, vorbis"',
           state: EEntityState.Default,
-          title: "module 3",
+          title: "video title module 3 videos id 43",
         },
         {
           id: 44,
@@ -370,7 +341,7 @@ class Videos implements IEduCommonElement {
           src: "https://www.youtube.com/watch?v=0ysi6DkeGmc",
           videoType: 'video/ogg; codecs="theora, vorbis"',
           state: EEntityState.Default,
-          title: "module 3",
+          title: "video title module 3 videos id 44",
         },
         {
           id: 45,
@@ -378,7 +349,7 @@ class Videos implements IEduCommonElement {
           src: "https://www.youtube.com/watch?v=0ysi6DkeGmc",
           videoType: 'video/ogg; codecs="theora, vorbis"',
           state: EEntityState.Default,
-          title: "module 3",
+          title: "video title module 3 videos id 45",
         },
         {
           id: 46,
@@ -386,7 +357,7 @@ class Videos implements IEduCommonElement {
           src: "https://www.youtube.com/watch?v=0ysi6DkeGmc",
           videoType: 'video/ogg; codecs="theora, vorbis"',
           state: EEntityState.Default,
-          title: "module 3",
+          title: "video title module 3 videos id 46",
         },
         {
           id: 47,
@@ -394,50 +365,43 @@ class Videos implements IEduCommonElement {
           src: "https://www.youtube.com/watch?v=0ysi6DkeGmc",
           videoType: 'video/ogg; codecs="theora, vorbis"',
           state: EEntityState.Default,
-          title: "module 3",
+          title: "video title module 3 videos id 47",
         },
-      ]);
-
-      this.list.set(4, [
         {
           id: 48,
           type: EEntityType.Videos,
           src: "https://www.youtube.com/watch?v=0ysi6DkeGmc",
           videoType: 'video/ogg; codecs="theora, vorbis"',
           state: EEntityState.Default,
-          title: "module 4",
+          title: "video title module 3 videos id 48",
         },
         {
           id: 49,
           type: EEntityType.Videos,
           src: "https://www.youtube.com/watch?v=0ysi6DkeGmc",
           videoType: 'video/ogg; codecs="theora, vorbis"',
-          state: EEntityState.Active,
-          title: "module 4",
-        },
-        {
-          id: 50,
-          type: EEntityType.Videos,
-          src: "https://www.youtube.com/watch?v=0ysi6DkeGmc",
-          videoType: 'video/ogg; codecs="theora, vorbis"',
           state: EEntityState.Default,
-          title: "module 4",
+          title: "video title module 3 videos id 49",
         },
+      ]);
+
+      // module 4
+      this.list.set(4, [
         {
           id: 51,
           type: EEntityType.Videos,
           src: "https://www.youtube.com/watch?v=0ysi6DkeGmc",
           videoType: 'video/ogg; codecs="theora, vorbis"',
           state: EEntityState.Default,
-          title: "module 4",
+          title: "video title module 4 videos id 51",
         },
         {
           id: 52,
           type: EEntityType.Videos,
           src: "https://www.youtube.com/watch?v=0ysi6DkeGmc",
           videoType: 'video/ogg; codecs="theora, vorbis"',
-          state: EEntityState.Default,
-          title: "module 4",
+          state: EEntityState.Active,
+          title: "video title module 4 videos id 52",
         },
         {
           id: 53,
@@ -445,7 +409,7 @@ class Videos implements IEduCommonElement {
           src: "https://www.youtube.com/watch?v=0ysi6DkeGmc",
           videoType: 'video/ogg; codecs="theora, vorbis"',
           state: EEntityState.Default,
-          title: "module 4",
+          title: "video title module 4 videos id 53",
         },
         {
           id: 54,
@@ -453,7 +417,7 @@ class Videos implements IEduCommonElement {
           src: "https://www.youtube.com/watch?v=0ysi6DkeGmc",
           videoType: 'video/ogg; codecs="theora, vorbis"',
           state: EEntityState.Default,
-          title: "module 4",
+          title: "video title module 4 videos id 54",
         },
         {
           id: 55,
@@ -461,7 +425,7 @@ class Videos implements IEduCommonElement {
           src: "https://www.youtube.com/watch?v=0ysi6DkeGmc",
           videoType: 'video/ogg; codecs="theora, vorbis"',
           state: EEntityState.Default,
-          title: "module 4",
+          title: "video title module 4 videos id 55",
         },
         {
           id: 56,
@@ -469,7 +433,7 @@ class Videos implements IEduCommonElement {
           src: "https://www.youtube.com/watch?v=0ysi6DkeGmc",
           videoType: 'video/ogg; codecs="theora, vorbis"',
           state: EEntityState.Default,
-          title: "module 4",
+          title: "video title module 4 videos id 56",
         },
         {
           id: 57,
@@ -477,7 +441,7 @@ class Videos implements IEduCommonElement {
           src: "https://www.youtube.com/watch?v=0ysi6DkeGmc",
           videoType: 'video/ogg; codecs="theora, vorbis"',
           state: EEntityState.Default,
-          title: "module 4",
+          title: "video title module 4 videos id 57",
         },
         {
           id: 58,
@@ -485,7 +449,7 @@ class Videos implements IEduCommonElement {
           src: "https://www.youtube.com/watch?v=0ysi6DkeGmc",
           videoType: 'video/ogg; codecs="theora, vorbis"',
           state: EEntityState.Default,
-          title: "module 4",
+          title: "video title module 4 videos id 58",
         },
         {
           id: 59,
@@ -493,7 +457,7 @@ class Videos implements IEduCommonElement {
           src: "https://www.youtube.com/watch?v=0ysi6DkeGmc",
           videoType: 'video/ogg; codecs="theora, vorbis"',
           state: EEntityState.Default,
-          title: "module 4",
+          title: "video title module 4 videos id 59",
         },
         {
           id: 60,
@@ -501,7 +465,7 @@ class Videos implements IEduCommonElement {
           src: "https://www.youtube.com/watch?v=0ysi6DkeGmc",
           videoType: 'video/ogg; codecs="theora, vorbis"',
           state: EEntityState.Default,
-          title: "module 4",
+          title: "video title module 4 videos id 60",
         },
         {
           id: 61,
@@ -509,18 +473,15 @@ class Videos implements IEduCommonElement {
           src: "https://www.youtube.com/watch?v=0ysi6DkeGmc",
           videoType: 'video/ogg; codecs="theora, vorbis"',
           state: EEntityState.Default,
-          title: "module 4",
+          title: "video title module 4 videos id 61",
         },
-      ]);
-
-      this.list.set(5, [
         {
           id: 62,
           type: EEntityType.Videos,
           src: "https://www.youtube.com/watch?v=0ysi6DkeGmc",
           videoType: 'video/ogg; codecs="theora, vorbis"',
-          state: EEntityState.Active,
-          title: "module 5",
+          state: EEntityState.Default,
+          title: "video title module 4 videos id 62",
         },
         {
           id: 63,
@@ -528,7 +489,7 @@ class Videos implements IEduCommonElement {
           src: "https://www.youtube.com/watch?v=0ysi6DkeGmc",
           videoType: 'video/ogg; codecs="theora, vorbis"',
           state: EEntityState.Default,
-          title: "module 5",
+          title: "video title module 4 videos id 63",
         },
         {
           id: 64,
@@ -536,34 +497,27 @@ class Videos implements IEduCommonElement {
           src: "https://www.youtube.com/watch?v=0ysi6DkeGmc",
           videoType: 'video/ogg; codecs="theora, vorbis"',
           state: EEntityState.Default,
-          title: "module 5",
+          title: "video title module 4 videos id 64",
         },
-        {
-          id: 65,
-          type: EEntityType.Videos,
-          src: "https://www.youtube.com/watch?v=0ysi6DkeGmc",
-          videoType: 'video/ogg; codecs="theora, vorbis"',
-          state: EEntityState.Default,
-          title: "module 5",
-        },
+      ]);
+
+      // module 5
+      this.list.set(5, [
         {
           id: 66,
           type: EEntityType.Videos,
           src: "https://www.youtube.com/watch?v=0ysi6DkeGmc",
           videoType: 'video/ogg; codecs="theora, vorbis"',
-          state: EEntityState.Default,
-          title: "module 5",
+          state: EEntityState.Active,
+          title: "video title module 5 videos id 66",
         },
-      ]);
-
-      this.list.set(6, [
         {
           id: 67,
           type: EEntityType.Videos,
           src: "https://www.youtube.com/watch?v=0ysi6DkeGmc",
           videoType: 'video/ogg; codecs="theora, vorbis"',
           state: EEntityState.Default,
-          title: "module 6",
+          title: "video title module 5 videos id 67",
         },
         {
           id: 68,
@@ -571,7 +525,7 @@ class Videos implements IEduCommonElement {
           src: "https://www.youtube.com/watch?v=0ysi6DkeGmc",
           videoType: 'video/ogg; codecs="theora, vorbis"',
           state: EEntityState.Default,
-          title: "module 6",
+          title: "video title module 5 videos id 68",
         },
         {
           id: 69,
@@ -579,31 +533,27 @@ class Videos implements IEduCommonElement {
           src: "https://www.youtube.com/watch?v=0ysi6DkeGmc",
           videoType: 'video/ogg; codecs="theora, vorbis"',
           state: EEntityState.Default,
-          title: "module 6",
+          title: "video title module 5 videos id 69",
         },
         {
           id: 70,
           type: EEntityType.Videos,
           src: "https://www.youtube.com/watch?v=0ysi6DkeGmc",
           videoType: 'video/ogg; codecs="theora, vorbis"',
-          state: EEntityState.Active,
-          title: "module 6",
-        },
-        {
-          id: 71,
-          type: EEntityType.Videos,
-          src: "https://www.youtube.com/watch?v=0ysi6DkeGmc",
-          videoType: 'video/ogg; codecs="theora, vorbis"',
           state: EEntityState.Default,
-          title: "module 6",
+          title: "video title module 5 videos id 70",
         },
+      ]);
+
+      // module 6
+      this.list.set(6, [
         {
           id: 72,
           type: EEntityType.Videos,
           src: "https://www.youtube.com/watch?v=0ysi6DkeGmc",
           videoType: 'video/ogg; codecs="theora, vorbis"',
           state: EEntityState.Default,
-          title: "module 6",
+          title: "video title module 6 videos id 72",
         },
         {
           id: 73,
@@ -611,7 +561,47 @@ class Videos implements IEduCommonElement {
           src: "https://www.youtube.com/watch?v=0ysi6DkeGmc",
           videoType: 'video/ogg; codecs="theora, vorbis"',
           state: EEntityState.Default,
-          title: "module 6",
+          title: "video title module 6 videos id 73",
+        },
+        {
+          id: 74,
+          type: EEntityType.Videos,
+          src: "https://www.youtube.com/watch?v=0ysi6DkeGmc",
+          videoType: 'video/ogg; codecs="theora, vorbis"',
+          state: EEntityState.Default,
+          title: "video title module 6 videos id 74",
+        },
+        {
+          id: 75,
+          type: EEntityType.Videos,
+          src: "https://www.youtube.com/watch?v=0ysi6DkeGmc",
+          videoType: 'video/ogg; codecs="theora, vorbis"',
+          state: EEntityState.Active,
+          title: "video title module 6 videos id 75",
+        },
+        {
+          id: 76,
+          type: EEntityType.Videos,
+          src: "https://www.youtube.com/watch?v=0ysi6DkeGmc",
+          videoType: 'video/ogg; codecs="theora, vorbis"',
+          state: EEntityState.Default,
+          title: "video title module 6 videos id 76",
+        },
+        {
+          id: 77,
+          type: EEntityType.Videos,
+          src: "https://www.youtube.com/watch?v=0ysi6DkeGmc",
+          videoType: 'video/ogg; codecs="theora, vorbis"',
+          state: EEntityState.Default,
+          title: "video title module 6 videos id 77",
+        },
+        {
+          id: 78,
+          type: EEntityType.Videos,
+          src: "https://www.youtube.com/watch?v=0ysi6DkeGmc",
+          videoType: 'video/ogg; codecs="theora, vorbis"',
+          state: EEntityState.Default,
+          title: "video title module 6 videos id 78",
         },
       ]);
     }

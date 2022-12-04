@@ -5,7 +5,7 @@
       restartTest();
       init();
     "
-    class="bg-gray-200 rounded-lg px-12 py-4 transition md:text-lg hover:bg-gray-300 transition"
+    class="bg-gray-200 rounded-lg px-12 py-4 transition md:text-lg hover:bg-gray-300 transition mb-6"
   >
     <div class="flex items-center">
       <router-link
@@ -25,7 +25,7 @@
       restartTest();
       init();
     "
-    class="bg-gray-200 rounded-lg px-12 py-4 transition md:text-lg hover:bg-gray-300 transition"
+    class="bg-gray-200 rounded-lg px-12 py-4 transition md:text-lg hover:bg-gray-300 transition mb-6"
   >
     <div class="flex items-center">
       <span class="mr-3">Пройти тест заново</span>
@@ -57,3 +57,5 @@ function init() {
   progressValue.value = 0;
 }
 </script>
+
+<style scoped lang="scss"></style>

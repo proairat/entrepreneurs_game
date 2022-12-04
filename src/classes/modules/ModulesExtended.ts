@@ -14,12 +14,12 @@ class ModulesExtended extends BaseEduElement implements IEduElementModules {
       const activeElem = this.getActiveElem();
 
       if (Array.isArray(elems) && activeElem !== undefined) {
-        const activeModuleIndex = super.findIndex(elems, activeElem.id);
-        const clickModuleIndex = super.findIndex(elems, moduleId);
+        const activeIndex = super.findIndex(elems, activeElem.id);
+        const clickIndex = super.findIndex(elems, moduleId);
 
-        if (activeModuleIndex !== -1 && clickModuleIndex !== -1) {
-          elems[activeModuleIndex]["state"] = EEntityState.Default;
-          elems[clickModuleIndex]["state"] = EEntityState.Active;
+        if (activeIndex !== -1 && clickIndex !== -1) {
+          elems[activeIndex]["state"] = EEntityState.Default;
+          elems[clickIndex]["state"] = EEntityState.Active;
         }
       }
     }

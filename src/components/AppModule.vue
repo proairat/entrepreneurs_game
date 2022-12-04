@@ -21,14 +21,14 @@ import { useModulesStore } from "@/stores";
  * */
 const props = defineProps<{
   id: number;
-  type: "modules";
+  type: EEntityType.Modules;
   src: string;
   alt: string;
   header: string;
   title: string;
   duration: string;
   footer: string;
-  state: string;
+  state: EEntityState.Active | EEntityState.Default;
 }>();
 
 const emits = defineEmits<{
@@ -41,10 +41,10 @@ const { getActiveTheme } = modulesStore;
 function getName(moduleId: number) {
   const activeElem = getActiveTheme(moduleId);
 
-  if (activeElem.type === "topics") {
+  if (activeElem.type === EEntityType.Topics) {
     return "ViewModuleTopics";
   }
-  if (activeElem.type === "tests") {
+  if (activeElem.type === EEntityType.Tests) {
     return "ViewModuleTests";
   }
 }
@@ -56,7 +56,6 @@ function getPath(moduleId: number) {
 
 function getParams(moduleId: number) {
   const activeElem = getActiveTheme(moduleId);
-
   return { moduleId, themeType: activeElem.type, themeId: activeElem.id };
 }
 

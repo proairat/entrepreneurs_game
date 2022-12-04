@@ -1,8 +1,9 @@
 <template>
-  <div class="text-gray-700 appTestBlock">
-    <AppTestOptions v-if="step === 0"></AppTestOptions>
-    <AppTestContent v-if="step === 1"></AppTestContent>
-    <AppTestRestart v-if="step === 2"></AppTestRestart>
+  <div class="appTestBlock">
+    <!--<AppTestOptions v-if="step === 0"></AppTestOptions>-->
+    <AppTestDescription v-if="step === 0" />
+    <AppTestContent v-if="step === 1" />
+    <AppTestRestart v-if="step === 2" />
   </div>
 </template>
 
@@ -18,6 +19,8 @@ import { storeToRefs } from "pinia";
 
 const testsStore = useTestsStore();
 const { step } = storeToRefs(testsStore);
+
+step.value = 0;
 </script>
 
 <style scoped lang="scss">
@@ -25,7 +28,6 @@ const { step } = storeToRefs(testsStore);
   background-color: $white;
   border-radius: 0.625rem;
   box-shadow: $box-shadow-2dp;
-  padding: 0 1.5rem 1.5rem 1.5rem;
   user-select: none;
 }
 </style>

@@ -7,6 +7,8 @@ import type {
   IEduElementVideos,
   ITheme,
   IVideo,
+  IEduElementTests,
+  ITest,
 } from "@/types/interfaces";
 import {
   Creator,
@@ -17,6 +19,8 @@ import {
   ThemesCreatorExtended,
   VideosCreator,
   VideosCreatorExtended,
+  TestsCreator,
+  TestsCreatorExtended,
 } from "@/classes";
 import type { TElemsList } from "@/types/types";
 
@@ -35,6 +39,7 @@ function getEduElementExtended(creator: CreatorExtended) {
 const eduElementModules = getEduElement(new ModulesCreator());
 const eduElementThemes = getEduElement(new ThemesCreator());
 const eduElementVideos = getEduElement(new VideosCreator());
+const eduElementTests = getEduElement(new TestsCreator());
 
 const eduElementModulesExtended = getEduElementExtended(
   new ModulesCreatorExtended(eduElementModules.getList() as IModule[])
@@ -52,16 +57,24 @@ const eduElementVideosExtended = getEduElementExtended(
   )
 ) as IEduElementVideos;
 
+const eduElementTestsExtended = getEduElementExtended(
+  new TestsCreatorExtended(
+    eduElementTests.getList() as TElemsList<number, ITest>
+  )
+) as IEduElementTests;
+
 export const useModulesStore = defineStore("modules", () => {
   const activeModule = ref(getActiveModule());
   const activeTheme = ref(getActiveTheme(activeModule.value.id));
   const activeVideo = ref(getActiveVideo(activeModule.value.id));
+  const activeTest = ref(getActiveTest(activeModule.value.id));
 
   function updateActiveModule(moduleId: number, elems: IModule[]): void {
     eduElementModulesExtended.updateActiveElem(moduleId, elems);
     activeModule.value = getActiveModule();
     activeTheme.value = getActiveTheme(moduleId);
     activeVideo.value = getActiveVideo(moduleId);
+    activeTest.value = getActiveTest(moduleId);
   }
 
   function updateActiveTheme(
@@ -76,10 +89,19 @@ export const useModulesStore = defineStore("modules", () => {
   function updateActiveVideo(
     moduleId: number,
     videos: IVideo[],
-    videoId: number
+    themeId: number
   ) {
-    eduElementVideosExtended.updateActiveElem(moduleId, videos, videoId);
+    eduElementVideosExtended.updateActiveElem(moduleId, videos, themeId);
     activeVideo.value = getActiveVideo(moduleId);
+  }
+
+  function updateActiveTest(moduleId: number, tests: ITest[], themeId: number) {
+    eduElementTestsExtended.updateActiveElem(moduleId, tests, themeId);
+    activeTest.value = getActiveTest(moduleId);
+  }
+
+  function getModulesList() {
+    return eduElementModules.getList() as IModule[];
   }
 
   function getThemesByModuleId(moduleId: number) {
@@ -90,6 +112,10 @@ export const useModulesStore = defineStore("modules", () => {
     return eduElementVideosExtended.getVideosByModuleId(moduleId);
   }
 
+  function getTestsByModuleId(moduleId: number) {
+    return eduElementTestsExtended.getTestsByModuleId(moduleId);
+  }
+
   function getActiveModule() {
     return eduElementModulesExtended.getActiveElem() as IModule;
   }
@@ -98,12 +124,12 @@ export const useModulesStore = defineStore("modules", () => {
     return eduElementThemesExtended.getActiveElem(moduleId) as ITheme;
   }
 
-  function getModulesList() {
-    return eduElementModules.getList();
-  }
-
   function getActiveVideo(moduleId: number) {
     return eduElementVideosExtended.getActiveElem(moduleId) as IVideo;
+  }
+
+  function getActiveTest(moduleId: number) {
+    return eduElementTestsExtended.getActiveElem(moduleId) as ITest;
   }
 
   /*
@@ -117,12 +143,15 @@ export const useModulesStore = defineStore("modules", () => {
     activeModule,
     activeTheme,
     activeVideo,
+    activeTest,
     getActiveTheme,
+    getModulesList,
     getThemesByModuleId,
     getVideosByModuleId,
-    getModulesList,
-    updateActiveTheme,
+    getTestsByModuleId,
     updateActiveModule,
+    updateActiveTheme,
     updateActiveVideo,
+    updateActiveTest,
   };
 });

@@ -13,8 +13,8 @@
           <AppListOfThemes :moduleId="getModuleId" />
         </div>
         <div class="right-side">
-          <AppVideo />
           <AppThemeHeader>{{ getThemeTitle }}</AppThemeHeader>
+          <AppVideo />
           <el-tabs type="border-card">
             <el-tab-pane label="Описание темы">
               <AppTabs>
@@ -54,7 +54,7 @@ import { computed, ref } from "vue";
 import { storeToRefs } from "pinia";
 
 const modulesStore = useModulesStore();
-const { activeTheme, activeModule } = storeToRefs(modulesStore);
+const { activeModule, activeTheme } = storeToRefs(modulesStore);
 const backTo = ref({
   path: `/modules`,
   name: "ViewModules",

@@ -13,6 +13,7 @@ class Themes implements IEduCommonElement {
   }
   public addToList(): void {
     if (this.list instanceof Map && this.list.size === 0) {
+      // module 1
       this.list.set(1, [
         {
           id: 1,
@@ -184,6 +185,7 @@ class Themes implements IEduCommonElement {
         },
       ]);
 
+      // module 2
       this.list.set(2, [
         {
           id: 29,
@@ -253,6 +255,7 @@ class Themes implements IEduCommonElement {
         },
       ]);
 
+      // module 3
       this.list.set(3, [
         {
           id: 40,
@@ -322,6 +325,7 @@ class Themes implements IEduCommonElement {
         },
       ]);
 
+      // module 4
       this.list.set(4, [
         {
           id: 51,
@@ -415,6 +419,7 @@ class Themes implements IEduCommonElement {
         },
       ]);
 
+      // module 5
       this.list.set(5, [
         {
           id: 66,
@@ -454,6 +459,7 @@ class Themes implements IEduCommonElement {
         },
       ]);
 
+      // module 6
       this.list.set(6, [
         {
           id: 72,
@@ -504,6 +510,8 @@ class Themes implements IEduCommonElement {
           title: "Тестирование 6",
         },
       ]);
+
+      // module 7
       this.list.set(7, [
         {
           id: 80,

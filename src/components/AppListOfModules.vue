@@ -24,6 +24,8 @@ const modules = ref<IModule[]>([]);
 const list = getModulesList();
 // const search = ref("");
 
+console.log("Listochek", list);
+
 if (Array.isArray(list)) {
   modules.value = list;
 }
