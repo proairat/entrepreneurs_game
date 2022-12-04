@@ -23,11 +23,15 @@ import {
   TestsCreatorExtended,
 } from "@/classes";
 import type { TElemsList } from "@/types/types";
+import { DB } from "@/classes/fetchFromDB";
 
-function getEduElement(creator: Creator) {
+function getEduElement<T>(
+  creator: Creator,
+  fromDB: T[] | TElemsList<number, T> | undefined
+) {
   const eduElement = creator.getEduElement();
-  eduElement.createList();
-  eduElement.addToList();
+  eduElement.createList(fromDB);
+  eduElement.addToList(fromDB);
   return eduElement;
 }
 
@@ -36,10 +40,10 @@ function getEduElementExtended(creator: CreatorExtended) {
   return eduElement;
 }
 
-const eduElementModules = getEduElement(new ModulesCreator());
-const eduElementThemes = getEduElement(new ThemesCreator());
-const eduElementVideos = getEduElement(new VideosCreator());
-const eduElementTests = getEduElement(new TestsCreator());
+const eduElementModules = getEduElement(new ModulesCreator(), DB.modules);
+const eduElementThemes = getEduElement(new ThemesCreator(), DB.themes);
+const eduElementVideos = getEduElement(new VideosCreator(), DB.videos);
+const eduElementTests = getEduElement(new TestsCreator(), DB.tests);
 
 const eduElementModulesExtended = getEduElementExtended(
   new ModulesCreatorExtended(eduElementModules.getList() as IModule[])
