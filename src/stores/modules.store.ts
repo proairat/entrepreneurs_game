@@ -12,26 +12,25 @@ import type {
 } from "@/types/interfaces";
 import {
   Creator,
-  ModulesCreator,
-  ThemesCreator,
   CreatorExtended,
   ModulesCreatorExtended,
   ThemesCreatorExtended,
-  VideosCreator,
   VideosCreatorExtended,
-  TestsCreator,
   TestsCreatorExtended,
+  EntityCreator,
 } from "@/classes";
 import type { TElemsList } from "@/types/types";
 import { DB } from "@/classes/fetchFromDB";
 
 function getEduElement<T>(
-  creator: Creator,
+  creator: Creator<T>,
   fromDB: T[] | TElemsList<number, T> | undefined
 ) {
   const eduElement = creator.getEduElement();
-  eduElement.createList(fromDB);
-  eduElement.addToList(fromDB);
+  if (fromDB) {
+    eduElement.createList(fromDB);
+    eduElement.addToList(fromDB);
+  }
   return eduElement;
 }
 
@@ -40,10 +39,13 @@ function getEduElementExtended(creator: CreatorExtended) {
   return eduElement;
 }
 
-const eduElementModules = getEduElement(new ModulesCreator(), DB.modules);
-const eduElementThemes = getEduElement(new ThemesCreator(), DB.themes);
-const eduElementVideos = getEduElement(new VideosCreator(), DB.videos);
-const eduElementTests = getEduElement(new TestsCreator(), DB.tests);
+const eduElementModules = getEduElement(
+  new EntityCreator<IModule>(),
+  DB.modules
+);
+const eduElementThemes = getEduElement(new EntityCreator<ITheme>(), DB.themes);
+const eduElementVideos = getEduElement(new EntityCreator<IVideo>(), DB.videos);
+const eduElementTests = getEduElement(new EntityCreator<ITest>(), DB.tests);
 
 const eduElementModulesExtended = getEduElementExtended(
   new ModulesCreatorExtended(eduElementModules.getList() as IModule[])
