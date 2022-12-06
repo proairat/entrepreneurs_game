@@ -2,22 +2,18 @@ import { defineStore } from "pinia";
 import { ref } from "vue";
 import type {
   IModule,
-  IEduElementModules,
-  IEduElementThemes,
-  IEduElementVideos,
+  IEduElementEntityArray,
   ITheme,
   IVideo,
-  IEduElementTests,
   ITest,
+  IEduElementEntityMap,
 } from "@/types/interfaces";
 import {
   Creator,
   CreatorExtended,
-  ModulesCreatorExtended,
-  ThemesCreatorExtended,
-  VideosCreatorExtended,
-  TestsCreatorExtended,
   EntityCreator,
+  EntityCreatorExtendedMap,
+  EntityCreatorExtendedArray,
 } from "@/classes";
 import type { TElemsList } from "@/types/types";
 import { DB } from "@/classes/fetchFromDB";
@@ -34,7 +30,7 @@ function getEduElement<T>(
   return eduElement;
 }
 
-function getEduElementExtended(creator: CreatorExtended) {
+function getEduElementExtended<T>(creator: CreatorExtended<T>) {
   const eduElement = creator.getEduElement();
   return eduElement;
 }
@@ -48,26 +44,28 @@ const eduElementVideos = getEduElement(new EntityCreator<IVideo>(), DB.videos);
 const eduElementTests = getEduElement(new EntityCreator<ITest>(), DB.tests);
 
 const eduElementModulesExtended = getEduElementExtended(
-  new ModulesCreatorExtended(eduElementModules.getList() as IModule[])
-) as IEduElementModules;
+  new EntityCreatorExtendedArray<IModule>(
+    eduElementModules.getList() as IModule[]
+  )
+) as IEduElementEntityArray<IModule>;
 
 const eduElementThemesExtended = getEduElementExtended(
-  new ThemesCreatorExtended(
+  new EntityCreatorExtendedMap<ITheme>(
     eduElementThemes.getList() as TElemsList<number, ITheme>
   )
-) as IEduElementThemes;
+) as IEduElementEntityMap<ITheme>;
 
 const eduElementVideosExtended = getEduElementExtended(
-  new VideosCreatorExtended(
+  new EntityCreatorExtendedMap<IVideo>(
     eduElementVideos.getList() as TElemsList<number, IVideo>
   )
-) as IEduElementVideos;
+) as IEduElementEntityMap<IVideo>;
 
 const eduElementTestsExtended = getEduElementExtended(
-  new TestsCreatorExtended(
+  new EntityCreatorExtendedMap<ITest>(
     eduElementTests.getList() as TElemsList<number, ITest>
   )
-) as IEduElementTests;
+) as IEduElementEntityMap<ITest>;
 
 export const useModulesStore = defineStore("modules", () => {
   const activeModule = ref(getActiveModule());
@@ -107,19 +105,19 @@ export const useModulesStore = defineStore("modules", () => {
   }
 
   function getModulesList() {
-    return eduElementModules.getList() as IModule[];
+    return eduElementModules.getList();
   }
 
   function getThemesByModuleId(moduleId: number) {
-    return eduElementThemesExtended.getThemesByModuleId(moduleId);
+    return eduElementThemesExtended.getEntityByModuleId(moduleId);
   }
 
   function getVideosByModuleId(moduleId: number) {
-    return eduElementVideosExtended.getVideosByModuleId(moduleId);
+    return eduElementVideosExtended.getEntityByModuleId(moduleId);
   }
 
   function getTestsByModuleId(moduleId: number) {
-    return eduElementTestsExtended.getTestsByModuleId(moduleId);
+    return eduElementTestsExtended.getEntityByModuleId(moduleId);
   }
 
   function getActiveModule() {
@@ -127,15 +125,15 @@ export const useModulesStore = defineStore("modules", () => {
   }
 
   function getActiveTheme(moduleId: number) {
-    return eduElementThemesExtended.getActiveElem(moduleId) as ITheme;
+    return eduElementThemesExtended.getActiveElem(moduleId);
   }
 
   function getActiveVideo(moduleId: number) {
-    return eduElementVideosExtended.getActiveElem(moduleId) as IVideo;
+    return eduElementVideosExtended.getActiveElem(moduleId);
   }
 
   function getActiveTest(moduleId: number) {
-    return eduElementTestsExtended.getActiveElem(moduleId) as ITest;
+    return eduElementTestsExtended.getActiveElem(moduleId);
   }
 
   /*

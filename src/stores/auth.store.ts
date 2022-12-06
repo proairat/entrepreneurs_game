@@ -23,7 +23,6 @@ export const useAuthStore = defineStore("auth", {
         this.user = user;
 
         console.log("this.user", this.user);
-
         /*
         const url = this.user.entranceTesting
           ? "/modules"

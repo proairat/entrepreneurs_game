@@ -1,11 +1,9 @@
 export * from "./BaseEduElement";
 export * from "./Creator";
 export * from "./CreatorExtended";
-export * from "./modules";
-export * from "./themes";
-export * from "./videos";
-export * from "./tests";
-export * from "./testsContent";
+// export * from "./testsContent";
 export * from "./entranceTests";
 export * from "./Entity";
 export * from "./EntityCreator";
+export * from "./EntityCreatorExtendedMap";
+export * from "./EntityCreatorExtendedArray";

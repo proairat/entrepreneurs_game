@@ -1,20 +1,13 @@
 import { EEntityState } from "@/types/enums";
-import type {
-  IModule,
-  ITheme,
-  IVideo,
-  ITest,
-  ITestContent,
-} from "@/types/interfaces";
+import type { TExtendsArray } from "@/types/types";
+import type { TExtendsMap } from "@/types/types";
 
 class BaseEduElement {
-  public find<T extends IModule | ITheme | IVideo | ITest | ITestContent>(
-    list: Array<T>
-  ): T | undefined {
+  public find<T extends TExtendsMap | TExtendsArray>(list: T[]): T | undefined {
     return list.find((item: T) => item.state === EEntityState.Active);
   }
-  public findIndex<T extends IModule | ITheme | IVideo | ITest | ITestContent>(
-    list: Array<T>,
+  public findIndex<T extends TExtendsMap | TExtendsArray>(
+    list: T[],
     id: number
   ): number | -1 {
     return list.findIndex((elem: T) => elem.id === id);
