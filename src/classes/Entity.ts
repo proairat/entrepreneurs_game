@@ -16,6 +16,15 @@ class Entity<T> implements IEduCommonElement<T> {
   }
   public addToList(fromDB: T[] | TElemsList<number, T>): void {
     if (
+      Array.isArray(this.list) &&
+      fromDB instanceof Array &&
+      this.list.length === 0
+    ) {
+      for (let i = 0; i < fromDB.length; i++) {
+        this.list.push(fromDB[i]);
+      }
+    }
+    if (
       this.list instanceof Map &&
       fromDB instanceof Map &&
       this.list.size === 0
@@ -25,15 +34,6 @@ class Entity<T> implements IEduCommonElement<T> {
         if (value) {
           this.list.set(key, value);
         }
-      }
-    }
-    if (
-      Array.isArray(this.list) &&
-      fromDB instanceof Array &&
-      this.list.length === 0
-    ) {
-      for (let i = 0; i < fromDB.length; i++) {
-        this.list.push(fromDB[i]);
       }
     }
   }

@@ -34,13 +34,13 @@ class TestsContentExtended
   }
   public getActiveElem(themeId: number): ITestContent | undefined {
     if (this.list instanceof Map) {
-      const list = this.getTestsByModuleId(themeId);
+      const list = this.getEntityByModuleId(themeId);
       if (Array.isArray(list)) {
         return super.find(list);
       }
     }
   }
-  public getTestsByModuleId(themeId: number): ITestContent[] | undefined {
+  public getEntityByModuleId(themeId: number): ITestContent[] | undefined {
     if (this.list instanceof Map) {
       return this.list.get(themeId);
     }

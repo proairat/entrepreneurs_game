@@ -98,58 +98,25 @@ interface IEduCommonElement<T> {
   getList(): T[] | TElemsList<number, T> | undefined;
 }
 
-/*
-interface IEduCommonElement {
-  createList():
-    | IModule[]
-    | TElemsList<number, ITheme>
-    | TElemsList<number, IVideo>
-    | IEntranceTest[]
-    | TElemsList<number, ITestContent>
-    | TElemsList<number, ITest>;
-  addToList(param: any): void;
-  getList():
-    | IModule[]
-    | TElemsList<number, ITheme>
-    | TElemsList<number, IVideo>
-    | IEntranceTest[]
-    | TElemsList<number, ITestContent>
-    | TElemsList<number, ITest>
-    | undefined;
-}
-*/
-
-interface IEduElementModules {
-  updateActiveElem(moduleId: number, elems: IModule[]): void;
-  getActiveElem(): IModule | undefined;
+interface IEduElementEntityArray<T> {
+  updateActiveElem(moduleId: number, elems: T[]): void;
+  getActiveElem(): T | undefined;
 }
 
-interface IEduElementThemes {
-  updateActiveElem(moduleId: number, elems: ITheme[], themeId: number): void;
-  getActiveElem(moduleId: number): ITheme | undefined;
-  getThemesByModuleId(moduleId: number): ITheme[] | undefined;
-}
-
-interface IEduElementVideos {
-  updateActiveElem(moduleId: number, elems: IVideo[], themeId: number): void;
-  getActiveElem(moduleId: number): IVideo | undefined;
-  getVideosByModuleId(moduleId: number): IVideo[] | undefined;
-}
-
-interface IEduElementTests {
-  updateActiveElem(moduleId: number, elems: ITest[], themeId: number): void;
-  getActiveElem(moduleId: number): ITest | undefined;
-  getTestsByModuleId(moduleId: number): ITest[] | undefined;
+interface IEduElementEntityMap<T> {
+  updateActiveElem(moduleId: number, elems: T[], themeId: number): void;
+  getActiveElem(moduleId: number): T | undefined;
+  getEntityByModuleId(moduleId: number): T[] | undefined;
 }
 
 interface IEduElementTestsContent {
   updateActiveElem(
     moduleId: number,
     elems: ITestContent[],
-    themeId: number
+    themeId?: number
   ): void;
   getActiveElem(moduleId: number): ITestContent | undefined;
-  getTestsByModuleId(moduleId: number): ITestContent[] | undefined;
+  getEntityByModuleId(moduleId: number): ITestContent[] | undefined;
 }
 
 interface IProgressCaption {
@@ -170,10 +137,8 @@ export type {
   IAnswer,
   IEntranceTest,
   IEduCommonElement,
-  IEduElementModules,
-  IEduElementThemes,
-  IEduElementVideos,
-  IEduElementTests,
+  IEduElementEntityArray,
   IEduElementTestsContent,
   IProgressCaption,
+  IEduElementEntityMap,
 };
