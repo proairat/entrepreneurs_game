@@ -17,7 +17,7 @@ modules.push(
     title: "Модуль 1",
     duration: "2 часа",
     footer: "Изучить модуль",
-    state: EEntityState.Default,
+    state: EEntityState.Active,
   },
   {
     id: 2,
@@ -39,7 +39,7 @@ modules.push(
     title: "Модуль 3",
     duration: "2 часа 15 минут",
     footer: "Изучить модуль",
-    state: EEntityState.Active,
+    state: EEntityState.Default,
   },
   {
     id: 4,
@@ -96,7 +96,7 @@ themes.set(1, [
   {
     id: 1,
     type: EEntityType.Topics,
-    state: EEntityState.Active,
+    state: EEntityState.Default,
     title: "topic 1 theme 1",
   },
   {
@@ -108,7 +108,7 @@ themes.set(1, [
   {
     id: 3,
     type: EEntityType.Topics,
-    state: EEntityState.Default,
+    state: EEntityState.Active,
     title: "sdfg",
   },
   {
@@ -610,7 +610,7 @@ videos.set(1, [
     type: EEntityType.Videos,
     src: "https://vk.com/video-30836025_456239619",
     videoType: 'video/ogg; codecs="theora, vorbis"',
-    state: EEntityState.Active,
+    state: EEntityState.Default,
     title: "video title module 1 videos id 1",
   },
   {
@@ -626,7 +626,7 @@ videos.set(1, [
     type: EEntityType.Videos,
     src: "https://www.youtube.com/watch?v=0ysi6DkeGmc",
     videoType: 'video/ogg; codecs="theora, vorbis"',
-    state: EEntityState.Default,
+    state: EEntityState.Active,
     title: "video title module 1 videos id 3",
   },
   {

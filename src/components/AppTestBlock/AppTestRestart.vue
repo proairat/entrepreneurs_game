@@ -1,10 +1,8 @@
 <template>
-  <div class="text-gray-700 flex flex-col items-center justify-center pt-6">
-    <div class="flex flex-col items-center">
-      <AppTestPercentAnswers :percent="getPercent" />
-      <AppTestResultCoins :percent="getPercent" />
-      <AppTestResultButton :percent="getPercent" />
-    </div>
+  <div class="test-restart">
+    <AppTestPercentAnswers :percent="getPercent" />
+    <AppTestResultCoins :percent="getPercent" />
+    <AppTestResultButton :percent="getPercent" />
   </div>
 </template>
 
@@ -20,3 +18,17 @@ const getPercent = computed(() => {
   return Math.ceil((score.value * 100) / questionCount.value);
 });
 </script>
+
+<style scoped lang="scss">
+.test-restart {
+  display: grid;
+  grid-template-columns: auto;
+  grid-template-areas: auto;
+  grid-template-areas:
+    "AppTestPercentAnswers"
+    "AppTestResultCoins"
+    "AppTestResultButton";
+  justify-items: center;
+  padding-top: 1.5rem;
+}
+</style>

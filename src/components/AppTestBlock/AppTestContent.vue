@@ -1,6 +1,6 @@
 <template>
   <AppTestLoader v-if="isLoading"></AppTestLoader>
-  <div v-else class="testContent text-gray-600">
+  <div v-else class="test-content">
     <AppTestPassingIndicator />
     <AppTestQuestion />
     <AppTestAnswerBlock>
@@ -39,8 +39,7 @@ function changeOptionState() {
 </script>
 
 <style scoped lang="scss">
-.testContent {
+.test-content {
   display: grid;
-  padding: 0 1.5rem 1.5rem 1.5rem;
 }
 </style>

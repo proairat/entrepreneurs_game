@@ -73,7 +73,7 @@ export const useModulesStore = defineStore("modules", () => {
   const activeVideo = ref(getActiveVideo(activeModule.value.id));
   const activeTest = ref(getActiveTest(activeModule.value.id));
 
-  function updateActiveModule(moduleId: number, elems: IModule[]): void {
+  function updateActiveModule(moduleId: number, elems: IModule[]) {
     eduElementModulesExtended.updateActiveElem(moduleId, elems);
     activeModule.value = getActiveModule();
     activeTheme.value = getActiveTheme(moduleId);
@@ -105,19 +105,19 @@ export const useModulesStore = defineStore("modules", () => {
   }
 
   function getModulesList() {
-    return eduElementModules.getList();
+    return eduElementModules.getList() as IModule[];
   }
 
   function getThemesByModuleId(moduleId: number) {
-    return eduElementThemesExtended.getEntityByModuleId(moduleId);
+    return eduElementThemesExtended.getEntityByModuleId(moduleId) as ITheme[];
   }
 
   function getVideosByModuleId(moduleId: number) {
-    return eduElementVideosExtended.getEntityByModuleId(moduleId);
+    return eduElementVideosExtended.getEntityByModuleId(moduleId) as IVideo[];
   }
 
   function getTestsByModuleId(moduleId: number) {
-    return eduElementTestsExtended.getEntityByModuleId(moduleId);
+    return eduElementTestsExtended.getEntityByModuleId(moduleId) as ITest[];
   }
 
   function getActiveModule() {
@@ -125,15 +125,15 @@ export const useModulesStore = defineStore("modules", () => {
   }
 
   function getActiveTheme(moduleId: number) {
-    return eduElementThemesExtended.getActiveElem(moduleId);
+    return eduElementThemesExtended.getActiveElem(moduleId) as ITheme;
   }
 
   function getActiveVideo(moduleId: number) {
-    return eduElementVideosExtended.getActiveElem(moduleId);
+    return eduElementVideosExtended.getActiveElem(moduleId) as IVideo;
   }
 
   function getActiveTest(moduleId: number) {
-    return eduElementTestsExtended.getActiveElem(moduleId);
+    return eduElementTestsExtended.getActiveElem(moduleId) as ITest;
   }
 
   /*

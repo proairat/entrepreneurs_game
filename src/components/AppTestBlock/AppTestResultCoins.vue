@@ -1,15 +1,17 @@
 <template>
-  <div class="flex items-center">
-    <img
-      v-for="n in countCoins"
-      :src="coin"
-      :key="n"
-      class="w-12 h-12"
-      alt="Монета"
-    />
-  </div>
-  <div class="msg">
-    {{ msg() }}
+  <div class="test-restart__result-coins">
+    <div class="test-restart__img-coins">
+      <img
+        v-for="n in countCoins"
+        :src="coin"
+        :key="n"
+        class="w-12 h-12 mb-6"
+        alt="Монета"
+      />
+    </div>
+    <div class="test-restart__message font-medium text-xl">
+      {{ message() }}
+    </div>
   </div>
 </template>
 
@@ -54,7 +56,7 @@ const countCoins = computed(() => {
 
 coins.value += countCoins.value;
 
-function msg() {
+function message() {
   let message = "К сожалению, вы ничего не заработали, пройдите тест заново";
   switch (countCoins.value) {
     case 1:
@@ -72,9 +74,14 @@ function msg() {
 }
 </script>
 
-<style scoped lang="scss">
-.msg {
-  font-weight: 500;
-  margin: 1rem auto;
+<style scope lang="scss">
+.test-restart {
+  &__result-coins {
+    grid-area: AppTestResultCoins;
+  }
+  &__img-coins {
+    display: flex;
+    justify-content: center;
+  }
 }
 </style>

@@ -149,7 +149,7 @@ export const useTestsStore = defineStore("tests", () => {
         ],
         guessed: "undefined",
       },
-      {
+      /*{
         id: 5,
         category: "Общие знания",
         type: "boolean",
@@ -306,7 +306,7 @@ export const useTestsStore = defineStore("tests", () => {
           },
         ],
         guessed: "undefined",
-      },
+      },*/
     ];
 
     result.forEach((item) => shuffle(item.answers));
@@ -321,7 +321,8 @@ export const useTestsStore = defineStore("tests", () => {
     questionCount.value = count;
   }
 
-  function restartTest() {
+  function initializeTest() {
+    progressValue.value = 0;
     score.value = 0;
     step.value = 0;
     questionCount.value = 0;
@@ -357,7 +358,7 @@ export const useTestsStore = defineStore("tests", () => {
     checkAnswer,
     getData,
     setQuestionCount,
-    restartTest,
+    initializeTest,
     incrementScore,
     incrementProgressValue,
     toggleIsOptionSelected,

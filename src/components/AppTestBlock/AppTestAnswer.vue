@@ -1,6 +1,6 @@
 <template>
   <button
-    class="w-full bg-gray-100 transition p-6 answerText"
+    class="test-answer w-full bg-gray-100 transition p-6"
     @click="
       checkAnswer(props.idAnswer);
       clickAnswer();
@@ -44,8 +44,7 @@ function clickAnswer() {
 </script>
 
 <style scoped lang="scss">
-.answerText {
-  color: $gray-90;
+.test-answer {
   border-radius: 0.625rem;
   font-size: $text-size-h5;
 }
