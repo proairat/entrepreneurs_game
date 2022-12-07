@@ -1,5 +1,5 @@
 <template>
-  <div class="appTestBlock">
+  <div class="app-test-block">
     <!--<AppTestOptions v-if="step === 0"></AppTestOptions>-->
     <AppTestDescription v-if="step === 0" />
     <AppTestContent v-if="step === 1" />
@@ -19,15 +19,18 @@ import { storeToRefs } from "pinia";
 
 const testsStore = useTestsStore();
 const { step } = storeToRefs(testsStore);
+const { initializeTest } = testsStore;
 
-step.value = 0;
+initializeTest();
 </script>
 
 <style scoped lang="scss">
-.appTestBlock {
+.app-test-block {
   background-color: $white;
   border-radius: 0.625rem;
   box-shadow: $box-shadow-2dp;
   user-select: none;
+  padding: 0 1.5rem 1.5rem 1.5rem;
+  color: $gray-90;
 }
 </style>

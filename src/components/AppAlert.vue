@@ -47,7 +47,7 @@ watch(alert, () => {
 .el-alert {
   $height: 40px;
   height: $height;
-  border-radius: 10px;
+  border-radius: 0.625rem;
   &--error {
     @include alertMixin($height, $rose, $rose-80, $rose-20);
   }

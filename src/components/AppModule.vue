@@ -81,7 +81,7 @@ function AppRouterLink() {
       onClick() {
         emits("changeActiveItem", props.id);
       },
-      class: "footer",
+      class: "footer rounded-md",
       to: {
         path: getPath(props.id),
         name: getName(props.id),
@@ -145,7 +145,6 @@ function AppRouterLink() {
     padding: 1rem;
     margin: 0 1rem 1rem 1rem;
     background-color: $sun-30;
-    // background-color: $blue-10;
     color: $gray-90;
     text-align: center;
     &:hover {

@@ -3,11 +3,11 @@
     К сожалению, тест ещё не разработан...
   </div>
   <div v-else class="test-description">
-    <div class="test-description__title">{{ activeTest.title }}</div>
+    <div class="test-description__title text-xl">{{ activeTest.title }}</div>
     <div class="test-description__outer-start-test">
       <el-button
         type="primary"
-        class="test-description__button-start-test"
+        class="test-description__button-start-test rounded-md"
         @click="startTest"
       >
         Начать тест
@@ -36,36 +36,26 @@ console.log("ээээ activeTest", activeTest.value);
   font-weight: $font-weight-medium;
 }
 .test-description {
-  background-color: $blue-10;
   display: grid;
-  color: $gray-90;
+  padding-top: 1.5rem;
   &__outer-start-test {
     display: flex;
     justify-content: center;
-    padding: 1.5rem 0;
+    padding-top: 1.5rem;
   }
   &__title {
     display: flex;
-    padding-top: 1.5rem;
     justify-content: center;
     font-weight: $font-weight-medium;
-    font-size: $text-size-h5;
   }
   &__button-start-test {
     width: 10rem;
-    color: $blue-10;
     font-size: 1rem;
-    background-color: $blue-80;
+    background-color: $sun-30;
+    color: inherit;
     border: none;
     &:hover {
-      background-color: $blue;
-    }
-    &:deep(.el-icon.is-loading) {
-      position: absolute;
-      left: calc(50% - 45px);
-      & + span {
-        margin-left: 0;
-      }
+      background-color: $sun-20;
     }
   }
 }

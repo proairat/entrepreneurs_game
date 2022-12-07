@@ -1,7 +1,9 @@
 <template>
-  <h1 class="mb-4 text-center text-lg font-medium">
-    У вас {{ props.percent }}% верных ответов!
-  </h1>
+  <div
+    class="test-restart__percent-answers text-center font-medium text-xl pb-6"
+  >
+    У вас {{ props.percent }}% верных ответов
+  </div>
 </template>
 
 <script setup lang="ts">
@@ -9,3 +11,9 @@ const props = defineProps<{
   percent: number;
 }>();
 </script>
+
+<style scoped lang="scss">
+.test-restart__percent-answers {
+  grid-area: AppTestPercentAnswers;
+}
+</style>
