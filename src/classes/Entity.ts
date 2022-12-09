@@ -8,7 +8,6 @@ class Entity<T> implements IEduCommonElement<T> {
     if (this.list === undefined && fromDB instanceof Array) {
       this.list = [];
     }
-
     if (this.list === undefined && fromDB instanceof Map) {
       this.list = new Map();
     }

@@ -32,7 +32,7 @@ const props = defineProps<{
 }>();
 
 const emits = defineEmits<{
-  (e: "changeActiveItem", moduleId: number): void;
+  (e: "changeActiveModule", moduleId: number): void;
 }>();
 
 const modulesStore = useModulesStore();
@@ -79,7 +79,7 @@ function AppRouterLink() {
     resolveComponent("router-link"),
     {
       onClick() {
-        emits("changeActiveItem", props.id);
+        emits("changeActiveModule", props.id);
       },
       class: "footer rounded-md",
       to: {

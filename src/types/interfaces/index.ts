@@ -99,24 +99,14 @@ interface IEduCommonElement<T> {
 }
 
 interface IEduElementEntityArray<T> {
-  updateActiveElem(moduleId: number, elems: T[]): void;
+  updateActiveElem(moduleId: number): void;
   getActiveElem(): T | undefined;
 }
 
 interface IEduElementEntityMap<T> {
-  updateActiveElem(moduleId: number, elems: T[], themeId: number): void;
-  getActiveElem(moduleId: number): T | undefined;
+  updateActiveElem(moduleId: number, themeId: number): void;
+  getActiveElem(entityByModuleId: T[] | undefined): T | undefined;
   getEntityByModuleId(moduleId: number): T[] | undefined;
-}
-
-interface IEduElementTestsContent {
-  updateActiveElem(
-    moduleId: number,
-    elems: ITestContent[],
-    themeId?: number
-  ): void;
-  getActiveElem(moduleId: number): ITestContent | undefined;
-  getEntityByModuleId(moduleId: number): ITestContent[] | undefined;
 }
 
 interface IProgressCaption {
@@ -138,7 +128,6 @@ export type {
   IEntranceTest,
   IEduCommonElement,
   IEduElementEntityArray,
-  IEduElementTestsContent,
   IProgressCaption,
   IEduElementEntityMap,
 };
