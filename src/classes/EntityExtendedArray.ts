@@ -13,17 +13,18 @@ class EntityExtendedArray<T extends TExtendsArray>
     super();
     this.list = list;
   }
-  public updateActiveElem(moduleId: number, elems: T[]): void {
+  public updateActiveElem(moduleId: number): void {
     if (Array.isArray(this.list)) {
+      const modules = this.list;
       const activeElem = this.getActiveElem();
 
-      if (Array.isArray(elems) && activeElem) {
-        const activeIndex = super.findIndex(elems, activeElem.id);
-        const clickIndex = super.findIndex(elems, moduleId);
+      if (Array.isArray(modules) && activeElem) {
+        const activeIndex = super.findIndex(modules, activeElem.id);
+        const clickIndex = super.findIndex(modules, moduleId);
 
         if (activeIndex !== -1 && clickIndex !== -1) {
-          elems[activeIndex]["state"] = EEntityState.Default;
-          elems[clickIndex]["state"] = EEntityState.Active;
+          modules[activeIndex]["state"] = EEntityState.Default;
+          modules[clickIndex]["state"] = EEntityState.Active;
         }
       }
     }

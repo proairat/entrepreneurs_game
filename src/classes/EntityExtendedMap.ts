@@ -13,27 +13,25 @@ class EntityExtendedMap<T extends TExtendsMap>
     super();
     this.list = list;
   }
-  public updateActiveElem(moduleId: number, elems: T[], themeId: number): void {
+  public updateActiveElem(moduleId: number, themeId: number): void {
     if (this.list instanceof Map) {
-      const activeElem = this.getActiveElem(moduleId);
+      const entityByModuleId = this.getEntityByModuleId(moduleId);
+      const activeElem = this.getActiveElem(entityByModuleId);
 
-      if (Array.isArray(elems) && activeElem) {
-        const activeIndex = super.findIndex(elems, activeElem.id);
-        const clickThemeIndex = super.findIndex(elems, themeId);
+      if (Array.isArray(entityByModuleId) && activeElem) {
+        const activeIndex = super.findIndex(entityByModuleId, activeElem.id);
+        const clickIndex = super.findIndex(entityByModuleId, themeId);
 
-        if (activeIndex !== -1 && clickThemeIndex !== -1) {
-          elems[activeIndex]["state"] = EEntityState.Default;
-          elems[clickThemeIndex]["state"] = EEntityState.Active;
+        if (activeIndex !== -1 && clickIndex !== -1) {
+          entityByModuleId[activeIndex]["state"] = EEntityState.Default;
+          entityByModuleId[clickIndex]["state"] = EEntityState.Active;
         }
       }
     }
   }
-  public getActiveElem(moduleId: number): T | undefined {
-    if (this.list instanceof Map) {
-      const list = this.getEntityByModuleId(moduleId);
-      if (Array.isArray(list)) {
-        return super.find(list);
-      }
+  public getActiveElem(entityByModuleId: T[] | undefined): T | undefined {
+    if (Array.isArray(entityByModuleId)) {
+      return super.find(entityByModuleId);
     }
   }
   public getEntityByModuleId(moduleId: number): T[] | undefined {

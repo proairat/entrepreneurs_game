@@ -45,25 +45,25 @@ const eduElementTests = getEduElement(new EntityCreator<ITest>(), DB.tests);
 
 const eduElementModulesExtended = getEduElementExtended(
   new EntityCreatorExtendedArray<IModule>(
-    eduElementModules.getList() as IModule[]
+    ref(eduElementModules.getList()).value as IModule[]
   )
 ) as IEduElementEntityArray<IModule>;
 
 const eduElementThemesExtended = getEduElementExtended(
   new EntityCreatorExtendedMap<ITheme>(
-    eduElementThemes.getList() as TElemsList<number, ITheme>
+    ref(eduElementThemes.getList()).value as TElemsList<number, ITheme>
   )
 ) as IEduElementEntityMap<ITheme>;
 
 const eduElementVideosExtended = getEduElementExtended(
   new EntityCreatorExtendedMap<IVideo>(
-    eduElementVideos.getList() as TElemsList<number, IVideo>
+    ref(eduElementVideos.getList()).value as TElemsList<number, IVideo>
   )
 ) as IEduElementEntityMap<IVideo>;
 
 const eduElementTestsExtended = getEduElementExtended(
   new EntityCreatorExtendedMap<ITest>(
-    eduElementTests.getList() as TElemsList<number, ITest>
+    ref(eduElementTests.getList()).value as TElemsList<number, ITest>
   )
 ) as IEduElementEntityMap<ITest>;
 
@@ -73,39 +73,31 @@ export const useModulesStore = defineStore("modules", () => {
   const activeVideo = ref(getActiveVideo(activeModule.value.id));
   const activeTest = ref(getActiveTest(activeModule.value.id));
 
-  function updateActiveModule(moduleId: number, elems: IModule[]) {
-    eduElementModulesExtended.updateActiveElem(moduleId, elems);
+  function updateActiveModule(moduleId: number) {
+    eduElementModulesExtended.updateActiveElem(moduleId);
     activeModule.value = getActiveModule();
     activeTheme.value = getActiveTheme(moduleId);
     activeVideo.value = getActiveVideo(moduleId);
     activeTest.value = getActiveTest(moduleId);
   }
 
-  function updateActiveTheme(
-    moduleId: number,
-    themes: ITheme[],
-    themeId: number
-  ) {
-    eduElementThemesExtended.updateActiveElem(moduleId, themes, themeId);
+  function updateActiveTheme(moduleId: number, themeId: number) {
+    eduElementThemesExtended.updateActiveElem(moduleId, themeId);
     activeTheme.value = getActiveTheme(moduleId);
   }
 
-  function updateActiveVideo(
-    moduleId: number,
-    videos: IVideo[],
-    themeId: number
-  ) {
-    eduElementVideosExtended.updateActiveElem(moduleId, videos, themeId);
+  function updateActiveVideo(moduleId: number, themeId: number) {
+    eduElementVideosExtended.updateActiveElem(moduleId, themeId);
     activeVideo.value = getActiveVideo(moduleId);
   }
 
-  function updateActiveTest(moduleId: number, tests: ITest[], themeId: number) {
-    eduElementTestsExtended.updateActiveElem(moduleId, tests, themeId);
+  function updateActiveTest(moduleId: number, themeId: number) {
+    eduElementTestsExtended.updateActiveElem(moduleId, themeId);
     activeTest.value = getActiveTest(moduleId);
   }
 
   function getModulesList() {
-    return eduElementModules.getList() as IModule[];
+    return ref(eduElementModules.getList()).value as IModule[];
   }
 
   function getThemesByModuleId(moduleId: number) {
@@ -125,15 +117,21 @@ export const useModulesStore = defineStore("modules", () => {
   }
 
   function getActiveTheme(moduleId: number) {
-    return eduElementThemesExtended.getActiveElem(moduleId) as ITheme;
+    return eduElementThemesExtended.getActiveElem(
+      eduElementThemesExtended.getEntityByModuleId(moduleId)
+    ) as ITheme;
   }
 
   function getActiveVideo(moduleId: number) {
-    return eduElementVideosExtended.getActiveElem(moduleId) as IVideo;
+    return eduElementVideosExtended.getActiveElem(
+      eduElementVideosExtended.getEntityByModuleId(moduleId)
+    ) as IVideo;
   }
 
   function getActiveTest(moduleId: number) {
-    return eduElementTestsExtended.getActiveElem(moduleId) as ITest;
+    return eduElementTestsExtended.getActiveElem(
+      eduElementTestsExtended.getEntityByModuleId(moduleId)
+    ) as ITest;
   }
 
   /*

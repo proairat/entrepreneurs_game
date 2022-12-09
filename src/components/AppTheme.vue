@@ -8,11 +8,10 @@
 <script setup lang="ts">
 import { computed, h, resolveComponent } from "vue";
 import { EEntityState, EEntityType } from "@/types/enums";
-import type { ITheme } from "@/types/interfaces";
+
 /**
  * Due to the limitations of defineProps in TS, no "ITheme" interface is used
  * */
-
 const props = defineProps<{
   id: number;
   type: EEntityType.Topics | EEntityType.Tests;
@@ -22,7 +21,12 @@ const props = defineProps<{
 
 const emits = defineEmits<{
   (e: "changeActiveTheme", themeId: number): void;
-  (e: "changeActiveVideo", props: ITheme): void;
+  (
+    e: "changeActiveVideo",
+    themeId: number,
+    themeType: EEntityType.Topics
+  ): void;
+  (e: "changeActiveTest", themeId: number, themeType: EEntityType.Tests): void;
 }>();
 
 // Due to the fact that backtics does not work correctly, let's leave it like that
@@ -54,7 +58,8 @@ function AppRouterLink() {
     {
       onClick() {
         emits("changeActiveTheme", props.id);
-        emits("changeActiveVideo", props);
+        emits("changeActiveVideo", props.id, props.type as EEntityType.Topics);
+        emits("changeActiveTest", props.id, props.type as EEntityType.Tests);
       },
       class: stateTitle.value,
       to: (() => {
