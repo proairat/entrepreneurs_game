@@ -1,5 +1,5 @@
 <template>
-  <LayoutContainer>
+  <AppEntry>
     <template #AppAlert>
       <AppAlert :isDisappears="true" />
     </template>
@@ -9,5 +9,5 @@
     <template #TheForm>
       <TheRegistrationForm />
     </template>
-  </LayoutContainer>
+  </AppEntry>
 </template>

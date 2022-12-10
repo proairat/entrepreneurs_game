@@ -5,7 +5,8 @@
     <AppTestQuestion />
     <AppTestAnswerBlock>
       <AppTestAnswer
-        v-for="{ idAnswer, answer, state } in data[questionNumber].answers"
+        v-for="{ idAnswer, answer, state } in testContent[questionNumber]
+          .answers"
         :key="idAnswer"
         :idAnswer="idAnswer"
         :answer="answer"
@@ -21,18 +22,20 @@
 </template>
 
 <script setup lang="ts">
-import { useTestsStore } from "@/stores";
+import { useModulesStore, useTestsStore } from "@/stores";
 import { EEntityState } from "@/types/enums";
 import { storeToRefs } from "pinia";
 
+const modulesStore = useModulesStore();
 const testsStore = useTestsStore();
-const { data, isLoading, questionNumber } = storeToRefs(testsStore);
-const { getData, toggleIsOptionSelected } = testsStore;
+const { activeTest } = storeToRefs(modulesStore);
+const { testContent, isLoading, questionNumber } = storeToRefs(testsStore);
+const { toggleIsOptionSelected, getTestsContentByEntityId } = testsStore;
 
-getData();
+getTestsContentByEntityId(activeTest.value.id);
 
 function changeOptionState() {
-  data.value[questionNumber.value].answers.forEach((elem) => {
+  testContent.value[questionNumber.value].answers.forEach((elem) => {
     elem.state = EEntityState.Blocked;
   });
 }

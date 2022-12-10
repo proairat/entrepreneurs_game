@@ -1,5 +1,6 @@
 // import { computed } from "vue";
 
+import type { IAnswer } from "@/types/interfaces";
 import type { Tfns } from "@/types/types";
 
 /**
@@ -122,7 +123,7 @@ function compose(...fns: Tfns<number>) {
   };
 }
 
-const shuffle = (array: { id: number; answer: string }[]) => {
+const shuffle = (array: IAnswer[]) => {
   let currentIndex = array.length;
   let randomIndex;
   while (currentIndex != 0) {

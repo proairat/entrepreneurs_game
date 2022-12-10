@@ -66,6 +66,7 @@ interface ITestContent {
   category: string;
   type: string;
   difficulty: string;
+  slideNumber: number;
   question: string;
   state: EEntityState.Active | EEntityState.Default;
   idAnswerCorrect: number;
@@ -76,7 +77,7 @@ interface ITestContent {
 interface IAnswer {
   idAnswer: number;
   answer: string;
-  state: EEntityState;
+  state: EEntityState.Unlocked | EEntityState.Blocked;
 }
 
 interface IEntranceTest {
@@ -104,9 +105,9 @@ interface IEduElementEntityArray<T> {
 }
 
 interface IEduElementEntityMap<T> {
-  updateActiveElem(moduleId: number, themeId: number): void;
+  updateActiveElem(entityId: number, themeId: number): void;
   getActiveElem(entityByModuleId: T[] | undefined): T | undefined;
-  getEntityByModuleId(moduleId: number): T[] | undefined;
+  getListByEntityId(entityId: number): T[] | undefined;
 }
 
 interface IProgressCaption {

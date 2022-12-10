@@ -25,14 +25,12 @@ const modulesStore = useModulesStore();
 
 const { startTest } = testsStore;
 const { activeTest } = storeToRefs(modulesStore);
-
-console.log("ээээ activeTest", activeTest.value);
 </script>
 
 <style scoped lang="scss">
 .test-undefined {
   color: $rose-80;
-  padding: 1.5rem;
+  padding-top: 1.5rem;
   font-weight: $font-weight-medium;
 }
 .test-description {
