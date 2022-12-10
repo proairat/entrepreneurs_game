@@ -16,7 +16,7 @@ import {
   EntityCreatorExtendedArray,
 } from "@/classes";
 import type { TElemsList } from "@/types/types";
-import { DB } from "@/classes/fetchFromDB";
+import { modules, themes, videos, tests } from "@/classes/fetchFromDB";
 
 function getEduElement<T>(
   creator: Creator<T>,
@@ -35,13 +35,10 @@ function getEduElementExtended<T>(creator: CreatorExtended<T>) {
   return eduElement;
 }
 
-const eduElementModules = getEduElement(
-  new EntityCreator<IModule>(),
-  DB.modules
-);
-const eduElementThemes = getEduElement(new EntityCreator<ITheme>(), DB.themes);
-const eduElementVideos = getEduElement(new EntityCreator<IVideo>(), DB.videos);
-const eduElementTests = getEduElement(new EntityCreator<ITest>(), DB.tests);
+const eduElementModules = getEduElement(new EntityCreator<IModule>(), modules);
+const eduElementThemes = getEduElement(new EntityCreator<ITheme>(), themes);
+const eduElementVideos = getEduElement(new EntityCreator<IVideo>(), videos);
+const eduElementTests = getEduElement(new EntityCreator<ITest>(), tests);
 
 const eduElementModulesExtended = getEduElementExtended(
   new EntityCreatorExtendedArray<IModule>(
@@ -101,15 +98,15 @@ export const useModulesStore = defineStore("modules", () => {
   }
 
   function getThemesByModuleId(moduleId: number) {
-    return eduElementThemesExtended.getEntityByModuleId(moduleId) as ITheme[];
+    return eduElementThemesExtended.getListByEntityId(moduleId) as ITheme[];
   }
 
   function getVideosByModuleId(moduleId: number) {
-    return eduElementVideosExtended.getEntityByModuleId(moduleId) as IVideo[];
+    return eduElementVideosExtended.getListByEntityId(moduleId) as IVideo[];
   }
 
   function getTestsByModuleId(moduleId: number) {
-    return eduElementTestsExtended.getEntityByModuleId(moduleId) as ITest[];
+    return eduElementTestsExtended.getListByEntityId(moduleId) as ITest[];
   }
 
   function getActiveModule() {
@@ -118,19 +115,19 @@ export const useModulesStore = defineStore("modules", () => {
 
   function getActiveTheme(moduleId: number) {
     return eduElementThemesExtended.getActiveElem(
-      eduElementThemesExtended.getEntityByModuleId(moduleId)
+      eduElementThemesExtended.getListByEntityId(moduleId)
     ) as ITheme;
   }
 
   function getActiveVideo(moduleId: number) {
     return eduElementVideosExtended.getActiveElem(
-      eduElementVideosExtended.getEntityByModuleId(moduleId)
+      eduElementVideosExtended.getListByEntityId(moduleId)
     ) as IVideo;
   }
 
   function getActiveTest(moduleId: number) {
     return eduElementTestsExtended.getActiveElem(
-      eduElementTestsExtended.getEntityByModuleId(moduleId)
+      eduElementTestsExtended.getListByEntityId(moduleId)
     ) as ITest;
   }
 

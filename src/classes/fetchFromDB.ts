@@ -1251,6 +1251,7 @@ testsContent.set(7, [
     category: "Общие знания",
     type: "multiple",
     difficulty: "medium",
+    slideNumber: 1,
     question: "Год основания федеральной налоговой службы?",
     state: EEntityState.Active,
     idAnswerCorrect: 1,
@@ -1267,6 +1268,7 @@ testsContent.set(7, [
     category: "Общие знания",
     type: "multiple",
     difficulty: "easy",
+    slideNumber: 2,
     question: "Какой режим налогообложения НЕ существует?",
     state: EEntityState.Default,
     idAnswerCorrect: 5,
@@ -1309,6 +1311,7 @@ testsContent.set(7, [
     category: "Общие знания",
     type: "multiple",
     difficulty: "medium",
+    slideNumber: 3,
     question:
       "В упрощённой системе налогообложения для юридических лиц налоговая ставка в процентах?",
     state: EEntityState.Default,
@@ -1326,6 +1329,7 @@ testsContent.set(7, [
     category: "Общие знания",
     type: "multiple",
     difficulty: "medium",
+    slideNumber: 4,
     question:
       "Для какой категории граждан введён налог на профессиональный доход ",
     state: EEntityState.Default,
@@ -1354,6 +1358,7 @@ testsContent.set(7, [
     category: "Общие знания",
     type: "boolean",
     difficulty: "easy",
+    slideNumber: 5,
     question: "Срок уплаты транспортного налога физическим лицом",
     state: EEntityState.Default,
     idAnswerCorrect: 21,
@@ -1386,6 +1391,7 @@ testsContent.set(7, [
     category: "Общие знания",
     type: "multiple",
     difficulty: "hard",
+    slideNumber: 6,
     question:
       "Может ли иное лицо осуществить уплату государственной пошлины за плательщика?",
     state: EEntityState.Default,
@@ -1401,6 +1407,7 @@ testsContent.set(7, [
     category: "Общие знания",
     type: "multiple",
     difficulty: "easy",
+    slideNumber: 7,
     question:
       "С какого момента и до какого момента применяется налоговый вычет для соглашения о защите и поощрении капиталовложений (СЗПК)?",
     state: EEntityState.Default,
@@ -1432,6 +1439,7 @@ testsContent.set(7, [
     category: "Общие знания",
     type: "multiple",
     difficulty: "medium",
+    slideNumber: 8,
     question:
       "Размер страховых взносов для общества с ограниченной ответственностью?",
     state: EEntityState.Default,
@@ -1475,6 +1483,7 @@ testsContent.set(7, [
     category: "Общие знания",
     type: "multiple",
     difficulty: "hard",
+    slideNumber: 9,
     question:
       "Может ли физическое лицо, не являющееся индивидуальным предпринимателем, являться налогоплательщиком НДС?",
     state: EEntityState.Default,
@@ -1490,6 +1499,7 @@ testsContent.set(7, [
     category: "Общие знания",
     type: "boolean",
     difficulty: "medium",
+    slideNumber: 10,
     question:
       "Какие страховые взносы Не платит индивидуальный предприниматель?",
     state: EEntityState.Default,
@@ -1521,6 +1531,7 @@ testsContent.set(14, [
     category: "Общие знания",
     type: "multiple",
     difficulty: "medium",
+    slideNumber: 1,
     question: "Сколько будет 2 + 2?",
     state: EEntityState.Default,
     idAnswerCorrect: 37,
@@ -1542,6 +1553,7 @@ testsContent.set(14, [
     category: "Общие знания",
     type: "multiple",
     difficulty: "easy",
+    slideNumber: 2,
     question: "Столица Никарагуа?",
     state: EEntityState.Default,
     idAnswerCorrect: 48,
@@ -1572,6 +1584,7 @@ testsContent.set(28, [
     category: "Общие знания",
     type: "multiple",
     difficulty: "medium",
+    slideNumber: 1,
     question: "Сейчас зима?",
     state: EEntityState.Default,
     idAnswerCorrect: 49,
@@ -1586,6 +1599,7 @@ testsContent.set(28, [
     category: "Общие знания",
     type: "multiple",
     difficulty: "easy",
+    slideNumber: 2,
     question: "Из песни слов не ...?",
     state: EEntityState.Default,
     idAnswerCorrect: 53,
@@ -1621,6 +1635,7 @@ testsContent.set(39, [
     category: "Общие знания",
     type: "multiple",
     difficulty: "medium",
+    slideNumber: 1,
     question: "Что такое Эдельвейс?",
     state: EEntityState.Default,
     idAnswerCorrect: 55,
@@ -1653,6 +1668,7 @@ testsContent.set(39, [
     category: "Общие знания",
     type: "multiple",
     difficulty: "easy",
+    slideNumber: 2,
     question: "Какого населённого пункта не существует?",
     state: EEntityState.Default,
     idAnswerCorrect: 61,
@@ -1677,6 +1693,4 @@ testsContent.set(39, [
   },
 ]);
 
-const DB = { modules, themes, videos, tests, testsContent };
-
-export { DB };
+export { modules, themes, videos, tests, testsContent };

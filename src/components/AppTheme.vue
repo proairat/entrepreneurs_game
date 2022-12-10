@@ -106,7 +106,7 @@ function AppRouterLink() {
   }
 }
 .test-item__state-icon {
-  @include stateIcon($sun-40, $sun-40) {
+  @include stateIcon($green-40, $sun-40) {
     margin: 0.5rem 0.5rem 0.5rem 0;
   }
 }
@@ -121,7 +121,7 @@ function AppRouterLink() {
 }
 .test-item__state-title {
   &_active {
-    color: $sun-90;
+    color: $green-60;
   }
   &_default {
     color: $sun-90;

@@ -12,7 +12,7 @@
 </template>
 
 <script setup lang="ts">
-import { useModulesStore } from "@/stores";
+import { useModulesStore, useTestsStore } from "@/stores";
 import { EEntityType } from "@/types/enums";
 
 const props = defineProps<{
@@ -26,6 +26,8 @@ const {
   updateActiveVideo,
   updateActiveTest,
 } = modulesStore;
+const testsStore = useTestsStore();
+const { initializeTest } = testsStore;
 const themes = getThemesByModuleId(props.moduleId);
 
 /**
@@ -59,6 +61,7 @@ function changeActiveTestHandler(
   themeType: EEntityType.Tests
 ) {
   if (themeType === EEntityType.Tests) {
+    initializeTest();
     updateActiveTest(props.moduleId, themeId);
   }
 }
