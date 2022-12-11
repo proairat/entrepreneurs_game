@@ -13,14 +13,14 @@ class EntityExtendedArray<T extends TExtendsArray>
     super();
     this.list = list;
   }
-  public updateActiveElem(moduleId: number): void {
+  public updateActiveElem(entityId: number): void {
     if (Array.isArray(this.list)) {
       const modules = this.list;
       const activeElem = this.getActiveElem();
 
       if (Array.isArray(modules) && activeElem) {
         const activeIndex = super.findIndex(modules, activeElem.id);
-        const clickIndex = super.findIndex(modules, moduleId);
+        const clickIndex = super.findIndex(modules, entityId);
 
         if (activeIndex !== -1 && clickIndex !== -1) {
           modules[activeIndex]["state"] = EEntityState.Default;

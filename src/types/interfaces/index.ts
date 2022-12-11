@@ -82,13 +82,29 @@ interface IAnswer {
 
 interface IEntranceTest {
   id: number;
-  category: string;
   type: EEntityType.EntranceTests;
+  title: string;
+  description: string;
+  state: EEntityState.Active | EEntityState.Default;
+}
+
+interface IEntranceTestContent {
+  id: number;
+  category: string;
+  type: string;
   difficulty: string;
+  slideNumber: number;
   question: string;
+  state: EEntityState.Active | EEntityState.Default;
   idAnswerCorrect: number;
   answers: IAnswer[];
   guessed: EGuessed;
+}
+
+interface IProgressCaption {
+  topics: string;
+  tests: string;
+  entryTests: string;
 }
 
 interface IEduCommonElement<T> {
@@ -100,7 +116,7 @@ interface IEduCommonElement<T> {
 }
 
 interface IEduElementEntityArray<T> {
-  updateActiveElem(moduleId: number): void;
+  updateActiveElem(entityId: number): void;
   getActiveElem(): T | undefined;
 }
 
@@ -108,12 +124,6 @@ interface IEduElementEntityMap<T> {
   updateActiveElem(entityId: number, themeId: number): void;
   getActiveElem(entityByModuleId: T[] | undefined): T | undefined;
   getListByEntityId(entityId: number): T[] | undefined;
-}
-
-interface IProgressCaption {
-  topics: string;
-  tests: string;
-  entryTests: string;
 }
 
 export type {
@@ -127,8 +137,9 @@ export type {
   ITestContent,
   IAnswer,
   IEntranceTest,
+  IEntranceTestContent,
+  IProgressCaption,
   IEduCommonElement,
   IEduElementEntityArray,
-  IProgressCaption,
   IEduElementEntityMap,
 };

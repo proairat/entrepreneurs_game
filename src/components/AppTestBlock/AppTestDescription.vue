@@ -4,6 +4,7 @@
   </div>
   <div v-else class="test-description">
     <div class="test-description__title text-xl">{{ activeTest.title }}</div>
+    <div class="test-description__content"></div>
     <div class="test-description__outer-start-test">
       <el-button
         type="primary"
@@ -47,9 +48,10 @@ const { activeTest } = storeToRefs(modulesStore);
     font-weight: $font-weight-medium;
   }
   &__button-start-test {
-    width: 10rem;
+    height: 3.5rem;
     font-size: 1rem;
     background-color: $sun-30;
+    padding: 1rem;
     color: inherit;
     border: none;
     &:hover {
