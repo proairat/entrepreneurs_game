@@ -158,4 +158,10 @@ const logo = await getImageUrl("academic-cap");
 .academicCap {
   padding-right: 1rem;
 }
+
+h6 {
+  font-size: $text-base-size;
+  font-weight: $font-weight-medium;
+  line-height: $line-height-xs;
+}
 </style>

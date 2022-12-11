@@ -9,7 +9,7 @@
           <AppProgress type="entryTests" />
         </div>
         <div class="right-side">
-          <AppTestBlock />
+          <AppEntranceTestBlock />
         </div>
       </div>
     </div>

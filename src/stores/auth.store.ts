@@ -23,15 +23,16 @@ export const useAuthStore = defineStore("auth", {
         this.user = user;
 
         console.log("this.user", this.user);
-        /*
+
         const url = this.user.entranceTesting
           ? "/modules"
           : "/entrance-testing";
-        */
 
+        /*
         const url = this.user.entranceTesting
           ? "/entrance-testing"
           : "/modules";
+        */
 
         console.log("login url", url);
         // store user details and jwt in local storage to keep user logged in between page refreshes
