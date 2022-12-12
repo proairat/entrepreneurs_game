@@ -1717,11 +1717,13 @@ entranceTests.push(
 );
 
 /**
- * ENTRY TESTS CONTENT
+ * ENTRANCE TESTS CONTENT
  */
-const entranceTestsContent: IEntranceTestContent[] | undefined = [];
-// id_test 7
-entranceTestsContent.push(
+const entranceTestsContent:
+  | TElemsList<number, IEntranceTestContent>
+  | undefined = new Map();
+// id_entrance_test 1
+entranceTestsContent.set(1, [
   {
     id: 1,
     category: "Общие знания",
@@ -1828,8 +1830,8 @@ entranceTestsContent.push(
       },
     ],
     guessed: EGuessed.Undefined,
-  }
-);
+  },
+]);
 
 export {
   modules,

@@ -8,10 +8,12 @@ import {
   Creator,
   CreatorExtended,
   EntityCreatorExtendedArray,
+  EntityCreatorExtendedMap,
 } from "@/classes";
 import type { TElemsList } from "@/types/types";
 import type {
   IEduElementEntityArray,
+  IEduElementEntityMap,
   IEntranceTest,
   IEntranceTestContent,
 } from "@/types/interfaces";
@@ -38,11 +40,25 @@ const eduElementEntranceTests = getEduElement(
   entranceTests
 );
 
+const eduElementEntranceTestsContent = getEduElement(
+  new EntityCreator<IEntranceTestContent>(),
+  entranceTestsContent
+);
+
 const eduElementEntranceTestsExtended = getEduElementExtended(
   new EntityCreatorExtendedArray<IEntranceTest>(
     ref(eduElementEntranceTests.getList()).value as IEntranceTest[]
   )
 ) as IEduElementEntityArray<IEntranceTest>;
+
+const eduElementEntranceTestsContentExtended = getEduElementExtended(
+  new EntityCreatorExtendedMap<IEntranceTestContent>(
+    ref(eduElementEntranceTestsContent.getList()).value as TElemsList<
+      number,
+      IEntranceTestContent
+    >
+  )
+) as IEduElementEntityMap<IEntranceTestContent>;
 
 export const useEntranceTestsStore = defineStore("entranceTests", () => {
   const activeEntranceTest = ref(getActiveEntranceTest());
@@ -71,7 +87,6 @@ export const useEntranceTestsStore = defineStore("entranceTests", () => {
   }
 
   function startTest() {
-    console.log("Start test from entranceTests");
     step.value = 1;
   }
 
@@ -128,6 +143,19 @@ export const useEntranceTestsStore = defineStore("entranceTests", () => {
     return eduElementEntranceTestsExtended.getActiveElem() as IEntranceTest;
   }
 
+  function getEntranceTestsContentByEntityId(entityId: number) {
+    const result = eduElementEntranceTestsContentExtended.getListByEntityId(
+      entityId
+    ) as IEntranceTestContent[];
+
+    result.forEach((item) => shuffle(item.answers));
+
+    testContent.value = deepClone(result);
+    isLoading.value = false;
+    questionNumber.value = 0;
+    questionCount.value = testContent.value.length;
+  }
+
   return {
     activeEntranceTest,
     progressValue,
@@ -150,5 +178,6 @@ export const useEntranceTestsStore = defineStore("entranceTests", () => {
     isAnswerIsCorrect,
     getQuestion,
     getEntranceTestsList,
+    getEntranceTestsContentByEntityId,
   };
 });

@@ -1,4 +1,10 @@
-import type { EAlert, EEntityState, EEntityType, EGuessed } from "../enums";
+import type {
+  EAlert,
+  EEntityState,
+  EEntityType,
+  EGuessed,
+  EProgressCaption,
+} from "../enums";
 import type { TElemsList } from "../types";
 
 interface IUser {
@@ -102,9 +108,10 @@ interface IEntranceTestContent {
 }
 
 interface IProgressCaption {
-  topics: string;
-  tests: string;
-  entryTests: string;
+  modules: EProgressCaption.ModulesCaption;
+  topics: EProgressCaption.TopicsCaption;
+  tests: EProgressCaption.TestsCaption;
+  entryTests: EProgressCaption.EntryTestsCaption;
 }
 
 interface IEduCommonElement<T> {

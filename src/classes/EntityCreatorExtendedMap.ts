@@ -1,7 +1,6 @@
 import type { IEduElementEntityMap } from "@/types/interfaces";
 import type { TElemsList, TExtendsMap } from "@/types/types";
-import { CreatorExtended } from "@/classes/CreatorExtended";
-import { EntityExtendedMap } from "./EntityExtendedMap";
+import { CreatorExtended, EntityExtendedMap } from "@/classes";
 
 class EntityCreatorExtendedMap<
   C extends TExtendsMap
