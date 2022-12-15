@@ -1,7 +1,7 @@
 <template>
+  <div class="font-medium text-xl">{{ props.resultMessage }}</div>
   <div class="test-result__result-button result-button">
     <el-button
-      v-if="checkBoundaryPercent()"
       type="primary"
       class="result-button__explore-other-sections-of-the-course rounded-md"
     >
@@ -13,38 +13,17 @@
             name: 'ViewModules',
           }"
         >
-          <span>Изучить другие разделы курса</span>
+          <span>Приступить к изучению разделов курса!</span>
         </router-link>
       </div>
-    </el-button>
-    <el-button
-      v-else
-      type="primary"
-      class="result-button__take-the-test-again transition rounded-md"
-      @click="initializeTest"
-    >
-      <span class="mr-2">Пройти тест заново</span
-      ><img :src="restart" alt="Рестарт" />
     </el-button>
   </div>
 </template>
 
 <script setup lang="ts">
-import { useEntranceTestsStore } from "@/stores";
-import { getImageUrl } from "@/helpers/commonFunctions";
-import { EPercent } from "@/types/enums";
-
 const props = defineProps<{
-  percent: number;
+  resultMessage: string;
 }>();
-
-const entranceTestsStore = useEntranceTestsStore();
-const { initializeTest } = entranceTestsStore;
-const restart = await getImageUrl("restart");
-
-function checkBoundaryPercent() {
-  return props.percent > EPercent.OneCoinLowBoundary ? true : false;
-}
 </script>
 
 <style scoped lang="scss">

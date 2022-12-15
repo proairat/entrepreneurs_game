@@ -19,7 +19,7 @@ modules.push(
   {
     id: 1,
     type: EEntityType.Modules,
-    src: "https://www.spletnik.ru/img/__post/5d/5dc18cc037668240ad73b448eb464516_297.jpg",
+    src: "https://catherineasquithgallery.com/uploads/posts/2021-03/1614630830_77-p-fon-knigi-dlya-fotoshopa-110.jpg",
     alt: "Модуль 1",
     header: "Основы предпринимательства",
     title: "Модуль 1",
@@ -30,7 +30,7 @@ modules.push(
   {
     id: 2,
     type: EEntityType.Modules,
-    src: "https://www.spletnik.ru/img/__post/5d/5dc18cc037668240ad73b448eb464516_297.jpg",
+    src: "https://catherineasquithgallery.com/uploads/posts/2021-03/1614630830_77-p-fon-knigi-dlya-fotoshopa-110.jpg",
     alt: "Модуль 2",
     header: "Грантовое проектирование",
     title: "Модуль 2",
@@ -41,7 +41,7 @@ modules.push(
   {
     id: 3,
     type: EEntityType.Modules,
-    src: "https://www.spletnik.ru/img/__post/5d/5dc18cc037668240ad73b448eb464516_297.jpg",
+    src: "https://catherineasquithgallery.com/uploads/posts/2021-03/1614630830_77-p-fon-knigi-dlya-fotoshopa-110.jpg",
     alt: "Модуль 3",
     header: "Технологическое предпринимательство",
     title: "Модуль 3",
@@ -52,7 +52,7 @@ modules.push(
   {
     id: 4,
     type: EEntityType.Modules,
-    src: "https://www.spletnik.ru/img/__post/5d/5dc18cc037668240ad73b448eb464516_297.jpg",
+    src: "https://catherineasquithgallery.com/uploads/posts/2021-03/1614630830_77-p-fon-knigi-dlya-fotoshopa-110.jpg",
     alt: "Модуль 4",
     header: "Массовое предпринимательство",
     title: "Модуль 4",
@@ -63,7 +63,7 @@ modules.push(
   {
     id: 5,
     type: EEntityType.Modules,
-    src: "https://www.spletnik.ru/img/__post/5d/5dc18cc037668240ad73b448eb464516_297.jpg",
+    src: "https://catherineasquithgallery.com/uploads/posts/2021-03/1614630830_77-p-fon-knigi-dlya-fotoshopa-110.jpg",
     alt: "Модуль 5",
     header: "Креативные индустрии",
     title: "Модуль 5",
@@ -74,7 +74,7 @@ modules.push(
   {
     id: 6,
     type: EEntityType.Modules,
-    src: "https://www.spletnik.ru/img/__post/5d/5dc18cc037668240ad73b448eb464516_297.jpg",
+    src: "https://catherineasquithgallery.com/uploads/posts/2021-03/1614630830_77-p-fon-knigi-dlya-fotoshopa-110.jpg",
     alt: "Модуль 6",
     header: "Социальное предпринимательство",
     title: "Модуль 6",
@@ -85,7 +85,7 @@ modules.push(
   {
     id: 7,
     type: EEntityType.Modules,
-    src: "https://www.spletnik.ru/img/__post/5d/5dc18cc037668240ad73b448eb464516_297.jpg",
+    src: "https://catherineasquithgallery.com/uploads/posts/2021-03/1614630830_77-p-fon-knigi-dlya-fotoshopa-110.jpg",
     alt: "Модуль 7",
     header: "Итоговое тестирование",
     title: "Модуль 7",
@@ -1733,6 +1733,7 @@ entranceTestsContent.set(1, [
     question: "Entrance Test Год основания федеральной налоговой службы?",
     state: EEntityState.Active,
     idAnswerCorrect: 1,
+    idAnswerUserSelected: [],
     answers: [
       { idAnswer: 1, answer: "2004", state: EEntityState.Unlocked },
       { idAnswer: 2, answer: "1998", state: EEntityState.Unlocked },
@@ -1750,6 +1751,7 @@ entranceTestsContent.set(1, [
     question: "Entrance Test Какой режим налогообложения НЕ существует?",
     state: EEntityState.Default,
     idAnswerCorrect: 5,
+    idAnswerUserSelected: [],
     answers: [
       {
         idAnswer: 5,
@@ -1794,6 +1796,7 @@ entranceTestsContent.set(1, [
       "Entrance Test В упрощённой системе налогообложения для юридических лиц налоговая ставка в процентах?",
     state: EEntityState.Default,
     idAnswerCorrect: 11,
+    idAnswerUserSelected: [],
     answers: [
       { idAnswer: 11, answer: "6%", state: EEntityState.Unlocked },
       { idAnswer: 12, answer: "8%", state: EEntityState.Unlocked },
@@ -1812,6 +1815,7 @@ entranceTestsContent.set(1, [
       "Entrance Test Для какой категории граждан введён налог на профессиональный доход ",
     state: EEntityState.Default,
     idAnswerCorrect: 17,
+    idAnswerUserSelected: [],
     answers: [
       {
         idAnswer: 15,

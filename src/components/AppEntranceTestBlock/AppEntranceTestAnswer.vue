@@ -6,8 +6,7 @@
       clickAnswer();
     "
     :class="{
-      'bg-red-200': !isCorrectAnswer && show,
-      'bg-green-200': isCorrectAnswer && show,
+      'bg-sun-20': show,
       'hover:bg-gray-200': props.state === EEntityState.Unlocked,
     }"
     :disabled="props.state === EEntityState.Blocked"
@@ -19,7 +18,6 @@
 <script setup lang="ts">
 import { useEntranceTestsStore } from "@/stores";
 import { EEntityState } from "@/types/enums";
-import { computed } from "vue";
 import { ref } from "vue";
 
 const props = defineProps<{
@@ -27,18 +25,16 @@ const props = defineProps<{
   answer: string;
   state: EEntityState.Unlocked | EEntityState.Blocked;
 }>();
-
 const emits = defineEmits<{
-  (e: "clickAnswer"): void;
+  (e: "clickAnswer", answerId: number): void;
 }>();
 
 const entranceTestsStore = useEntranceTestsStore();
-const { checkAnswer, isAnswerIsCorrect } = entranceTestsStore;
+const { checkAnswer } = entranceTestsStore;
 const show = ref(false);
-const isCorrectAnswer = computed(() => isAnswerIsCorrect(props.idAnswer));
 
 function clickAnswer() {
-  emits("clickAnswer");
+  emits("clickAnswer", props.idAnswer);
   show.value = true;
 }
 </script>
@@ -47,5 +43,8 @@ function clickAnswer() {
 .test-answer {
   border-radius: 0.625rem;
   font-size: $text-size-h5;
+}
+.bg-sun-20 {
+  background-color: $sun-20;
 }
 </style>

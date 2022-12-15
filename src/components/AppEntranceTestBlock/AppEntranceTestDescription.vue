@@ -18,15 +18,7 @@
         предпринимательстве?
       </p>
     </div>
-    <div class="test-description__outer-start-test">
-      <el-button
-        type="primary"
-        class="test-description__button-start-test rounded-md"
-        @click="startTest"
-      >
-        Начать входное тестирование
-      </el-button>
-    </div>
+    <AppEntranceTestPersonalData />
   </div>
 </template>
 
@@ -35,7 +27,6 @@ import { useEntranceTestsStore } from "@/stores";
 import { storeToRefs } from "pinia";
 
 const entranceTestsStore = useEntranceTestsStore();
-const { startTest } = entranceTestsStore;
 const { activeEntranceTest } = storeToRefs(entranceTestsStore);
 </script>
 

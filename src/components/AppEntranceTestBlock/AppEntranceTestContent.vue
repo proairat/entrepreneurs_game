@@ -14,6 +14,7 @@
         @click-answer="
           toggleIsOptionSelected(true);
           changeOptionState();
+          setIdAnswerUserSelected(idAnswer);
         "
       ></AppEntranceTestAnswer>
     </AppEntranceTestAnswerBlock>
@@ -29,8 +30,11 @@ import { storeToRefs } from "pinia";
 const entranceTestsStore = useEntranceTestsStore();
 const { activeEntranceTest, testContent, isLoading, questionNumber } =
   storeToRefs(entranceTestsStore);
-const { toggleIsOptionSelected, getEntranceTestsContentByEntityId } =
-  entranceTestsStore;
+const {
+  toggleIsOptionSelected,
+  getEntranceTestsContentByEntityId,
+  setIdAnswerUserSelected,
+} = entranceTestsStore;
 
 getEntranceTestsContentByEntityId(activeEntranceTest.value.id);
 

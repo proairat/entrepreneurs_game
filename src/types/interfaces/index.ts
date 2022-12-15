@@ -103,6 +103,7 @@ interface IEntranceTestContent {
   question: string;
   state: EEntityState.Active | EEntityState.Default;
   idAnswerCorrect: number;
+  idAnswerUserSelected: number[];
   answers: IAnswer[];
   guessed: EGuessed;
 }

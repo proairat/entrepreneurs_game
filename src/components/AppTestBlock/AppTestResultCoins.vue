@@ -1,6 +1,6 @@
 <template>
-  <div class="test-restart__result-coins">
-    <div class="test-restart__img-coins">
+  <div class="test-result__result-coins">
+    <div class="test-result__img-coins">
       <img
         v-for="n in countCoins"
         :src="coin"
@@ -9,7 +9,7 @@
         alt="Монета"
       />
     </div>
-    <div class="test-restart__message font-medium text-xl">
+    <div class="test-result__message font-medium text-xl">
       {{ message() }}
     </div>
   </div>
@@ -75,7 +75,7 @@ function message() {
 </script>
 
 <style scope lang="scss">
-.test-restart {
+.test-result {
   &__result-coins {
     grid-area: AppTestResultCoins;
   }

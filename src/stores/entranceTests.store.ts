@@ -100,6 +100,10 @@ export const useEntranceTestsStore = defineStore("entranceTests", () => {
     testContent.value[questionNumber.value].guessed = value;
   }
 
+  function setIdAnswerUserSelected(idAnswer: number) {
+    testContent.value[questionNumber.value].idAnswerUserSelected.push(idAnswer);
+  }
+
   function checkAnswer(idAnswer: number) {
     if (isAnswerIsCorrect(idAnswer)) {
       incrementScore();
@@ -179,5 +183,6 @@ export const useEntranceTestsStore = defineStore("entranceTests", () => {
     getQuestion,
     getEntranceTestsList,
     getEntranceTestsContentByEntityId,
+    setIdAnswerUserSelected,
   };
 });

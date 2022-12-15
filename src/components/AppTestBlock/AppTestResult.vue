@@ -1,18 +1,18 @@
 <template>
-  <div class="test-restart">
-    <AppEntranceTestPercentAnswers :percent="getPercent" />
-    <AppEntranceTestResultCoins :percent="getPercent" />
-    <AppEntranceTestResultButton :percent="getPercent" />
+  <div class="test-result">
+    <AppTestPercentAnswers :percent="getPercent" />
+    <AppTestResultCoins :percent="getPercent" />
+    <AppTestResultButton :percent="getPercent" />
   </div>
 </template>
 
 <script setup lang="ts">
 import { computed } from "vue";
-import { useEntranceTestsStore } from "@/stores";
+import { useTestsStore } from "@/stores";
 import { storeToRefs } from "pinia";
 
-const entranceTestsStore = useEntranceTestsStore();
-const { questionCount, score } = storeToRefs(entranceTestsStore);
+const testsStore = useTestsStore();
+const { questionCount, score } = storeToRefs(testsStore);
 
 const getPercent = computed(() => {
   return Math.ceil((score.value * 100) / questionCount.value);
@@ -20,7 +20,7 @@ const getPercent = computed(() => {
 </script>
 
 <style scoped lang="scss">
-.test-restart {
+.test-result {
   display: grid;
   grid-template-columns: auto;
   grid-template-areas: auto;

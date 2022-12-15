@@ -2,7 +2,7 @@
   <div class="app-test-block">
     <AppEntranceTestDescription v-if="step === 0" />
     <AppEntranceTestContent v-if="step === 1" />
-    <AppEntranceTestRestart v-if="step === 2" />
+    <AppEntranceTestResult v-if="step === 2" />
   </div>
 </template>
 
