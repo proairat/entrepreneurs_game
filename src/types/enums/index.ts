@@ -35,4 +35,18 @@ enum EGuessed {
   Active = "active",
 }
 
-export { EAlert, EEntityState, EEntityType, EPercent, EGuessed };
+enum EProgressCaption {
+  ModulesCaption = "Прогресс модуля",
+  TopicsCaption = "Прогресс темы",
+  TestsCaption = "Прогрессс теста",
+  EntryTestsCaption = "Прогресс входного тестирования",
+}
+
+export {
+  EAlert,
+  EEntityState,
+  EEntityType,
+  EPercent,
+  EGuessed,
+  EProgressCaption,
+};

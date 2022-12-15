@@ -3,7 +3,7 @@
     <!--<AppTestOptions v-if="step === 0"></AppTestOptions>-->
     <AppTestDescription v-if="step === 0" />
     <AppTestContent v-if="step === 1" />
-    <AppTestRestart v-if="step === 2" />
+    <AppTestResult v-if="step === 2" />
   </div>
 </template>
 

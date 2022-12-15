@@ -136,6 +136,32 @@ const shuffle = (array: IAnswer[]) => {
   }
 };
 
+function isObjectEmpty(value: any) {
+  return (
+    Object.prototype.toString.call(value) === "[object Object]" &&
+    JSON.stringify(value) === "{}"
+  );
+}
+
+function groupByKey(key: any) {
+  return (array: any) =>
+    array.reduce((prev: any, current: any) => {
+      /*
+      console.log('key', key);
+      console.log('current', current);
+      console.log('current[key]', current[key]);
+      throw 'current';
+      */
+
+      const property = current[key];
+
+      prev[property] = prev[property] || [];
+      prev[property].push(current);
+
+      return prev;
+    }, {});
+}
+
 export {
   FuzzySearch,
   FulfillRequests,
@@ -146,4 +172,6 @@ export {
   removeObjectProperty,
   shuffle,
   compose,
+  isObjectEmpty,
+  groupByKey,
 };

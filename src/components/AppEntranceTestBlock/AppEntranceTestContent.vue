@@ -14,6 +14,7 @@
         @click-answer="
           toggleIsOptionSelected(true);
           changeOptionState();
+          setIdAnswerUserSelected(idAnswer);
         "
       ></AppEntranceTestAnswer>
     </AppEntranceTestAnswerBlock>
@@ -22,18 +23,20 @@
 </template>
 
 <script setup lang="ts">
-import { useModulesStore, useEntranceTestsStore } from "@/stores";
+import { useEntranceTestsStore } from "@/stores";
 import { EEntityState } from "@/types/enums";
 import { storeToRefs } from "pinia";
 
-const modulesStore = useModulesStore();
 const entranceTestsStore = useEntranceTestsStore();
-const { activeTest } = storeToRefs(modulesStore);
-const { testContent, isLoading, questionNumber } =
+const { activeEntranceTest, testContent, isLoading, questionNumber } =
   storeToRefs(entranceTestsStore);
-const { toggleIsOptionSelected } = entranceTestsStore;
+const {
+  toggleIsOptionSelected,
+  getEntranceTestsContentByEntityId,
+  setIdAnswerUserSelected,
+} = entranceTestsStore;
 
-// getTestsContentByEntityId(activeTest.value.id);
+getEntranceTestsContentByEntityId(activeEntranceTest.value.id);
 
 function changeOptionState() {
   testContent.value[questionNumber.value].answers.forEach((elem) => {

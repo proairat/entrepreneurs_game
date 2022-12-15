@@ -1,5 +1,5 @@
 <template>
-  <div class="test-restart__result-button result-button">
+  <div class="test-result__result-button result-button">
     <el-button
       v-if="checkBoundaryPercent()"
       type="primary"
@@ -13,7 +13,7 @@
             name: 'ViewModules',
           }"
         >
-          <span class="mr-3">Изучить другие разделы курса</span>
+          <span>Изучить другие разделы курса</span>
         </router-link>
       </div>
     </el-button>
@@ -23,7 +23,8 @@
       class="result-button__take-the-test-again transition rounded-md"
       @click="initializeTest"
     >
-      Пройти тест заново &nbsp;<img :src="restart" alt="Рестарт" />
+      <span class="mr-2">Пройти тест заново</span
+      ><img :src="restart" alt="Рестарт" />
     </el-button>
   </div>
 </template>
@@ -47,7 +48,7 @@ function checkBoundaryPercent() {
 </script>
 
 <style scoped lang="scss">
-.test-restart__result-button {
+.test-result__result-button {
   grid-area: AppTestResultButton;
   display: flex;
   padding-top: 1.5rem;

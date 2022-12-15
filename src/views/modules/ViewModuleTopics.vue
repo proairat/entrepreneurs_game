@@ -62,17 +62,9 @@ const backTo = ref({
 
 // const filteredList = computed(() => FuzzySearch(search.value, modules, "title"));
 
-const getModuleHeader = computed(() => {
-  return activeModule.value.header;
-});
-
-const getModuleId = computed(() => {
-  return activeModule.value.id;
-});
-
-const getThemeTitle = computed(() => {
-  return activeTheme.value.title;
-});
+const getModuleHeader = computed(() => activeModule.value.header);
+const getModuleId = computed(() => activeModule.value.id);
+const getThemeTitle = computed(() => activeTheme.value.title);
 </script>
 
 <style scoped lang="scss">

@@ -9,23 +9,16 @@
     <div class="test-description__content">
       <p>
         Открыть свое дело мечтают многие. Кто-то уже открыл, кто-то сомневается
-        в реальности такого шага, другие думают, что не готовы.
+        в реальности такого шага, другие думают, что не готовы. Вот проверить
+        готовность мы как раз и собираемся.
       </p>
       <p>
-        Вот проверить готовность мы как раз и собираемся. Ответьте на несколько
-        простых вопросов, а в конце узнаем, стоит ли подавать документы на
-        стартап или лучше побольше разведать о предпринимательстве?
+        Ответьте на несколько простых вопросов, а в конце узнаем, стоит ли
+        подавать документы на стартап или лучше побольше разведать о
+        предпринимательстве?
       </p>
     </div>
-    <div class="test-description__outer-start-test">
-      <el-button
-        type="primary"
-        class="test-description__button-start-test rounded-md"
-        @click="startTest"
-      >
-        Начать входное тестирование
-      </el-button>
-    </div>
+    <AppEntranceTestPersonalData />
   </div>
 </template>
 
@@ -34,11 +27,7 @@ import { useEntranceTestsStore } from "@/stores";
 import { storeToRefs } from "pinia";
 
 const entranceTestsStore = useEntranceTestsStore();
-
-const { startTest } = entranceTestsStore;
 const { activeEntranceTest } = storeToRefs(entranceTestsStore);
-
-console.log("Хихо activeEntranceTest.value", activeEntranceTest.value);
 </script>
 
 <style scoped lang="scss">
