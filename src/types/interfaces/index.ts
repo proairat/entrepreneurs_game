@@ -53,6 +53,7 @@ interface IVideo {
   id: number;
   type: EEntityType.Videos;
   src: string;
+  poster: string;
   videoType: string;
   duration?: number;
   state: EEntityState.Active | EEntityState.Default;

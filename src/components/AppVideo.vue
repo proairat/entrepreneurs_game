@@ -1,31 +1,63 @@
 <template>
   <div class="video">
-    <video controls>
-      <source
-        :src="activeVideo?.src"
-        type='video/ogg; codecs=\"theora, vorbis\"'
-      />
-    </video>
+    <VideoPlayer
+      class="video-player vjs-big-play-centered"
+      controls
+      :src="getVideoSrc"
+      :poster="getVideoPoster"
+      :loop="true"
+      :volume="0.6"
+      aspectRatio="16:9"
+      playsinline
+      :playback-rates="[1.0, 1.5, 2.0]"
+      @mounted="handleMounted"
+      @ready="handleEvent($event)"
+      @play="handleEvent($event)"
+      @pause="handleEvent($event)"
+      @ended="handleEvent($event)"
+      @loadeddata="handleEvent($event)"
+      @waiting="handleEvent($event)"
+      @playing="handleEvent($event)"
+      @canplay="handleEvent($event)"
+      @canplaythrough="handleEvent($event)"
+      @timeupdate="handleEvent(player?.currentTime())"
+    />
     <AppThemeHeader>{{ getVideoTitle }}</AppThemeHeader>
   </div>
 </template>
 
 <script setup lang="ts">
+import type { VideoJsPlayer } from "video.js";
+import { VideoPlayer } from "@videojs-player/vue";
+import "video.js/dist/video-js.css";
 import { useModulesStore } from "@/stores";
 import { storeToRefs } from "pinia";
-import { computed } from "vue";
+import { computed, shallowRef } from "vue";
 
 const modulesStore = useModulesStore();
 const { activeVideo } = storeToRefs(modulesStore);
-const getVideoTitle = computed(() => {
-  return activeVideo.value.title;
-});
+
+const getVideoTitle = computed(() => activeVideo.value.title);
+const getVideoSrc = computed(
+  () => new URL(activeVideo.value.src, import.meta.url).href
+);
+const getVideoPoster = computed(
+  () => new URL(activeVideo.value.poster, import.meta.url).href
+);
+
+const player = shallowRef<VideoJsPlayer>();
+const handleMounted = (payload: any) => {
+  player.value = payload.player;
+  // console.log('Basic player mounted', payload)
+};
+const handleEvent = (log: any) => {
+  // console.log('Basic player event', log)
+};
 </script>
 
 <style scoped lang="scss">
-.video {
-  & > video {
-    width: 100%;
-  }
+.video-player {
+  background-color: $gray-90;
+  width: 100%;
 }
 </style>
