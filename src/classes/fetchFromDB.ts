@@ -104,7 +104,7 @@ themes.set(1, [
   {
     id: 1,
     type: EEntityType.Topics,
-    state: EEntityState.Default,
+    state: EEntityState.Active,
     title: "topic 1 theme 1",
   },
   {
@@ -116,7 +116,7 @@ themes.set(1, [
   {
     id: 3,
     type: EEntityType.Topics,
-    state: EEntityState.Active,
+    state: EEntityState.Default,
     title: "sdfg",
   },
   {
@@ -616,15 +616,17 @@ videos.set(1, [
   {
     id: 1,
     type: EEntityType.Videos,
-    src: "https://vk.com/video-30836025_456239619",
+    src: "../assets/video/srcs/1.mp4",
+    poster: "../assets/video/posters/1.png",
     videoType: 'video/ogg; codecs="theora, vorbis"',
-    state: EEntityState.Default,
-    title: "video title module 1 videos id 1",
+    state: EEntityState.Active,
+    title: "Приветствие",
   },
   {
     id: 2,
     type: EEntityType.Videos,
-    src: "https://www.youtube.com/watch?v=0ysi6DkeGmc",
+    src: "../assets/video/srcs/2.mp4",
+    poster: "../assets/video/posters/2.png",
     videoType: 'video/ogg; codecs="theora, vorbis"',
     state: EEntityState.Default,
     title: "video title module 1 videos id 2",
@@ -632,15 +634,17 @@ videos.set(1, [
   {
     id: 3,
     type: EEntityType.Videos,
-    src: "https://www.youtube.com/watch?v=0ysi6DkeGmc",
+    src: "../assets/video/srcs/3.mp4",
+    poster: "../assets/video/posters/3.png",
     videoType: 'video/ogg; codecs="theora, vorbis"',
-    state: EEntityState.Active,
+    state: EEntityState.Default,
     title: "video title module 1 videos id 3",
   },
   {
     id: 4,
     type: EEntityType.Videos,
-    src: "https://www.youtube.com/watch?v=0ysi6DkeGmc",
+    src: "../assets/video/srcs/4.mp4",
+    poster: "../assets/video/posters/4.png",
     videoType: 'video/ogg; codecs="theora, vorbis"',
     state: EEntityState.Default,
     title: "video title module 1 videos id 4",
@@ -648,7 +652,8 @@ videos.set(1, [
   {
     id: 5,
     type: EEntityType.Videos,
-    src: "https://www.youtube.com/watch?v=0ysi6DkeGmc",
+    src: "https://vjs.zencdn.net/v/oceans.mp4",
+    poster: "https://vjs.zencdn.net/v/oceans.png",
     videoType: 'video/ogg; codecs="theora, vorbis"',
     state: EEntityState.Default,
     title: "video title module 1 videos id 5",
@@ -656,7 +661,8 @@ videos.set(1, [
   {
     id: 6,
     type: EEntityType.Videos,
-    src: "https://www.youtube.com/watch?v=0ysi6DkeGmc",
+    src: "https://vjs.zencdn.net/v/oceans.mp4",
+    poster: "https://vjs.zencdn.net/v/oceans.png",
     videoType: 'video/ogg; codecs="theora, vorbis"',
     state: EEntityState.Default,
     title: "video title module 1 videos id 6",
@@ -664,7 +670,8 @@ videos.set(1, [
   {
     id: 8,
     type: EEntityType.Videos,
-    src: "https://www.youtube.com/watch?v=0ysi6DkeGmc",
+    src: "https://vjs.zencdn.net/v/oceans.mp4",
+    poster: "https://vjs.zencdn.net/v/oceans.png",
     videoType: 'video/ogg; codecs="theora, vorbis"',
     state: EEntityState.Default,
     title: "video title module 1 videos id 8",
@@ -672,7 +679,8 @@ videos.set(1, [
   {
     id: 9,
     type: EEntityType.Videos,
-    src: "https://www.youtube.com/watch?v=0ysi6DkeGmc",
+    src: "https://vjs.zencdn.net/v/oceans.mp4",
+    poster: "https://vjs.zencdn.net/v/oceans.png",
     videoType: 'video/ogg; codecs="theora, vorbis"',
     state: EEntityState.Default,
     title: "video title module 1 videos id 9",
@@ -680,7 +688,8 @@ videos.set(1, [
   {
     id: 10,
     type: EEntityType.Videos,
-    src: "https://www.youtube.com/watch?v=0ysi6DkeGmc",
+    src: "https://vjs.zencdn.net/v/oceans.mp4",
+    poster: "https://vjs.zencdn.net/v/oceans.png",
     videoType: 'video/ogg; codecs="theora, vorbis"',
     state: EEntityState.Default,
     title: "video title module 1 videos id 10",
@@ -688,7 +697,8 @@ videos.set(1, [
   {
     id: 11,
     type: EEntityType.Videos,
-    src: "https://www.youtube.com/watch?v=0ysi6DkeGmc",
+    src: "https://vjs.zencdn.net/v/oceans.mp4",
+    poster: "https://vjs.zencdn.net/v/oceans.png",
     videoType: 'video/ogg; codecs="theora, vorbis"',
     state: EEntityState.Default,
     title: "video title module 1 videos id 11",
@@ -696,7 +706,8 @@ videos.set(1, [
   {
     id: 12,
     type: EEntityType.Videos,
-    src: "https://www.youtube.com/watch?v=0ysi6DkeGmc",
+    src: "https://vjs.zencdn.net/v/oceans.mp4",
+    poster: "https://vjs.zencdn.net/v/oceans.png",
     videoType: 'video/ogg; codecs="theora, vorbis"',
     state: EEntityState.Default,
     title: "video title module 1 videos id 12",
@@ -704,7 +715,8 @@ videos.set(1, [
   {
     id: 13,
     type: EEntityType.Videos,
-    src: "https://www.youtube.com/watch?v=0ysi6DkeGmc",
+    src: "https://vjs.zencdn.net/v/oceans.mp4",
+    poster: "https://vjs.zencdn.net/v/oceans.png",
     videoType: 'video/ogg; codecs="theora, vorbis"',
     state: EEntityState.Default,
     title: "video title module 1 videos id 13",
@@ -712,7 +724,8 @@ videos.set(1, [
   {
     id: 15,
     type: EEntityType.Videos,
-    src: "https://www.youtube.com/watch?v=0ysi6DkeGmc",
+    src: "https://vjs.zencdn.net/v/oceans.mp4",
+    poster: "https://vjs.zencdn.net/v/oceans.png",
     videoType: 'video/ogg; codecs="theora, vorbis"',
     state: EEntityState.Default,
     title: "video title module 1 videos id 15",
@@ -720,7 +733,8 @@ videos.set(1, [
   {
     id: 16,
     type: EEntityType.Videos,
-    src: "https://www.youtube.com/watch?v=0ysi6DkeGmc",
+    src: "https://vjs.zencdn.net/v/oceans.mp4",
+    poster: "https://vjs.zencdn.net/v/oceans.png",
     videoType: 'video/ogg; codecs="theora, vorbis"',
     state: EEntityState.Default,
     title: "video title module 1 videos id 16",
@@ -728,7 +742,8 @@ videos.set(1, [
   {
     id: 17,
     type: EEntityType.Videos,
-    src: "https://www.youtube.com/watch?v=0ysi6DkeGmc",
+    src: "https://vjs.zencdn.net/v/oceans.mp4",
+    poster: "https://vjs.zencdn.net/v/oceans.png",
     videoType: 'video/ogg; codecs="theora, vorbis"',
     state: EEntityState.Default,
     title: "video title module 1 videos id 17",
@@ -736,7 +751,8 @@ videos.set(1, [
   {
     id: 18,
     type: EEntityType.Videos,
-    src: "https://www.youtube.com/watch?v=0ysi6DkeGmc",
+    src: "https://vjs.zencdn.net/v/oceans.mp4",
+    poster: "https://vjs.zencdn.net/v/oceans.png",
     videoType: 'video/ogg; codecs="theora, vorbis"',
     state: EEntityState.Default,
     title: "video title module 1 videos id 18",
@@ -744,7 +760,8 @@ videos.set(1, [
   {
     id: 19,
     type: EEntityType.Videos,
-    src: "https://www.youtube.com/watch?v=0ysi6DkeGmc",
+    src: "https://vjs.zencdn.net/v/oceans.mp4",
+    poster: "https://vjs.zencdn.net/v/oceans.png",
     videoType: 'video/ogg; codecs="theora, vorbis"',
     state: EEntityState.Default,
     title: "video title module 1 videos id 19",
@@ -752,7 +769,8 @@ videos.set(1, [
   {
     id: 20,
     type: EEntityType.Videos,
-    src: "https://www.youtube.com/watch?v=0ysi6DkeGmc",
+    src: "https://vjs.zencdn.net/v/oceans.mp4",
+    poster: "https://vjs.zencdn.net/v/oceans.png",
     videoType: 'video/ogg; codecs="theora, vorbis"',
     state: EEntityState.Default,
     title: "video title module 1 videos id 20",
@@ -760,7 +778,8 @@ videos.set(1, [
   {
     id: 21,
     type: EEntityType.Videos,
-    src: "https://www.youtube.com/watch?v=0ysi6DkeGmc",
+    src: "https://vjs.zencdn.net/v/oceans.mp4",
+    poster: "https://vjs.zencdn.net/v/oceans.png",
     videoType: 'video/ogg; codecs="theora, vorbis"',
     state: EEntityState.Default,
     title: "video title module 1 videos id 21",
@@ -768,7 +787,8 @@ videos.set(1, [
   {
     id: 22,
     type: EEntityType.Videos,
-    src: "https://www.youtube.com/watch?v=0ysi6DkeGmc",
+    src: "https://vjs.zencdn.net/v/oceans.mp4",
+    poster: "https://vjs.zencdn.net/v/oceans.png",
     videoType: 'video/ogg; codecs="theora, vorbis"',
     state: EEntityState.Default,
     title: "video title module 1 videos id 22",
@@ -776,7 +796,8 @@ videos.set(1, [
   {
     id: 23,
     type: EEntityType.Videos,
-    src: "https://www.youtube.com/watch?v=0ysi6DkeGmc",
+    src: "https://vjs.zencdn.net/v/oceans.mp4",
+    poster: "https://vjs.zencdn.net/v/oceans.png",
     videoType: 'video/ogg; codecs="theora, vorbis"',
     state: EEntityState.Default,
     title: "video title module 1 videos id 23",
@@ -784,7 +805,8 @@ videos.set(1, [
   {
     id: 24,
     type: EEntityType.Videos,
-    src: "https://www.youtube.com/watch?v=0ysi6DkeGmc",
+    src: "https://vjs.zencdn.net/v/oceans.mp4",
+    poster: "https://vjs.zencdn.net/v/oceans.png",
     videoType: 'video/ogg; codecs="theora, vorbis"',
     state: EEntityState.Default,
     title: "video title module 1 videos id 24",
@@ -792,7 +814,8 @@ videos.set(1, [
   {
     id: 25,
     type: EEntityType.Videos,
-    src: "https://www.youtube.com/watch?v=0ysi6DkeGmc",
+    src: "https://vjs.zencdn.net/v/oceans.mp4",
+    poster: "https://vjs.zencdn.net/v/oceans.png",
     videoType: 'video/ogg; codecs="theora, vorbis"',
     state: EEntityState.Default,
     title: "video title module 1 videos id 25",
@@ -800,7 +823,8 @@ videos.set(1, [
   {
     id: 26,
     type: EEntityType.Videos,
-    src: "https://www.youtube.com/watch?v=0ysi6DkeGmc",
+    src: "https://vjs.zencdn.net/v/oceans.mp4",
+    poster: "https://vjs.zencdn.net/v/oceans.png",
     videoType: 'video/ogg; codecs="theora, vorbis"',
     state: EEntityState.Default,
     title: "video title module 1 videos id 26",
@@ -808,7 +832,8 @@ videos.set(1, [
   {
     id: 27,
     type: EEntityType.Videos,
-    src: "https://www.youtube.com/watch?v=0ysi6DkeGmc",
+    src: "https://vjs.zencdn.net/v/oceans.mp4",
+    poster: "https://vjs.zencdn.net/v/oceans.png",
     videoType: 'video/ogg; codecs="theora, vorbis"',
     state: EEntityState.Default,
     title: "video title module 1 videos id 27",
@@ -820,7 +845,8 @@ videos.set(2, [
   {
     id: 29,
     type: EEntityType.Videos,
-    src: "https://www.youtube.com/watch?v=0ysi6DkeGmc",
+    src: "https://vjs.zencdn.net/v/oceans.mp4",
+    poster: "https://vjs.zencdn.net/v/oceans.png",
     videoType: 'video/ogg; codecs="theora, vorbis"',
     state: EEntityState.Active,
     title: "video title module 2 videos id 29",
@@ -828,7 +854,8 @@ videos.set(2, [
   {
     id: 30,
     type: EEntityType.Videos,
-    src: "https://www.youtube.com/watch?v=0ysi6DkeGmc",
+    src: "https://vjs.zencdn.net/v/oceans.mp4",
+    poster: "https://vjs.zencdn.net/v/oceans.png",
     videoType: 'video/ogg; codecs="theora, vorbis"',
     state: EEntityState.Default,
     title: "video title module 2 videos id 30",
@@ -836,7 +863,8 @@ videos.set(2, [
   {
     id: 31,
     type: EEntityType.Videos,
-    src: "https://www.youtube.com/watch?v=0ysi6DkeGmc",
+    src: "https://vjs.zencdn.net/v/oceans.mp4",
+    poster: "https://vjs.zencdn.net/v/oceans.png",
     videoType: 'video/ogg; codecs="theora, vorbis"',
     state: EEntityState.Default,
     title: "video title module 2 videos id 31",
@@ -844,7 +872,8 @@ videos.set(2, [
   {
     id: 32,
     type: EEntityType.Videos,
-    src: "https://www.youtube.com/watch?v=0ysi6DkeGmc",
+    src: "https://vjs.zencdn.net/v/oceans.mp4",
+    poster: "https://vjs.zencdn.net/v/oceans.png",
     videoType: 'video/ogg; codecs="theora, vorbis"',
     state: EEntityState.Default,
     title: "video title module 2 videos id 32",
@@ -852,7 +881,8 @@ videos.set(2, [
   {
     id: 33,
     type: EEntityType.Videos,
-    src: "https://www.youtube.com/watch?v=0ysi6DkeGmc",
+    src: "https://vjs.zencdn.net/v/oceans.mp4",
+    poster: "https://vjs.zencdn.net/v/oceans.png",
     videoType: 'video/ogg; codecs="theora, vorbis"',
     state: EEntityState.Default,
     title: "video title module 2 videos id 33",
@@ -860,7 +890,8 @@ videos.set(2, [
   {
     id: 34,
     type: EEntityType.Videos,
-    src: "https://www.youtube.com/watch?v=0ysi6DkeGmc",
+    src: "https://vjs.zencdn.net/v/oceans.mp4",
+    poster: "https://vjs.zencdn.net/v/oceans.png",
     videoType: 'video/ogg; codecs="theora, vorbis"',
     state: EEntityState.Default,
     title: "video title module 2 videos id 34",
@@ -868,7 +899,8 @@ videos.set(2, [
   {
     id: 35,
     type: EEntityType.Videos,
-    src: "https://www.youtube.com/watch?v=0ysi6DkeGmc",
+    src: "https://vjs.zencdn.net/v/oceans.mp4",
+    poster: "https://vjs.zencdn.net/v/oceans.png",
     videoType: 'video/ogg; codecs="theora, vorbis"',
     state: EEntityState.Default,
     title: "video title module 2 videos id 35",
@@ -876,7 +908,8 @@ videos.set(2, [
   {
     id: 36,
     type: EEntityType.Videos,
-    src: "https://www.youtube.com/watch?v=0ysi6DkeGmc",
+    src: "https://vjs.zencdn.net/v/oceans.mp4",
+    poster: "https://vjs.zencdn.net/v/oceans.png",
     videoType: 'video/ogg; codecs="theora, vorbis"',
     state: EEntityState.Default,
     title: "video title module 2 videos id 36",
@@ -884,7 +917,8 @@ videos.set(2, [
   {
     id: 37,
     type: EEntityType.Videos,
-    src: "https://www.youtube.com/watch?v=0ysi6DkeGmc",
+    src: "https://vjs.zencdn.net/v/oceans.mp4",
+    poster: "https://vjs.zencdn.net/v/oceans.png",
     videoType: 'video/ogg; codecs="theora, vorbis"',
     state: EEntityState.Default,
     title: "video title module 2 videos id 37",
@@ -892,7 +926,8 @@ videos.set(2, [
   {
     id: 38,
     type: EEntityType.Videos,
-    src: "https://www.youtube.com/watch?v=0ysi6DkeGmc",
+    src: "https://vjs.zencdn.net/v/oceans.mp4",
+    poster: "https://vjs.zencdn.net/v/oceans.png",
     videoType: 'video/ogg; codecs="theora, vorbis"',
     state: EEntityState.Default,
     title: "video title module 2 videos id 38",
@@ -904,7 +939,8 @@ videos.set(3, [
   {
     id: 40,
     type: EEntityType.Videos,
-    src: "https://www.youtube.com/watch?v=0ysi6DkeGmc",
+    src: "https://vjs.zencdn.net/v/oceans.mp4",
+    poster: "https://vjs.zencdn.net/v/oceans.png",
     videoType: 'video/ogg; codecs="theora, vorbis"',
     state: EEntityState.Active,
     title: "video title module 3 videos theme 1 id 40",
@@ -912,7 +948,8 @@ videos.set(3, [
   {
     id: 41,
     type: EEntityType.Videos,
-    src: "https://www.youtube.com/watch?v=0ysi6DkeGmc",
+    src: "https://vjs.zencdn.net/v/oceans.mp4",
+    poster: "https://vjs.zencdn.net/v/oceans.png",
     videoType: 'video/ogg; codecs="theora, vorbis"',
     state: EEntityState.Default,
     title: "video title module 3 videos theme 2 id 41",
@@ -920,7 +957,8 @@ videos.set(3, [
   {
     id: 42,
     type: EEntityType.Videos,
-    src: "https://www.youtube.com/watch?v=0ysi6DkeGmc",
+    src: "https://vjs.zencdn.net/v/oceans.mp4",
+    poster: "https://vjs.zencdn.net/v/oceans.png",
     videoType: 'video/ogg; codecs="theora, vorbis"',
     state: EEntityState.Default,
     title: "video title module 3 videos theme 3 id 42",
@@ -928,7 +966,8 @@ videos.set(3, [
   {
     id: 43,
     type: EEntityType.Videos,
-    src: "https://www.youtube.com/watch?v=0ysi6DkeGmc",
+    src: "https://vjs.zencdn.net/v/oceans.mp4",
+    poster: "https://vjs.zencdn.net/v/oceans.png",
     videoType: 'video/ogg; codecs="theora, vorbis"',
     state: EEntityState.Default,
     title: "video title module 3 videos id 43",
@@ -936,7 +975,8 @@ videos.set(3, [
   {
     id: 44,
     type: EEntityType.Videos,
-    src: "https://www.youtube.com/watch?v=0ysi6DkeGmc",
+    src: "https://vjs.zencdn.net/v/oceans.mp4",
+    poster: "https://vjs.zencdn.net/v/oceans.png",
     videoType: 'video/ogg; codecs="theora, vorbis"',
     state: EEntityState.Default,
     title: "video title module 3 videos id 44",
@@ -944,7 +984,8 @@ videos.set(3, [
   {
     id: 45,
     type: EEntityType.Videos,
-    src: "https://www.youtube.com/watch?v=0ysi6DkeGmc",
+    src: "https://vjs.zencdn.net/v/oceans.mp4",
+    poster: "https://vjs.zencdn.net/v/oceans.png",
     videoType: 'video/ogg; codecs="theora, vorbis"',
     state: EEntityState.Default,
     title: "video title module 3 videos id 45",
@@ -952,7 +993,8 @@ videos.set(3, [
   {
     id: 46,
     type: EEntityType.Videos,
-    src: "https://www.youtube.com/watch?v=0ysi6DkeGmc",
+    src: "https://vjs.zencdn.net/v/oceans.mp4",
+    poster: "https://vjs.zencdn.net/v/oceans.png",
     videoType: 'video/ogg; codecs="theora, vorbis"',
     state: EEntityState.Default,
     title: "video title module 3 videos id 46",
@@ -960,7 +1002,8 @@ videos.set(3, [
   {
     id: 47,
     type: EEntityType.Videos,
-    src: "https://www.youtube.com/watch?v=0ysi6DkeGmc",
+    src: "https://vjs.zencdn.net/v/oceans.mp4",
+    poster: "https://vjs.zencdn.net/v/oceans.png",
     videoType: 'video/ogg; codecs="theora, vorbis"',
     state: EEntityState.Default,
     title: "video title module 3 videos id 47",
@@ -968,7 +1011,8 @@ videos.set(3, [
   {
     id: 48,
     type: EEntityType.Videos,
-    src: "https://www.youtube.com/watch?v=0ysi6DkeGmc",
+    src: "https://vjs.zencdn.net/v/oceans.mp4",
+    poster: "https://vjs.zencdn.net/v/oceans.png",
     videoType: 'video/ogg; codecs="theora, vorbis"',
     state: EEntityState.Default,
     title: "video title module 3 videos id 48",
@@ -976,7 +1020,8 @@ videos.set(3, [
   {
     id: 49,
     type: EEntityType.Videos,
-    src: "https://www.youtube.com/watch?v=0ysi6DkeGmc",
+    src: "https://vjs.zencdn.net/v/oceans.mp4",
+    poster: "https://vjs.zencdn.net/v/oceans.png",
     videoType: 'video/ogg; codecs="theora, vorbis"',
     state: EEntityState.Default,
     title: "video title module 3 videos id 49",
@@ -988,7 +1033,8 @@ videos.set(4, [
   {
     id: 51,
     type: EEntityType.Videos,
-    src: "https://www.youtube.com/watch?v=0ysi6DkeGmc",
+    src: "https://vjs.zencdn.net/v/oceans.mp4",
+    poster: "https://vjs.zencdn.net/v/oceans.png",
     videoType: 'video/ogg; codecs="theora, vorbis"',
     state: EEntityState.Default,
     title: "video title module 4 videos id 51",
@@ -996,7 +1042,8 @@ videos.set(4, [
   {
     id: 52,
     type: EEntityType.Videos,
-    src: "https://www.youtube.com/watch?v=0ysi6DkeGmc",
+    src: "https://vjs.zencdn.net/v/oceans.mp4",
+    poster: "https://vjs.zencdn.net/v/oceans.png",
     videoType: 'video/ogg; codecs="theora, vorbis"',
     state: EEntityState.Active,
     title: "video title module 4 videos id 52",
@@ -1004,7 +1051,8 @@ videos.set(4, [
   {
     id: 53,
     type: EEntityType.Videos,
-    src: "https://www.youtube.com/watch?v=0ysi6DkeGmc",
+    src: "https://vjs.zencdn.net/v/oceans.mp4",
+    poster: "https://vjs.zencdn.net/v/oceans.png",
     videoType: 'video/ogg; codecs="theora, vorbis"',
     state: EEntityState.Default,
     title: "video title module 4 videos id 53",
@@ -1012,7 +1060,8 @@ videos.set(4, [
   {
     id: 54,
     type: EEntityType.Videos,
-    src: "https://www.youtube.com/watch?v=0ysi6DkeGmc",
+    src: "https://vjs.zencdn.net/v/oceans.mp4",
+    poster: "https://vjs.zencdn.net/v/oceans.png",
     videoType: 'video/ogg; codecs="theora, vorbis"',
     state: EEntityState.Default,
     title: "video title module 4 videos id 54",
@@ -1020,7 +1069,8 @@ videos.set(4, [
   {
     id: 55,
     type: EEntityType.Videos,
-    src: "https://www.youtube.com/watch?v=0ysi6DkeGmc",
+    src: "https://vjs.zencdn.net/v/oceans.mp4",
+    poster: "https://vjs.zencdn.net/v/oceans.png",
     videoType: 'video/ogg; codecs="theora, vorbis"',
     state: EEntityState.Default,
     title: "video title module 4 videos id 55",
@@ -1028,7 +1078,8 @@ videos.set(4, [
   {
     id: 56,
     type: EEntityType.Videos,
-    src: "https://www.youtube.com/watch?v=0ysi6DkeGmc",
+    src: "https://vjs.zencdn.net/v/oceans.mp4",
+    poster: "https://vjs.zencdn.net/v/oceans.png",
     videoType: 'video/ogg; codecs="theora, vorbis"',
     state: EEntityState.Default,
     title: "video title module 4 videos id 56",
@@ -1036,7 +1087,8 @@ videos.set(4, [
   {
     id: 57,
     type: EEntityType.Videos,
-    src: "https://www.youtube.com/watch?v=0ysi6DkeGmc",
+    src: "https://vjs.zencdn.net/v/oceans.mp4",
+    poster: "https://vjs.zencdn.net/v/oceans.png",
     videoType: 'video/ogg; codecs="theora, vorbis"',
     state: EEntityState.Default,
     title: "video title module 4 videos id 57",
@@ -1044,7 +1096,8 @@ videos.set(4, [
   {
     id: 58,
     type: EEntityType.Videos,
-    src: "https://www.youtube.com/watch?v=0ysi6DkeGmc",
+    src: "https://vjs.zencdn.net/v/oceans.mp4",
+    poster: "https://vjs.zencdn.net/v/oceans.png",
     videoType: 'video/ogg; codecs="theora, vorbis"',
     state: EEntityState.Default,
     title: "video title module 4 videos id 58",
@@ -1052,7 +1105,8 @@ videos.set(4, [
   {
     id: 59,
     type: EEntityType.Videos,
-    src: "https://www.youtube.com/watch?v=0ysi6DkeGmc",
+    src: "https://vjs.zencdn.net/v/oceans.mp4",
+    poster: "https://vjs.zencdn.net/v/oceans.png",
     videoType: 'video/ogg; codecs="theora, vorbis"',
     state: EEntityState.Default,
     title: "video title module 4 videos id 59",
@@ -1060,7 +1114,8 @@ videos.set(4, [
   {
     id: 60,
     type: EEntityType.Videos,
-    src: "https://www.youtube.com/watch?v=0ysi6DkeGmc",
+    src: "https://vjs.zencdn.net/v/oceans.mp4",
+    poster: "https://vjs.zencdn.net/v/oceans.png",
     videoType: 'video/ogg; codecs="theora, vorbis"',
     state: EEntityState.Default,
     title: "video title module 4 videos id 60",
@@ -1068,7 +1123,8 @@ videos.set(4, [
   {
     id: 61,
     type: EEntityType.Videos,
-    src: "https://www.youtube.com/watch?v=0ysi6DkeGmc",
+    src: "https://vjs.zencdn.net/v/oceans.mp4",
+    poster: "https://vjs.zencdn.net/v/oceans.png",
     videoType: 'video/ogg; codecs="theora, vorbis"',
     state: EEntityState.Default,
     title: "video title module 4 videos id 61",
@@ -1076,7 +1132,8 @@ videos.set(4, [
   {
     id: 62,
     type: EEntityType.Videos,
-    src: "https://www.youtube.com/watch?v=0ysi6DkeGmc",
+    src: "https://vjs.zencdn.net/v/oceans.mp4",
+    poster: "https://vjs.zencdn.net/v/oceans.png",
     videoType: 'video/ogg; codecs="theora, vorbis"',
     state: EEntityState.Default,
     title: "video title module 4 videos id 62",
@@ -1084,7 +1141,8 @@ videos.set(4, [
   {
     id: 63,
     type: EEntityType.Videos,
-    src: "https://www.youtube.com/watch?v=0ysi6DkeGmc",
+    src: "https://vjs.zencdn.net/v/oceans.mp4",
+    poster: "https://vjs.zencdn.net/v/oceans.png",
     videoType: 'video/ogg; codecs="theora, vorbis"',
     state: EEntityState.Default,
     title: "video title module 4 videos id 63",
@@ -1092,7 +1150,8 @@ videos.set(4, [
   {
     id: 64,
     type: EEntityType.Videos,
-    src: "https://www.youtube.com/watch?v=0ysi6DkeGmc",
+    src: "https://vjs.zencdn.net/v/oceans.mp4",
+    poster: "https://vjs.zencdn.net/v/oceans.png",
     videoType: 'video/ogg; codecs="theora, vorbis"',
     state: EEntityState.Default,
     title: "video title module 4 videos id 64",
@@ -1104,7 +1163,8 @@ videos.set(5, [
   {
     id: 66,
     type: EEntityType.Videos,
-    src: "https://www.youtube.com/watch?v=0ysi6DkeGmc",
+    src: "https://vjs.zencdn.net/v/oceans.mp4",
+    poster: "https://vjs.zencdn.net/v/oceans.png",
     videoType: 'video/ogg; codecs="theora, vorbis"',
     state: EEntityState.Active,
     title: "video title module 5 videos id 66",
@@ -1112,7 +1172,8 @@ videos.set(5, [
   {
     id: 67,
     type: EEntityType.Videos,
-    src: "https://www.youtube.com/watch?v=0ysi6DkeGmc",
+    src: "https://vjs.zencdn.net/v/oceans.mp4",
+    poster: "https://vjs.zencdn.net/v/oceans.png",
     videoType: 'video/ogg; codecs="theora, vorbis"',
     state: EEntityState.Default,
     title: "video title module 5 videos id 67",
@@ -1120,7 +1181,8 @@ videos.set(5, [
   {
     id: 68,
     type: EEntityType.Videos,
-    src: "https://www.youtube.com/watch?v=0ysi6DkeGmc",
+    src: "https://vjs.zencdn.net/v/oceans.mp4",
+    poster: "https://vjs.zencdn.net/v/oceans.png",
     videoType: 'video/ogg; codecs="theora, vorbis"',
     state: EEntityState.Default,
     title: "video title module 5 videos id 68",
@@ -1128,7 +1190,8 @@ videos.set(5, [
   {
     id: 69,
     type: EEntityType.Videos,
-    src: "https://www.youtube.com/watch?v=0ysi6DkeGmc",
+    src: "https://vjs.zencdn.net/v/oceans.mp4",
+    poster: "https://vjs.zencdn.net/v/oceans.png",
     videoType: 'video/ogg; codecs="theora, vorbis"',
     state: EEntityState.Default,
     title: "video title module 5 videos id 69",
@@ -1136,7 +1199,8 @@ videos.set(5, [
   {
     id: 70,
     type: EEntityType.Videos,
-    src: "https://www.youtube.com/watch?v=0ysi6DkeGmc",
+    src: "https://vjs.zencdn.net/v/oceans.mp4",
+    poster: "https://vjs.zencdn.net/v/oceans.png",
     videoType: 'video/ogg; codecs="theora, vorbis"',
     state: EEntityState.Default,
     title: "video title module 5 videos id 70",
@@ -1148,7 +1212,8 @@ videos.set(6, [
   {
     id: 72,
     type: EEntityType.Videos,
-    src: "https://www.youtube.com/watch?v=0ysi6DkeGmc",
+    src: "https://vjs.zencdn.net/v/oceans.mp4",
+    poster: "https://vjs.zencdn.net/v/oceans.png",
     videoType: 'video/ogg; codecs="theora, vorbis"',
     state: EEntityState.Default,
     title: "video title module 6 videos id 72",
@@ -1156,7 +1221,8 @@ videos.set(6, [
   {
     id: 73,
     type: EEntityType.Videos,
-    src: "https://www.youtube.com/watch?v=0ysi6DkeGmc",
+    src: "https://vjs.zencdn.net/v/oceans.mp4",
+    poster: "https://vjs.zencdn.net/v/oceans.png",
     videoType: 'video/ogg; codecs="theora, vorbis"',
     state: EEntityState.Default,
     title: "video title module 6 videos id 73",
@@ -1164,7 +1230,8 @@ videos.set(6, [
   {
     id: 74,
     type: EEntityType.Videos,
-    src: "https://www.youtube.com/watch?v=0ysi6DkeGmc",
+    src: "https://vjs.zencdn.net/v/oceans.mp4",
+    poster: "https://vjs.zencdn.net/v/oceans.png",
     videoType: 'video/ogg; codecs="theora, vorbis"',
     state: EEntityState.Default,
     title: "video title module 6 videos id 74",
@@ -1172,7 +1239,8 @@ videos.set(6, [
   {
     id: 75,
     type: EEntityType.Videos,
-    src: "https://www.youtube.com/watch?v=0ysi6DkeGmc",
+    src: "https://vjs.zencdn.net/v/oceans.mp4",
+    poster: "https://vjs.zencdn.net/v/oceans.png",
     videoType: 'video/ogg; codecs="theora, vorbis"',
     state: EEntityState.Active,
     title: "video title module 6 videos id 75",
@@ -1180,7 +1248,8 @@ videos.set(6, [
   {
     id: 76,
     type: EEntityType.Videos,
-    src: "https://www.youtube.com/watch?v=0ysi6DkeGmc",
+    src: "https://vjs.zencdn.net/v/oceans.mp4",
+    poster: "https://vjs.zencdn.net/v/oceans.png",
     videoType: 'video/ogg; codecs="theora, vorbis"',
     state: EEntityState.Default,
     title: "video title module 6 videos id 76",
@@ -1188,7 +1257,8 @@ videos.set(6, [
   {
     id: 77,
     type: EEntityType.Videos,
-    src: "https://www.youtube.com/watch?v=0ysi6DkeGmc",
+    src: "https://vjs.zencdn.net/v/oceans.mp4",
+    poster: "https://vjs.zencdn.net/v/oceans.png",
     videoType: 'video/ogg; codecs="theora, vorbis"',
     state: EEntityState.Default,
     title: "video title module 6 videos id 77",
@@ -1196,7 +1266,8 @@ videos.set(6, [
   {
     id: 78,
     type: EEntityType.Videos,
-    src: "https://www.youtube.com/watch?v=0ysi6DkeGmc",
+    src: "https://vjs.zencdn.net/v/oceans.mp4",
+    poster: "https://vjs.zencdn.net/v/oceans.png",
     videoType: 'video/ogg; codecs="theora, vorbis"',
     state: EEntityState.Default,
     title: "video title module 6 videos id 78",
