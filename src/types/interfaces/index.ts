@@ -49,6 +49,14 @@ interface ITheme {
   title: string;
 }
 
+interface ITabsAuthors {
+  id: number;
+  surname: string;
+  name: string;
+  patronymic: string;
+  regalia: string;
+}
+
 interface IVideo {
   id: number;
   type: EEntityType.Videos;
@@ -58,6 +66,8 @@ interface IVideo {
   duration?: number;
   state: EEntityState.Active | EEntityState.Default;
   title: string;
+  authors: ITabsAuthors[];
+  description: string;
 }
 
 interface ITest {
@@ -141,6 +151,7 @@ export type {
   INavigation,
   IModule,
   ITheme,
+  ITabsAuthors,
   IVideo,
   ITest,
   ITestContent,

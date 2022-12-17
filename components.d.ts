@@ -55,6 +55,7 @@ declare module "@vue/runtime-core" {
     AppTitle: typeof import("./src/components/AppTitle.vue")["default"];
     AppTitleLine: typeof import("./src/components/AppTitleLine.vue")["default"];
     AppVideo: typeof import("./src/components/AppVideo.vue")["default"];
+    AppVideoTabs: typeof import("./src/components/AppVideoTabs.vue")["default"];
     ElAlert: typeof import("element-plus/es")["ElAlert"];
     ElButton: typeof import("element-plus/es")["ElButton"];
     ElForm: typeof import("element-plus/es")["ElForm"];

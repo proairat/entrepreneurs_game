@@ -1,29 +1,31 @@
 <template>
-  <div class="video">
-    <VideoPlayer
-      class="video-player vjs-big-play-centered"
-      controls
-      :src="getVideoSrc"
-      :poster="getVideoPoster"
-      :loop="true"
-      :volume="0.6"
-      aspectRatio="16:9"
-      playsinline
-      :playback-rates="[1.0, 1.5, 2.0]"
-      @mounted="handleMounted"
-      @ready="handleEvent($event)"
-      @play="handleEvent($event)"
-      @pause="handleEvent($event)"
-      @ended="handleEvent($event)"
-      @loadeddata="handleEvent($event)"
-      @waiting="handleEvent($event)"
-      @playing="handleEvent($event)"
-      @canplay="handleEvent($event)"
-      @canplaythrough="handleEvent($event)"
-      @timeupdate="handleEvent(player?.currentTime())"
-    />
-    <AppThemeHeader>{{ getVideoTitle }}</AppThemeHeader>
-  </div>
+  <VideoPlayer
+    class="video-player vjs-big-play-centered"
+    controls
+    :src="getVideoSrc"
+    :poster="getVideoPoster"
+    :loop="true"
+    :volume="0.6"
+    aspectRatio="16:9"
+    playsinline
+    :playback-rates="[1.0, 1.5, 2.0]"
+    @mounted="handleMounted"
+    @ready="handleEvent($event)"
+    @play="handleEvent($event)"
+    @pause="handleEvent($event)"
+    @ended="handleEvent($event)"
+    @loadeddata="handleEvent($event)"
+    @waiting="handleEvent($event)"
+    @playing="handleEvent($event)"
+    @canplay="handleEvent($event)"
+    @canplaythrough="handleEvent($event)"
+    @timeupdate="handleEvent(player?.currentTime())"
+  />
+  <AppThemeHeader>{{ getVideoTitle }}</AppThemeHeader>
+  <AppVideoTabs
+    :video-authors="getVideoAuthors"
+    :video-description="getVideoDescription"
+  />
 </template>
 
 <script setup lang="ts">
@@ -36,7 +38,6 @@ import { computed, shallowRef } from "vue";
 
 const modulesStore = useModulesStore();
 const { activeVideo } = storeToRefs(modulesStore);
-
 const getVideoTitle = computed(() => activeVideo.value.title);
 const getVideoSrc = computed(
   () => new URL(activeVideo.value.src, import.meta.url).href
@@ -44,7 +45,8 @@ const getVideoSrc = computed(
 const getVideoPoster = computed(
   () => new URL(activeVideo.value.poster, import.meta.url).href
 );
-
+const getVideoAuthors = computed(() => activeVideo.value.authors);
+const getVideoDescription = computed(() => activeVideo.value.description);
 const player = shallowRef<VideoJsPlayer>();
 const handleMounted = (payload: any) => {
   player.value = payload.player;
