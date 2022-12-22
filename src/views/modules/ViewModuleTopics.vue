@@ -13,7 +13,9 @@
           <AppListOfThemes :moduleId="getModuleId" />
         </div>
         <div class="right-side">
-          <AppThemeHeader>{{ getThemeTitle }}</AppThemeHeader>
+          <AppTitleLine>
+            <AppTitle>{{ getThemeTitle }}</AppTitle>
+          </AppTitleLine>
           <AppVideo />
         </div>
       </div>

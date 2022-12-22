@@ -1,6 +1,6 @@
 <template>
   <div v-if="user">
-    <div class="wrapper">
+    <div class="mt-[calc(7rem+8px)] sh-960:mt-[4rem] wrapper">
       <AppNavbar :logout="logout" />
       <router-view />
     </div>

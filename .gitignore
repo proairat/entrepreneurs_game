@@ -1,4 +1,6 @@
 src/assets/video/
+src/assets/modules/
+src/assets/modulesAdvanced/
 
 # Logs
 logs

@@ -32,6 +32,7 @@ declare module "@vue/runtime-core" {
     AppListOfThemes: typeof import("./src/components/AppListOfThemes.vue")["default"];
     AppModule: typeof import("./src/components/AppModule.vue")["default"];
     AppNavbar: typeof import("./src/components/AppNavbar/index.vue")["default"];
+    AppPadding: typeof import("./src/components/AppPadding.vue")["default"];
     AppProgress: typeof import("./src/components/AppProgress.vue")["default"];
     AppRing: typeof import("./src/components/AppRing.vue")["default"];
     AppSearch: typeof import("./src/components/AppSearch.vue")["default"];
@@ -51,7 +52,6 @@ declare module "@vue/runtime-core" {
     AppTestResultButton: typeof import("./src/components/AppTestBlock/AppTestResultButton.vue")["default"];
     AppTestResultCoins: typeof import("./src/components/AppTestBlock/AppTestResultCoins.vue")["default"];
     AppTheme: typeof import("./src/components/AppTheme.vue")["default"];
-    AppThemeHeader: typeof import("./src/components/AppThemeHeader.vue")["default"];
     AppTitle: typeof import("./src/components/AppTitle.vue")["default"];
     AppTitleLine: typeof import("./src/components/AppTitleLine.vue")["default"];
     AppVideo: typeof import("./src/components/AppVideo.vue")["default"];
@@ -62,6 +62,7 @@ declare module "@vue/runtime-core" {
     ElFormItem: typeof import("element-plus/es")["ElFormItem"];
     ElIcon: typeof import("element-plus/es")["ElIcon"];
     ElInput: typeof import("element-plus/es")["ElInput"];
+    ElPopover: typeof import("element-plus/es")["ElPopover"];
     ElProgress: typeof import("element-plus/es")["ElProgress"];
     ElTabPane: typeof import("element-plus/es")["ElTabPane"];
     ElTabs: typeof import("element-plus/es")["ElTabs"];

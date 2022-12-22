@@ -1,8 +1,6 @@
 <template>
-  <div class="outer">
-    <div
-      class="mt-[calc(7rem+8px)] sh-960:mt-[4rem] max-w-6xl min-w-[35rem] mx-auto line"
-    >
+  <div class="app-title-line">
+    <div class="max-w-6xl min-w-[35rem] mx-auto app-title-line-content">
       <slot></slot>
     </div>
   </div>
@@ -11,11 +9,11 @@
 <script setup lang="ts"></script>
 
 <style scoped lang="scss">
-.outer {
+.app-title-line {
   color: $gray-90;
   background-color: $gray-10;
 
-  & > .line {
+  &-content {
     display: flex;
     align-items: center;
     padding: 1.5rem;

@@ -2,6 +2,7 @@
 import { EEntityState, EEntityType, EGuessed } from "@/types/enums";
 import type {
   IModule,
+  IModuleAdvanced,
   ITheme,
   IVideo,
   ITest,
@@ -19,7 +20,7 @@ modules.push(
   {
     id: 1,
     type: EEntityType.Modules,
-    src: "https://catherineasquithgallery.com/uploads/posts/2021-03/1614630830_77-p-fon-knigi-dlya-fotoshopa-110.jpg",
+    src: "../assets/modules/cardCover/1.png",
     alt: "Модуль 1",
     header: "Основы предпринимательства",
     title: "Модуль 1",
@@ -30,7 +31,7 @@ modules.push(
   {
     id: 2,
     type: EEntityType.Modules,
-    src: "https://catherineasquithgallery.com/uploads/posts/2021-03/1614630830_77-p-fon-knigi-dlya-fotoshopa-110.jpg",
+    src: "../assets/modules/cardCover/2.png",
     alt: "Модуль 2",
     header: "Грантовое проектирование",
     title: "Модуль 2",
@@ -41,7 +42,7 @@ modules.push(
   {
     id: 3,
     type: EEntityType.Modules,
-    src: "https://catherineasquithgallery.com/uploads/posts/2021-03/1614630830_77-p-fon-knigi-dlya-fotoshopa-110.jpg",
+    src: "../assets/modules/cardCover/3.png",
     alt: "Модуль 3",
     header: "Технологическое предпринимательство",
     title: "Модуль 3",
@@ -52,7 +53,7 @@ modules.push(
   {
     id: 4,
     type: EEntityType.Modules,
-    src: "https://catherineasquithgallery.com/uploads/posts/2021-03/1614630830_77-p-fon-knigi-dlya-fotoshopa-110.jpg",
+    src: "../assets/modules/cardCover/4.png",
     alt: "Модуль 4",
     header: "Массовое предпринимательство",
     title: "Модуль 4",
@@ -63,7 +64,7 @@ modules.push(
   {
     id: 5,
     type: EEntityType.Modules,
-    src: "https://catherineasquithgallery.com/uploads/posts/2021-03/1614630830_77-p-fon-knigi-dlya-fotoshopa-110.jpg",
+    src: "../assets/modules/cardCover/5.png",
     alt: "Модуль 5",
     header: "Креативные индустрии",
     title: "Модуль 5",
@@ -74,7 +75,7 @@ modules.push(
   {
     id: 6,
     type: EEntityType.Modules,
-    src: "https://catherineasquithgallery.com/uploads/posts/2021-03/1614630830_77-p-fon-knigi-dlya-fotoshopa-110.jpg",
+    src: "../assets/modules/cardCover/6.png",
     alt: "Модуль 6",
     header: "Социальное предпринимательство",
     title: "Модуль 6",
@@ -85,13 +86,56 @@ modules.push(
   {
     id: 7,
     type: EEntityType.Modules,
-    src: "https://catherineasquithgallery.com/uploads/posts/2021-03/1614630830_77-p-fon-knigi-dlya-fotoshopa-110.jpg",
+    src: "../assets/modules/cardCover/7.png",
     alt: "Модуль 7",
     header: "Итоговое тестирование",
     title: "Модуль 7",
     duration: "30 минут",
     footer: "Изучить модуль",
     state: EEntityState.Default,
+  }
+);
+
+/**
+ * MODULES ADVANCED
+ */
+const modulesAdvanced: IModuleAdvanced[] | undefined = [];
+modulesAdvanced.push(
+  {
+    id: 8,
+    type: EEntityType.ModulesAdvanced,
+    src: "../assets/modulesAdvanced/cardCover/1.png",
+    alt: "Модуль углубленный 1",
+    header: "Углубленный курс",
+    title: "Модуль углубленный 1",
+    duration: "2 часа",
+    footer: "Изучить модуль",
+    state: EEntityState.Blocked,
+    visibility: "visible",
+  },
+  {
+    id: 8,
+    type: EEntityType.ModulesAdvanced,
+    src: "../assets/modulesAdvanced/cardCover/1.png",
+    alt: "Модуль углубленный 1",
+    header: "Углубленный курс",
+    title: "Модуль углубленный 1",
+    duration: "2 часа",
+    footer: "Изучить модуль",
+    state: EEntityState.Default,
+    visibility: "hidden",
+  },
+  {
+    id: 8,
+    type: EEntityType.ModulesAdvanced,
+    src: "../assets/modulesAdvanced/cardCover/1.png",
+    alt: "Модуль углубленный 1",
+    header: "Углубленный курс",
+    title: "Модуль углубленный 1",
+    duration: "2 часа",
+    footer: "Изучить модуль",
+    state: EEntityState.Default,
+    visibility: "hidden",
   }
 );
 
@@ -276,13 +320,13 @@ themes.set(2, [
   {
     id: 29,
     type: EEntityType.Topics,
-    state: EEntityState.Active,
+    state: EEntityState.Default,
     title: "topic 2 theme 1",
   },
   {
     id: 30,
     type: EEntityType.Topics,
-    state: EEntityState.Default,
+    state: EEntityState.Active,
     title: "two",
   },
   {
@@ -346,7 +390,7 @@ themes.set(3, [
   {
     id: 40,
     type: EEntityType.Topics,
-    state: EEntityState.Active,
+    state: EEntityState.Default,
     title: "topic 3 theme 1",
   },
   {
@@ -358,7 +402,7 @@ themes.set(3, [
   {
     id: 42,
     type: EEntityType.Topics,
-    state: EEntityState.Default,
+    state: EEntityState.Active,
     title: "sdfg",
   },
   {
@@ -422,7 +466,7 @@ themes.set(4, [
   {
     id: 52,
     type: EEntityType.Topics,
-    state: EEntityState.Active,
+    state: EEntityState.Default,
     title: "topic 4 theme 2",
   },
   {
@@ -434,7 +478,7 @@ themes.set(4, [
   {
     id: 54,
     type: EEntityType.Topics,
-    state: EEntityState.Default,
+    state: EEntityState.Active,
     title: "fghjfhj",
   },
   {
@@ -510,7 +554,7 @@ themes.set(5, [
   {
     id: 66,
     type: EEntityType.Topics,
-    state: EEntityState.Active,
+    state: EEntityState.Default,
     title: "topic 5 theme 1",
   },
   {
@@ -534,7 +578,7 @@ themes.set(5, [
   {
     id: 70,
     type: EEntityType.Topics,
-    state: EEntityState.Default,
+    state: EEntityState.Active,
     title: "zxcv",
   },
   {
@@ -568,7 +612,7 @@ themes.set(6, [
   {
     id: 75,
     type: EEntityType.Topics,
-    state: EEntityState.Active,
+    state: EEntityState.Default,
     title: "topic 6 theme 4",
   },
   {
@@ -580,7 +624,7 @@ themes.set(6, [
   {
     id: 77,
     type: EEntityType.Topics,
-    state: EEntityState.Default,
+    state: EEntityState.Active,
     title: "234",
   },
   {
@@ -607,6 +651,28 @@ themes.set(7, [
   },
 ]);
 
+// id_module 8
+themes.set(8, [
+  {
+    id: 81,
+    type: EEntityType.Topics,
+    state: EEntityState.Active,
+    title: "topic 8 theme 1",
+  },
+  {
+    id: 82,
+    type: EEntityType.Topics,
+    state: EEntityState.Default,
+    title: "two",
+  },
+  {
+    id: 83,
+    type: EEntityType.Topics,
+    state: EEntityState.Default,
+    title: "three",
+  },
+]);
+
 /**
  * VIDEOS
  */
@@ -626,7 +692,7 @@ videos.set(1, [
         id: 1,
         surname: "Сазонов",
         name: "Борис",
-        patronymic: "Отчество",
+        patronymic: "",
         regalia:
           "член Общественной палаты Башкортостана, председатель Уфимского отделения БРО Опора России",
       },
@@ -2124,6 +2190,7 @@ entranceTestsContent.set(1, [
 
 export {
   modules,
+  modulesAdvanced,
   themes,
   videos,
   tests,

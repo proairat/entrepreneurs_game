@@ -28,7 +28,7 @@ import { EEntityType, EProgressCaption } from "@/types/enums";
  * Due to the limitations of defineProps in TS, no interface is used
  * */
 const props = defineProps<{
-  type: string;
+  type: EEntityType;
 }>();
 
 const testsStore = useTestsStore();
@@ -37,7 +37,7 @@ const caption: IProgressCaption = {
   modules: EProgressCaption.ModulesCaption,
   topics: EProgressCaption.TopicsCaption,
   tests: EProgressCaption.TestsCaption,
-  entryTests: EProgressCaption.EntryTestsCaption,
+  entranceTests: EProgressCaption.EntranceTestsCaption,
 };
 const color = "#FFE97A"; // $sun-40
 const getProgressCaption = computed(
@@ -47,11 +47,11 @@ const getPercentage = computed(() => {
   let progress: number | undefined;
   // заготовка под прогресс модуля
   // if (props.type === "modules") {}
-  if (props.type === "entryTests") {
+  if (props.type === EEntityType.EntranceTests) {
     const { progressValue } = storeToRefs(entranceTestsStore);
     progress = progressValue.value;
   }
-  if (props.type === "tests" || props.type === "topics") {
+  if (props.type === EEntityType.Tests || props.type === EEntityType.Topics) {
     const { progressValue } = storeToRefs(testsStore);
     progress = progressValue.value;
   }

@@ -101,12 +101,18 @@ function AppRouterLink() {
 }
 
 .topic-item__state-icon {
-  @include stateIcon($green-40, $gray-40) {
+  @include stateIcon("active", $green-40) {
+    margin: 0.5rem 0.5rem 0.5rem 0;
+  }
+  @include stateIcon("default", $gray-40) {
     margin: 0.5rem 0.5rem 0.5rem 0;
   }
 }
 .test-item__state-icon {
-  @include stateIcon($green-40, $sun-40) {
+  @include stateIcon("active", $green-40) {
+    margin: 0.5rem 0.5rem 0.5rem 0;
+  }
+  @include stateIcon("default", $sun-40) {
     margin: 0.5rem 0.5rem 0.5rem 0;
   }
 }
