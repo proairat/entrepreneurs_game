@@ -1,5 +1,5 @@
 <template>
-  <div class="backButton">
+  <div class="app-title-line-content__back-button">
     <router-link
       class="flex"
       :to="{
@@ -23,7 +23,7 @@ const props = defineProps<{
 </script>
 
 <style scoped lang="scss">
-.backButton {
+.app-title-line-content__back-button {
   display: flex;
   align-items: center;
 

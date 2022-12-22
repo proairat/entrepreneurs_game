@@ -88,9 +88,8 @@ function deepClone(value: any): any {
  * getImageUrl('academic-cap')
  */
 async function getImageUrl(name: string, extension: string = "svg") {
-  let dynamicImport;
   try {
-    dynamicImport = await import(`@/assets/img/${name}.${extension}`);
+    const dynamicImport = await import(`@/assets/img/${name}.${extension}`);
     return dynamicImport.default;
   } catch (err) {
     console.error("We are know about error and try to address it", err);

@@ -21,7 +21,9 @@
     @canplaythrough="handleEvent($event)"
     @timeupdate="handleEvent(player?.currentTime())"
   />
-  <AppThemeHeader>{{ getVideoTitle }}</AppThemeHeader>
+  <AppTitleLine>
+    <AppTitle>{{ getVideoTitle }}</AppTitle>
+  </AppTitleLine>
   <AppVideoTabs
     :video-authors="getVideoAuthors"
     :video-description="getVideoDescription"

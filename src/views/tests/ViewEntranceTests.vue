@@ -6,7 +6,7 @@
     <div class="max-w-6xl mx-auto">
       <div class="main-part">
         <div class="left-side">
-          <AppProgress type="entryTests" />
+          <AppProgress type="entranceTests" />
         </div>
         <div class="right-side">
           <AppEntranceTestBlock />

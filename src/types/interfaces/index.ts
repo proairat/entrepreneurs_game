@@ -42,6 +42,19 @@ interface IModule {
   state: EEntityState.Active | EEntityState.Default;
 }
 
+interface IModuleAdvanced {
+  id: number;
+  type: EEntityType.ModulesAdvanced;
+  src: string;
+  alt: string;
+  header: string;
+  title: string;
+  duration: string;
+  footer: string;
+  state: EEntityState.Active | EEntityState.Default | EEntityState.Blocked;
+  visibility: "visible" | "hidden";
+}
+
 interface ITheme {
   id: number;
   type: EEntityType.Topics | EEntityType.Tests;
@@ -123,7 +136,7 @@ interface IProgressCaption {
   modules: EProgressCaption.ModulesCaption;
   topics: EProgressCaption.TopicsCaption;
   tests: EProgressCaption.TestsCaption;
-  entryTests: EProgressCaption.EntryTestsCaption;
+  entranceTests: EProgressCaption.EntranceTestsCaption;
 }
 
 interface IEduCommonElement<T> {
@@ -150,6 +163,7 @@ export type {
   IAlert,
   INavigation,
   IModule,
+  IModuleAdvanced,
   ITheme,
   ITabsAuthors,
   IVideo,

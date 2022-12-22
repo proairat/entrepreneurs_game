@@ -34,13 +34,10 @@
   border-#{$side}: 1px solid $color;
 }
 
-@mixin stateIcon($activeColor, $defaultColor) {
+@mixin stateIcon($state, $color) {
   @extend %state-icon;
   @content; // margin
-  &_active {
-    background-color: $activeColor;
-  }
-  &_default {
-    background-color: $defaultColor;
+  &_#{$state} {
+    background-color: $color;
   }
 }

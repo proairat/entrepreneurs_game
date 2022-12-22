@@ -2,6 +2,7 @@ import { defineStore } from "pinia";
 import { ref } from "vue";
 import type {
   IModule,
+  IModuleAdvanced,
   IEduElementEntityArray,
   ITheme,
   IVideo,
@@ -16,7 +17,13 @@ import {
   EntityCreatorExtendedArray,
 } from "@/classes";
 import type { TElemsList } from "@/types/types";
-import { modules, themes, videos, tests } from "@/classes/fetchFromDB";
+import {
+  modules,
+  modulesAdvanced,
+  themes,
+  videos,
+  tests,
+} from "@/classes/fetchFromDB";
 
 function getEduElement<T>(
   creator: Creator<T>,
@@ -36,6 +43,10 @@ function getEduElementExtended<T>(creator: CreatorExtended<T>) {
 }
 
 const eduElementModules = getEduElement(new EntityCreator<IModule>(), modules);
+const eduElementModulesAdvanced = getEduElement(
+  new EntityCreator<IModuleAdvanced>(),
+  modulesAdvanced
+);
 const eduElementThemes = getEduElement(new EntityCreator<ITheme>(), themes);
 const eduElementVideos = getEduElement(new EntityCreator<IVideo>(), videos);
 const eduElementTests = getEduElement(new EntityCreator<ITest>(), tests);
@@ -45,6 +56,12 @@ const eduElementModulesExtended = getEduElementExtended(
     ref(eduElementModules.getList()).value as IModule[]
   )
 ) as IEduElementEntityArray<IModule>;
+
+const eduElementModulesAdvancedExtended = getEduElementExtended(
+  new EntityCreatorExtendedArray<IModuleAdvanced>(
+    ref(eduElementModulesAdvanced.getList()).value as IModuleAdvanced[]
+  )
+) as IEduElementEntityArray<IModuleAdvanced>;
 
 const eduElementThemesExtended = getEduElementExtended(
   new EntityCreatorExtendedMap<ITheme>(
@@ -66,6 +83,7 @@ const eduElementTestsExtended = getEduElementExtended(
 
 export const useModulesStore = defineStore("modules", () => {
   const activeModule = ref(getActiveModule());
+  const activeModuleAdvanced = ref(getActiveModuleAdvanced());
   const activeTheme = ref(getActiveTheme(activeModule.value.id));
   const activeVideo = ref(getActiveVideo(activeModule.value.id));
   const activeTest = ref(getActiveTest(activeModule.value.id));
@@ -76,6 +94,14 @@ export const useModulesStore = defineStore("modules", () => {
     activeTheme.value = getActiveTheme(moduleId);
     activeVideo.value = getActiveVideo(moduleId);
     activeTest.value = getActiveTest(moduleId);
+  }
+
+  function updateActiveModuleAdvanced(moduleAdvancedId: number) {
+    eduElementModulesAdvancedExtended.updateActiveElem(moduleAdvancedId);
+    activeModuleAdvanced.value = getActiveModuleAdvanced();
+    activeTheme.value = getActiveTheme(moduleAdvancedId);
+    activeVideo.value = getActiveVideo(moduleAdvancedId);
+    activeTest.value = getActiveTest(moduleAdvancedId);
   }
 
   function updateActiveTheme(moduleId: number, themeId: number) {
@@ -97,6 +123,10 @@ export const useModulesStore = defineStore("modules", () => {
     return ref(eduElementModules.getList()).value as IModule[];
   }
 
+  function getModulesAdvancedList() {
+    return ref(eduElementModulesAdvanced.getList()).value as IModuleAdvanced[];
+  }
+
   function getThemesByModuleId(moduleId: number) {
     return eduElementThemesExtended.getListByEntityId(moduleId) as ITheme[];
   }
@@ -111,6 +141,10 @@ export const useModulesStore = defineStore("modules", () => {
 
   function getActiveModule() {
     return eduElementModulesExtended.getActiveElem() as IModule;
+  }
+
+  function getActiveModuleAdvanced() {
+    return eduElementModulesAdvancedExtended.getActiveElem() as IModuleAdvanced;
   }
 
   function getActiveTheme(moduleId: number) {
@@ -140,15 +174,18 @@ export const useModulesStore = defineStore("modules", () => {
 
   return {
     activeModule,
+    activeModuleAdvanced,
     activeTheme,
     activeVideo,
     activeTest,
     getActiveTheme,
     getModulesList,
+    getModulesAdvancedList,
     getThemesByModuleId,
     getVideosByModuleId,
     getTestsByModuleId,
     updateActiveModule,
+    updateActiveModuleAdvanced,
     updateActiveTheme,
     updateActiveVideo,
     updateActiveTest,

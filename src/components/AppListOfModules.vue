@@ -15,10 +15,32 @@
 
 <script setup lang="ts">
 import { useModulesStore } from "@/stores";
+import { EEntityType } from "@/types/enums";
+import type { IModule, IModuleAdvanced } from "@/types/interfaces";
+
+const props = defineProps<{
+  type: EEntityType;
+}>();
 
 const modulesStore = useModulesStore();
-const { getModulesList, updateActiveModule } = modulesStore;
-const modules = getModulesList();
+const {
+  getModulesList,
+  updateActiveModule,
+  getModulesAdvancedList,
+  updateActiveModuleAdvanced,
+} = modulesStore;
+let modules: IModule[] | IModuleAdvanced[] = [];
+let updateEntity: (id: number) => void;
+
+if (props.type === EEntityType.Modules) {
+  modules = getModulesList();
+  updateEntity = updateActiveModule;
+}
+
+if (props.type === EEntityType.ModulesAdvanced) {
+  modules = getModulesAdvancedList();
+  updateEntity = updateActiveModuleAdvanced;
+}
 
 // const search = ref("");
 
@@ -27,7 +49,7 @@ const modules = getModulesList();
  * @param {number} moduleId - module identifier
  */
 function changeActiveModuleHandler(moduleId: number) {
-  updateActiveModule(moduleId);
+  updateEntity(moduleId);
 }
 
 // const filteredList = computed(() => FuzzySearch(search.value, modules, "title"));
@@ -38,11 +60,11 @@ function changeActiveModuleHandler(moduleId: number) {
   background-color: $gray-10;
 }
 .modules {
-  padding: 0 1.5rem 1.5rem 1.5rem;
+  padding: 0 1.5rem;
   & > ul {
     display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-    grid-gap: 1rem;
+    grid-template-columns: repeat(auto-fit, minmax(18.75rem, 1fr));
+    grid-gap: 1.5rem;
   }
 }
 </style>

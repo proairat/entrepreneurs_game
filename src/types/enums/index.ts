@@ -12,11 +12,12 @@ enum EEntityState {
 }
 
 enum EEntityType {
+  Modules = "modules",
+  ModulesAdvanced = "modulesAdvanced",
   Topics = "topics",
   Tests = "tests",
-  Modules = "modules",
-  Videos = "videos",
   EntranceTests = "entranceTests",
+  Videos = "videos",
 }
 
 enum EPercent {
@@ -39,7 +40,14 @@ enum EProgressCaption {
   ModulesCaption = "Прогресс модуля",
   TopicsCaption = "Прогресс темы",
   TestsCaption = "Прогрессс теста",
-  EntryTestsCaption = "Прогресс входного тестирования",
+  EntranceTestsCaption = "Прогресс входного тестирования",
+}
+
+enum EPadding {
+  Top = "paddingTop",
+  Right = "paddingRight",
+  Bottom = "paddingBottom",
+  Left = "paddingLeft",
 }
 
 export {
@@ -49,4 +57,5 @@ export {
   EPercent,
   EGuessed,
   EProgressCaption,
+  EPadding,
 };
