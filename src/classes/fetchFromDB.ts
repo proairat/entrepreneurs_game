@@ -112,6 +112,7 @@ modulesAdvanced.push(
     footer: "Изучить модуль",
     state: EEntityState.Blocked,
     visibility: "visible",
+    order: 1,
   },
   {
     id: 8,
@@ -122,8 +123,9 @@ modulesAdvanced.push(
     title: "Модуль углубленный 1",
     duration: "2 часа",
     footer: "Изучить модуль",
-    state: EEntityState.Default,
+    state: EEntityState.Blocked,
     visibility: "hidden",
+    order: 2,
   },
   {
     id: 8,
@@ -134,8 +136,9 @@ modulesAdvanced.push(
     title: "Модуль углубленный 1",
     duration: "2 часа",
     footer: "Изучить модуль",
-    state: EEntityState.Default,
+    state: EEntityState.Blocked,
     visibility: "hidden",
+    order: 3,
   }
 );
 

@@ -1,10 +1,10 @@
 <template>
   <div v-if="user">
-    <div class="mt-[calc(7rem+8px)] sh-960:mt-[4rem] wrapper">
+    <div class="mt-[calc(7rem+8px)] sh-960:mt-[4rem] wrapper min-w-[35rem]">
       <AppNavbar :logout="logout" />
       <router-view />
+      <AppFooter />
     </div>
-    <AppFooter />
     <!--<router-link to="/users">Управление пользователями</router-link>-->
   </div>
 </template>

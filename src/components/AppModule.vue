@@ -61,6 +61,7 @@ const props = defineProps<{
   footer: string;
   state: EEntityState.Active | EEntityState.Default | EEntityState.Blocked;
   visibility?: "visible" | "hidden";
+  order?: number;
 }>();
 
 const emits = defineEmits<{
@@ -75,6 +76,8 @@ const visibility = computed(() => {
     ? {
         visible: props.visibility === "visible",
         invisible: props.visibility === "hidden",
+        order2: props.visibility === "hidden" && props.order === 2,
+        order3: props.visibility === "hidden" && props.order === 3,
       }
     : "";
 });
@@ -157,7 +160,6 @@ function AppRouterLink() {
 <style scoped lang="scss">
 .module-item {
   display: grid;
-  grid-template-rows: 0.1fr 1fr 0.1fr 0.1fr 0.1fr 0.1fr;
   grid-template-areas:
     "progress"
     "poster"
@@ -174,7 +176,8 @@ function AppRouterLink() {
     grid-area: poster;
     padding: 1rem;
     object-fit: cover;
-    height: 100%;
+    height: 18.75rem;
+    width: 100%;
   }
 
   &__header {
@@ -220,29 +223,43 @@ function AppRouterLink() {
       background-color: $sun-20;
     }
   }
+
+  &__state-icon {
+    @include stateIcon("active", $green-40) {
+      margin-right: 0.5rem;
+    }
+    @include stateIcon("default", $gray-40) {
+      margin-right: 0.5rem;
+    }
+    @include stateIcon("blocked", $rose-60) {
+      margin-right: 0.5rem;
+    }
+  }
+
+  &__state-title {
+    &_active {
+      color: $green-60;
+    }
+    &_default {
+      color: $gray-90;
+    }
+    &_blocked {
+      color: $rose-80;
+    }
+  }
 }
 
-.module-item__state-icon {
-  @include stateIcon("active", $green-40) {
-    margin-right: 0.5rem;
-  }
-  @include stateIcon("default", $gray-40) {
-    margin-right: 0.5rem;
-  }
-  @include stateIcon("blocked", $rose-60) {
-    margin-right: 0.5rem;
+.order2 {
+  display: none;
+  @media (min-width: 1013px) {
+    display: grid;
   }
 }
 
-.module-item__state-title {
-  &_active {
-    color: $green-60;
-  }
-  &_default {
-    color: $gray-90;
-  }
-  &_blocked {
-    color: $rose-80;
+.order3 {
+  display: none;
+  @media (min-width: 689px) {
+    display: grid;
   }
 }
 </style>

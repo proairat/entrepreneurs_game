@@ -1,6 +1,6 @@
 <template>
-  <div class="app-title-line">
-    <div class="max-w-6xl min-w-[35rem] mx-auto app-title-line-content">
+  <div class="app-title-line max-w-6xl mx-auto">
+    <div class="app-title-line-content">
       <slot></slot>
     </div>
   </div>
