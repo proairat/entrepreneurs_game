@@ -49,6 +49,7 @@ const { activeEntranceTest } = storeToRefs(entranceTestsStore);
     justify-content: center;
     font-weight: $font-weight-medium;
     padding-bottom: 1.5rem;
+    text-align: center;
   }
   &__content {
     font-size: $text-base-size;

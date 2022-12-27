@@ -15,7 +15,7 @@
     <AppProgress class="module-item__progress" type="modules" />
     <el-popover
       v-if="props.state === EEntityState.Blocked"
-      placement="right"
+      placement="top"
       :width="250"
       trigger="click"
     >

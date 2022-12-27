@@ -152,25 +152,25 @@ themes.set(1, [
     id: 1,
     type: EEntityType.Topics,
     state: EEntityState.Active,
-    title: "topic 1 theme 1",
+    title: "Введение",
   },
   {
     id: 2,
     type: EEntityType.Topics,
     state: EEntityState.Default,
-    title: "two",
+    title: "Бизнес как профессия",
   },
   {
     id: 3,
     type: EEntityType.Topics,
     state: EEntityState.Default,
-    title: "sdfg",
+    title: "С чего начать новый бизнес?",
   },
   {
     id: 4,
     type: EEntityType.Topics,
     state: EEntityState.Default,
-    title: "fghjfhj",
+    title: "Бизнес-модель",
   },
   {
     id: 5,
@@ -689,7 +689,7 @@ videos.set(1, [
     poster: "../assets/video/posters/1.png",
     videoType: "",
     state: EEntityState.Active,
-    title: "Приветствие",
+    title: "Введение в курс",
     authors: [
       {
         id: 1,
@@ -697,7 +697,7 @@ videos.set(1, [
         name: "Борис",
         patronymic: "",
         regalia:
-          "член Общественной палаты Башкортостана, председатель Уфимского отделения БРО Опора России",
+          'генеральный директор компании "Дом Здоровья Уфа": 8 магазинов в 4 городах РФ; директор по развитию бизнес-академии "Умный бизнес"; победитель управленческого конкурса "Лидеры Башкортостана"; председатель Уфимского отделения БРО ОПОРА РОССИИ',
       },
     ],
     description: "Введение в бизнес",
@@ -709,7 +709,7 @@ videos.set(1, [
     poster: "../assets/video/posters/2.png",
     videoType: "",
     state: EEntityState.Default,
-    title: "video title module 1 videos id 2",
+    title: `Урок 1 "Бизнеc как профессия"`,
     authors: [
       {
         id: 1,
@@ -717,10 +717,11 @@ videos.set(1, [
         name: "Борис",
         patronymic: "",
         regalia:
-          "член Общественной палаты Башкортостана, председатель Уфимского отделения БРО Опора России",
+          'генеральный директор компании "Дом Здоровья Уфа": 8 магазинов в 4 городах РФ; директор по развитию бизнес-академии "Умный бизнес"; победитель управленческого конкурса "Лидеры Башкортостана"; председатель Уфимского отделения БРО ОПОРА РОССИИ',
       },
     ],
-    description: "Кто такой современный предприниматель?",
+    description:
+      'Кто такой современный предприниматель? Где их обучают и чему предстоит научиться; "+" и "-" предпринимательства; типичные ошибки начинающих предпринимателей; ожидания и реальность',
   },
   {
     id: 3,
@@ -729,7 +730,7 @@ videos.set(1, [
     poster: "../assets/video/posters/3.png",
     videoType: "",
     state: EEntityState.Default,
-    title: "video title module 1 videos id 3",
+    title: `Урок 2 "С чего начать новый бизнес?"`,
     authors: [
       {
         id: 1,
@@ -737,7 +738,7 @@ videos.set(1, [
         name: "Борис",
         patronymic: "",
         regalia:
-          "член Общественной палаты Башкортостана, председатель Уфимского отделения БРО Опора России",
+          'генеральный директор компании "Дом Здоровья Уфа": 8 магазинов в 4 городах РФ; директор по развитию бизнес-академии "Умный бизнес"; победитель управленческого конкурса "Лидеры Башкортостана"; председатель Уфимского отделения БРО ОПОРА РОССИИ',
       },
     ],
     description: "С чего начать новый бизнес, если есть идея?",
@@ -749,7 +750,7 @@ videos.set(1, [
     poster: "../assets/video/posters/4.png",
     videoType: "",
     state: EEntityState.Default,
-    title: "video title module 1 videos id 4",
+    title: `Урок 3 "Бизнес-модель"`,
     authors: [
       {
         id: 1,
@@ -757,7 +758,7 @@ videos.set(1, [
         name: "Борис",
         patronymic: "",
         regalia:
-          "член Общественной палаты Башкортостана, председатель Уфимского отделения БРО Опора России",
+          'генеральный директор компании "Дом Здоровья Уфа": 8 магазинов в 4 городах РФ; директор по развитию бизнес-академии "Умный бизнес"; победитель управленческого конкурса "Лидеры Башкортостана"; председатель Уфимского отделения БРО ОПОРА РОССИИ',
       },
     ],
     description: "Бизнес-модель",
@@ -1709,7 +1710,7 @@ testsContent.set(7, [
     ],
     guessed: EGuessed.Undefined,
   },
-  /*{
+  {
     id: 5,
     category: "Общие знания",
     type: "boolean",
@@ -1878,7 +1879,7 @@ testsContent.set(7, [
       },
     ],
     guessed: EGuessed.Undefined,
-  },*/
+  },
 ]);
 // id_test 14
 testsContent.set(14, [
