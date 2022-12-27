@@ -1,7 +1,7 @@
 <template>
-  <div class="min-w-[35rem] outer-part">
-    <div class="modules max-w-6xl mx-auto">
-      <ul>
+  <div class="outer-part max-w-6xl mx-auto">
+    <div class="modules">
+      <ul class="modules__ul">
         <AppModule
           v-for="modul in modules"
           :key="modul.id"
@@ -61,7 +61,7 @@ function changeActiveModuleHandler(moduleId: number) {
 }
 .modules {
   padding: 0 1.5rem;
-  & > ul {
+  &__ul {
     display: grid;
     grid-template-columns: repeat(auto-fit, minmax(18.75rem, 1fr));
     grid-gap: 1.5rem;

@@ -53,6 +53,7 @@ interface IModuleAdvanced {
   footer: string;
   state: EEntityState.Active | EEntityState.Default | EEntityState.Blocked;
   visibility: "visible" | "hidden";
+  order: number;
 }
 
 interface ITheme {

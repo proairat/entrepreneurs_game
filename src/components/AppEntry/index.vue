@@ -1,6 +1,8 @@
 <template>
-  <div class="containerOuter">
-    <div class="welcomeWindow boxShadow">
+  <div class="container-outer">
+    <div
+      class="container-outer__welcome-window container-outer__welcome-window_box-shadow"
+    >
       <div id="AppAlert">
         <slot name="AppAlert"></slot>
       </div>
@@ -21,34 +23,55 @@ export default {
 </script>
 
 <style scoped lang="scss">
-.containerOuter {
+.container-outer {
+  width: 100%;
+  height: 100%;
+  position: fixed;
+  top: 0;
+  left: 0;
   display: flex;
   align-items: center;
+  align-content: center;
   justify-content: center;
-  height: 100vh;
-  background-color: $blue-5;
-  min-width: 960px;
-  min-height: 560px;
-}
+  overflow: auto;
+  background-color: $gray-10;
 
-.welcomeWindow {
-  display: grid;
-  grid-template-areas: "TheDescription TheForm";
-  grid-template-rows: 1fr;
-  grid-template-columns: 1.5fr 1fr;
-  position: relative;
-  width: 960px;
-  height: 560px;
-  border-radius: 0.625rem;
-}
+  &__welcome-window {
+    display: grid;
+    grid-template-areas:
+      "TheDescription"
+      "TheForm";
+    grid-template-rows: 1.5fr 1fr;
+    grid-template-columns: 1fr;
+    position: relative;
+    width: 35rem;
+    height: 60rem;
+    border-radius: 0.625rem;
+    &_box-shadow {
+      box-shadow: $box-shadow-4dp;
+    }
+  }
 
-.boxShadow {
-  box-shadow: $box-shadow-4dp;
+  @media (min-width: 60rem) {
+    &__welcome-window {
+      display: grid;
+      grid-template-areas: "TheDescription TheForm";
+      grid-template-rows: 1fr;
+      grid-template-columns: 1.5fr 1fr;
+      position: relative;
+      width: 60rem;
+      height: 35rem;
+      border-radius: 0.625rem;
+      &_box-shadow {
+        box-shadow: $box-shadow-4dp;
+      }
+    }
+  }
 }
 
 #AppAlert {
   position: absolute;
-  width: calc(100% - 20px);
+  width: calc(100% - 1.25rem);
   margin: 0.625rem;
 }
 
