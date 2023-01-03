@@ -1,9 +1,10 @@
 <template>
   <button
+    type="button"
     class="test-answer w-full bg-gray-100 transition p-6"
     @click="
       checkAnswer(props.idAnswer);
-      clickAnswer();
+      clickAnswer(props.idAnswer);
     "
     :class="{
       'bg-sun-20': show,
@@ -33,8 +34,8 @@ const entranceTestsStore = useEntranceTestsStore();
 const { checkAnswer } = entranceTestsStore;
 const show = ref(false);
 
-function clickAnswer() {
-  emits("clickAnswer", props.idAnswer);
+function clickAnswer(idAnswer: number) {
+  emits("clickAnswer", idAnswer);
   show.value = true;
 }
 </script>

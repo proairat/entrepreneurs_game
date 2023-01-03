@@ -1,9 +1,8 @@
 <template>
-  <AppTestLoader v-if="isLoading"></AppTestLoader>
+  <AppTestLoader v-if="isLoading" />
 </template>
 
 <script setup lang="ts">
-import AppTestLoader from "./AppTestLoader.vue";
 import { useTestsStore } from "@/stores";
 import { storeToRefs } from "pinia";
 

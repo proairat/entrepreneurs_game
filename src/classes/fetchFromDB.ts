@@ -1710,7 +1710,7 @@ testsContent.set(7, [
     ],
     guessed: EGuessed.Undefined,
   },
-  {
+  /*{
     id: 5,
     category: "Общие знания",
     type: "boolean",
@@ -1879,7 +1879,7 @@ testsContent.set(7, [
       },
     ],
     guessed: EGuessed.Undefined,
-  },
+  },*/
 ]);
 // id_test 14
 testsContent.set(14, [

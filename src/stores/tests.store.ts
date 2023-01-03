@@ -11,6 +11,10 @@ import {
 } from "@/classes";
 import type { TElemsList } from "@/types/types";
 import type { IEduElementEntityMap, ITestContent } from "@/types/interfaces";
+import isEmpty from "lodash/isEmpty";
+
+console.log("isEmpty([1, 2, 3]", isEmpty({ a: 1 }));
+// => false
 
 function getEduElement<T>(
   creator: Creator<T>,
@@ -46,12 +50,14 @@ export const useTestsStore = defineStore("tests", () => {
   const progressValue = ref(0);
   const score = ref(0);
   const questionCount = ref(0);
-  const isOptionSelected = ref(false);
+  const isAnswerSelected = ref(false);
   const isTestEnded = ref(false);
   const testContent = ref<ITestContent[]>([]);
   const isLoading = ref(true);
   const questionNumber = ref(0);
   const step = ref(0);
+  const activeQuestion = ref();
+  const activeAnswer = ref();
 
   function getQuestion() {
     return testContent.value[questionNumber.value].question;
@@ -102,6 +108,7 @@ export const useTestsStore = defineStore("tests", () => {
     isTestEnded.value = false;
     testContent.value = [];
     isLoading.value = true;
+    isAnswerSelected.value = false;
   }
 
   function incrementScore() {
@@ -112,8 +119,8 @@ export const useTestsStore = defineStore("tests", () => {
     progressValue.value += Math.ceil(100 / questionCount.value);
   }
 
-  function toggleIsOptionSelected(value: boolean) {
-    isOptionSelected.value = value;
+  function toggleIsAnswerSelected(value: boolean) {
+    isAnswerSelected.value = value;
   }
 
   function getTestsContentByEntityId(entityId: number) {
@@ -129,11 +136,19 @@ export const useTestsStore = defineStore("tests", () => {
     questionCount.value = testContent.value.length;
   }
 
+  /*
+  function getActiveQuestion() {
+    return eduElementThemesExtended.getActiveElem(
+      eduElementThemesExtended.getListByEntityId(moduleId)
+    ) as ITheme;
+  }
+  */
+
   return {
     progressValue,
     score,
     questionCount,
-    isOptionSelected,
+    isAnswerSelected,
     isTestEnded,
     testContent,
     isLoading,
@@ -146,7 +161,7 @@ export const useTestsStore = defineStore("tests", () => {
     initializeTest,
     incrementScore,
     incrementProgressValue,
-    toggleIsOptionSelected,
+    toggleIsAnswerSelected,
     isAnswerIsCorrect,
     getQuestion,
     getTestsContentByEntityId,

@@ -108,7 +108,7 @@ interface ITestContent {
 interface IAnswer {
   idAnswer: number;
   answer: string;
-  state: EEntityState.Unlocked | EEntityState.Blocked;
+  state: EEntityState.Unlocked | EEntityState.Blocked | EEntityState.Active;
 }
 
 interface IEntranceTest {

@@ -1,5 +1,5 @@
 <template>
-  <AppTestLoader v-if="isLoading"></AppTestLoader>
+  <AppTestLoader v-if="isLoading" />
   <div v-else class="test-content">
     <AppTestPassingIndicator />
     <AppTestQuestion />
@@ -12,8 +12,8 @@
         :answer="answer"
         :state="state"
         @click-answer="
-          toggleIsOptionSelected(true);
-          changeOptionState();
+          toggleIsAnswerSelected(true);
+          clickAnswerHandler(idAnswer);
         "
       ></AppTestAnswer>
     </AppTestAnswerBlock>
@@ -30,15 +30,29 @@ const modulesStore = useModulesStore();
 const testsStore = useTestsStore();
 const { activeTest } = storeToRefs(modulesStore);
 const { testContent, isLoading, questionNumber } = storeToRefs(testsStore);
-const { toggleIsOptionSelected, getTestsContentByEntityId } = testsStore;
+const { toggleIsAnswerSelected, getTestsContentByEntityId } = testsStore;
 
 getTestsContentByEntityId(activeTest.value.id);
 
-function changeOptionState() {
+function clickAnswerHandler(idAnswer: number) {
+  console.log("clickAnswerHandler(), idAnswer", idAnswer);
   testContent.value[questionNumber.value].answers.forEach((elem) => {
-    elem.state = EEntityState.Blocked;
+    if (elem.idAnswer === idAnswer) {
+      elem.state = EEntityState.Active;
+    } else {
+      elem.state = EEntityState.Unlocked;
+    }
   });
 }
+
+/*
+changeOptionState(EEntityState.Active);
+
+function changeOptionState(state: EEntityState.Unlocked | EEntityState.Blocked | EEntityState.Active) {
+  testContent.value[questionNumber.value].answers.forEach((elem) => {
+    elem.state = state;
+  });
+}*/
 </script>
 
 <style scoped lang="scss">

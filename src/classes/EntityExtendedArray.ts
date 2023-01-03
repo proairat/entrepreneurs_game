@@ -31,7 +31,7 @@ class EntityExtendedArray<T extends TExtendsArray>
   }
   public getActiveElem(): T | undefined {
     if (Array.isArray(this.list)) {
-      return super.find(this.list);
+      return super.find(this.list, EEntityState.Active);
     }
   }
 }

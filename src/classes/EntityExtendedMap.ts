@@ -31,7 +31,7 @@ class EntityExtendedMap<T extends TExtendsMap>
   }
   public getActiveElem(entityByModuleId: T[] | undefined): T | undefined {
     if (Array.isArray(entityByModuleId)) {
-      return super.find(entityByModuleId);
+      return super.find(entityByModuleId, EEntityState.Active);
     }
   }
   public getListByEntityId(entityId: number): T[] | undefined {

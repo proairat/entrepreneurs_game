@@ -65,7 +65,7 @@ export const useEntranceTestsStore = defineStore("entranceTests", () => {
   const progressValue = ref(0);
   const score = ref(0);
   const questionCount = ref(0);
-  const isOptionSelected = ref(false);
+  const isAnswerSelected = ref(false);
   const isTestEnded = ref(false);
   const testContent = ref<IEntranceTestContent[]>([]);
   const isLoading = ref(true);
@@ -135,8 +135,8 @@ export const useEntranceTestsStore = defineStore("entranceTests", () => {
     progressValue.value += Math.ceil(100 / questionCount.value);
   }
 
-  function toggleIsOptionSelected(value: boolean) {
-    isOptionSelected.value = value;
+  function toggleIsAnswerSelected(value: boolean) {
+    isAnswerSelected.value = value;
   }
 
   function getEntranceTestsList() {
@@ -165,7 +165,7 @@ export const useEntranceTestsStore = defineStore("entranceTests", () => {
     progressValue,
     score,
     questionCount,
-    isOptionSelected,
+    isAnswerSelected,
     isTestEnded,
     testContent,
     isLoading,
@@ -178,7 +178,7 @@ export const useEntranceTestsStore = defineStore("entranceTests", () => {
     initializeTest,
     incrementScore,
     incrementProgressValue,
-    toggleIsOptionSelected,
+    toggleIsAnswerSelected,
     isAnswerIsCorrect,
     getQuestion,
     getEntranceTestsList,

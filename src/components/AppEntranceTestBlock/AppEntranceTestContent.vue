@@ -1,9 +1,9 @@
 <template>
-  <AppEntranceTestLoader v-if="isLoading"></AppEntranceTestLoader>
+  <AppTestLoader v-if="isLoading" />
   <div v-else class="test-content">
     <AppEntranceTestPassingIndicator />
     <AppEntranceTestQuestion />
-    <AppEntranceTestAnswerBlock>
+    <AppTestAnswerBlock>
       <AppEntranceTestAnswer
         v-for="{ idAnswer, answer, state } in testContent[questionNumber]
           .answers"
@@ -12,12 +12,12 @@
         :answer="answer"
         :state="state"
         @click-answer="
-          toggleIsOptionSelected(true);
+          toggleIsAnswerSelected(true);
           changeOptionState();
           setIdAnswerUserSelected(idAnswer);
         "
       ></AppEntranceTestAnswer>
-    </AppEntranceTestAnswerBlock>
+    </AppTestAnswerBlock>
     <AppEntranceTestPassingButton />
   </div>
 </template>
@@ -31,7 +31,7 @@ const entranceTestsStore = useEntranceTestsStore();
 const { activeEntranceTest, testContent, isLoading, questionNumber } =
   storeToRefs(entranceTestsStore);
 const {
-  toggleIsOptionSelected,
+  toggleIsAnswerSelected,
   getEntranceTestsContentByEntityId,
   setIdAnswerUserSelected,
 } = entranceTestsStore;
