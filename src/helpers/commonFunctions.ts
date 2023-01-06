@@ -2,6 +2,7 @@
 
 import type { IAnswer } from "@/types/interfaces";
 import type { Tfns } from "@/types/types";
+import cloneDeep from "lodash/cloneDeep";
 
 /**
  * Функция для удаления свойства из объекта
@@ -66,18 +67,6 @@ function getURLPathNameDigit(url: string): string | null {
   return Array.isArray(result) ? result[0] : null;
 }
 
-function deepClone(value: any): any {
-  if (Array.isArray(value)) {
-    return value.map((child) => deepClone(child));
-  }
-  if (Object.prototype.toString.call(value) === "[object Object]") {
-    return Object.fromEntries(
-      Object.entries(value).map(([k, v]) => [k, deepClone(v)])
-    );
-  }
-  return value;
-}
-
 /**
  * Функция для получения пути к изображению по названию изображения
  *
@@ -122,16 +111,20 @@ function compose(...fns: Tfns<number>) {
   };
 }
 
-const shuffle = (array: IAnswer[]) => {
-  let currentIndex = array.length;
-  let randomIndex;
-  while (currentIndex !== 0) {
-    randomIndex = Math.floor(Math.random() * currentIndex);
-    currentIndex--;
-    [array[currentIndex], array[randomIndex]] = [
-      array[randomIndex],
-      array[currentIndex],
-    ];
+const shuffle = <T>(inputArray: T[]): T[] | undefined => {
+  if (Array.isArray(inputArray)) {
+    const outputArray = cloneDeep(inputArray);
+    let currentIndex = inputArray.length;
+    let randomIndex: number;
+    while (currentIndex !== 0) {
+      randomIndex = Math.floor(Math.random() * currentIndex);
+      currentIndex--;
+      [outputArray[currentIndex], outputArray[randomIndex]] = [
+        outputArray[randomIndex],
+        outputArray[currentIndex],
+      ];
+    }
+    return outputArray;
   }
 };
 
@@ -166,7 +159,6 @@ export {
   FulfillRequests,
   getURLParamValue,
   getURLPathNameDigit,
-  deepClone,
   getImageUrl,
   removeObjectProperty,
   shuffle,

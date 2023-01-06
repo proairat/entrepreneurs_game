@@ -13,7 +13,7 @@
 
 <script setup lang="ts">
 import { useModulesStore, useTestsStore } from "@/stores";
-import { EEntityType } from "@/types/enums";
+import { EEntityState, EEntityType } from "@/types/enums";
 
 const props = defineProps<{
   moduleId: number;
@@ -35,8 +35,14 @@ const themes = getThemesByModuleId(props.moduleId);
  * @param {number} themeId - theme identifier
  */
 function changeActiveThemeHandler(themeId: number) {
-  updateActiveTheme(props.moduleId, themeId);
+  updateActiveTheme({
+    entityId: props.moduleId,
+    themeId: themeId,
+    activeIndexState: EEntityState.Default,
+    clickIndexState: EEntityState.Active,
+  });
 }
+
 /**
  * Update active video in Pinia
  * @param {number} themeId - theme identifier
@@ -47,7 +53,12 @@ function changeActiveVideoHandler(
   themeType: EEntityType.Topics
 ) {
   if (themeType === EEntityType.Topics) {
-    updateActiveVideo(props.moduleId, themeId);
+    updateActiveVideo({
+      entityId: props.moduleId,
+      themeId: themeId,
+      activeIndexState: EEntityState.Default,
+      clickIndexState: EEntityState.Active,
+    });
   }
 }
 
@@ -62,7 +73,12 @@ function changeActiveTestHandler(
 ) {
   if (themeType === EEntityType.Tests) {
     initializeTest();
-    updateActiveTest(props.moduleId, themeId);
+    updateActiveTest({
+      entityId: props.moduleId,
+      themeId: themeId,
+      activeIndexState: EEntityState.Default,
+      clickIndexState: EEntityState.Active,
+    });
   }
 }
 </script>

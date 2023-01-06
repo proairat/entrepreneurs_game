@@ -15,8 +15,12 @@
 
 <script setup lang="ts">
 import { useModulesStore } from "@/stores";
-import { EEntityType } from "@/types/enums";
-import type { IModule, IModuleAdvanced } from "@/types/interfaces";
+import { EEntityState, EEntityType } from "@/types/enums";
+import type {
+  IModule,
+  IModuleAdvanced,
+  IUpdateArray,
+} from "@/types/interfaces";
 
 const props = defineProps<{
   type: EEntityType;
@@ -30,7 +34,7 @@ const {
   updateActiveModuleAdvanced,
 } = modulesStore;
 let modules: IModule[] | IModuleAdvanced[] = [];
-let updateEntity: (id: number) => void;
+let updateEntity: (updateArray: IUpdateArray) => void;
 
 if (props.type === EEntityType.Modules) {
   modules = getModulesList();
@@ -49,7 +53,11 @@ if (props.type === EEntityType.ModulesAdvanced) {
  * @param {number} moduleId - module identifier
  */
 function changeActiveModuleHandler(moduleId: number) {
-  updateEntity(moduleId);
+  updateEntity({
+    entityId: moduleId,
+    activeIndexState: EEntityState.Default,
+    clickIndexState: EEntityState.Active,
+  });
 }
 
 // const filteredList = computed(() => FuzzySearch(search.value, modules, "title"));

@@ -1,5 +1,4 @@
-import { defineStore } from "pinia";
-import { shuffle, deepClone } from "@/helpers/commonFunctions";
+import { defineStore, storeToRefs } from "pinia";
 import { EGuessed } from "@/types/enums";
 import { ref } from "vue";
 import { testsContent } from "@/classes/fetchFromDB";
@@ -12,6 +11,8 @@ import {
 import type { TElemsList } from "@/types/types";
 import type { IEduElementEntityMap, ITestContent } from "@/types/interfaces";
 import isEmpty from "lodash/isEmpty";
+import cloneDeep from "lodash/cloneDeep";
+import { useModulesStore } from "@/stores";
 
 console.log("isEmpty([1, 2, 3]", isEmpty({ a: 1 }));
 // => false
@@ -47,6 +48,8 @@ const eduElementTestsContentExtended = getEduElementExtended(
 ) as IEduElementEntityMap<ITestContent>;
 
 export const useTestsStore = defineStore("tests", () => {
+  const modulesStore = useModulesStore();
+  const { activeTest } = storeToRefs(modulesStore);
   const progressValue = ref(0);
   const score = ref(0);
   const questionCount = ref(0);
@@ -56,11 +59,11 @@ export const useTestsStore = defineStore("tests", () => {
   const isLoading = ref(true);
   const questionNumber = ref(0);
   const step = ref(0);
-  const activeQuestion = ref();
-  const activeAnswer = ref();
+  const activeQuestion = ref(getActiveQuestion(activeTest.value.id));
 
-  function getQuestion() {
-    return testContent.value[questionNumber.value].question;
+  function getQuestionContent() {
+    // return testContent.value[questionNumber.value].question;
+    return activeQuestion.value.question;
   }
 
   function getNextQuestion() {
@@ -78,13 +81,15 @@ export const useTestsStore = defineStore("tests", () => {
   }
 
   function isAnswerIsCorrect(idAnswer: number) {
-    return testContent.value[questionNumber.value].idAnswerCorrect === idAnswer
+    /*return testContent.value[questionNumber.value].idAnswerCorrect === idAnswer
       ? true
-      : false;
+      : false;*/
+    return activeQuestion.value.idAnswerCorrect === idAnswer ? true : false;
   }
 
   function setGuessed(value: EGuessed) {
-    testContent.value[questionNumber.value].guessed = value;
+    // testContent.value[questionNumber.value].guessed = value;
+    activeQuestion.value.guessed = value;
   }
 
   function checkAnswer(idAnswer: number) {
@@ -109,6 +114,7 @@ export const useTestsStore = defineStore("tests", () => {
     testContent.value = [];
     isLoading.value = true;
     isAnswerSelected.value = false;
+    questionNumber.value = 0;
   }
 
   function incrementScore() {
@@ -123,28 +129,32 @@ export const useTestsStore = defineStore("tests", () => {
     isAnswerSelected.value = value;
   }
 
-  function getTestsContentByEntityId(entityId: number) {
-    const result = eduElementTestsContentExtended.getListByEntityId(
-      entityId
-    ) as ITestContent[];
-
-    result.forEach((item) => shuffle(item.answers));
-
-    testContent.value = deepClone(result);
+  function temporaryTestContent(result: any) {
+    testContent.value = cloneDeep(result);
     isLoading.value = false;
-    questionNumber.value = 0;
     questionCount.value = testContent.value.length;
   }
 
-  /*
-  function getActiveQuestion() {
-    return eduElementThemesExtended.getActiveElem(
-      eduElementThemesExtended.getListByEntityId(moduleId)
-    ) as ITheme;
+  function getTestsContentByActiveTestId(activeTestId: number) {
+    const result = eduElementTestsContentExtended.getListByEntityId(
+      activeTestId
+    ) as ITestContent[];
+
+    temporaryTestContent(result);
+
+    return result;
   }
-  */
+
+  function getActiveQuestion(activeTestId: number) {
+    return eduElementTestsContentExtended.getActiveElem(
+      eduElementTestsContentExtended.getListByEntityId(
+        activeTestId
+      ) as ITestContent[]
+    ) as ITestContent;
+  }
 
   return {
+    activeQuestion,
     progressValue,
     score,
     questionCount,
@@ -163,7 +173,7 @@ export const useTestsStore = defineStore("tests", () => {
     incrementProgressValue,
     toggleIsAnswerSelected,
     isAnswerIsCorrect,
-    getQuestion,
-    getTestsContentByEntityId,
+    getQuestionContent,
+    getTestsContentByActiveTestId,
   };
 });

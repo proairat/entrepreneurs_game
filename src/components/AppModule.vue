@@ -119,7 +119,6 @@ const stateTitle = computed(() => ({
 
 function getName(moduleId: number) {
   const activeElem = getActiveTheme(moduleId);
-
   if (activeElem.type === EEntityType.Topics) {
     return "ViewModuleTopics";
   }

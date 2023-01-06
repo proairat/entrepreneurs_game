@@ -57,19 +57,6 @@ const getPercentage = computed(() => {
   }
   return progress;
 });
-/*
-const getModuleHeader = computed(() => {
-  return activeModule.value.header;
-});
-
-const getModuleId = computed(() => {
-  return activeModule.value.id;
-});
-
-const getThemeTitle = computed(() => {
-  return activeTheme.value.title;
-});
-*/
 </script>
 
 <style scoped lang="scss">

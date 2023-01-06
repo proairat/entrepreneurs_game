@@ -1,5 +1,5 @@
 import { defineStore } from "pinia";
-import { shuffle, deepClone } from "@/helpers/commonFunctions";
+import { shuffle } from "@/helpers/commonFunctions";
 import { EGuessed } from "@/types/enums";
 import { ref } from "vue";
 import { entranceTests, entranceTestsContent } from "@/classes/fetchFromDB";
@@ -17,6 +17,7 @@ import type {
   IEntranceTest,
   IEntranceTestContent,
 } from "@/types/interfaces";
+import cloneDeep from "lodash/cloneDeep";
 
 function getEduElement<T>(
   creator: Creator<T>,
@@ -72,7 +73,7 @@ export const useEntranceTestsStore = defineStore("entranceTests", () => {
   const questionNumber = ref(0);
   const step = ref(0);
 
-  function getQuestion() {
+  function getQuestionContent() {
     return testContent.value[questionNumber.value].question;
   }
 
@@ -154,7 +155,7 @@ export const useEntranceTestsStore = defineStore("entranceTests", () => {
 
     result.forEach((item) => shuffle(item.answers));
 
-    testContent.value = deepClone(result);
+    testContent.value = cloneDeep(result);
     isLoading.value = false;
     questionNumber.value = 0;
     questionCount.value = testContent.value.length;
@@ -180,7 +181,7 @@ export const useEntranceTestsStore = defineStore("entranceTests", () => {
     incrementProgressValue,
     toggleIsAnswerSelected,
     isAnswerIsCorrect,
-    getQuestion,
+    getQuestionContent,
     getEntranceTestsList,
     getEntranceTestsContentByEntityId,
     setIdAnswerUserSelected,

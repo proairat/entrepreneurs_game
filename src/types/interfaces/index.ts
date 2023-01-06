@@ -39,7 +39,7 @@ interface IModule {
   title: string;
   duration: string;
   footer: string;
-  state: EEntityState.Active | EEntityState.Default;
+  state: EEntityState;
 }
 
 interface IModuleAdvanced {
@@ -51,7 +51,7 @@ interface IModuleAdvanced {
   title: string;
   duration: string;
   footer: string;
-  state: EEntityState.Active | EEntityState.Default | EEntityState.Blocked;
+  state: EEntityState;
   visibility: "visible" | "hidden";
   order: number;
 }
@@ -59,7 +59,7 @@ interface IModuleAdvanced {
 interface ITheme {
   id: number;
   type: EEntityType.Topics | EEntityType.Tests;
-  state: EEntityState.Active | EEntityState.Default;
+  state: EEntityState;
   title: string;
 }
 
@@ -78,7 +78,7 @@ interface IVideo {
   poster: string;
   videoType: string;
   duration?: number;
-  state: EEntityState.Active | EEntityState.Default;
+  state: EEntityState;
   title: string;
   authors: ITabsAuthors[];
   description: string;
@@ -89,7 +89,7 @@ interface ITest {
   type: EEntityType.Tests;
   title: string;
   description: string;
-  state: EEntityState.Active | EEntityState.Default;
+  state: EEntityState;
 }
 
 interface ITestContent {
@@ -99,7 +99,7 @@ interface ITestContent {
   difficulty: string;
   slideNumber: number;
   question: string;
-  state: EEntityState.Active | EEntityState.Default;
+  state: EEntityState;
   idAnswerCorrect: number;
   answers: IAnswer[];
   guessed: EGuessed;
@@ -108,7 +108,7 @@ interface ITestContent {
 interface IAnswer {
   idAnswer: number;
   answer: string;
-  state: EEntityState.Unlocked | EEntityState.Blocked | EEntityState.Active;
+  state: EEntityState;
 }
 
 interface IEntranceTest {
@@ -116,7 +116,7 @@ interface IEntranceTest {
   type: EEntityType.EntranceTests;
   title: string;
   description: string;
-  state: EEntityState.Active | EEntityState.Default;
+  state: EEntityState;
 }
 
 interface IEntranceTestContent {
@@ -126,7 +126,7 @@ interface IEntranceTestContent {
   difficulty: string;
   slideNumber: number;
   question: string;
-  state: EEntityState.Active | EEntityState.Default;
+  state: EEntityState;
   idAnswerCorrect: number;
   idAnswerUserSelected: number[];
   answers: IAnswer[];
@@ -140,6 +140,19 @@ interface IProgressCaption {
   entranceTests: EProgressCaption.EntranceTestsCaption;
 }
 
+interface IUpdateArray {
+  entityId: number;
+  activeIndexState: EEntityState;
+  clickIndexState: EEntityState;
+}
+
+interface IUpdateMap {
+  entityId: number;
+  themeId: number;
+  activeIndexState: EEntityState;
+  clickIndexState: EEntityState;
+}
+
 interface IEduCommonElement<T> {
   createList(
     param: T[] | TElemsList<number, T>
@@ -149,13 +162,13 @@ interface IEduCommonElement<T> {
 }
 
 interface IEduElementEntityArray<T> {
-  updateActiveElem(entityId: number): void;
+  updateActiveElem(updateArray: IUpdateArray): void;
   getActiveElem(): T | undefined;
 }
 
 interface IEduElementEntityMap<T> {
-  updateActiveElem(entityId: number, themeId: number): void;
-  getActiveElem(entityByModuleId: T[] | undefined): T | undefined;
+  updateActiveElem(updateMap: IUpdateMap): void;
+  getActiveElem(listByEntityId: T[] | undefined): T | undefined;
   getListByEntityId(entityId: number): T[] | undefined;
 }
 
@@ -174,6 +187,8 @@ export type {
   IEntranceTest,
   IEntranceTestContent,
   IProgressCaption,
+  IUpdateArray,
+  IUpdateMap,
   IEduCommonElement,
   IEduElementEntityArray,
   IEduElementEntityMap,

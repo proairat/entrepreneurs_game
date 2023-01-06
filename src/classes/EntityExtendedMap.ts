@@ -1,5 +1,5 @@
 import { EEntityState } from "@/types/enums";
-import type { IEduElementEntityMap } from "@/types/interfaces";
+import type { IEduElementEntityMap, IUpdateMap } from "@/types/interfaces";
 import type { TElemsList, TExtendsMap } from "@/types/types";
 import { BaseEduElement } from "@/classes/BaseEduElement";
 
@@ -13,25 +13,25 @@ class EntityExtendedMap<T extends TExtendsMap>
     super();
     this.list = list;
   }
-  public updateActiveElem(entityId: number, themeId: number): void {
+  public updateActiveElem(updateMap: IUpdateMap): void {
     if (this.list instanceof Map) {
-      const entityByModuleId = this.getListByEntityId(entityId);
-      const activeElem = this.getActiveElem(entityByModuleId);
+      const listByEntityId = this.getListByEntityId(updateMap.entityId);
+      const activeElem = this.getActiveElem(listByEntityId);
 
-      if (Array.isArray(entityByModuleId) && activeElem) {
-        const activeIndex = super.findIndex(entityByModuleId, activeElem.id);
-        const clickIndex = super.findIndex(entityByModuleId, themeId);
+      if (Array.isArray(listByEntityId) && activeElem) {
+        const activeIndex = super.findIndex(listByEntityId, activeElem.id);
+        const clickIndex = super.findIndex(listByEntityId, updateMap.themeId);
 
         if (activeIndex !== -1 && clickIndex !== -1) {
-          entityByModuleId[activeIndex]["state"] = EEntityState.Default;
-          entityByModuleId[clickIndex]["state"] = EEntityState.Active;
+          listByEntityId[activeIndex]["state"] = updateMap.activeIndexState;
+          listByEntityId[clickIndex]["state"] = updateMap.clickIndexState;
         }
       }
     }
   }
-  public getActiveElem(entityByModuleId: T[] | undefined): T | undefined {
-    if (Array.isArray(entityByModuleId)) {
-      return super.find(entityByModuleId, EEntityState.Active);
+  public getActiveElem(listByEntityId: T[] | undefined): T | undefined {
+    if (Array.isArray(listByEntityId)) {
+      return super.find(listByEntityId, EEntityState.Active);
     }
   }
   public getListByEntityId(entityId: number): T[] | undefined {
