@@ -45,8 +45,8 @@ const modulesStore = useModulesStore();
 const testsStore = useTestsStore();
 const { activeTest } = storeToRefs(modulesStore);
 const { testContent, isLoading, questionNumber } = storeToRefs(testsStore);
-const { toggleIsAnswerSelected, getTestsContentByActiveTestId } = testsStore;
-const tluser = ref(getTestsContentByActiveTestId(activeTest.value.id));
+const { toggleIsAnswerSelected, getTestsQuestionsByActiveTestId } = testsStore;
+const tluser = ref(getTestsQuestionsByActiveTestId(activeTest.value.id));
 const answers = ref(
   shuffle<IAnswer>(tluser.value[questionNumber.value].answers)
 );

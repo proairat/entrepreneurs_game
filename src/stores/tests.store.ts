@@ -1,7 +1,7 @@
 import { defineStore, storeToRefs } from "pinia";
 import { EGuessed } from "@/types/enums";
-import { ref } from "vue";
-import { testsContent } from "@/classes/fetchFromDB";
+import { ref, type Ref } from "vue";
+import { testsQuestions } from "@/fetch";
 import {
   EntityCreator,
   Creator,
@@ -9,7 +9,11 @@ import {
   EntityCreatorExtendedMap,
 } from "@/classes";
 import type { TElemsList } from "@/types/types";
-import type { IEduElementEntityMap, ITestContent } from "@/types/interfaces";
+import type {
+  IAnswer,
+  IEduElementEntityMap,
+  IQuestion,
+} from "@/types/interfaces";
 import isEmpty from "lodash/isEmpty";
 import cloneDeep from "lodash/cloneDeep";
 import { useModulesStore } from "@/stores";
@@ -34,18 +38,15 @@ function getEduElementExtended<T>(creator: CreatorExtended<T>) {
   return eduElement;
 }
 
-const eduElementTestsContent = getEduElement(
-  new EntityCreator<ITestContent>(),
-  testsContent
+const eduElementTestsQuestions = getEduElement(
+  new EntityCreator<IQuestion>(),
+  testsQuestions
 );
-const eduElementTestsContentExtended = getEduElementExtended(
-  new EntityCreatorExtendedMap<ITestContent>(
-    ref(eduElementTestsContent.getList()).value as TElemsList<
-      number,
-      ITestContent
-    >
+const eduElementTestsQuestionsExtended = getEduElementExtended(
+  new EntityCreatorExtendedMap<IQuestion>(
+    ref(eduElementTestsQuestions.getList()).value as TElemsList<number, IQuestion>
   )
-) as IEduElementEntityMap<ITestContent>;
+) as IEduElementEntityMap<IQuestion>;
 
 export const useTestsStore = defineStore("tests", () => {
   const modulesStore = useModulesStore();
@@ -55,11 +56,16 @@ export const useTestsStore = defineStore("tests", () => {
   const questionCount = ref(0);
   const isAnswerSelected = ref(false);
   const isTestEnded = ref(false);
-  const testContent = ref<ITestContent[]>([]);
+  const testContent = ref<IQuestion[]>([]);
   const isLoading = ref(true);
   const questionNumber = ref(0);
   const step = ref(0);
   const activeQuestion = ref(getActiveQuestion(activeTest.value.id));
+  const activeAnswer = ref();
+
+  function getActiveAnswer(idQuestion: number) {}
+
+  function updateActiveAnswer() {}
 
   function getQuestionContent() {
     // return testContent.value[questionNumber.value].question;
@@ -135,10 +141,10 @@ export const useTestsStore = defineStore("tests", () => {
     questionCount.value = testContent.value.length;
   }
 
-  function getTestsContentByActiveTestId(activeTestId: number) {
-    const result = eduElementTestsContentExtended.getListByEntityId(
+  function getTestsQuestionsByActiveTestId(activeTestId: number) {
+    const result = eduElementTestsQuestionsExtended.getListByEntityId(
       activeTestId
-    ) as ITestContent[];
+    ) as IQuestion[];
 
     temporaryTestContent(result);
 
@@ -146,11 +152,11 @@ export const useTestsStore = defineStore("tests", () => {
   }
 
   function getActiveQuestion(activeTestId: number) {
-    return eduElementTestsContentExtended.getActiveElem(
-      eduElementTestsContentExtended.getListByEntityId(
+    return eduElementTestsQuestionsExtended.getActiveElem(
+      eduElementTestsQuestionsExtended.getListByEntityId(
         activeTestId
-      ) as ITestContent[]
-    ) as ITestContent;
+      ) as IQuestion[]
+    ) as IQuestion;
   }
 
   return {
@@ -174,6 +180,6 @@ export const useTestsStore = defineStore("tests", () => {
     toggleIsAnswerSelected,
     isAnswerIsCorrect,
     getQuestionContent,
-    getTestsContentByActiveTestId,
+    getTestsQuestionsByActiveTestId,
   };
 });

@@ -19,13 +19,7 @@ import {
   EntityCreatorExtendedArray,
 } from "@/classes";
 import type { TElemsList } from "@/types/types";
-import {
-  modules,
-  modulesAdvanced,
-  themes,
-  videos,
-  tests,
-} from "@/classes/fetchFromDB";
+import { modules, modulesAdvanced, themes, videos, tests } from "@/fetch";
 import type { EEntityState } from "@/types/enums";
 
 function getEduElement<T>(
@@ -167,13 +161,6 @@ export const useModulesStore = defineStore("modules", () => {
       getTestsByModuleId(moduleId)
     ) as ITest;
   }
-
-  /*
-  const square = (x: number) => x * x;
-  const times2 = (x: number) => x * 2;
-  const sum = () => 6;
-  console.log("compose", compose(square, times2, sum)());
-  */
 
   return {
     activeModule,

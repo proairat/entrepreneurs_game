@@ -92,7 +92,7 @@ interface ITest {
   state: EEntityState;
 }
 
-interface ITestContent {
+interface IQuestion {
   id: number;
   category: string;
   type: string;
@@ -101,11 +101,11 @@ interface ITestContent {
   question: string;
   state: EEntityState;
   idAnswerCorrect: number;
-  answers: IAnswer[];
   guessed: EGuessed;
 }
 
 interface IAnswer {
+  idQuestion: number;
   idAnswer: number;
   answer: string;
   state: EEntityState;
@@ -182,7 +182,7 @@ export type {
   ITabsAuthors,
   IVideo,
   ITest,
-  ITestContent,
+  IQuestion,
   IAnswer,
   IEntranceTest,
   IEntranceTestContent,

@@ -32,11 +32,11 @@ const { activeEntranceTest, testContent, isLoading, questionNumber } =
   storeToRefs(entranceTestsStore);
 const {
   toggleIsAnswerSelected,
-  getEntranceTestsContentByEntityId,
+  getEntranceTestsQuestionsByEntityId,
   setIdAnswerUserSelected,
 } = entranceTestsStore;
 
-getEntranceTestsContentByEntityId(activeEntranceTest.value.id);
+getEntranceTestsQuestionsByEntityId(activeEntranceTest.value.id);
 
 function changeOptionState() {
   testContent.value[questionNumber.value].answers.forEach((elem) => {

@@ -98,6 +98,10 @@ async function getImageUrl(name: string, extension: string = "svg") {
  *
  * compose(square, times2)(2) === square(times2(2)));
  * compose(square, times2, sum)(3, 4) === square(times2(sum(3, 4))));
+ * const square = (x: number) => x * x;
+ * const times2 = (x: number) => x * 2;
+ * const sum = () => 6;
+ * console.log("compose", compose(square, times2, sum)());
  */
 
 function compose(...fns: Tfns<number>) {

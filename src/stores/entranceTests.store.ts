@@ -2,7 +2,7 @@ import { defineStore } from "pinia";
 import { shuffle } from "@/helpers/commonFunctions";
 import { EGuessed } from "@/types/enums";
 import { ref } from "vue";
-import { entranceTests, entranceTestsContent } from "@/classes/fetchFromDB";
+import { entranceTests, entranceTestsQuestions } from "@/fetch";
 import {
   EntityCreator,
   Creator,
@@ -41,9 +41,9 @@ const eduElementEntranceTests = getEduElement(
   entranceTests
 );
 
-const eduElementEntranceTestsContent = getEduElement(
+const eduElementEntranceTestsQuestions = getEduElement(
   new EntityCreator<IEntranceTestContent>(),
-  entranceTestsContent
+  entranceTestsQuestions
 );
 
 const eduElementEntranceTestsExtended = getEduElementExtended(
@@ -52,9 +52,9 @@ const eduElementEntranceTestsExtended = getEduElementExtended(
   )
 ) as IEduElementEntityArray<IEntranceTest>;
 
-const eduElementEntranceTestsContentExtended = getEduElementExtended(
+const eduElementEntranceTestsQuestionsExtended = getEduElementExtended(
   new EntityCreatorExtendedMap<IEntranceTestContent>(
-    ref(eduElementEntranceTestsContent.getList()).value as TElemsList<
+    ref(eduElementEntranceTestsQuestions.getList()).value as TElemsList<
       number,
       IEntranceTestContent
     >
@@ -148,8 +148,8 @@ export const useEntranceTestsStore = defineStore("entranceTests", () => {
     return eduElementEntranceTestsExtended.getActiveElem() as IEntranceTest;
   }
 
-  function getEntranceTestsContentByEntityId(entityId: number) {
-    const result = eduElementEntranceTestsContentExtended.getListByEntityId(
+  function getEntranceTestsQuestionsByEntityId(entityId: number) {
+    const result = eduElementEntranceTestsQuestionsExtended.getListByEntityId(
       entityId
     ) as IEntranceTestContent[];
 
@@ -183,7 +183,7 @@ export const useEntranceTestsStore = defineStore("entranceTests", () => {
     isAnswerIsCorrect,
     getQuestionContent,
     getEntranceTestsList,
-    getEntranceTestsContentByEntityId,
+    getEntranceTestsQuestionsByEntityId,
     setIdAnswerUserSelected,
   };
 });
