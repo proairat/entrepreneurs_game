@@ -27,7 +27,7 @@ const {
   updateActiveTest,
 } = modulesStore;
 const testsStore = useTestsStore();
-const { initializeTest } = testsStore;
+const { initializeTest, updateActiveQuestion } = testsStore;
 const themes = getThemesByModuleId(props.moduleId);
 
 /**
@@ -36,8 +36,8 @@ const themes = getThemesByModuleId(props.moduleId);
  */
 function changeActiveThemeHandler(themeId: number) {
   updateActiveTheme({
-    entityId: props.moduleId,
-    themeId: themeId,
+    entityIdForListByEntityId: props.moduleId,
+    entityIdForClickIndex: themeId,
     activeIndexState: EEntityState.Default,
     clickIndexState: EEntityState.Active,
   });
@@ -54,8 +54,8 @@ function changeActiveVideoHandler(
 ) {
   if (themeType === EEntityType.Topics) {
     updateActiveVideo({
-      entityId: props.moduleId,
-      themeId: themeId,
+      entityIdForListByEntityId: props.moduleId,
+      entityIdForClickIndex: themeId,
       activeIndexState: EEntityState.Default,
       clickIndexState: EEntityState.Active,
     });
@@ -74,8 +74,14 @@ function changeActiveTestHandler(
   if (themeType === EEntityType.Tests) {
     initializeTest();
     updateActiveTest({
-      entityId: props.moduleId,
-      themeId: themeId,
+      entityIdForListByEntityId: props.moduleId,
+      entityIdForClickIndex: themeId,
+      activeIndexState: EEntityState.Default,
+      clickIndexState: EEntityState.Active,
+    });
+    updateActiveQuestion({
+      entityIdForListByEntityId: themeId,
+      entityIdForClickIndex: 1,
       activeIndexState: EEntityState.Default,
       clickIndexState: EEntityState.Active,
     });

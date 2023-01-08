@@ -1,12 +1,13 @@
 // Mock object represent database data
 import { EEntityState, EGuessed } from "@/types/enums";
-import type { IQuestion } from "@/types/interfaces";
+import type { ITestQuestion } from "@/types/interfaces";
 import type { TElemsList } from "@/types/types";
 
 /**
  * TESTS QUESTIONS
  */
-const testsQuestions: TElemsList<number, IQuestion> | undefined = new Map();
+const testsQuestions: TElemsList<number, ITestQuestion> | undefined = new Map();
+
 // id_test 7
 testsQuestions.set(7, [
   {
@@ -127,6 +128,7 @@ testsQuestions.set(7, [
     guessed: EGuessed.Undefined,
   },
 ]);
+
 // id_test 14
 testsQuestions.set(14, [
   {
@@ -136,7 +138,7 @@ testsQuestions.set(14, [
     difficulty: "medium",
     slideNumber: 1,
     question: "Сколько будет 2 + 2?",
-    state: EEntityState.Default,
+    state: EEntityState.Active,
     idAnswerCorrect: 37,
     guessed: EGuessed.Active,
   },
@@ -152,6 +154,7 @@ testsQuestions.set(14, [
     guessed: EGuessed.Undefined,
   },
 ]);
+
 // id_test 28
 testsQuestions.set(28, [
   {
@@ -161,7 +164,7 @@ testsQuestions.set(28, [
     difficulty: "medium",
     slideNumber: 1,
     question: "Сейчас зима?",
-    state: EEntityState.Default,
+    state: EEntityState.Active,
     idAnswerCorrect: 49,
     guessed: EGuessed.Active,
   },
@@ -177,6 +180,7 @@ testsQuestions.set(28, [
     guessed: EGuessed.Undefined,
   },
 ]);
+
 // id_test 39
 testsQuestions.set(39, [
   {
@@ -186,7 +190,7 @@ testsQuestions.set(39, [
     difficulty: "medium",
     slideNumber: 1,
     question: "Что такое Эдельвейс?",
-    state: EEntityState.Default,
+    state: EEntityState.Active,
     idAnswerCorrect: 55,
     guessed: EGuessed.Active,
   },
@@ -200,6 +204,21 @@ testsQuestions.set(39, [
     state: EEntityState.Default,
     idAnswerCorrect: 61,
     guessed: EGuessed.Undefined,
+  },
+]);
+
+// id_test 80
+testsQuestions.set(80, [
+  {
+    id: 17,
+    category: "Общие знания",
+    type: "multiple",
+    difficulty: "medium",
+    slideNumber: 1,
+    question: "Это итоговое тестирование?",
+    state: EEntityState.Active,
+    idAnswerCorrect: 62,
+    guessed: EGuessed.Active,
   },
 ]);
 

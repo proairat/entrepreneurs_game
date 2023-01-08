@@ -15,7 +15,7 @@ import type {
   IEduElementEntityArray,
   IEduElementEntityMap,
   IEntranceTest,
-  IEntranceTestContent,
+  IEntranceTestQuestion,
 } from "@/types/interfaces";
 import cloneDeep from "lodash/cloneDeep";
 
@@ -42,7 +42,7 @@ const eduElementEntranceTests = getEduElement(
 );
 
 const eduElementEntranceTestsQuestions = getEduElement(
-  new EntityCreator<IEntranceTestContent>(),
+  new EntityCreator<IEntranceTestQuestion>(),
   entranceTestsQuestions
 );
 
@@ -53,13 +53,13 @@ const eduElementEntranceTestsExtended = getEduElementExtended(
 ) as IEduElementEntityArray<IEntranceTest>;
 
 const eduElementEntranceTestsQuestionsExtended = getEduElementExtended(
-  new EntityCreatorExtendedMap<IEntranceTestContent>(
+  new EntityCreatorExtendedMap<IEntranceTestQuestion>(
     ref(eduElementEntranceTestsQuestions.getList()).value as TElemsList<
       number,
-      IEntranceTestContent
+      IEntranceTestQuestion
     >
   )
-) as IEduElementEntityMap<IEntranceTestContent>;
+) as IEduElementEntityMap<IEntranceTestQuestion>;
 
 export const useEntranceTestsStore = defineStore("entranceTests", () => {
   const activeEntranceTest = ref(getActiveEntranceTest());
@@ -68,7 +68,7 @@ export const useEntranceTestsStore = defineStore("entranceTests", () => {
   const questionCount = ref(0);
   const isAnswerSelected = ref(false);
   const isTestEnded = ref(false);
-  const testContent = ref<IEntranceTestContent[]>([]);
+  const testContent = ref<IEntranceTestQuestion[]>([]);
   const isLoading = ref(true);
   const questionNumber = ref(0);
   const step = ref(0);
@@ -91,8 +91,8 @@ export const useEntranceTestsStore = defineStore("entranceTests", () => {
     step.value = 1;
   }
 
-  function isAnswerIsCorrect(idAnswer: number) {
-    return testContent.value[questionNumber.value].idAnswerCorrect === idAnswer
+  function isAnswerIsCorrect(id: number) {
+    return testContent.value[questionNumber.value].idAnswerCorrect === id
       ? true
       : false;
   }
@@ -101,12 +101,12 @@ export const useEntranceTestsStore = defineStore("entranceTests", () => {
     testContent.value[questionNumber.value].guessed = value;
   }
 
-  function setIdAnswerUserSelected(idAnswer: number) {
-    testContent.value[questionNumber.value].idAnswerUserSelected.push(idAnswer);
+  function setIdAnswerUserSelected(id: number) {
+    testContent.value[questionNumber.value].idAnswerUserSelected.push(id);
   }
 
-  function checkAnswer(idAnswer: number) {
-    if (isAnswerIsCorrect(idAnswer)) {
+  function checkAnswer(id: number) {
+    if (isAnswerIsCorrect(id)) {
       incrementScore();
       setGuessed(EGuessed.Right);
     } else {
@@ -151,7 +151,7 @@ export const useEntranceTestsStore = defineStore("entranceTests", () => {
   function getEntranceTestsQuestionsByEntityId(entityId: number) {
     const result = eduElementEntranceTestsQuestionsExtended.getListByEntityId(
       entityId
-    ) as IEntranceTestContent[];
+    ) as IEntranceTestQuestion[];
 
     result.forEach((item) => shuffle(item.answers));
 

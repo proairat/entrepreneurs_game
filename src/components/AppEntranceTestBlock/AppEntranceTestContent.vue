@@ -5,16 +5,15 @@
     <AppEntranceTestQuestion />
     <AppTestAnswerBlock>
       <AppEntranceTestAnswer
-        v-for="{ idAnswer, answer, state } in testContent[questionNumber]
-          .answers"
-        :key="idAnswer"
-        :idAnswer="idAnswer"
+        v-for="{ id, answer, state } in testContent[questionNumber].answers"
+        :key="id"
+        :id="id"
         :answer="answer"
         :state="state"
         @click-answer="
           toggleIsAnswerSelected(true);
           changeOptionState();
-          setIdAnswerUserSelected(idAnswer);
+          setIdAnswerUserSelected(id);
         "
       ></AppEntranceTestAnswer>
     </AppTestAnswerBlock>

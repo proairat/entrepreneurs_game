@@ -3,8 +3,8 @@
     type="button"
     class="test-answer w-full transition p-6"
     @click="
-      checkAnswer(props.idAnswer);
-      clickAnswer(props.idAnswer);
+      checkAnswer(props.id);
+      clickAnswer(props.id);
     "
     :class="{
       'bg-red-200': !isCorrectAnswer && show,
@@ -23,7 +23,7 @@
   <button
     type="button"
     class="test-answer w-full transition p-6"
-    @click="clickAnswer(props.idAnswer)"
+    @click="clickAnswer(props.id)"
     :class="{
       'bg-gray-100': props.state === EEntityState.Unlocked,
       'hover:bg-gray-200': props.state === EEntityState.Unlocked,
@@ -42,7 +42,7 @@ import { computed } from "vue";
 import { ref } from "vue";
 
 const props = defineProps<{
-  idAnswer: number;
+  id: number;
   answer: string;
   state: EEntityState.Unlocked | EEntityState.Blocked | EEntityState.Active;
 }>();
@@ -54,10 +54,10 @@ const emits = defineEmits<{
 const testsStore = useTestsStore();
 const { checkAnswer, isAnswerIsCorrect } = testsStore;
 const show = ref(false);
-const isCorrectAnswer = computed(() => isAnswerIsCorrect(props.idAnswer));
+const isCorrectAnswer = computed(() => isAnswerIsCorrect(props.id));
 
-function clickAnswer(idAnswer: number) {
-  emits("clickAnswer", idAnswer);
+function clickAnswer(id: number) {
+  emits("clickAnswer", id);
   show.value = true;
 }
 </script>

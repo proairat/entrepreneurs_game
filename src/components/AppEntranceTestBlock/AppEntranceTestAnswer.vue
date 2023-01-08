@@ -3,8 +3,8 @@
     type="button"
     class="test-answer w-full bg-gray-100 transition p-6"
     @click="
-      checkAnswer(props.idAnswer);
-      clickAnswer(props.idAnswer);
+      checkAnswer(props.id);
+      clickAnswer(props.id);
     "
     :class="{
       'bg-sun-20': show,
@@ -22,7 +22,7 @@ import { EEntityState } from "@/types/enums";
 import { ref } from "vue";
 
 const props = defineProps<{
-  idAnswer: number;
+  id: number;
   answer: string;
   state: EEntityState.Unlocked | EEntityState.Blocked;
 }>();
@@ -34,8 +34,8 @@ const entranceTestsStore = useEntranceTestsStore();
 const { checkAnswer } = entranceTestsStore;
 const show = ref(false);
 
-function clickAnswer(idAnswer: number) {
-  emits("clickAnswer", idAnswer);
+function clickAnswer(id: number) {
+  emits("clickAnswer", id);
   show.value = true;
 }
 </script>

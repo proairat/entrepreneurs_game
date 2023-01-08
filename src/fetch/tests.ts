@@ -31,6 +31,7 @@ tests.set(1, [
     state: EEntityState.Default,
   },
 ]);
+
 // id_module 2
 tests.set(2, [
   {
@@ -38,6 +39,17 @@ tests.set(2, [
     type: EEntityType.Tests,
     title: "Заголовок четвёртого теста id 39",
     description: "Описание четвёртого теста",
+    state: EEntityState.Active,
+  },
+]);
+
+// id_module 7
+tests.set(7, [
+  {
+    id: 80,
+    type: EEntityType.Tests,
+    title: "Заголовок пятого теста id 80",
+    description: "Описание пятого теста",
     state: EEntityState.Active,
   },
 ]);

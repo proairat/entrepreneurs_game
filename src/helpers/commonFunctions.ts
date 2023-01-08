@@ -1,6 +1,6 @@
 // import { computed } from "vue";
 
-import type { IAnswer } from "@/types/interfaces";
+import type { ITestAnswer } from "@/types/interfaces";
 import type { Tfns } from "@/types/types";
 import cloneDeep from "lodash/cloneDeep";
 
@@ -53,7 +53,7 @@ async function FulfillRequests(url: string) {
       return await response.json();
     }
   } catch (e) {
-    console.log("Что-то пошло не так...", e);
+    console.error("Что-то пошло не так...", e);
   }
 }
 

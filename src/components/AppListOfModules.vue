@@ -14,7 +14,8 @@
 </template>
 
 <script setup lang="ts">
-import { useModulesStore } from "@/stores";
+import { storeToRefs } from "pinia";
+import { useModulesStore, useTestsStore } from "@/stores";
 import { EEntityState, EEntityType } from "@/types/enums";
 import type {
   IModule,
@@ -32,7 +33,11 @@ const {
   updateActiveModule,
   getModulesAdvancedList,
   updateActiveModuleAdvanced,
+  getActiveTest,
 } = modulesStore;
+const testsStore = useTestsStore();
+const { updateActiveQuestion } = testsStore;
+const { activeTest } = storeToRefs(modulesStore);
 let modules: IModule[] | IModuleAdvanced[] = [];
 let updateEntity: (updateArray: IUpdateArray) => void;
 
@@ -55,6 +60,13 @@ if (props.type === EEntityType.ModulesAdvanced) {
 function changeActiveModuleHandler(moduleId: number) {
   updateEntity({
     entityId: moduleId,
+    activeIndexState: EEntityState.Default,
+    clickIndexState: EEntityState.Active,
+  });
+
+  updateActiveQuestion({
+    entityIdForListByEntityId: activeTest.value.id,
+    entityIdForClickIndex: 1,
     activeIndexState: EEntityState.Default,
     clickIndexState: EEntityState.Active,
   });

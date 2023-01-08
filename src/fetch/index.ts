@@ -3,7 +3,7 @@ export * from "./modulesAdvanced";
 export * from "./themes";
 export * from "./videos";
 export * from "./tests";
-export * from "./answers";
+export * from "./testsAnswers";
 export * from "./testsQuestions";
 export * from "./entranceTests";
 export * from "./entranceTestsQuestions";

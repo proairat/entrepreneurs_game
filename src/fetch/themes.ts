@@ -245,7 +245,7 @@ themes.set(2, [
     id: 39,
     type: EEntityType.Tests,
     state: EEntityState.Default,
-    title: "Тестирование 2",
+    title: "Тестирование 4",
   },
 ]);
 
@@ -310,12 +310,6 @@ themes.set(3, [
     type: EEntityType.Topics,
     state: EEntityState.Default,
     title: "десять",
-  },
-  {
-    id: 50,
-    type: EEntityType.Tests,
-    state: EEntityState.Default,
-    title: "Тестирование 3",
   },
 ]);
 
@@ -405,12 +399,6 @@ themes.set(4, [
     state: EEntityState.Default,
     title: "десять",
   },
-  {
-    id: 65,
-    type: EEntityType.Tests,
-    state: EEntityState.Default,
-    title: "Тестирование 4",
-  },
 ]);
 
 // id_module 5
@@ -444,12 +432,6 @@ themes.set(5, [
     type: EEntityType.Topics,
     state: EEntityState.Active,
     title: "zxcv",
-  },
-  {
-    id: 71,
-    type: EEntityType.Tests,
-    state: EEntityState.Default,
-    title: "Тестирование 5",
   },
 ]);
 
@@ -497,12 +479,6 @@ themes.set(6, [
     state: EEntityState.Default,
     title: "десять",
   },
-  {
-    id: 79,
-    type: EEntityType.Tests,
-    state: EEntityState.Default,
-    title: "Тестирование 6",
-  },
 ]);
 
 // id_module 7
@@ -511,7 +487,7 @@ themes.set(7, [
     id: 80,
     type: EEntityType.Tests,
     state: EEntityState.Active,
-    title: "test 7 theme 1",
+    title: "Тестирование 5",
   },
 ]);
 

@@ -92,7 +92,7 @@ interface ITest {
   state: EEntityState;
 }
 
-interface IQuestion {
+interface ITestQuestion {
   id: number;
   category: string;
   type: string;
@@ -104,9 +104,9 @@ interface IQuestion {
   guessed: EGuessed;
 }
 
-interface IAnswer {
+interface ITestAnswer {
   idQuestion: number;
-  idAnswer: number;
+  id: number;
   answer: string;
   state: EEntityState;
 }
@@ -119,7 +119,7 @@ interface IEntranceTest {
   state: EEntityState;
 }
 
-interface IEntranceTestContent {
+interface IEntranceTestQuestion {
   id: number;
   category: string;
   type: string;
@@ -129,7 +129,7 @@ interface IEntranceTestContent {
   state: EEntityState;
   idAnswerCorrect: number;
   idAnswerUserSelected: number[];
-  answers: IAnswer[];
+  answers: ITestAnswer[];
   guessed: EGuessed;
 }
 
@@ -147,8 +147,8 @@ interface IUpdateArray {
 }
 
 interface IUpdateMap {
-  entityId: number;
-  themeId: number;
+  entityIdForListByEntityId: number;
+  entityIdForClickIndex: number;
   activeIndexState: EEntityState;
   clickIndexState: EEntityState;
 }
@@ -182,10 +182,10 @@ export type {
   ITabsAuthors,
   IVideo,
   ITest,
-  IQuestion,
-  IAnswer,
+  ITestQuestion,
+  ITestAnswer,
   IEntranceTest,
-  IEntranceTestContent,
+  IEntranceTestQuestion,
   IProgressCaption,
   IUpdateArray,
   IUpdateMap,

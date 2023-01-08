@@ -5,27 +5,27 @@
     <AppTestQuestion />
     <AppTestAnswerBlock>
       <!--<AppTestAnswer
-        v-for="{ idAnswer, answer, state } in shuffle<IAnswer>(
+        v-for="{ id, answer, state } in shuffle<ITestAnswer>(
           testContent[questionNumber].answers
         )"
-        :key="idAnswer"
-        :idAnswer="idAnswer"
+        :key="id"
+        :id="id"
         :answer="answer"
         :state="state"
         @click-answer="
           toggleIsAnswerSelected(true);
-          clickAnswerHandler(idAnswer);
+          clickAnswerHandler(id);
         "
       ></AppTestAnswer>-->
       <AppTestAnswer
-        v-for="{ idAnswer, answer, state } in shuffle<IAnswer>(tluser[questionNumber].answers)"
-        :key="idAnswer"
-        :idAnswer="idAnswer"
+        v-for="{ id, answer, state } in answers"
+        :key="id"
+        :id="id"
         :answer="answer"
         :state="state"
         @click-answer="
           toggleIsAnswerSelected(true);
-          clickAnswerHandler(idAnswer);
+          clickAnswerHandler(id);
         "
       ></AppTestAnswer>
     </AppTestAnswerBlock>
@@ -38,30 +38,36 @@ import { useModulesStore, useTestsStore } from "@/stores";
 import { EEntityState } from "@/types/enums";
 import { storeToRefs } from "pinia";
 import { shuffle } from "@/helpers/commonFunctions";
-import type { IAnswer } from "@/types/interfaces";
+import type { ITestAnswer } from "@/types/interfaces";
 import { ref } from "vue";
 
 const modulesStore = useModulesStore();
 const testsStore = useTestsStore();
 const { activeTest } = storeToRefs(modulesStore);
-const { testContent, isLoading, questionNumber } = storeToRefs(testsStore);
-const { toggleIsAnswerSelected, getTestsQuestionsByActiveTestId } = testsStore;
+const { testContent, isLoading, questionNumber, activeQuestion, activeAnswer } =
+  storeToRefs(testsStore);
+const {
+  toggleIsAnswerSelected,
+  getTestsQuestionsByActiveTestId,
+  getTestsAnswersByQuestionId,
+} = testsStore;
 const tluser = ref(getTestsQuestionsByActiveTestId(activeTest.value.id));
 const answers = ref(
-  shuffle<IAnswer>(tluser.value[questionNumber.value].answers)
+  shuffle<ITestAnswer>(getTestsAnswersByQuestionId(activeQuestion.value.id))
 );
+
+console.log("activeQuestion", activeQuestion.value);
+console.log("activeAnswer", activeAnswer.value);
 console.log(
-  "FIRST tluser.value",
-  tluser.value,
-  "questionNumber.value",
-  questionNumber.value
+  "Поглядим, что можешь getTestsAnswersByQuestionId",
+  getTestsAnswersByQuestionId(11)
 );
 
 /*
-function clickAnswerHandler(idAnswer: number) {
-  console.log("clickAnswerHandler(), idAnswer", idAnswer);
+function clickAnswerHandler(id: number) {
+  console.log("clickAnswerHandler(), id", id);
   testContent.value[questionNumber.value].answers.forEach((elem) => {
-    if (elem.idAnswer === idAnswer) {
+    if (elem.id === id) {
       elem.state = EEntityState.Active;
     } else {
       elem.state = EEntityState.Unlocked;
@@ -69,8 +75,8 @@ function clickAnswerHandler(idAnswer: number) {
   });
 }*/
 
-function clickAnswerHandler(idAnswer: number) {
-  console.log("clickAnswerHandler(), idAnswer", idAnswer);
+function clickAnswerHandler(id: number) {
+  console.log("clickAnswerHandler(), id", id);
   console.log(
     "clickAnswerHandler() tluser.value",
     tluser.value,
@@ -78,7 +84,7 @@ function clickAnswerHandler(idAnswer: number) {
     questionNumber.value
   );
   tluser.value[questionNumber.value].answers.forEach((elem) => {
-    if (elem.idAnswer === idAnswer) {
+    if (elem.id === id) {
       elem.state = EEntityState.Active;
     } else {
       elem.state = EEntityState.Unlocked;

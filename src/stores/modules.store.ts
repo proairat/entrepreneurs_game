@@ -90,7 +90,9 @@ export const useModulesStore = defineStore("modules", () => {
     activeModule.value = getActiveModule();
     activeTheme.value = getActiveTheme(updateArray.entityId);
     activeVideo.value = getActiveVideo(updateArray.entityId);
-    activeTest.value = getActiveTest(updateArray.entityId);
+    if (getActiveTest(updateArray.entityId)) {
+      activeTest.value = getActiveTest(updateArray.entityId);
+    }
   }
 
   function updateActiveModuleAdvanced(updateArray: IUpdateArray) {
@@ -98,22 +100,24 @@ export const useModulesStore = defineStore("modules", () => {
     activeModuleAdvanced.value = getActiveModuleAdvanced();
     activeTheme.value = getActiveTheme(updateArray.entityId);
     activeVideo.value = getActiveVideo(updateArray.entityId);
-    activeTest.value = getActiveTest(updateArray.entityId);
+    if (getActiveTest(updateArray.entityId)) {
+      activeTest.value = getActiveTest(updateArray.entityId);
+    }
   }
 
   function updateActiveTheme(updateMap: IUpdateMap) {
     eduElementThemesExtended.updateActiveElem(updateMap);
-    activeTheme.value = getActiveTheme(updateMap.entityId);
+    activeTheme.value = getActiveTheme(updateMap.entityIdForListByEntityId);
   }
 
   function updateActiveVideo(updateMap: IUpdateMap) {
     eduElementVideosExtended.updateActiveElem(updateMap);
-    activeVideo.value = getActiveVideo(updateMap.entityId);
+    activeVideo.value = getActiveVideo(updateMap.entityIdForListByEntityId);
   }
 
   function updateActiveTest(updateMap: IUpdateMap) {
     eduElementTestsExtended.updateActiveElem(updateMap);
-    activeTest.value = getActiveTest(updateMap.entityId);
+    activeTest.value = getActiveTest(updateMap.entityIdForListByEntityId);
   }
 
   function getModulesList() {
@@ -169,11 +173,10 @@ export const useModulesStore = defineStore("modules", () => {
     activeVideo,
     activeTest,
     getActiveTheme,
+    getActiveTest,
     getModulesList,
     getModulesAdvancedList,
     getThemesByModuleId,
-    getVideosByModuleId,
-    getTestsByModuleId,
     updateActiveModule,
     updateActiveModuleAdvanced,
     updateActiveTheme,

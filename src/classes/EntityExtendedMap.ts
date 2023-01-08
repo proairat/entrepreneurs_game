@@ -15,12 +15,17 @@ class EntityExtendedMap<T extends TExtendsMap>
   }
   public updateActiveElem(updateMap: IUpdateMap): void {
     if (this.list instanceof Map) {
-      const listByEntityId = this.getListByEntityId(updateMap.entityId);
+      const listByEntityId = this.getListByEntityId(
+        updateMap.entityIdForListByEntityId
+      );
       const activeElem = this.getActiveElem(listByEntityId);
 
       if (Array.isArray(listByEntityId) && activeElem) {
         const activeIndex = super.findIndex(listByEntityId, activeElem.id);
-        const clickIndex = super.findIndex(listByEntityId, updateMap.themeId);
+        const clickIndex = super.findIndex(
+          listByEntityId,
+          updateMap.entityIdForClickIndex
+        );
 
         if (activeIndex !== -1 && clickIndex !== -1) {
           listByEntityId[activeIndex]["state"] = updateMap.activeIndexState;
@@ -35,7 +40,7 @@ class EntityExtendedMap<T extends TExtendsMap>
     }
   }
   public getListByEntityId(entityId: number): T[] | undefined {
-    if (this.list instanceof Map) {
+    if (this.list instanceof Map && entityId) {
       return this.list.get(entityId);
     }
   }
