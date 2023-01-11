@@ -12,6 +12,7 @@
 </template>
 
 <script setup lang="ts">
+import { storeToRefs } from "pinia";
 import { useModulesStore, useTestsStore } from "@/stores";
 import { EEntityState, EEntityType } from "@/types/enums";
 
@@ -27,7 +28,8 @@ const {
   updateActiveTest,
 } = modulesStore;
 const testsStore = useTestsStore();
-const { initializeTest, updateActiveQuestion } = testsStore;
+const { initializeTest, updateActiveQuestion, updateActiveAnswer } = testsStore;
+const { activeQuestion, activeAnswer } = storeToRefs(testsStore);
 const themes = getThemesByModuleId(props.moduleId);
 
 /**
@@ -38,8 +40,9 @@ function changeActiveThemeHandler(themeId: number) {
   updateActiveTheme({
     entityIdForListByEntityId: props.moduleId,
     entityIdForClickIndex: themeId,
-    activeIndexState: EEntityState.Default,
-    clickIndexState: EEntityState.Active,
+    stateForCurrentElem: EEntityState.Active,
+    stateForCurrentIndex: EEntityState.Default,
+    stateForClickIndex: EEntityState.Active,
   });
 }
 
@@ -56,8 +59,9 @@ function changeActiveVideoHandler(
     updateActiveVideo({
       entityIdForListByEntityId: props.moduleId,
       entityIdForClickIndex: themeId,
-      activeIndexState: EEntityState.Default,
-      clickIndexState: EEntityState.Active,
+      stateForCurrentElem: EEntityState.Active,
+      stateForCurrentIndex: EEntityState.Default,
+      stateForClickIndex: EEntityState.Active,
     });
   }
 }
@@ -72,19 +76,31 @@ function changeActiveTestHandler(
   themeType: EEntityType.Tests
 ) {
   if (themeType === EEntityType.Tests) {
-    initializeTest();
     updateActiveTest({
       entityIdForListByEntityId: props.moduleId,
       entityIdForClickIndex: themeId,
-      activeIndexState: EEntityState.Default,
-      clickIndexState: EEntityState.Active,
+      stateForCurrentElem: EEntityState.Active,
+      stateForCurrentIndex: EEntityState.Default,
+      stateForClickIndex: EEntityState.Active,
     });
+
     updateActiveQuestion({
       entityIdForListByEntityId: themeId,
-      entityIdForClickIndex: 1,
-      activeIndexState: EEntityState.Default,
-      clickIndexState: EEntityState.Active,
+      entityIdForClickIndex: activeQuestion.value.id,
+      stateForCurrentElem: EEntityState.Active,
+      stateForCurrentIndex: EEntityState.Active,
+      stateForClickIndex: EEntityState.Active,
     });
+    if (activeAnswer.value) {
+      updateActiveAnswer({
+        entityIdForListByEntityId: activeQuestion.value.id,
+        entityIdForClickIndex: activeAnswer.value.id,
+        stateForCurrentElem: EEntityState.Active,
+        stateForCurrentIndex: EEntityState.Unlocked,
+        stateForClickIndex: EEntityState.Unlocked,
+      });
+    }
+    initializeTest();
   }
 }
 </script>

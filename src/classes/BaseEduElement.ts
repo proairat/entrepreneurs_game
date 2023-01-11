@@ -4,14 +4,14 @@ import type { TExtendsMap } from "@/types/types";
 
 class BaseEduElement {
   public find<T extends TExtendsMap | TExtendsArray>(
-    list: T[],
-    entityState: EEntityState
+    state: EEntityState,
+    list: T[]
   ): T | undefined {
-    return list.find((item: T) => item.state === entityState);
+    return list.find((item: T) => item.state === state);
   }
   public findIndex<T extends TExtendsMap | TExtendsArray>(
-    list: T[],
-    id: number
+    id: number,
+    list: T[]
   ): number | -1 {
     return list.findIndex((item: T) => item.id === id);
   }

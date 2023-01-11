@@ -33,10 +33,10 @@ const {
   updateActiveModule,
   getModulesAdvancedList,
   updateActiveModuleAdvanced,
-  getActiveTest,
 } = modulesStore;
 const testsStore = useTestsStore();
-const { updateActiveQuestion } = testsStore;
+const { initializeTest, updateActiveQuestion, updateActiveAnswer } = testsStore;
+const { activeQuestion, activeAnswer } = storeToRefs(testsStore);
 const { activeTest } = storeToRefs(modulesStore);
 let modules: IModule[] | IModuleAdvanced[] = [];
 let updateEntity: (updateArray: IUpdateArray) => void;
@@ -60,16 +60,29 @@ if (props.type === EEntityType.ModulesAdvanced) {
 function changeActiveModuleHandler(moduleId: number) {
   updateEntity({
     entityId: moduleId,
-    activeIndexState: EEntityState.Default,
-    clickIndexState: EEntityState.Active,
+    stateForCurrentElem: EEntityState.Active,
+    stateForCurrentIndex: EEntityState.Default,
+    stateForClickIndex: EEntityState.Active,
   });
 
+  // находим первый активный вопрос соответствующего теста
   updateActiveQuestion({
     entityIdForListByEntityId: activeTest.value.id,
-    entityIdForClickIndex: 1,
-    activeIndexState: EEntityState.Default,
-    clickIndexState: EEntityState.Active,
+    entityIdForClickIndex: activeQuestion.value.id,
+    stateForCurrentElem: EEntityState.Active,
+    stateForCurrentIndex: EEntityState.Active,
+    stateForClickIndex: EEntityState.Active,
   });
+  if (activeAnswer.value) {
+    updateActiveAnswer({
+      entityIdForListByEntityId: activeQuestion.value.id,
+      entityIdForClickIndex: activeAnswer.value.id,
+      stateForCurrentElem: EEntityState.Active,
+      stateForCurrentIndex: EEntityState.Unlocked,
+      stateForClickIndex: EEntityState.Unlocked,
+    });
+  }
+  initializeTest();
 }
 
 // const filteredList = computed(() => FuzzySearch(search.value, modules, "title"));

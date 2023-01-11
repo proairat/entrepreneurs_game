@@ -105,7 +105,6 @@ interface ITestQuestion {
 }
 
 interface ITestAnswer {
-  idQuestion: number;
   id: number;
   answer: string;
   state: EEntityState;
@@ -142,15 +141,17 @@ interface IProgressCaption {
 
 interface IUpdateArray {
   entityId: number;
-  activeIndexState: EEntityState;
-  clickIndexState: EEntityState;
+  stateForCurrentElem: EEntityState;
+  stateForCurrentIndex: EEntityState;
+  stateForClickIndex: EEntityState;
 }
 
 interface IUpdateMap {
   entityIdForListByEntityId: number;
   entityIdForClickIndex: number;
-  activeIndexState: EEntityState;
-  clickIndexState: EEntityState;
+  stateForCurrentElem: EEntityState;
+  stateForCurrentIndex: EEntityState;
+  stateForClickIndex: EEntityState;
 }
 
 interface IEduCommonElement<T> {
@@ -162,13 +163,16 @@ interface IEduCommonElement<T> {
 }
 
 interface IEduElementEntityArray<T> {
-  updateActiveElem(updateArray: IUpdateArray): void;
-  getActiveElem(): T | undefined;
+  updateElemByState(updateArray: IUpdateArray): void;
+  getElemByState(state: EEntityState): T | undefined;
 }
 
 interface IEduElementEntityMap<T> {
-  updateActiveElem(updateMap: IUpdateMap): void;
-  getActiveElem(listByEntityId: T[] | undefined): T | undefined;
+  updateElemByState(updateMap: IUpdateMap): void;
+  getElemByState(
+    state: EEntityState,
+    listByEntityId: T[] | undefined
+  ): T | undefined;
   getListByEntityId(entityId: number): T[] | undefined;
 }
 

@@ -1,4 +1,4 @@
-import { EEntityState } from "@/types/enums";
+import type { EEntityState } from "@/types/enums";
 import type { IEduElementEntityMap, IUpdateMap } from "@/types/interfaces";
 import type { TElemsList, TExtendsMap } from "@/types/types";
 import { BaseEduElement } from "@/classes/BaseEduElement";
@@ -13,30 +13,35 @@ class EntityExtendedMap<T extends TExtendsMap>
     super();
     this.list = list;
   }
-  public updateActiveElem(updateMap: IUpdateMap): void {
+  public updateElemByState(updateMap: IUpdateMap): void {
     if (this.list instanceof Map) {
       const listByEntityId = this.getListByEntityId(
         updateMap.entityIdForListByEntityId
       );
-      const activeElem = this.getActiveElem(listByEntityId);
-
-      if (Array.isArray(listByEntityId) && activeElem) {
-        const activeIndex = super.findIndex(listByEntityId, activeElem.id);
+      const currentElem = this.getElemByState(
+        updateMap.stateForCurrentElem,
+        listByEntityId
+      );
+      if (Array.isArray(listByEntityId) && currentElem) {
+        const currentIndex = super.findIndex(currentElem.id, listByEntityId);
         const clickIndex = super.findIndex(
-          listByEntityId,
-          updateMap.entityIdForClickIndex
+          updateMap.entityIdForClickIndex,
+          listByEntityId
         );
-
-        if (activeIndex !== -1 && clickIndex !== -1) {
-          listByEntityId[activeIndex]["state"] = updateMap.activeIndexState;
-          listByEntityId[clickIndex]["state"] = updateMap.clickIndexState;
+        if (currentIndex !== -1 && clickIndex !== -1) {
+          listByEntityId[currentIndex]["state"] =
+            updateMap.stateForCurrentIndex;
+          listByEntityId[clickIndex]["state"] = updateMap.stateForClickIndex;
         }
       }
     }
   }
-  public getActiveElem(listByEntityId: T[] | undefined): T | undefined {
+  public getElemByState(
+    state: EEntityState,
+    listByEntityId: T[] | undefined
+  ): T | undefined {
     if (Array.isArray(listByEntityId)) {
-      return super.find(listByEntityId, EEntityState.Active);
+      return super.find(state, listByEntityId);
     }
   }
   public getListByEntityId(entityId: number): T[] | undefined {

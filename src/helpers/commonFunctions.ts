@@ -1,6 +1,4 @@
 // import { computed } from "vue";
-
-import type { ITestAnswer } from "@/types/interfaces";
 import type { Tfns } from "@/types/types";
 import cloneDeep from "lodash/cloneDeep";
 
@@ -117,7 +115,8 @@ function compose(...fns: Tfns<number>) {
 
 const shuffle = <T>(inputArray: T[]): T[] | undefined => {
   if (Array.isArray(inputArray)) {
-    const outputArray = cloneDeep(inputArray);
+    // const outputArray = cloneDeep(inputArray);
+    const outputArray = inputArray;
     let currentIndex = inputArray.length;
     let randomIndex: number;
     while (currentIndex !== 0) {

@@ -20,7 +20,7 @@ import {
 } from "@/classes";
 import type { TElemsList } from "@/types/types";
 import { modules, modulesAdvanced, themes, videos, tests } from "@/fetch";
-import type { EEntityState } from "@/types/enums";
+import { EEntityState } from "@/types/enums";
 
 function getEduElement<T>(
   creator: Creator<T>,
@@ -86,7 +86,7 @@ export const useModulesStore = defineStore("modules", () => {
   const activeTest = ref(getActiveTest(activeModule.value.id));
 
   function updateActiveModule(updateArray: IUpdateArray) {
-    eduElementModulesExtended.updateActiveElem(updateArray);
+    eduElementModulesExtended.updateElemByState(updateArray);
     activeModule.value = getActiveModule();
     activeTheme.value = getActiveTheme(updateArray.entityId);
     activeVideo.value = getActiveVideo(updateArray.entityId);
@@ -96,7 +96,7 @@ export const useModulesStore = defineStore("modules", () => {
   }
 
   function updateActiveModuleAdvanced(updateArray: IUpdateArray) {
-    eduElementModulesAdvancedExtended.updateActiveElem(updateArray);
+    eduElementModulesAdvancedExtended.updateElemByState(updateArray);
     activeModuleAdvanced.value = getActiveModuleAdvanced();
     activeTheme.value = getActiveTheme(updateArray.entityId);
     activeVideo.value = getActiveVideo(updateArray.entityId);
@@ -106,17 +106,17 @@ export const useModulesStore = defineStore("modules", () => {
   }
 
   function updateActiveTheme(updateMap: IUpdateMap) {
-    eduElementThemesExtended.updateActiveElem(updateMap);
+    eduElementThemesExtended.updateElemByState(updateMap);
     activeTheme.value = getActiveTheme(updateMap.entityIdForListByEntityId);
   }
 
   function updateActiveVideo(updateMap: IUpdateMap) {
-    eduElementVideosExtended.updateActiveElem(updateMap);
+    eduElementVideosExtended.updateElemByState(updateMap);
     activeVideo.value = getActiveVideo(updateMap.entityIdForListByEntityId);
   }
 
   function updateActiveTest(updateMap: IUpdateMap) {
-    eduElementTestsExtended.updateActiveElem(updateMap);
+    eduElementTestsExtended.updateElemByState(updateMap);
     activeTest.value = getActiveTest(updateMap.entityIdForListByEntityId);
   }
 
@@ -141,27 +141,34 @@ export const useModulesStore = defineStore("modules", () => {
   }
 
   function getActiveModule() {
-    return eduElementModulesExtended.getActiveElem() as IModule;
+    return eduElementModulesExtended.getElemByState(
+      EEntityState.Active
+    ) as IModule;
   }
 
   function getActiveModuleAdvanced() {
-    return eduElementModulesAdvancedExtended.getActiveElem() as IModuleAdvanced;
+    return eduElementModulesAdvancedExtended.getElemByState(
+      EEntityState.Active
+    ) as IModuleAdvanced;
   }
 
   function getActiveTheme(moduleId: number) {
-    return eduElementThemesExtended.getActiveElem(
+    return eduElementThemesExtended.getElemByState(
+      EEntityState.Active,
       getThemesByModuleId(moduleId)
     ) as ITheme;
   }
 
   function getActiveVideo(moduleId: number) {
-    return eduElementVideosExtended.getActiveElem(
+    return eduElementVideosExtended.getElemByState(
+      EEntityState.Active,
       getVideosByModuleId(moduleId)
     ) as IVideo;
   }
 
   function getActiveTest(moduleId: number) {
-    return eduElementTestsExtended.getActiveElem(
+    return eduElementTestsExtended.getElemByState(
+      EEntityState.Active,
       getTestsByModuleId(moduleId)
     ) as ITest;
   }

@@ -44,7 +44,7 @@ import { ref } from "vue";
 const props = defineProps<{
   id: number;
   answer: string;
-  state: EEntityState.Unlocked | EEntityState.Blocked | EEntityState.Active;
+  state: EEntityState;
 }>();
 
 const emits = defineEmits<{

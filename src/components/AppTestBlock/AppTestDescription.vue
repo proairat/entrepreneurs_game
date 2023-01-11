@@ -20,7 +20,6 @@ import { storeToRefs } from "pinia";
 
 const testsStore = useTestsStore();
 const modulesStore = useModulesStore();
-
 const { startTest } = testsStore;
 const { activeTest } = storeToRefs(modulesStore);
 </script>

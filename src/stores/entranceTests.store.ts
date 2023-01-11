@@ -1,6 +1,6 @@
 import { defineStore } from "pinia";
 import { shuffle } from "@/helpers/commonFunctions";
-import { EGuessed } from "@/types/enums";
+import { EEntityState, EGuessed } from "@/types/enums";
 import { ref } from "vue";
 import { entranceTests, entranceTestsQuestions } from "@/fetch";
 import {
@@ -145,7 +145,9 @@ export const useEntranceTestsStore = defineStore("entranceTests", () => {
   }
 
   function getActiveEntranceTest() {
-    return eduElementEntranceTestsExtended.getActiveElem() as IEntranceTest;
+    return eduElementEntranceTestsExtended.getElemByState(
+      EEntityState.Active
+    ) as IEntranceTest;
   }
 
   function getEntranceTestsQuestionsByEntityId(entityId: number) {

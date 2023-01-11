@@ -19,9 +19,6 @@ import { storeToRefs } from "pinia";
 
 const testsStore = useTestsStore();
 const { step } = storeToRefs(testsStore);
-const { initializeTest } = testsStore;
-
-initializeTest();
 </script>
 
 <style scoped lang="scss">

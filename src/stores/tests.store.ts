@@ -1,6 +1,6 @@
 import { defineStore, storeToRefs } from "pinia";
 import { EEntityState, EGuessed } from "@/types/enums";
-import { ref, type Ref } from "vue";
+import { ref } from "vue";
 import { testsQuestions, testsAnswers } from "@/fetch";
 import {
   EntityCreator,
@@ -15,12 +15,9 @@ import type {
   ITestQuestion,
   IUpdateMap,
 } from "@/types/interfaces";
-import isEmpty from "lodash/isEmpty";
+// import isEmpty from "lodash/isEmpty";
 import cloneDeep from "lodash/cloneDeep";
 import { useModulesStore } from "@/stores";
-
-console.log("isEmpty([1, 2, 3]", isEmpty({ a: 1 }));
-// => false
 
 function getEduElement<T>(
   creator: Creator<T>,
@@ -82,13 +79,17 @@ export const useTestsStore = defineStore("tests", () => {
   const activeAnswer = ref(getActiveAnswer(activeQuestion.value.id));
 
   function updateActiveQuestion(updateMap: IUpdateMap) {
-    eduElementTestsQuestionsExtended.updateActiveElem(updateMap);
+    eduElementTestsQuestionsExtended.updateElemByState(updateMap);
     activeQuestion.value = getActiveQuestion(
       updateMap.entityIdForListByEntityId
     );
+    activeAnswer.value = getActiveAnswer(activeQuestion.value.id);
   }
 
-  function updateActiveAnswer() {}
+  function updateActiveAnswer(updateMap: IUpdateMap) {
+    eduElementTestsAnswersExtended.updateElemByState(updateMap);
+    activeAnswer.value = getActiveAnswer(updateMap.entityIdForListByEntityId);
+  }
 
   function getQuestionContent() {
     // return testContent.value[questionNumber.value].question;
@@ -181,7 +182,8 @@ export const useTestsStore = defineStore("tests", () => {
   }
 
   function getActiveQuestion(activeTestId: number) {
-    return eduElementTestsQuestionsExtended.getActiveElem(
+    return eduElementTestsQuestionsExtended.getElemByState(
+      EEntityState.Active,
       eduElementTestsQuestionsExtended.getListByEntityId(
         activeTestId
       ) as ITestQuestion[]
@@ -189,10 +191,9 @@ export const useTestsStore = defineStore("tests", () => {
   }
 
   function getActiveAnswer(questionId: number) {
-    return eduElementTestsAnswersExtended.getActiveElem(
-      eduElementTestsAnswersExtended.getListByEntityId(
-        questionId
-      ) as ITestAnswer[]
+    return eduElementTestsAnswersExtended.getElemByState(
+      EEntityState.Active,
+      getTestsAnswersByQuestionId(questionId)
     ) as ITestAnswer;
   }
 
