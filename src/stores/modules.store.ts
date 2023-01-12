@@ -8,7 +8,7 @@ import type {
   IVideo,
   ITest,
   IEduElementEntityMap,
-  IUpdateMap,
+  IUpdateMapElem,
   IUpdateArray,
 } from "@/types/interfaces";
 import {
@@ -105,19 +105,19 @@ export const useModulesStore = defineStore("modules", () => {
     }
   }
 
-  function updateActiveTheme(updateMap: IUpdateMap) {
-    eduElementThemesExtended.updateElemByState(updateMap);
-    activeTheme.value = getActiveTheme(updateMap.entityIdForListByEntityId);
+  function updateActiveTheme(updateMapElem: IUpdateMapElem) {
+    eduElementThemesExtended.updateElemByState(updateMapElem);
+    activeTheme.value = getActiveTheme(updateMapElem.entityIdForListByEntityId);
   }
 
-  function updateActiveVideo(updateMap: IUpdateMap) {
-    eduElementVideosExtended.updateElemByState(updateMap);
-    activeVideo.value = getActiveVideo(updateMap.entityIdForListByEntityId);
+  function updateActiveVideo(updateMapElem: IUpdateMapElem) {
+    eduElementVideosExtended.updateElemByState(updateMapElem);
+    activeVideo.value = getActiveVideo(updateMapElem.entityIdForListByEntityId);
   }
 
-  function updateActiveTest(updateMap: IUpdateMap) {
-    eduElementTestsExtended.updateElemByState(updateMap);
-    activeTest.value = getActiveTest(updateMap.entityIdForListByEntityId);
+  function updateActiveTest(updateMapElem: IUpdateMapElem) {
+    eduElementTestsExtended.updateElemByState(updateMapElem);
+    activeTest.value = getActiveTest(updateMapElem.entityIdForListByEntityId);
   }
 
   function getModulesList() {

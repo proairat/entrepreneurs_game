@@ -15,6 +15,12 @@ class BaseEduElement {
   ): number | -1 {
     return list.findIndex((item: T) => item.id === id);
   }
+  public filter<T extends TExtendsMap | TExtendsArray>(
+    state: EEntityState,
+    list: T[]
+  ): T[] {
+    return list.filter((item: T) => item.state === state);
+  }
 }
 
 export { BaseEduElement };

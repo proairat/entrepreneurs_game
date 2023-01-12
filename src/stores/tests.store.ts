@@ -13,7 +13,8 @@ import type {
   ITestAnswer,
   IEduElementEntityMap,
   ITestQuestion,
-  IUpdateMap,
+  IUpdateMapElem,
+  IUpdateMapElements,
 } from "@/types/interfaces";
 // import isEmpty from "lodash/isEmpty";
 import cloneDeep from "lodash/cloneDeep";
@@ -70,6 +71,7 @@ export const useTestsStore = defineStore("tests", () => {
   const score = ref(0);
   const questionCount = ref(0);
   const isAnswerSelected = ref(false);
+  const isClickedCheckButton = ref(false);
   const isTestEnded = ref(false);
   const testContent = ref<ITestQuestion[]>([]);
   const isLoading = ref(true);
@@ -78,17 +80,23 @@ export const useTestsStore = defineStore("tests", () => {
   const activeQuestion = ref(getActiveQuestion(activeTest.value.id));
   const activeAnswer = ref(getActiveAnswer(activeQuestion.value.id));
 
-  function updateActiveQuestion(updateMap: IUpdateMap) {
-    eduElementTestsQuestionsExtended.updateElemByState(updateMap);
+  function updateActiveQuestion(updateMapElem: IUpdateMapElem) {
+    eduElementTestsQuestionsExtended.updateElemByState(updateMapElem);
     activeQuestion.value = getActiveQuestion(
-      updateMap.entityIdForListByEntityId
+      updateMapElem.entityIdForListByEntityId
     );
     activeAnswer.value = getActiveAnswer(activeQuestion.value.id);
   }
 
-  function updateActiveAnswer(updateMap: IUpdateMap) {
-    eduElementTestsAnswersExtended.updateElemByState(updateMap);
-    activeAnswer.value = getActiveAnswer(updateMap.entityIdForListByEntityId);
+  function updateActiveAnswer(updateMapElem: IUpdateMapElem) {
+    eduElementTestsAnswersExtended.updateElemByState(updateMapElem);
+    activeAnswer.value = getActiveAnswer(
+      updateMapElem.entityIdForListByEntityId
+    );
+  }
+
+  function updateElementsByState(updateMapElements: IUpdateMapElements) {
+    eduElementTestsAnswersExtended.updateElementsByState(updateMapElements);
   }
 
   function getQuestionContent() {
@@ -110,11 +118,11 @@ export const useTestsStore = defineStore("tests", () => {
     step.value = 1;
   }
 
-  function isAnswerIsCorrect(id: number) {
-    /*return testContent.value[questionNumber.value].idAnswerCorrect === id
+  function isAnswerIsCorrect(answerId: number) {
+    /*return testContent.value[questionNumber.value].idAnswerCorrect === answerId
       ? true
       : false;*/
-    return activeQuestion.value.idAnswerCorrect === id ? true : false;
+    return activeQuestion.value.idAnswerCorrect === answerId ? true : false;
   }
 
   function setGuessed(value: EGuessed) {
@@ -122,8 +130,8 @@ export const useTestsStore = defineStore("tests", () => {
     activeQuestion.value.guessed = value;
   }
 
-  function checkAnswer(id: number) {
-    if (isAnswerIsCorrect(id)) {
+  function checkAnswer(answerId: number) {
+    if (isAnswerIsCorrect(answerId)) {
       incrementScore();
       setGuessed(EGuessed.Right);
     } else {
@@ -204,6 +212,7 @@ export const useTestsStore = defineStore("tests", () => {
     score,
     questionCount,
     isAnswerSelected,
+    isClickedCheckButton,
     isTestEnded,
     testContent,
     isLoading,
@@ -223,5 +232,6 @@ export const useTestsStore = defineStore("tests", () => {
     getTestsAnswersByQuestionId,
     updateActiveQuestion,
     updateActiveAnswer,
+    updateElementsByState,
   };
 });

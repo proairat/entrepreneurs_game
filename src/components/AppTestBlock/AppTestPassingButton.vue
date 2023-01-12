@@ -44,15 +44,32 @@
 
 <script setup lang="ts">
 import { useTestsStore } from "@/stores";
+import { EEntityState } from "@/types/enums";
 import { storeToRefs } from "pinia";
 
 const testsStore = useTestsStore();
-const { isAnswerSelected } = storeToRefs(testsStore);
-const { getNextQuestion, incrementProgressValue, toggleIsAnswerSelected } =
-  testsStore;
+const { isAnswerSelected, isClickedCheckButton, activeQuestion, activeAnswer } =
+  storeToRefs(testsStore);
+const {
+  checkAnswer,
+  getNextQuestion,
+  incrementProgressValue,
+  toggleIsAnswerSelected,
+  updateActiveAnswer,
+  getTestsAnswersByQuestionId,
+  updateElementsByState,
+} = testsStore;
 
 function checkButton() {
+  isClickedCheckButton.value = true;
   console.log("checkButton()");
+  console.log("AppTestPassingButton -> updateElementsByState()");
+  updateElementsByState({
+    entityIdForListByEntityId: activeQuestion.value.id,
+    stateForListByEntityIdFiltered: EEntityState.Unlocked,
+    stateForListByEntityId: EEntityState.Blocked,
+  });
+  checkAnswer(activeAnswer.value.id);
 }
 </script>
 

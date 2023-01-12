@@ -13,6 +13,7 @@ class EntityExtendedArray<T extends TExtendsArray>
     super();
     this.list = list;
   }
+
   public updateElemByState(updateArray: IUpdateArray): void {
     if (Array.isArray(this.list)) {
       const thisList = this.list;
@@ -27,6 +28,7 @@ class EntityExtendedArray<T extends TExtendsArray>
       }
     }
   }
+
   public getElemByState(state: EEntityState): T | undefined {
     if (Array.isArray(this.list)) {
       return super.find(state, this.list);

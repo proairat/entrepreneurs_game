@@ -1,5 +1,5 @@
 // Mock object represent database data
-import { EEntityState, EGuessed } from "@/types/enums";
+import { EEntityState, EEntityType, EGuessed } from "@/types/enums";
 import type { ITestQuestion } from "@/types/interfaces";
 import type { TElemsList } from "@/types/types";
 
@@ -12,8 +12,8 @@ const testsQuestions: TElemsList<number, ITestQuestion> | undefined = new Map();
 testsQuestions.set(7, [
   {
     id: 1,
+    type: EEntityType.TestsQuestions,
     category: "Общие знания",
-    type: "multiple",
     difficulty: "medium",
     slideNumber: 1,
     question: "Год основания федеральной налоговой службы?",
@@ -23,8 +23,8 @@ testsQuestions.set(7, [
   },
   {
     id: 2,
+    type: EEntityType.TestsQuestions,
     category: "Общие знания",
-    type: "multiple",
     difficulty: "easy",
     slideNumber: 2,
     question: "Какой режим налогообложения НЕ существует?",
@@ -34,8 +34,8 @@ testsQuestions.set(7, [
   },
   {
     id: 3,
+    type: EEntityType.TestsQuestions,
     category: "Общие знания",
-    type: "multiple",
     difficulty: "medium",
     slideNumber: 3,
     question:
@@ -46,8 +46,8 @@ testsQuestions.set(7, [
   },
   {
     id: 4,
+    type: EEntityType.TestsQuestions,
     category: "Общие знания",
-    type: "multiple",
     difficulty: "medium",
     slideNumber: 4,
     question:
@@ -58,8 +58,8 @@ testsQuestions.set(7, [
   },
   {
     id: 5,
+    type: EEntityType.TestsQuestions,
     category: "Общие знания",
-    type: "boolean",
     difficulty: "easy",
     slideNumber: 5,
     question: "Срок уплаты транспортного налога физическим лицом",
@@ -69,8 +69,8 @@ testsQuestions.set(7, [
   },
   {
     id: 6,
+    type: EEntityType.TestsQuestions,
     category: "Общие знания",
-    type: "multiple",
     difficulty: "hard",
     slideNumber: 6,
     question:
@@ -81,8 +81,8 @@ testsQuestions.set(7, [
   },
   {
     id: 7,
+    type: EEntityType.TestsQuestions,
     category: "Общие знания",
-    type: "multiple",
     difficulty: "easy",
     slideNumber: 7,
     question:
@@ -93,8 +93,8 @@ testsQuestions.set(7, [
   },
   {
     id: 8,
+    type: EEntityType.TestsQuestions,
     category: "Общие знания",
-    type: "multiple",
     difficulty: "medium",
     slideNumber: 8,
     question:
@@ -105,8 +105,8 @@ testsQuestions.set(7, [
   },
   {
     id: 9,
+    type: EEntityType.TestsQuestions,
     category: "Общие знания",
-    type: "multiple",
     difficulty: "hard",
     slideNumber: 9,
     question:
@@ -117,8 +117,8 @@ testsQuestions.set(7, [
   },
   {
     id: 10,
+    type: EEntityType.TestsQuestions,
     category: "Общие знания",
-    type: "boolean",
     difficulty: "medium",
     slideNumber: 10,
     question:
@@ -133,8 +133,8 @@ testsQuestions.set(7, [
 testsQuestions.set(14, [
   {
     id: 11,
+    type: EEntityType.TestsQuestions,
     category: "Общие знания",
-    type: "multiple",
     difficulty: "medium",
     slideNumber: 1,
     question: "Сколько будет 2 + 2?",
@@ -144,8 +144,8 @@ testsQuestions.set(14, [
   },
   {
     id: 12,
+    type: EEntityType.TestsQuestions,
     category: "Общие знания",
-    type: "multiple",
     difficulty: "easy",
     slideNumber: 2,
     question: "Столица Никарагуа?",
@@ -159,8 +159,8 @@ testsQuestions.set(14, [
 testsQuestions.set(28, [
   {
     id: 13,
+    type: EEntityType.TestsQuestions,
     category: "Общие знания",
-    type: "multiple",
     difficulty: "medium",
     slideNumber: 1,
     question: "Сейчас зима?",
@@ -170,8 +170,8 @@ testsQuestions.set(28, [
   },
   {
     id: 14,
+    type: EEntityType.TestsQuestions,
     category: "Общие знания",
-    type: "multiple",
     difficulty: "easy",
     slideNumber: 2,
     question: "Из песни слов не ...?",
@@ -185,8 +185,8 @@ testsQuestions.set(28, [
 testsQuestions.set(39, [
   {
     id: 15,
+    type: EEntityType.TestsQuestions,
     category: "Общие знания",
-    type: "multiple",
     difficulty: "medium",
     slideNumber: 1,
     question: "Что такое Эдельвейс?",
@@ -196,8 +196,8 @@ testsQuestions.set(39, [
   },
   {
     id: 16,
+    type: EEntityType.TestsQuestions,
     category: "Общие знания",
-    type: "multiple",
     difficulty: "easy",
     slideNumber: 2,
     question: "Какого населённого пункта не существует?",
@@ -211,8 +211,8 @@ testsQuestions.set(39, [
 testsQuestions.set(80, [
   {
     id: 17,
+    type: EEntityType.TestsQuestions,
     category: "Общие знания",
-    type: "multiple",
     difficulty: "medium",
     slideNumber: 1,
     question: "Это итоговое тестирование?",

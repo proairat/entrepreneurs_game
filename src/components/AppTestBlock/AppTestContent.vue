@@ -10,10 +10,7 @@
         :id="id"
         :answer="answer"
         :state="state"
-        @click-answer="
-          toggleIsAnswerSelected(true);
-          changeActiveAnswerHandler(id);
-        "
+        @click-answer="clickAnswerHandler"
       ></AppTestAnswer>
     </AppTestAnswerBlock>
     <AppTestPassingButton />
@@ -42,6 +39,12 @@ const tluser = ref(getTestsQuestionsByActiveTestId(activeTest.value.id));
 const answers = ref(
   shuffle<ITestAnswer>(getTestsAnswersByQuestionId(activeQuestion.value.id))
 );
+
+function clickAnswerHandler(answerId: number) {
+  console.log("clickAnswerHandler()");
+  toggleIsAnswerSelected(true);
+  changeActiveAnswerHandler(answerId);
+}
 
 function changeActiveAnswerHandler(answerId: number) {
   if (activeAnswer.value) {

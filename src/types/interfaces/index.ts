@@ -65,6 +65,7 @@ interface ITheme {
 
 interface ITabsAuthors {
   id: number;
+  type: EEntityType.TabsAuthors;
   surname: string;
   name: string;
   patronymic: string;
@@ -94,8 +95,8 @@ interface ITest {
 
 interface ITestQuestion {
   id: number;
+  type: EEntityType.TestsQuestions;
   category: string;
-  type: string;
   difficulty: string;
   slideNumber: number;
   question: string;
@@ -106,6 +107,7 @@ interface ITestQuestion {
 
 interface ITestAnswer {
   id: number;
+  type: EEntityType.TestsAnswers;
   answer: string;
   state: EEntityState;
 }
@@ -146,12 +148,17 @@ interface IUpdateArray {
   stateForClickIndex: EEntityState;
 }
 
-interface IUpdateMap {
+interface IUpdateMapElem {
   entityIdForListByEntityId: number;
   entityIdForClickIndex: number;
   stateForCurrentElem: EEntityState;
   stateForCurrentIndex: EEntityState;
   stateForClickIndex: EEntityState;
+}
+interface IUpdateMapElements {
+  entityIdForListByEntityId: number;
+  stateForListByEntityIdFiltered: EEntityState;
+  stateForListByEntityId: EEntityState;
 }
 
 interface IEduCommonElement<T> {
@@ -168,11 +175,16 @@ interface IEduElementEntityArray<T> {
 }
 
 interface IEduElementEntityMap<T> {
-  updateElemByState(updateMap: IUpdateMap): void;
+  updateElemByState(updateMapElem: IUpdateMapElem): void;
+  updateElementsByState(updateMapElements: IUpdateMapElements): void;
   getElemByState(
     state: EEntityState,
     listByEntityId: T[] | undefined
   ): T | undefined;
+  getElementsByState(
+    state: EEntityState,
+    listByEntityId: T[] | undefined
+  ): T[] | undefined;
   getListByEntityId(entityId: number): T[] | undefined;
 }
 
@@ -192,7 +204,8 @@ export type {
   IEntranceTestQuestion,
   IProgressCaption,
   IUpdateArray,
-  IUpdateMap,
+  IUpdateMapElem,
+  IUpdateMapElements,
   IEduCommonElement,
   IEduElementEntityArray,
   IEduElementEntityMap,

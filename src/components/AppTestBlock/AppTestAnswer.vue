@@ -25,11 +25,23 @@
     class="test-answer w-full transition p-6"
     @click="clickAnswer(props.id)"
     :class="{
-      'bg-gray-100': props.state === EEntityState.Unlocked,
-      'hover:bg-gray-200': props.state === EEntityState.Unlocked,
-      'bg-sun-20': props.state === EEntityState.Active,
+      'bg-red-200':
+        !isCorrectAnswer &&
+        isClickedCheckButton &&
+        props.state === EEntityState.Active,
+      'bg-green-200':
+        isCorrectAnswer &&
+        isClickedCheckButton &&
+        props.state === EEntityState.Active,
+      'bg-gray-100':
+        props.state === EEntityState.Unlocked ||
+        props.state === EEntityState.Blocked,
+      'hover:bg-gray-200':
+        props.state === EEntityState.Unlocked && !isClickedCheckButton,
+      'bg-sun-20': props.state === EEntityState.Active && !isClickedCheckButton,
+      disabled: isClickedCheckButton,
     }"
-    :disabled="props.state === EEntityState.Blocked"
+    :disabled="isClickedCheckButton"
   >
     {{ props.answer }}
   </button>
@@ -37,9 +49,9 @@
 
 <script setup lang="ts">
 import { useTestsStore } from "@/stores";
+import { storeToRefs } from "pinia";
 import { EEntityState } from "@/types/enums";
 import { computed } from "vue";
-import { ref } from "vue";
 
 const props = defineProps<{
   id: number;
@@ -53,13 +65,13 @@ const emits = defineEmits<{
 
 const testsStore = useTestsStore();
 const { checkAnswer, isAnswerIsCorrect } = testsStore;
-const show = ref(false);
+const { isClickedCheckButton } = storeToRefs(testsStore);
 const isCorrectAnswer = computed(() => isAnswerIsCorrect(props.id));
 
-function clickAnswer(id: number) {
-  emits("clickAnswer", id);
-  show.value = true;
+function clickAnswer(answerId: number) {
+  emits("clickAnswer", answerId);
 }
+console.log("common!");
 </script>
 
 <style scoped lang="scss">
@@ -72,5 +84,8 @@ function clickAnswer(id: number) {
   &:hover {
     background-color: $sun-40;
   }
+}
+.disabled {
+  cursor: not-allowed;
 }
 </style>

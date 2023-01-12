@@ -18,6 +18,9 @@ enum EEntityType {
   Tests = "tests",
   EntranceTests = "entranceTests",
   Videos = "videos",
+  TestsQuestions = "testsQuestions",
+  TestsAnswers = "testsAnswers",
+  TabsAuthors = "tabsAuthors",
 }
 
 enum EPercent {
