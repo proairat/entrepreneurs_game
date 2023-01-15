@@ -23,19 +23,18 @@ class EntityExtendedMap<T extends TExtendsMap>
       const listByEntityId = this.getListByEntityId(
         updateMapElem.entityIdForListByEntityId
       );
-      const currentElem = this.getElemByState(
-        updateMapElem.stateForCurrentElem,
+      const findElem = this.getElemByState(
+        updateMapElem.stateForFindElem,
         listByEntityId
       );
-      if (Array.isArray(listByEntityId) && currentElem) {
-        const currentIndex = super.findIndex(currentElem.id, listByEntityId);
+      if (Array.isArray(listByEntityId) && findElem) {
+        const findIndex = super.findIndex(findElem.id, listByEntityId);
         const clickIndex = super.findIndex(
           updateMapElem.entityIdForClickIndex,
           listByEntityId
         );
-        if (currentIndex !== -1 && clickIndex !== -1) {
-          listByEntityId[currentIndex]["state"] =
-            updateMapElem.stateForCurrentIndex;
+        if (findIndex !== -1 && clickIndex !== -1) {
+          listByEntityId[findIndex]["state"] = updateMapElem.stateForFindIndex;
           listByEntityId[clickIndex]["state"] =
             updateMapElem.stateForClickIndex;
         }
@@ -54,32 +53,16 @@ class EntityExtendedMap<T extends TExtendsMap>
         listByEntityId
       );
 
-      /*return eduElementTestsAnswersExtended.getElementsByState(
-      EEntityState.Unlocked,
-      getTestsAnswersByQuestionId(questionId)
-      )*/
-
-      console.log(
-        "BEFORE updateElementsByState() -> listByEntityId",
-        listByEntityId
-      );
       if (
         Array.isArray(listByEntityId) &&
         Array.isArray(listByEntityIdFiltered)
       ) {
         for (let i = 0; i < listByEntityId.length; i++) {
-          const elem = listByEntityId[i];
-
-          if (listByEntityIdFiltered.includes(elem)) {
+          if (listByEntityIdFiltered.includes(listByEntityId[i])) {
             listByEntityId[i]["state"] =
               updateMapElements.stateForListByEntityId;
           }
         }
-
-        console.log(
-          "AFTER updateElementsByState() -> listByEntityId",
-          listByEntityId
-        );
       }
     }
   }

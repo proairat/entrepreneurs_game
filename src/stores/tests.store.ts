@@ -1,7 +1,7 @@
 import { defineStore, storeToRefs } from "pinia";
-import { EEntityState, EGuessed } from "@/types/enums";
+import { EEntityState, EGuess } from "@/types/enums";
 import { ref } from "vue";
-import { testsQuestions, testsAnswers } from "@/fetch";
+import { testsQuestions, testsAnswers, guesses } from "@/fetch";
 import {
   EntityCreator,
   Creator,
@@ -15,6 +15,7 @@ import type {
   ITestQuestion,
   IUpdateMapElem,
   IUpdateMapElements,
+  IGuess,
 } from "@/types/interfaces";
 // import isEmpty from "lodash/isEmpty";
 import cloneDeep from "lodash/cloneDeep";
@@ -46,6 +47,8 @@ const eduElementTestsAnswers = getEduElement(
   testsAnswers
 );
 
+const eduElementGuesses = getEduElement(new EntityCreator<IGuess>(), guesses);
+
 const eduElementTestsQuestionsExtended = getEduElementExtended(
   new EntityCreatorExtendedMap<ITestQuestion>(
     ref(eduElementTestsQuestions.getList()).value as TElemsList<
@@ -63,6 +66,12 @@ const eduElementTestsAnswersExtended = getEduElementExtended(
     >
   )
 ) as IEduElementEntityMap<ITestAnswer>;
+
+const eduElementGuessesExtended = getEduElementExtended(
+  new EntityCreatorExtendedMap<IGuess>(
+    ref(eduElementGuesses.getList()).value as TElemsList<number, IGuess>
+  )
+) as IEduElementEntityMap<IGuess>;
 
 export const useTestsStore = defineStore("tests", () => {
   const modulesStore = useModulesStore();
@@ -99,6 +108,10 @@ export const useTestsStore = defineStore("tests", () => {
     eduElementTestsAnswersExtended.updateElementsByState(updateMapElements);
   }
 
+  function updateGuessesElem(updateMapElem: IUpdateMapElem) {
+    eduElementGuessesExtended.updateElemByState(updateMapElem);
+  }
+
   function getQuestionContent() {
     // return testContent.value[questionNumber.value].question;
     return activeQuestion.value.question;
@@ -110,7 +123,7 @@ export const useTestsStore = defineStore("tests", () => {
       step.value = 2;
     } else {
       questionNumber.value += 1;
-      setGuessed(EGuessed.Active);
+      setGuessed(EGuess.Active);
     }
   }
 
@@ -125,9 +138,9 @@ export const useTestsStore = defineStore("tests", () => {
     return activeQuestion.value.idAnswerCorrect === answerId ? true : false;
   }
 
-  function setGuessed(value: EGuessed) {
-    // testContent.value[questionNumber.value].guessed = value;
-    activeQuestion.value.guessed = value;
+  function setGuessed(value: EGuess) {
+    // testContent.value[questionNumber.value].guesses = value;
+    activeQuestion.value.guesses = value;
   }
 
   function checkAnswer(answerId: number) {
@@ -136,6 +149,30 @@ export const useTestsStore = defineStore("tests", () => {
       setGuessed(EGuessed.Right);
     } else {
       setGuessed(EGuessed.Wrong);
+    }
+  }
+
+  function checkAnswerNew(answerId: number) {
+    console.log("checkAnswerNew()");
+    if (isAnswerIsCorrect(answerId)) {
+      console.log("Сюда корретно");
+      incrementScore();
+      updateGuessesElem({
+        entityIdForListByEntityId: activeTest.value.id,
+        entityIdForClickIndex: activeQuestion.value.id,
+        stateForFindElem: EEntityState.Active,
+        stateForFindIndex: EEntityState.Right,
+        stateForClickIndex: EEntityState.Right,
+      });
+    } else {
+      console.log("Сюда некорретно");
+      updateGuessesElem({
+        entityIdForListByEntityId: activeTest.value.id,
+        entityIdForClickIndex: activeQuestion.value.id,
+        stateForFindElem: EEntityState.Active,
+        stateForFindIndex: EEntityState.Wrong,
+        stateForClickIndex: EEntityState.Wrong,
+      });
     }
   }
 
@@ -153,6 +190,7 @@ export const useTestsStore = defineStore("tests", () => {
     isLoading.value = true;
     isAnswerSelected.value = false;
     questionNumber.value = 0;
+    isClickedCheckButton.value = false;
   }
 
   function incrementScore() {
@@ -205,6 +243,10 @@ export const useTestsStore = defineStore("tests", () => {
     ) as ITestAnswer;
   }
 
+  function getGuessesByTestId(testId: number) {
+    return eduElementGuessesExtended.getListByEntityId(testId) as IGuess[];
+  }
+
   return {
     activeQuestion,
     activeAnswer,
@@ -221,6 +263,7 @@ export const useTestsStore = defineStore("tests", () => {
     getNextQuestion,
     startTest,
     checkAnswer,
+    checkAnswerNew,
     setQuestionCount,
     initializeTest,
     incrementScore,
@@ -230,8 +273,10 @@ export const useTestsStore = defineStore("tests", () => {
     getQuestionContent,
     getTestsQuestionsByActiveTestId,
     getTestsAnswersByQuestionId,
+    getGuessesByTestId,
     updateActiveQuestion,
     updateActiveAnswer,
     updateElementsByState,
+    updateGuessesElem,
   };
 });

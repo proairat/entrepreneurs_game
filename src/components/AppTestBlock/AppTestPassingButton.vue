@@ -3,7 +3,7 @@
     <button
       type="button"
       class="choose-button w-[18rem] p-4 text-indigo-900 border border-indigo-200 rounded-[0.625rem] cursor-default"
-      v-if="!isAnswerSelected"
+      v-if="!isAnswerSelected && !isClickedCheckButton"
     >
       Выберите вариант ответа
     </button>
@@ -21,15 +21,15 @@
     </button>-->
     <button
       type="button"
-      v-if="isAnswerSelected"
+      v-if="isAnswerSelected && !isClickedCheckButton"
       class="check-button w-[18rem] p-4 bg-indigo-100 text-indigo-900 border border-indigo-200 rounded-[0.625rem] hover:bg-indigo-200"
       @click="checkButton"
     >
       Проверить
     </button>
-    <!--<button
+    <button
       type="button"
-      v-if="isAnswerSelected"
+      v-if="isClickedCheckButton"
       @click="
         getNextQuestion();
         incrementProgressValue();
@@ -38,7 +38,7 @@
       class="further-button w-[18rem] p-4 bg-indigo-100 text-indigo-900 border border-indigo-200 rounded-[0.625rem] hover:bg-indigo-200"
     >
       Дальше
-    </button>-->
+    </button>
   </div>
 </template>
 
@@ -51,7 +51,7 @@ const testsStore = useTestsStore();
 const { isAnswerSelected, isClickedCheckButton, activeQuestion, activeAnswer } =
   storeToRefs(testsStore);
 const {
-  checkAnswer,
+  checkAnswerNew,
   getNextQuestion,
   incrementProgressValue,
   toggleIsAnswerSelected,
@@ -69,7 +69,7 @@ function checkButton() {
     stateForListByEntityIdFiltered: EEntityState.Unlocked,
     stateForListByEntityId: EEntityState.Blocked,
   });
-  checkAnswer(activeAnswer.value.id);
+  checkAnswerNew(activeAnswer.value.id);
 }
 </script>
 

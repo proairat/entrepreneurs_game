@@ -1,6 +1,6 @@
 import { defineStore } from "pinia";
 import { shuffle } from "@/helpers/commonFunctions";
-import { EEntityState, EGuessed } from "@/types/enums";
+import { EEntityState, EGuess } from "@/types/enums";
 import { ref } from "vue";
 import { entranceTests, entranceTestsQuestions } from "@/fetch";
 import {
@@ -83,7 +83,7 @@ export const useEntranceTestsStore = defineStore("entranceTests", () => {
       step.value = 2;
     } else {
       questionNumber.value += 1;
-      setGuessed(EGuessed.Active);
+      setGuessed(EGuess.Active);
     }
   }
 
@@ -97,8 +97,8 @@ export const useEntranceTestsStore = defineStore("entranceTests", () => {
       : false;
   }
 
-  function setGuessed(value: EGuessed) {
-    testContent.value[questionNumber.value].guessed = value;
+  function setGuessed(value: EGuess) {
+    testContent.value[questionNumber.value].guesses = value;
   }
 
   function setIdAnswerUserSelected(id: number) {
@@ -108,9 +108,9 @@ export const useEntranceTestsStore = defineStore("entranceTests", () => {
   function checkAnswer(id: number) {
     if (isAnswerIsCorrect(id)) {
       incrementScore();
-      setGuessed(EGuessed.Right);
+      setGuessed(EGuess.Right);
     } else {
-      setGuessed(EGuessed.Wrong);
+      setGuessed(EGuess.Wrong);
     }
   }
 

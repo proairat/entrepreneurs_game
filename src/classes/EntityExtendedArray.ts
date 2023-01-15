@@ -17,12 +17,12 @@ class EntityExtendedArray<T extends TExtendsArray>
   public updateElemByState(updateArray: IUpdateArray): void {
     if (Array.isArray(this.list)) {
       const thisList = this.list;
-      const currentElem = this.getElemByState(updateArray.stateForCurrentElem);
-      if (Array.isArray(thisList) && currentElem) {
-        const currentIndex = super.findIndex(currentElem.id, thisList);
+      const findElem = this.getElemByState(updateArray.stateForFindElem);
+      if (Array.isArray(thisList) && findElem) {
+        const findIndex = super.findIndex(findElem.id, thisList);
         const clickIndex = super.findIndex(updateArray.entityId, thisList);
-        if (currentIndex !== -1 && clickIndex !== -1) {
-          thisList[currentIndex]["state"] = updateArray.stateForCurrentIndex;
+        if (findIndex !== -1 && clickIndex !== -1) {
+          thisList[findIndex]["state"] = updateArray.stateForFindIndex;
           thisList[clickIndex]["state"] = updateArray.stateForClickIndex;
         }
       }

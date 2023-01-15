@@ -1,5 +1,5 @@
 // Mock object represent database data
-import { EEntityState, EEntityType, EGuessed } from "@/types/enums";
+import { EEntityState, EEntityType, EGuess } from "@/types/enums";
 import type { ITestQuestion } from "@/types/interfaces";
 import type { TElemsList } from "@/types/types";
 
@@ -19,7 +19,7 @@ testsQuestions.set(7, [
     question: "Год основания федеральной налоговой службы?",
     state: EEntityState.Active,
     idAnswerCorrect: 1,
-    guessed: EGuessed.Active,
+    guesses: EGuess.Active,
   },
   {
     id: 2,
@@ -30,7 +30,7 @@ testsQuestions.set(7, [
     question: "Какой режим налогообложения НЕ существует?",
     state: EEntityState.Default,
     idAnswerCorrect: 5,
-    guessed: EGuessed.Undefined,
+    guesses: EGuess.Undefined,
   },
   {
     id: 3,
@@ -42,7 +42,7 @@ testsQuestions.set(7, [
       "В упрощённой системе налогообложения для юридических лиц налоговая ставка в процентах?",
     state: EEntityState.Default,
     idAnswerCorrect: 11,
-    guessed: EGuessed.Undefined,
+    guesses: EGuess.Undefined,
   },
   {
     id: 4,
@@ -54,7 +54,7 @@ testsQuestions.set(7, [
       "Для какой категории граждан введён налог на профессиональный доход ",
     state: EEntityState.Default,
     idAnswerCorrect: 17,
-    guessed: EGuessed.Undefined,
+    guesses: EGuess.Undefined,
   },
   {
     id: 5,
@@ -65,7 +65,7 @@ testsQuestions.set(7, [
     question: "Срок уплаты транспортного налога физическим лицом",
     state: EEntityState.Default,
     idAnswerCorrect: 21,
-    guessed: EGuessed.Undefined,
+    guesses: EGuess.Undefined,
   },
   {
     id: 6,
@@ -77,7 +77,7 @@ testsQuestions.set(7, [
       "Может ли иное лицо осуществить уплату государственной пошлины за плательщика?",
     state: EEntityState.Default,
     idAnswerCorrect: 23,
-    guessed: EGuessed.Undefined,
+    guesses: EGuess.Undefined,
   },
   {
     id: 7,
@@ -89,7 +89,7 @@ testsQuestions.set(7, [
       "С какого момента и до какого момента применяется налоговый вычет для соглашения о защите и поощрении капиталовложений (СЗПК)?",
     state: EEntityState.Default,
     idAnswerCorrect: 26,
-    guessed: EGuessed.Undefined,
+    guesses: EGuess.Undefined,
   },
   {
     id: 8,
@@ -101,7 +101,7 @@ testsQuestions.set(7, [
       "Размер страховых взносов для общества с ограниченной ответственностью?",
     state: EEntityState.Default,
     idAnswerCorrect: 29,
-    guessed: EGuessed.Undefined,
+    guesses: EGuess.Undefined,
   },
   {
     id: 9,
@@ -113,7 +113,7 @@ testsQuestions.set(7, [
       "Может ли физическое лицо, не являющееся индивидуальным предпринимателем, являться налогоплательщиком НДС?",
     state: EEntityState.Default,
     idAnswerCorrect: 33,
-    guessed: EGuessed.Undefined,
+    guesses: EGuess.Undefined,
   },
   {
     id: 10,
@@ -125,7 +125,7 @@ testsQuestions.set(7, [
       "Какие страховые взносы Не платит индивидуальный предприниматель?",
     state: EEntityState.Default,
     idAnswerCorrect: 36,
-    guessed: EGuessed.Undefined,
+    guesses: EGuess.Undefined,
   },
 ]);
 
@@ -140,7 +140,7 @@ testsQuestions.set(14, [
     question: "Сколько будет 2 + 2?",
     state: EEntityState.Active,
     idAnswerCorrect: 37,
-    guessed: EGuessed.Active,
+    guesses: EGuess.Active,
   },
   {
     id: 12,
@@ -151,7 +151,7 @@ testsQuestions.set(14, [
     question: "Столица Никарагуа?",
     state: EEntityState.Default,
     idAnswerCorrect: 48,
-    guessed: EGuessed.Undefined,
+    guesses: EGuess.Undefined,
   },
 ]);
 
@@ -166,7 +166,7 @@ testsQuestions.set(28, [
     question: "Сейчас зима?",
     state: EEntityState.Active,
     idAnswerCorrect: 49,
-    guessed: EGuessed.Active,
+    guesses: EGuess.Active,
   },
   {
     id: 14,
@@ -177,7 +177,7 @@ testsQuestions.set(28, [
     question: "Из песни слов не ...?",
     state: EEntityState.Default,
     idAnswerCorrect: 53,
-    guessed: EGuessed.Undefined,
+    guesses: EGuess.Undefined,
   },
 ]);
 
@@ -192,7 +192,7 @@ testsQuestions.set(39, [
     question: "Что такое Эдельвейс?",
     state: EEntityState.Active,
     idAnswerCorrect: 55,
-    guessed: EGuessed.Active,
+    guesses: EGuess.Active,
   },
   {
     id: 16,
@@ -203,7 +203,7 @@ testsQuestions.set(39, [
     question: "Какого населённого пункта не существует?",
     state: EEntityState.Default,
     idAnswerCorrect: 61,
-    guessed: EGuessed.Undefined,
+    guesses: EGuess.Undefined,
   },
 ]);
 
@@ -218,7 +218,7 @@ testsQuestions.set(80, [
     question: "Это итоговое тестирование?",
     state: EEntityState.Active,
     idAnswerCorrect: 62,
-    guessed: EGuessed.Active,
+    guesses: EGuess.Active,
   },
 ]);
 

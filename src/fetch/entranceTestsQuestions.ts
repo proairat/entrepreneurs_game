@@ -1,5 +1,5 @@
 // Mock object represent database data
-import { EEntityState, EGuessed } from "@/types/enums";
+import { EEntityState, EGuess } from "@/types/enums";
 import type { IEntranceTestQuestion } from "@/types/interfaces";
 import type { TElemsList } from "@/types/types";
 
@@ -47,7 +47,7 @@ entranceTestsQuestions.set(1, [
         state: EEntityState.Unlocked,
       },
     ],
-    guessed: EGuessed.Active,
+    guesses: EGuess.Active,
   },
   {
     id: 2,
@@ -97,7 +97,7 @@ entranceTestsQuestions.set(1, [
         state: EEntityState.Unlocked,
       },
     ],
-    guessed: EGuessed.Undefined,
+    guesses: EGuess.Undefined,
   },
   {
     id: 3,
@@ -136,7 +136,7 @@ entranceTestsQuestions.set(1, [
         state: EEntityState.Unlocked,
       },
     ],
-    guessed: EGuessed.Undefined,
+    guesses: EGuess.Undefined,
   },
   {
     id: 4,
@@ -169,7 +169,7 @@ entranceTestsQuestions.set(1, [
         state: EEntityState.Unlocked,
       },
     ],
-    guessed: EGuessed.Undefined,
+    guesses: EGuess.Undefined,
   },
 ]);
 

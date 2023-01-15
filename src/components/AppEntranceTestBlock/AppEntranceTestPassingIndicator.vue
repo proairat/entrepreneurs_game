@@ -10,10 +10,10 @@
         class="w-5 h-5 rounded-md mx-1 text-center text-xs flex items-center justify-center"
         :class="{
           'bg-gray-100':
-            item.guessed === EGuessed.Undefined ||
-            item.guessed === EGuessed.Right ||
-            item.guessed === EGuessed.Wrong,
-          'bg-sun-40': item.guessed === EGuessed.Active,
+            item.guesses === EGuess.Undefined ||
+            item.guesses === EGuess.Right ||
+            item.guesses === EGuess.Wrong,
+          'bg-sun-40': item.guesses === EGuess.Active,
         }"
       >
         {{ item.slideNumber }}
@@ -22,9 +22,9 @@
     <div
       class="passing-indicator__result-of-answer w-24 text-center rounded-md"
       :class="{
-        'bg-green-200': testContent[questionNumber].guessed === EGuessed.Right,
-        'bg-red-200': testContent[questionNumber].guessed === EGuessed.Wrong,
-        'bg-sun-40': testContent[questionNumber].guessed === EGuessed.Active,
+        'bg-green-200': testContent[questionNumber].guesses === EGuess.Right,
+        'bg-red-200': testContent[questionNumber].guesses === EGuess.Wrong,
+        'bg-sun-40': testContent[questionNumber].guesses === EGuess.Active,
       }"
     ></div>
   </div>
@@ -32,7 +32,7 @@
 
 <script setup lang="ts">
 import { useEntranceTestsStore } from "@/stores";
-import { EGuessed } from "@/types/enums";
+import { EGuess } from "@/types/enums";
 import { storeToRefs } from "pinia";
 
 const entranceTestsStore = useEntranceTestsStore();

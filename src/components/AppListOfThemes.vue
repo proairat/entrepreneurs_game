@@ -40,8 +40,8 @@ function changeActiveThemeHandler(themeId: number) {
   updateActiveTheme({
     entityIdForListByEntityId: props.moduleId,
     entityIdForClickIndex: themeId,
-    stateForCurrentElem: EEntityState.Active,
-    stateForCurrentIndex: EEntityState.Default,
+    stateForFindElem: EEntityState.Active,
+    stateForFindIndex: EEntityState.Default,
     stateForClickIndex: EEntityState.Active,
   });
 }
@@ -59,8 +59,8 @@ function changeActiveVideoHandler(
     updateActiveVideo({
       entityIdForListByEntityId: props.moduleId,
       entityIdForClickIndex: themeId,
-      stateForCurrentElem: EEntityState.Active,
-      stateForCurrentIndex: EEntityState.Default,
+      stateForFindElem: EEntityState.Active,
+      stateForFindIndex: EEntityState.Default,
       stateForClickIndex: EEntityState.Active,
     });
   }
@@ -79,24 +79,24 @@ function changeActiveTestHandler(
     updateActiveTest({
       entityIdForListByEntityId: props.moduleId,
       entityIdForClickIndex: themeId,
-      stateForCurrentElem: EEntityState.Active,
-      stateForCurrentIndex: EEntityState.Default,
+      stateForFindElem: EEntityState.Active,
+      stateForFindIndex: EEntityState.Default,
       stateForClickIndex: EEntityState.Active,
     });
 
     updateActiveQuestion({
       entityIdForListByEntityId: themeId,
       entityIdForClickIndex: activeQuestion.value.id,
-      stateForCurrentElem: EEntityState.Active,
-      stateForCurrentIndex: EEntityState.Active,
+      stateForFindElem: EEntityState.Active,
+      stateForFindIndex: EEntityState.Active,
       stateForClickIndex: EEntityState.Active,
     });
     if (activeAnswer.value) {
       updateActiveAnswer({
         entityIdForListByEntityId: activeQuestion.value.id,
         entityIdForClickIndex: activeAnswer.value.id,
-        stateForCurrentElem: EEntityState.Active,
-        stateForCurrentIndex: EEntityState.Unlocked,
+        stateForFindElem: EEntityState.Active,
+        stateForFindIndex: EEntityState.Unlocked,
         stateForClickIndex: EEntityState.Unlocked,
       });
     }

@@ -60,8 +60,8 @@ if (props.type === EEntityType.ModulesAdvanced) {
 function changeActiveModuleHandler(moduleId: number) {
   updateEntity({
     entityId: moduleId,
-    stateForCurrentElem: EEntityState.Active,
-    stateForCurrentIndex: EEntityState.Default,
+    stateForFindElem: EEntityState.Active,
+    stateForFindIndex: EEntityState.Default,
     stateForClickIndex: EEntityState.Active,
   });
 
@@ -69,16 +69,16 @@ function changeActiveModuleHandler(moduleId: number) {
   updateActiveQuestion({
     entityIdForListByEntityId: activeTest.value.id,
     entityIdForClickIndex: activeQuestion.value.id,
-    stateForCurrentElem: EEntityState.Active,
-    stateForCurrentIndex: EEntityState.Active,
+    stateForFindElem: EEntityState.Active,
+    stateForFindIndex: EEntityState.Active,
     stateForClickIndex: EEntityState.Active,
   });
   if (activeAnswer.value) {
     updateActiveAnswer({
       entityIdForListByEntityId: activeQuestion.value.id,
       entityIdForClickIndex: activeAnswer.value.id,
-      stateForCurrentElem: EEntityState.Active,
-      stateForCurrentIndex: EEntityState.Unlocked,
+      stateForFindElem: EEntityState.Active,
+      stateForFindIndex: EEntityState.Unlocked,
       stateForClickIndex: EEntityState.Unlocked,
     });
   }

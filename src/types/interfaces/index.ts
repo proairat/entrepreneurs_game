@@ -2,7 +2,7 @@ import type {
   EAlert,
   EEntityState,
   EEntityType,
-  EGuessed,
+  EGuess,
   EProgressCaption,
 } from "../enums";
 import type { TElemsList } from "../types";
@@ -56,6 +56,12 @@ interface IModuleAdvanced {
   order: number;
 }
 
+interface IGuess {
+  id: number;
+  type: EEntityType.Guesses;
+  state: EEntityState;
+}
+
 interface ITheme {
   id: number;
   type: EEntityType.Topics | EEntityType.Tests;
@@ -102,7 +108,7 @@ interface ITestQuestion {
   question: string;
   state: EEntityState;
   idAnswerCorrect: number;
-  guessed: EGuessed;
+  guesses: EGuess;
 }
 
 interface ITestAnswer {
@@ -131,7 +137,7 @@ interface IEntranceTestQuestion {
   idAnswerCorrect: number;
   idAnswerUserSelected: number[];
   answers: ITestAnswer[];
-  guessed: EGuessed;
+  guesses: EGuess;
 }
 
 interface IProgressCaption {
@@ -143,18 +149,19 @@ interface IProgressCaption {
 
 interface IUpdateArray {
   entityId: number;
-  stateForCurrentElem: EEntityState;
-  stateForCurrentIndex: EEntityState;
+  stateForFindElem: EEntityState;
+  stateForFindIndex: EEntityState;
   stateForClickIndex: EEntityState;
 }
 
 interface IUpdateMapElem {
   entityIdForListByEntityId: number;
   entityIdForClickIndex: number;
-  stateForCurrentElem: EEntityState;
-  stateForCurrentIndex: EEntityState;
+  stateForFindElem: EEntityState;
+  stateForFindIndex: EEntityState;
   stateForClickIndex: EEntityState;
 }
+
 interface IUpdateMapElements {
   entityIdForListByEntityId: number;
   stateForListByEntityIdFiltered: EEntityState;
@@ -194,6 +201,7 @@ export type {
   INavigation,
   IModule,
   IModuleAdvanced,
+  IGuess,
   ITheme,
   ITabsAuthors,
   IVideo,

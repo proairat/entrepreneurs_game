@@ -7,3 +7,4 @@ export * from "./testsAnswers";
 export * from "./testsQuestions";
 export * from "./entranceTests";
 export * from "./entranceTestsQuestions";
+export * from "./guesses";

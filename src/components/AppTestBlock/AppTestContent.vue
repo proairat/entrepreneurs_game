@@ -51,8 +51,8 @@ function changeActiveAnswerHandler(answerId: number) {
     updateActiveAnswer({
       entityIdForListByEntityId: activeQuestion.value.id,
       entityIdForClickIndex: answerId,
-      stateForCurrentElem: EEntityState.Active,
-      stateForCurrentIndex: EEntityState.Unlocked,
+      stateForFindElem: EEntityState.Active,
+      stateForFindIndex: EEntityState.Unlocked,
       stateForClickIndex: EEntityState.Active,
     });
   } else {
@@ -60,8 +60,8 @@ function changeActiveAnswerHandler(answerId: number) {
     updateActiveAnswer({
       entityIdForListByEntityId: activeQuestion.value.id,
       entityIdForClickIndex: answerId,
-      stateForCurrentElem: EEntityState.Unlocked,
-      stateForCurrentIndex: EEntityState.Unlocked,
+      stateForFindElem: EEntityState.Unlocked,
+      stateForFindIndex: EEntityState.Unlocked,
       stateForClickIndex: EEntityState.Active,
     });
   }
