@@ -5,7 +5,9 @@
     <AppTestQuestion />
     <AppTestAnswerBlock>
       <AppTestAnswer
-        v-for="{ id, answer, state } in answers"
+        v-for="{ id, answer, state } in getTestsAnswersByQuestionId(
+          activeQuestion.id
+        )"
         :key="id"
         :id="id"
         :answer="answer"
@@ -18,30 +20,23 @@
 </template>
 
 <script setup lang="ts">
-import { useModulesStore, useTestsStore } from "@/stores";
+import { useTestsStore } from "@/stores";
 import { EEntityState } from "@/types/enums";
 import { storeToRefs } from "pinia";
 import { shuffle } from "@/helpers/commonFunctions";
 import type { ITestAnswer } from "@/types/interfaces";
-import { ref } from "vue";
 
-const modulesStore = useModulesStore();
 const testsStore = useTestsStore();
-const { activeTest } = storeToRefs(modulesStore);
 const { isLoading, activeQuestion, activeAnswer } = storeToRefs(testsStore);
 const {
   toggleIsAnswerSelected,
-  getTestsQuestionsByActiveTestId,
   getTestsAnswersByQuestionId,
   updateActiveAnswer,
 } = testsStore;
-const tluser = ref(getTestsQuestionsByActiveTestId(activeTest.value.id));
-const answers = ref(
-  shuffle<ITestAnswer>(getTestsAnswersByQuestionId(activeQuestion.value.id))
-);
+
+shuffle<ITestAnswer>(getTestsAnswersByQuestionId(activeQuestion.value.id));
 
 function clickAnswerHandler(answerId: number) {
-  console.log("clickAnswerHandler()");
   toggleIsAnswerSelected(true);
   changeActiveAnswerHandler(answerId);
 }
@@ -66,15 +61,6 @@ function changeActiveAnswerHandler(answerId: number) {
     });
   }
 }
-
-/*
-changeOptionState(EEntityState.Active);
-
-function changeOptionState(state: EEntityState.Unlocked | EEntityState.Blocked | EEntityState.Active) {
-  testContent.value[questionNumber.value].answers.forEach((elem) => {
-    elem.state = state;
-  });
-}*/
 </script>
 
 <style scoped lang="scss">

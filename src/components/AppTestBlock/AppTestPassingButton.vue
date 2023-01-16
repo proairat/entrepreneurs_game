@@ -7,18 +7,6 @@
     >
       Выберите вариант ответа
     </button>
-    <!--<button
-      type="button"
-      v-else
-      @click="
-        getNextQuestion();
-        incrementProgressValue();
-        toggleIsAnswerSelected(false);
-      "
-      class="further-button w-[18rem] p-4 bg-indigo-100 text-indigo-900 border border-indigo-200 rounded-[0.625rem] hover:bg-indigo-200"
-    >
-      Дальше
-    </button>-->
     <button
       type="button"
       v-if="isAnswerSelected && !isClickedCheckButton"
@@ -55,16 +43,13 @@ const {
   getNextQuestion,
   incrementProgressValue,
   toggleIsAnswerSelected,
-  updateActiveAnswer,
-  getTestsAnswersByQuestionId,
-  updateElementsByState,
+  updateTestsAnswersElementsByState,
+  toggleIsClickedCheckButton,
 } = testsStore;
 
 function checkButton() {
-  isClickedCheckButton.value = true;
-  console.log("checkButton()");
-  console.log("AppTestPassingButton -> updateElementsByState()");
-  updateElementsByState({
+  toggleIsClickedCheckButton(true);
+  updateTestsAnswersElementsByState({
     entityIdForListByEntityId: activeQuestion.value.id,
     stateForListByEntityIdFiltered: EEntityState.Unlocked,
     stateForListByEntityId: EEntityState.Blocked,

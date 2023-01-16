@@ -114,10 +114,6 @@ export const useEntranceTestsStore = defineStore("entranceTests", () => {
     }
   }
 
-  function setQuestionCount(count: number) {
-    questionCount.value = count;
-  }
-
   function initializeTest() {
     progressValue.value = 0;
     score.value = 0;
@@ -177,7 +173,6 @@ export const useEntranceTestsStore = defineStore("entranceTests", () => {
     getNextQuestion,
     startTest,
     checkAnswer,
-    setQuestionCount,
     initializeTest,
     incrementScore,
     incrementProgressValue,

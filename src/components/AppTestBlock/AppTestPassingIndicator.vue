@@ -15,7 +15,7 @@
           'bg-sun-40': item.state === EEntityState.Active,
         }"
       >
-        {{ item.id }}
+        {{ item.slideNumber }}
       </div>
     </div>
     <div
@@ -39,17 +39,10 @@ import { storeToRefs } from "pinia";
 
 const testsStore = useTestsStore();
 const modulesStore = useModulesStore();
-const { questionCount, questionNumber, activeQuestion } =
-  storeToRefs(testsStore);
-const { getGuessesByTestId, updateGuessesElem, updateElementsByState } =
-  testsStore;
+const { questionCount, questionNumber } = storeToRefs(testsStore);
+const { getGuessesByTestId } = testsStore;
 const { activeTest } = storeToRefs(modulesStore);
 const guesses = getGuessesByTestId(activeTest.value.id);
-
-console.log("AppTestPassingIndicator.vue -> activeTest", activeTest.value);
-console.log("AppTestPassingIndicator.vue -> guesses", guesses);
-console.log("AppTestPassingIndicator.vue -> guesses[2]", guesses[2]);
-
 const resultOfAnswer = computed(() => {
   if (guesses[questionNumber.value].state === EEntityState.Right) {
     return "Верно!";
@@ -58,29 +51,9 @@ const resultOfAnswer = computed(() => {
     return "Неверно";
   }
   if (guesses[questionNumber.value].state === EEntityState.Active) {
-    return "Активный";
+    return "Активно";
   }
   return "";
-});
-
-updateElementsByState({
-  entityIdForListByEntityId: activeTest.value.id,
-  stateForListByEntityIdFiltered: EEntityState.Wrong,
-  stateForListByEntityId: EEntityState.Undefined,
-});
-
-updateElementsByState({
-  entityIdForListByEntityId: activeTest.value.id,
-  stateForListByEntityIdFiltered: EEntityState.Right,
-  stateForListByEntityId: EEntityState.Undefined,
-});
-
-updateGuessesElem({
-  entityIdForListByEntityId: activeTest.value.id,
-  entityIdForClickIndex: activeQuestion.value.id,
-  stateForFindElem: EEntityState.Undefined,
-  stateForFindIndex: EEntityState.Undefined,
-  stateForClickIndex: EEntityState.Active,
 });
 </script>
 

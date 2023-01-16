@@ -14,52 +14,62 @@ guesses.set(7, [
     id: 1,
     type: EEntityType.Guesses,
     state: EEntityState.Active,
+    slideNumber: 1,
   },
   {
     id: 2,
     type: EEntityType.Guesses,
     state: EEntityState.Undefined,
+    slideNumber: 2,
   },
   {
     id: 3,
     type: EEntityType.Guesses,
     state: EEntityState.Undefined,
+    slideNumber: 3,
   },
   {
     id: 4,
     type: EEntityType.Guesses,
     state: EEntityState.Undefined,
+    slideNumber: 4,
   },
-  {
+  /*{
     id: 5,
     type: EEntityType.Guesses,
     state: EEntityState.Undefined,
+    slideNumber: 5,
   },
   {
     id: 6,
     type: EEntityType.Guesses,
     state: EEntityState.Undefined,
+    slideNumber: 6,
   },
   {
     id: 7,
     type: EEntityType.Guesses,
     state: EEntityState.Undefined,
+    slideNumber: 7,
   },
   {
     id: 8,
     type: EEntityType.Guesses,
     state: EEntityState.Undefined,
+    slideNumber: 8,
   },
   {
     id: 9,
     type: EEntityType.Guesses,
     state: EEntityState.Undefined,
+    slideNumber: 9,
   },
   {
     id: 10,
     type: EEntityType.Guesses,
     state: EEntityState.Undefined,
-  },
+    slideNumber: 10,
+  },*/
 ]);
 
 // id_test 14
@@ -68,11 +78,13 @@ guesses.set(14, [
     id: 11,
     type: EEntityType.Guesses,
     state: EEntityState.Active,
+    slideNumber: 1,
   },
   {
     id: 12,
     type: EEntityType.Guesses,
     state: EEntityState.Undefined,
+    slideNumber: 2,
   },
 ]);
 
@@ -82,11 +94,13 @@ guesses.set(28, [
     id: 13,
     type: EEntityType.Guesses,
     state: EEntityState.Active,
+    slideNumber: 1,
   },
   {
     id: 14,
     type: EEntityType.Guesses,
     state: EEntityState.Undefined,
+    slideNumber: 2,
   },
 ]);
 
@@ -96,11 +110,13 @@ guesses.set(39, [
     id: 15,
     type: EEntityType.Guesses,
     state: EEntityState.Active,
+    slideNumber: 1,
   },
   {
     id: 16,
     type: EEntityType.Guesses,
     state: EEntityState.Undefined,
+    slideNumber: 2,
   },
 ]);
 
@@ -110,6 +126,7 @@ guesses.set(80, [
     id: 17,
     type: EEntityType.Guesses,
     state: EEntityState.Active,
+    slideNumber: 1,
   },
 ]);
 

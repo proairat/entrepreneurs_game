@@ -82,7 +82,6 @@ export const useTestsStore = defineStore("tests", () => {
   const isAnswerSelected = ref(false);
   const isClickedCheckButton = ref(false);
   const isTestEnded = ref(false);
-  const testContent = ref<ITestQuestion[]>([]);
   const isLoading = ref(true);
   const questionNumber = ref(0);
   const step = ref(0);
@@ -104,7 +103,9 @@ export const useTestsStore = defineStore("tests", () => {
     );
   }
 
-  function updateElementsByState(updateMapElements: IUpdateMapElements) {
+  function updateTestsAnswersElementsByState(
+    updateMapElements: IUpdateMapElements
+  ) {
     eduElementTestsAnswersExtended.updateElementsByState(updateMapElements);
   }
 
@@ -112,34 +113,70 @@ export const useTestsStore = defineStore("tests", () => {
     eduElementGuessesExtended.updateElemByState(updateMapElem);
   }
 
+  function updateGuessesElementsByState(updateMapElements: IUpdateMapElements) {
+    eduElementGuessesExtended.updateElementsByState(updateMapElements);
+  }
+
   function getQuestionContent() {
-    // return testContent.value[questionNumber.value].question;
     return activeQuestion.value.question;
   }
 
   function getNextQuestion() {
-    if (questionNumber.value >= testContent.value.length - 1) {
+    if (questionNumber.value >= questionCount.value - 1) {
       isTestEnded.value = true;
       step.value = 2;
     } else {
       questionNumber.value += 1;
-      setGuessed(EGuess.Active);
     }
+
+    const guesses = getGuessesByTestId(activeTest.value.id);
+
+    updateActiveAnswer({
+      entityIdForListByEntityId: activeQuestion.value.id,
+      entityIdForClickIndex: activeAnswer.value.id,
+      stateForFindElem: EEntityState.Active,
+      stateForFindIndex: EEntityState.Unlocked,
+      stateForClickIndex: EEntityState.Unlocked,
+    });
+
+    updateTestsAnswersElementsByState({
+      entityIdForListByEntityId: activeQuestion.value.id,
+      stateForListByEntityIdFiltered: EEntityState.Blocked,
+      stateForListByEntityId: EEntityState.Unlocked,
+    });
+
+    updateActiveQuestion({
+      entityIdForListByEntityId: activeTest.value.id,
+      entityIdForClickIndex: guesses[questionNumber.value].id,
+      stateForFindElem: EEntityState.Active,
+      stateForFindIndex: EEntityState.Default,
+      stateForClickIndex: EEntityState.Active,
+    });
+
+    updateGuessesElem({
+      entityIdForListByEntityId: activeTest.value.id,
+      entityIdForClickIndex: activeQuestion.value.id,
+      stateForFindElem: EEntityState.Undefined,
+      stateForFindIndex: EEntityState.Undefined,
+      stateForClickIndex: EEntityState.Active,
+    });
+
+    toggleIsClickedCheckButton(false);
   }
 
   function startTest() {
+    isLoading.value = false;
     step.value = 1;
+    questionCount.value = getTestsQuestionsByActiveTestId(
+      activeTest.value.id
+    ).length;
   }
 
   function isAnswerIsCorrect(answerId: number) {
-    /*return testContent.value[questionNumber.value].idAnswerCorrect === answerId
-      ? true
-      : false;*/
     return activeQuestion.value.idAnswerCorrect === answerId ? true : false;
   }
 
   function setGuessed(value: EGuess) {
-    // testContent.value[questionNumber.value].guesses = value;
     activeQuestion.value.guesses = value;
   }
 
@@ -153,9 +190,7 @@ export const useTestsStore = defineStore("tests", () => {
   }
 
   function checkAnswerNew(answerId: number) {
-    console.log("checkAnswerNew()");
     if (isAnswerIsCorrect(answerId)) {
-      console.log("Сюда корретно");
       incrementScore();
       updateGuessesElem({
         entityIdForListByEntityId: activeTest.value.id,
@@ -165,7 +200,6 @@ export const useTestsStore = defineStore("tests", () => {
         stateForClickIndex: EEntityState.Right,
       });
     } else {
-      console.log("Сюда некорретно");
       updateGuessesElem({
         entityIdForListByEntityId: activeTest.value.id,
         entityIdForClickIndex: activeQuestion.value.id,
@@ -176,21 +210,53 @@ export const useTestsStore = defineStore("tests", () => {
     }
   }
 
-  function setQuestionCount(count: number) {
-    questionCount.value = count;
-  }
-
   function initializeTest() {
+    console.log("initializeTest");
     progressValue.value = 0;
     score.value = 0;
     step.value = 0;
     questionCount.value = 0;
     isTestEnded.value = false;
-    testContent.value = [];
     isLoading.value = true;
-    isAnswerSelected.value = false;
     questionNumber.value = 0;
-    isClickedCheckButton.value = false;
+    toggleIsAnswerSelected(false);
+    toggleIsClickedCheckButton(false);
+
+    updateGuessesElementsByState({
+      entityIdForListByEntityId: activeTest.value.id,
+      stateForListByEntityIdFiltered: EEntityState.Wrong,
+      stateForListByEntityId: EEntityState.Undefined,
+    });
+    updateGuessesElementsByState({
+      entityIdForListByEntityId: activeTest.value.id,
+      stateForListByEntityIdFiltered: EEntityState.Right,
+      stateForListByEntityId: EEntityState.Undefined,
+    });
+
+    const guesses = getGuessesByTestId(activeTest.value.id);
+
+    updateGuessesElem({
+      entityIdForListByEntityId: activeTest.value.id,
+      entityIdForClickIndex: guesses[questionNumber.value].id,
+      stateForFindElem: EEntityState.Active,
+      stateForFindIndex: EEntityState.Undefined,
+      stateForClickIndex: EEntityState.Active,
+    });
+    updateGuessesElem({
+      entityIdForListByEntityId: activeTest.value.id,
+      entityIdForClickIndex: guesses[questionNumber.value].id,
+      stateForFindElem: EEntityState.Undefined,
+      stateForFindIndex: EEntityState.Undefined,
+      stateForClickIndex: EEntityState.Active,
+    });
+
+    updateActiveQuestion({
+      entityIdForListByEntityId: activeTest.value.id,
+      entityIdForClickIndex: guesses[questionNumber.value].id,
+      stateForFindElem: EEntityState.Active,
+      stateForFindIndex: EEntityState.Active,
+      stateForClickIndex: EEntityState.Active,
+    });
   }
 
   function incrementScore() {
@@ -201,24 +267,18 @@ export const useTestsStore = defineStore("tests", () => {
     progressValue.value += Math.ceil(100 / questionCount.value);
   }
 
+  function toggleIsClickedCheckButton(value: boolean) {
+    isClickedCheckButton.value = value;
+  }
+
   function toggleIsAnswerSelected(value: boolean) {
     isAnswerSelected.value = value;
   }
 
-  function temporaryTestContent(result: any) {
-    testContent.value = cloneDeep(result);
-    isLoading.value = false;
-    questionCount.value = testContent.value.length;
-  }
-
   function getTestsQuestionsByActiveTestId(activeTestId: number) {
-    const result = eduElementTestsQuestionsExtended.getListByEntityId(
+    return eduElementTestsQuestionsExtended.getListByEntityId(
       activeTestId
     ) as ITestQuestion[];
-
-    temporaryTestContent(result);
-
-    return result;
   }
 
   function getTestsAnswersByQuestionId(questionId: number) {
@@ -256,7 +316,6 @@ export const useTestsStore = defineStore("tests", () => {
     isAnswerSelected,
     isClickedCheckButton,
     isTestEnded,
-    testContent,
     isLoading,
     questionNumber,
     step,
@@ -264,10 +323,10 @@ export const useTestsStore = defineStore("tests", () => {
     startTest,
     checkAnswer,
     checkAnswerNew,
-    setQuestionCount,
     initializeTest,
     incrementScore,
     incrementProgressValue,
+    toggleIsClickedCheckButton,
     toggleIsAnswerSelected,
     isAnswerIsCorrect,
     getQuestionContent,
@@ -276,7 +335,8 @@ export const useTestsStore = defineStore("tests", () => {
     getGuessesByTestId,
     updateActiveQuestion,
     updateActiveAnswer,
-    updateElementsByState,
+    updateTestsAnswersElementsByState,
     updateGuessesElem,
+    updateGuessesElementsByState,
   };
 });

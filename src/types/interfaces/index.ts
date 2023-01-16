@@ -60,6 +60,7 @@ interface IGuess {
   id: number;
   type: EEntityType.Guesses;
   state: EEntityState;
+  slideNumber: number;
 }
 
 interface ITheme {

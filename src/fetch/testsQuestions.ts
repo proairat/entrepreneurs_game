@@ -27,7 +27,7 @@ testsQuestions.set(7, [
     category: "Общие знания",
     difficulty: "easy",
     slideNumber: 2,
-    question: "Какой режим налогообложения НЕ существует?",
+    question: "Какого режима налогообложения НЕ существует?",
     state: EEntityState.Default,
     idAnswerCorrect: 5,
     guesses: EGuess.Undefined,
@@ -56,7 +56,7 @@ testsQuestions.set(7, [
     idAnswerCorrect: 17,
     guesses: EGuess.Undefined,
   },
-  {
+  /*{
     id: 5,
     type: EEntityType.TestsQuestions,
     category: "Общие знания",
@@ -126,7 +126,7 @@ testsQuestions.set(7, [
     state: EEntityState.Default,
     idAnswerCorrect: 36,
     guesses: EGuess.Undefined,
-  },
+  },*/
 ]);
 
 // id_test 14

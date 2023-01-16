@@ -1,24 +1,3 @@
-<!--<template>
-  <button
-    type="button"
-    class="test-answer w-full transition p-6"
-    @click="
-      checkAnswer(props.id);
-      clickAnswer(props.id);
-    "
-    :class="{
-      'bg-red-200': !isCorrectAnswer && show,
-      'bg-green-200': isCorrectAnswer && show,
-      'bg-gray-100': props.state === EEntityState.Unlocked,
-      'hover:bg-gray-200': props.state === EEntityState.Unlocked,
-      'bg-sun-30': props.state === EEntityState.Active,
-    }"
-    :disabled="props.state === EEntityState.Blocked"
-  >
-    {{ props.answer }}
-  </button>
-</template>-->
-
 <template>
   <button
     type="button"
@@ -64,14 +43,13 @@ const emits = defineEmits<{
 }>();
 
 const testsStore = useTestsStore();
-const { checkAnswer, isAnswerIsCorrect } = testsStore;
+const { isAnswerIsCorrect } = testsStore;
 const { isClickedCheckButton } = storeToRefs(testsStore);
 const isCorrectAnswer = computed(() => isAnswerIsCorrect(props.id));
 
 function clickAnswer(answerId: number) {
   emits("clickAnswer", answerId);
 }
-console.log("common!");
 </script>
 
 <style scoped lang="scss">
