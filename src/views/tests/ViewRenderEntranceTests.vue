@@ -3,8 +3,9 @@
     <div class="mt-[calc(7rem+8px)] sh-960:mt-[4rem] min-w-[35rem] wrapper">
       <AppNavbar :logout="logout" />
       <router-view />
-      <AppFooter />
     </div>
+    <AppFooter />
+    <!--<router-link to="/users">Управление пользователями</router-link>-->
   </div>
 </template>
 
@@ -19,7 +20,7 @@ const { logout } = authStore;
 
 <style scoped lang="scss">
 .wrapper {
-  min-height: calc(100vh - 20rem);
+  min-height: calc(100vh - 26rem);
   background-color: $gray-10;
 }
 </style>

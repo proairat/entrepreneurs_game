@@ -2,7 +2,7 @@
   <div
     class="test-question border w-full flex items-center justify-center p-4 mb-6 text-xl font-medium text-center"
   >
-    {{ getQuestion() }}
+    {{ getQuestionContent() }}
   </div>
 </template>
 
@@ -10,7 +10,7 @@
 import { useTestsStore } from "@/stores";
 
 const testsStore = useTestsStore();
-const { getQuestion } = testsStore;
+const { getQuestionContent } = testsStore;
 </script>
 
 <style scoped lang="scss">

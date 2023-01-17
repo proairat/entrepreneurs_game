@@ -25,6 +25,7 @@
               >Edit</router-link
             >
             <button
+              type="button"
               @click="usersStore.delete(user.id)"
               class="btn btn-sm btn-danger btn-delete-user"
               :disabled="user.isDeleting"

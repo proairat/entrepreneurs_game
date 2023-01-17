@@ -1,20 +1,16 @@
 <template>
-  <AppTestLoader v-if="isLoading"></AppTestLoader>
+  <AppTestLoader v-if="isLoading" />
   <div v-else class="test-content">
     <AppTestPassingIndicator />
     <AppTestQuestion />
     <AppTestAnswerBlock>
       <AppTestAnswer
-        v-for="{ idAnswer, answer, state } in testContent[questionNumber]
-          .answers"
-        :key="idAnswer"
-        :idAnswer="idAnswer"
+        v-for="{ id, answer, state } in answers"
+        :key="id"
+        :id="id"
         :answer="answer"
         :state="state"
-        @click-answer="
-          toggleIsOptionSelected(true);
-          changeOptionState();
-        "
+        @click-answer="clickAnswerHandler"
       ></AppTestAnswer>
     </AppTestAnswerBlock>
     <AppTestPassingButton />
@@ -22,22 +18,54 @@
 </template>
 
 <script setup lang="ts">
-import { useModulesStore, useTestsStore } from "@/stores";
+import { useTestsStore } from "@/stores";
 import { EEntityState } from "@/types/enums";
 import { storeToRefs } from "pinia";
+import { shuffle } from "@/helpers/commonFunctions";
+import type { ITestAnswer } from "@/types/interfaces";
+import { ref, watch } from "vue";
 
-const modulesStore = useModulesStore();
 const testsStore = useTestsStore();
-const { activeTest } = storeToRefs(modulesStore);
-const { testContent, isLoading, questionNumber } = storeToRefs(testsStore);
-const { toggleIsOptionSelected, getTestsContentByEntityId } = testsStore;
+const { isLoading, activeQuestion, activeAnswer } = storeToRefs(testsStore);
+const {
+  toggleIsAnswerSelected,
+  getTestsAnswersByQuestionId,
+  updateActiveAnswer,
+} = testsStore;
+const answers = ref(
+  shuffle<ITestAnswer>(getTestsAnswersByQuestionId(activeQuestion.value.id))
+);
 
-getTestsContentByEntityId(activeTest.value.id);
+watch(activeQuestion, (changedActiveQuestion) => {
+  answers.value = shuffle<ITestAnswer>(
+    getTestsAnswersByQuestionId(changedActiveQuestion.id)
+  );
+});
 
-function changeOptionState() {
-  testContent.value[questionNumber.value].answers.forEach((elem) => {
-    elem.state = EEntityState.Blocked;
-  });
+function clickAnswerHandler(answerId: number) {
+  toggleIsAnswerSelected(true);
+  changeActiveAnswerHandler(answerId);
+}
+
+function changeActiveAnswerHandler(answerId: number) {
+  if (activeAnswer.value) {
+    updateActiveAnswer({
+      entityIdForListByEntityId: activeQuestion.value.id,
+      entityIdForClickIndex: answerId,
+      stateForFindElem: EEntityState.Active,
+      stateForFindIndex: EEntityState.Unlocked,
+      stateForClickIndex: EEntityState.Active,
+    });
+  } else {
+    // будет найден элемент с нулевым индексом, так как все элементы массива изначально в state="UNLOCKED"
+    updateActiveAnswer({
+      entityIdForListByEntityId: activeQuestion.value.id,
+      entityIdForClickIndex: answerId,
+      stateForFindElem: EEntityState.Unlocked,
+      stateForFindIndex: EEntityState.Unlocked,
+      stateForClickIndex: EEntityState.Active,
+    });
+  }
 }
 </script>
 

@@ -1,8 +1,5 @@
 <template>
-  <div v-if="!activeTest" class="test-undefined">
-    К сожалению, тест ещё не разработан...
-  </div>
-  <div v-else class="test-description">
+  <div class="test-description">
     <div class="test-description__title text-xl">{{ activeTest.title }}</div>
     <div class="test-description__content"></div>
     <div class="test-description__outer-start-test">
@@ -23,17 +20,11 @@ import { storeToRefs } from "pinia";
 
 const testsStore = useTestsStore();
 const modulesStore = useModulesStore();
-
 const { startTest } = testsStore;
 const { activeTest } = storeToRefs(modulesStore);
 </script>
 
 <style scoped lang="scss">
-.test-undefined {
-  color: $rose-80;
-  padding-top: 1.5rem;
-  font-weight: $font-weight-medium;
-}
 .test-description {
   display: grid;
   padding-top: 1.5rem;

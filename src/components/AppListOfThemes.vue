@@ -12,8 +12,9 @@
 </template>
 
 <script setup lang="ts">
+import { storeToRefs } from "pinia";
 import { useModulesStore, useTestsStore } from "@/stores";
-import { EEntityType } from "@/types/enums";
+import { EEntityState, EEntityType } from "@/types/enums";
 
 const props = defineProps<{
   moduleId: number;
@@ -27,7 +28,8 @@ const {
   updateActiveTest,
 } = modulesStore;
 const testsStore = useTestsStore();
-const { initializeTest } = testsStore;
+const { initializeTest, updateActiveQuestion, updateActiveAnswer } = testsStore;
+const { activeQuestion, activeAnswer } = storeToRefs(testsStore);
 const themes = getThemesByModuleId(props.moduleId);
 
 /**
@@ -35,8 +37,15 @@ const themes = getThemesByModuleId(props.moduleId);
  * @param {number} themeId - theme identifier
  */
 function changeActiveThemeHandler(themeId: number) {
-  updateActiveTheme(props.moduleId, themeId);
+  updateActiveTheme({
+    entityIdForListByEntityId: props.moduleId,
+    entityIdForClickIndex: themeId,
+    stateForFindElem: EEntityState.Active,
+    stateForFindIndex: EEntityState.Default,
+    stateForClickIndex: EEntityState.Active,
+  });
 }
+
 /**
  * Update active video in Pinia
  * @param {number} themeId - theme identifier
@@ -47,7 +56,13 @@ function changeActiveVideoHandler(
   themeType: EEntityType.Topics
 ) {
   if (themeType === EEntityType.Topics) {
-    updateActiveVideo(props.moduleId, themeId);
+    updateActiveVideo({
+      entityIdForListByEntityId: props.moduleId,
+      entityIdForClickIndex: themeId,
+      stateForFindElem: EEntityState.Active,
+      stateForFindIndex: EEntityState.Default,
+      stateForClickIndex: EEntityState.Active,
+    });
   }
 }
 
@@ -61,8 +76,31 @@ function changeActiveTestHandler(
   themeType: EEntityType.Tests
 ) {
   if (themeType === EEntityType.Tests) {
+    updateActiveTest({
+      entityIdForListByEntityId: props.moduleId,
+      entityIdForClickIndex: themeId,
+      stateForFindElem: EEntityState.Active,
+      stateForFindIndex: EEntityState.Default,
+      stateForClickIndex: EEntityState.Active,
+    });
+
+    updateActiveQuestion({
+      entityIdForListByEntityId: themeId,
+      entityIdForClickIndex: activeQuestion.value.id,
+      stateForFindElem: EEntityState.Active,
+      stateForFindIndex: EEntityState.Active,
+      stateForClickIndex: EEntityState.Active,
+    });
+    if (activeAnswer.value) {
+      updateActiveAnswer({
+        entityIdForListByEntityId: activeQuestion.value.id,
+        entityIdForClickIndex: activeAnswer.value.id,
+        stateForFindElem: EEntityState.Active,
+        stateForFindIndex: EEntityState.Unlocked,
+        stateForClickIndex: EEntityState.Unlocked,
+      });
+    }
     initializeTest();
-    updateActiveTest(props.moduleId, themeId);
   }
 }
 </script>

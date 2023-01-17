@@ -1,8 +1,8 @@
 import { defineStore } from "pinia";
-import { shuffle, deepClone } from "@/helpers/commonFunctions";
-import { EGuessed } from "@/types/enums";
+import { shuffle } from "@/helpers/commonFunctions";
+import { EEntityState, EGuess } from "@/types/enums";
 import { ref } from "vue";
-import { entranceTests, entranceTestsContent } from "@/classes/fetchFromDB";
+import { entranceTests, entranceTestsQuestions } from "@/fetch";
 import {
   EntityCreator,
   Creator,
@@ -15,8 +15,9 @@ import type {
   IEduElementEntityArray,
   IEduElementEntityMap,
   IEntranceTest,
-  IEntranceTestContent,
+  IEntranceTestQuestion,
 } from "@/types/interfaces";
+import cloneDeep from "lodash/cloneDeep";
 
 function getEduElement<T>(
   creator: Creator<T>,
@@ -40,9 +41,9 @@ const eduElementEntranceTests = getEduElement(
   entranceTests
 );
 
-const eduElementEntranceTestsContent = getEduElement(
-  new EntityCreator<IEntranceTestContent>(),
-  entranceTestsContent
+const eduElementEntranceTestsQuestions = getEduElement(
+  new EntityCreator<IEntranceTestQuestion>(),
+  entranceTestsQuestions
 );
 
 const eduElementEntranceTestsExtended = getEduElementExtended(
@@ -51,28 +52,28 @@ const eduElementEntranceTestsExtended = getEduElementExtended(
   )
 ) as IEduElementEntityArray<IEntranceTest>;
 
-const eduElementEntranceTestsContentExtended = getEduElementExtended(
-  new EntityCreatorExtendedMap<IEntranceTestContent>(
-    ref(eduElementEntranceTestsContent.getList()).value as TElemsList<
+const eduElementEntranceTestsQuestionsExtended = getEduElementExtended(
+  new EntityCreatorExtendedMap<IEntranceTestQuestion>(
+    ref(eduElementEntranceTestsQuestions.getList()).value as TElemsList<
       number,
-      IEntranceTestContent
+      IEntranceTestQuestion
     >
   )
-) as IEduElementEntityMap<IEntranceTestContent>;
+) as IEduElementEntityMap<IEntranceTestQuestion>;
 
 export const useEntranceTestsStore = defineStore("entranceTests", () => {
   const activeEntranceTest = ref(getActiveEntranceTest());
   const progressValue = ref(0);
   const score = ref(0);
   const questionCount = ref(0);
-  const isOptionSelected = ref(false);
+  const isAnswerSelected = ref(false);
   const isTestEnded = ref(false);
-  const testContent = ref<IEntranceTestContent[]>([]);
+  const testContent = ref<IEntranceTestQuestion[]>([]);
   const isLoading = ref(true);
   const questionNumber = ref(0);
   const step = ref(0);
 
-  function getQuestion() {
+  function getQuestionContent() {
     return testContent.value[questionNumber.value].question;
   }
 
@@ -82,7 +83,7 @@ export const useEntranceTestsStore = defineStore("entranceTests", () => {
       step.value = 2;
     } else {
       questionNumber.value += 1;
-      setGuessed(EGuessed.Active);
+      setGuessed(EGuess.Active);
     }
   }
 
@@ -90,31 +91,27 @@ export const useEntranceTestsStore = defineStore("entranceTests", () => {
     step.value = 1;
   }
 
-  function isAnswerIsCorrect(idAnswer: number) {
-    return testContent.value[questionNumber.value].idAnswerCorrect === idAnswer
+  function isAnswerIsCorrect(id: number) {
+    return testContent.value[questionNumber.value].idAnswerCorrect === id
       ? true
       : false;
   }
 
-  function setGuessed(value: EGuessed) {
-    testContent.value[questionNumber.value].guessed = value;
+  function setGuessed(value: EGuess) {
+    testContent.value[questionNumber.value].guesses = value;
   }
 
-  function setIdAnswerUserSelected(idAnswer: number) {
-    testContent.value[questionNumber.value].idAnswerUserSelected.push(idAnswer);
+  function setIdAnswerUserSelected(id: number) {
+    testContent.value[questionNumber.value].idAnswerUserSelected.push(id);
   }
 
-  function checkAnswer(idAnswer: number) {
-    if (isAnswerIsCorrect(idAnswer)) {
+  function checkAnswer(id: number) {
+    if (isAnswerIsCorrect(id)) {
       incrementScore();
-      setGuessed(EGuessed.Right);
+      setGuessed(EGuess.Right);
     } else {
-      setGuessed(EGuessed.Wrong);
+      setGuessed(EGuess.Wrong);
     }
-  }
-
-  function setQuestionCount(count: number) {
-    questionCount.value = count;
   }
 
   function initializeTest() {
@@ -135,8 +132,8 @@ export const useEntranceTestsStore = defineStore("entranceTests", () => {
     progressValue.value += Math.ceil(100 / questionCount.value);
   }
 
-  function toggleIsOptionSelected(value: boolean) {
-    isOptionSelected.value = value;
+  function toggleIsAnswerSelected(value: boolean) {
+    isAnswerSelected.value = value;
   }
 
   function getEntranceTestsList() {
@@ -144,17 +141,19 @@ export const useEntranceTestsStore = defineStore("entranceTests", () => {
   }
 
   function getActiveEntranceTest() {
-    return eduElementEntranceTestsExtended.getActiveElem() as IEntranceTest;
+    return eduElementEntranceTestsExtended.getElemByState(
+      EEntityState.Active
+    ) as IEntranceTest;
   }
 
-  function getEntranceTestsContentByEntityId(entityId: number) {
-    const result = eduElementEntranceTestsContentExtended.getListByEntityId(
+  function getEntranceTestsQuestionsByEntityId(entityId: number) {
+    const result = eduElementEntranceTestsQuestionsExtended.getListByEntityId(
       entityId
-    ) as IEntranceTestContent[];
+    ) as IEntranceTestQuestion[];
 
     result.forEach((item) => shuffle(item.answers));
 
-    testContent.value = deepClone(result);
+    testContent.value = cloneDeep(result);
     isLoading.value = false;
     questionNumber.value = 0;
     questionCount.value = testContent.value.length;
@@ -165,7 +164,7 @@ export const useEntranceTestsStore = defineStore("entranceTests", () => {
     progressValue,
     score,
     questionCount,
-    isOptionSelected,
+    isAnswerSelected,
     isTestEnded,
     testContent,
     isLoading,
@@ -174,15 +173,14 @@ export const useEntranceTestsStore = defineStore("entranceTests", () => {
     getNextQuestion,
     startTest,
     checkAnswer,
-    setQuestionCount,
     initializeTest,
     incrementScore,
     incrementProgressValue,
-    toggleIsOptionSelected,
+    toggleIsAnswerSelected,
     isAnswerIsCorrect,
-    getQuestion,
+    getQuestionContent,
     getEntranceTestsList,
-    getEntranceTestsContentByEntityId,
+    getEntranceTestsQuestionsByEntityId,
     setIdAnswerUserSelected,
   };
 });

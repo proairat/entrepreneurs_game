@@ -1,5 +1,5 @@
-import { EEntityState } from "@/types/enums";
-import type { IEduElementEntityArray } from "@/types/interfaces";
+import type { EEntityState } from "@/types/enums";
+import type { IEduElementEntityArray, IUpdateArray } from "@/types/interfaces";
 import type { TExtendsArray } from "@/types/types";
 import { BaseEduElement } from "@/classes/BaseEduElement";
 
@@ -13,25 +13,25 @@ class EntityExtendedArray<T extends TExtendsArray>
     super();
     this.list = list;
   }
-  public updateActiveElem(entityId: number): void {
+
+  public updateElemByState(updateArray: IUpdateArray): void {
     if (Array.isArray(this.list)) {
-      const modules = this.list;
-      const activeElem = this.getActiveElem();
-
-      if (Array.isArray(modules) && activeElem) {
-        const activeIndex = super.findIndex(modules, activeElem.id);
-        const clickIndex = super.findIndex(modules, entityId);
-
-        if (activeIndex !== -1 && clickIndex !== -1) {
-          modules[activeIndex]["state"] = EEntityState.Default;
-          modules[clickIndex]["state"] = EEntityState.Active;
+      const thisList = this.list;
+      const findElem = this.getElemByState(updateArray.stateForFindElem);
+      if (Array.isArray(thisList) && findElem) {
+        const findIndex = super.findIndex(findElem.id, thisList);
+        const clickIndex = super.findIndex(updateArray.entityId, thisList);
+        if (findIndex !== -1 && clickIndex !== -1) {
+          thisList[findIndex]["state"] = updateArray.stateForFindIndex;
+          thisList[clickIndex]["state"] = updateArray.stateForClickIndex;
         }
       }
     }
   }
-  public getActiveElem(): T | undefined {
+
+  public getElemByState(state: EEntityState): T | undefined {
     if (Array.isArray(this.list)) {
-      return super.find(this.list);
+      return super.find(state, this.list);
     }
   }
 }

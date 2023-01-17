@@ -14,9 +14,14 @@
 </template>
 
 <script setup lang="ts">
-import { useModulesStore } from "@/stores";
-import { EEntityType } from "@/types/enums";
-import type { IModule, IModuleAdvanced } from "@/types/interfaces";
+import { storeToRefs } from "pinia";
+import { useModulesStore, useTestsStore } from "@/stores";
+import { EEntityState, EEntityType } from "@/types/enums";
+import type {
+  IModule,
+  IModuleAdvanced,
+  IUpdateArray,
+} from "@/types/interfaces";
 
 const props = defineProps<{
   type: EEntityType;
@@ -29,8 +34,12 @@ const {
   getModulesAdvancedList,
   updateActiveModuleAdvanced,
 } = modulesStore;
+const testsStore = useTestsStore();
+const { initializeTest, updateActiveQuestion, updateActiveAnswer } = testsStore;
+const { activeQuestion, activeAnswer } = storeToRefs(testsStore);
+const { activeTest } = storeToRefs(modulesStore);
 let modules: IModule[] | IModuleAdvanced[] = [];
-let updateEntity: (id: number) => void;
+let updateEntity: (updateArray: IUpdateArray) => void;
 
 if (props.type === EEntityType.Modules) {
   modules = getModulesList();
@@ -49,7 +58,31 @@ if (props.type === EEntityType.ModulesAdvanced) {
  * @param {number} moduleId - module identifier
  */
 function changeActiveModuleHandler(moduleId: number) {
-  updateEntity(moduleId);
+  updateEntity({
+    entityId: moduleId,
+    stateForFindElem: EEntityState.Active,
+    stateForFindIndex: EEntityState.Default,
+    stateForClickIndex: EEntityState.Active,
+  });
+
+  // находим первый активный вопрос соответствующего теста
+  updateActiveQuestion({
+    entityIdForListByEntityId: activeTest.value.id,
+    entityIdForClickIndex: activeQuestion.value.id,
+    stateForFindElem: EEntityState.Active,
+    stateForFindIndex: EEntityState.Active,
+    stateForClickIndex: EEntityState.Active,
+  });
+  if (activeAnswer.value) {
+    updateActiveAnswer({
+      entityIdForListByEntityId: activeQuestion.value.id,
+      entityIdForClickIndex: activeAnswer.value.id,
+      stateForFindElem: EEntityState.Active,
+      stateForFindIndex: EEntityState.Unlocked,
+      stateForClickIndex: EEntityState.Unlocked,
+    });
+  }
+  initializeTest();
 }
 
 // const filteredList = computed(() => FuzzySearch(search.value, modules, "title"));

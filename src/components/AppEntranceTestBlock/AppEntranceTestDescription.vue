@@ -1,8 +1,5 @@
 <template>
-  <div v-if="!activeEntranceTest" class="test-undefined">
-    К сожалению, тест ещё не разработан...
-  </div>
-  <div v-else class="test-description">
+  <div class="test-description">
     <div class="test-description__title text-xl">
       {{ activeEntranceTest.title }}
     </div>
@@ -31,11 +28,6 @@ const { activeEntranceTest } = storeToRefs(entranceTestsStore);
 </script>
 
 <style scoped lang="scss">
-.test-undefined {
-  color: $rose-80;
-  padding-top: 1.5rem;
-  font-weight: $font-weight-medium;
-}
 .test-description {
   display: grid;
   padding-top: 1.5rem;

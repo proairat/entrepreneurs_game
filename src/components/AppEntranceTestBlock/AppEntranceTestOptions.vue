@@ -1,5 +1,5 @@
 <template>
-  <AppEntranceTestLoader v-if="isLoading"></AppEntranceTestLoader>
+  <AppTestLoader v-if="isLoading" />
 </template>
 
 <script setup lang="ts">

@@ -125,7 +125,7 @@ const submitForm = async (formEl: FormInstance | undefined) => {
         alertStore.error(error);
       }
     } else {
-      console.log("error TheRegistrationForm", fields);
+      console.error("error TheRegistrationForm", fields);
     }
   });
 };

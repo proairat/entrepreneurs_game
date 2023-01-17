@@ -1,17 +1,19 @@
 <template>
   <div class="min-h-full min-w-full flex items-center justify-center">
     <button
-      v-if="!isOptionSelected"
+      type="button"
+      v-if="!isAnswerSelected"
       class="w-[18rem] p-4 mt-6 text-indigo-900 border border-indigo-200 text-lg rounded-[0.625rem] cursor-default"
     >
       Выберите вариант ответа
     </button>
     <button
+      type="button"
       v-else
       @click="
         getNextQuestion();
         incrementProgressValue();
-        toggleIsOptionSelected(false);
+        toggleIsAnswerSelected(false);
       "
       class="w-[18rem] p-4 mt-6 bg-indigo-100 text-indigo-900 border border-indigo-200 text-lg rounded-[0.625rem] hover:bg-indigo-200"
     >
@@ -25,7 +27,7 @@ import { useEntranceTestsStore } from "@/stores";
 import { storeToRefs } from "pinia";
 
 const entranceTestsStore = useEntranceTestsStore();
-const { isOptionSelected } = storeToRefs(entranceTestsStore);
-const { getNextQuestion, incrementProgressValue, toggleIsOptionSelected } =
+const { isAnswerSelected } = storeToRefs(entranceTestsStore);
+const { getNextQuestion, incrementProgressValue, toggleIsAnswerSelected } =
   entranceTestsStore;
 </script>

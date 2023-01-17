@@ -1,16 +1,26 @@
 <template>
   <button
-    class="test-answer w-full bg-gray-100 transition p-6"
-    @click="
-      checkAnswer(props.idAnswer);
-      clickAnswer();
-    "
+    type="button"
+    class="test-answer w-full transition p-6"
+    @click="clickAnswer(props.id)"
     :class="{
-      'bg-red-200': !isCorrectAnswer && show,
-      'bg-green-200': isCorrectAnswer && show,
-      'hover:bg-gray-200': props.state === EEntityState.Unlocked,
+      'bg-red-200':
+        !isCorrectAnswer &&
+        isClickedCheckButton &&
+        props.state === EEntityState.Active,
+      'bg-green-200':
+        isCorrectAnswer &&
+        isClickedCheckButton &&
+        props.state === EEntityState.Active,
+      'bg-gray-100':
+        props.state === EEntityState.Unlocked ||
+        props.state === EEntityState.Blocked,
+      'hover:bg-gray-200':
+        props.state === EEntityState.Unlocked && !isClickedCheckButton,
+      'bg-sun-20': props.state === EEntityState.Active && !isClickedCheckButton,
+      disabled: isClickedCheckButton,
     }"
-    :disabled="props.state === EEntityState.Blocked"
+    :disabled="isClickedCheckButton"
   >
     {{ props.answer }}
   </button>
@@ -18,28 +28,27 @@
 
 <script setup lang="ts">
 import { useTestsStore } from "@/stores";
+import { storeToRefs } from "pinia";
 import { EEntityState } from "@/types/enums";
 import { computed } from "vue";
-import { ref } from "vue";
 
 const props = defineProps<{
-  idAnswer: number;
+  id: number;
   answer: string;
-  state: EEntityState.Unlocked | EEntityState.Blocked;
+  state: EEntityState;
 }>();
 
 const emits = defineEmits<{
-  (e: "clickAnswer"): void;
+  (e: "clickAnswer", answerId: number): void;
 }>();
 
 const testsStore = useTestsStore();
-const { checkAnswer, isAnswerIsCorrect } = testsStore;
-const show = ref(false);
-const isCorrectAnswer = computed(() => isAnswerIsCorrect(props.idAnswer));
+const { isAnswerIsCorrect } = testsStore;
+const { isClickedCheckButton } = storeToRefs(testsStore);
+const isCorrectAnswer = computed(() => isAnswerIsCorrect(props.id));
 
-function clickAnswer() {
-  emits("clickAnswer");
-  show.value = true;
+function clickAnswer(answerId: number) {
+  emits("clickAnswer", answerId);
 }
 </script>
 
@@ -47,5 +56,14 @@ function clickAnswer() {
 .test-answer {
   border-radius: 0.625rem;
   font-size: $text-size-h5;
+}
+.bg-sun-20 {
+  background-color: $sun-20;
+  &:hover {
+    background-color: $sun-40;
+  }
+}
+.disabled {
+  cursor: not-allowed;
 }
 </style>

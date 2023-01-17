@@ -1,23 +1,22 @@
 <template>
-  <AppEntranceTestLoader v-if="isLoading"></AppEntranceTestLoader>
+  <AppTestLoader v-if="isLoading" />
   <div v-else class="test-content">
     <AppEntranceTestPassingIndicator />
     <AppEntranceTestQuestion />
-    <AppEntranceTestAnswerBlock>
+    <AppTestAnswerBlock>
       <AppEntranceTestAnswer
-        v-for="{ idAnswer, answer, state } in testContent[questionNumber]
-          .answers"
-        :key="idAnswer"
-        :idAnswer="idAnswer"
+        v-for="{ id, answer, state } in testContent[questionNumber].answers"
+        :key="id"
+        :id="id"
         :answer="answer"
         :state="state"
         @click-answer="
-          toggleIsOptionSelected(true);
+          toggleIsAnswerSelected(true);
           changeOptionState();
-          setIdAnswerUserSelected(idAnswer);
+          setIdAnswerUserSelected(id);
         "
       ></AppEntranceTestAnswer>
-    </AppEntranceTestAnswerBlock>
+    </AppTestAnswerBlock>
     <AppEntranceTestPassingButton />
   </div>
 </template>
@@ -31,12 +30,12 @@ const entranceTestsStore = useEntranceTestsStore();
 const { activeEntranceTest, testContent, isLoading, questionNumber } =
   storeToRefs(entranceTestsStore);
 const {
-  toggleIsOptionSelected,
-  getEntranceTestsContentByEntityId,
+  toggleIsAnswerSelected,
+  getEntranceTestsQuestionsByEntityId,
   setIdAnswerUserSelected,
 } = entranceTestsStore;
 
-getEntranceTestsContentByEntityId(activeEntranceTest.value.id);
+getEntranceTestsQuestionsByEntityId(activeEntranceTest.value.id);
 
 function changeOptionState() {
   testContent.value[questionNumber.value].answers.forEach((elem) => {

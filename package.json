@@ -21,6 +21,7 @@
     "@tailwindcss/forms": "^0.5.3",
     "@tailwindcss/line-clamp": "^0.4.2",
     "@tailwindcss/typography": "^0.5.7",
+    "@types/lodash": "^4.14.191",
     "@videojs-player/vue": "^1.0.0",
     "element-plus": "^2.2.17",
     "normalize.css": "^8.0.1",

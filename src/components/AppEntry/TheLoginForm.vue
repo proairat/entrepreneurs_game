@@ -83,10 +83,10 @@ const submitForm = async (formEl: FormInstance | undefined) => {
         loading.value = false;
       } catch (error) {
         loading.value = false;
-        console.log("try error TheLoginForm", error);
+        console.error("try error TheLoginForm", error);
       }
     } else {
-      console.log("error TheLoginForm", fields);
+      console.error("error TheLoginForm", fields);
     }
   });
 };

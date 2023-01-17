@@ -55,7 +55,7 @@
         </div>
       </div>
       <div class="form-group">
-        <button class="btn btn-primary" :disabled="isSubmitting">
+        <button type="button" class="btn btn-primary" :disabled="isSubmitting">
           <span
             v-show="isSubmitting"
             class="spinner-border spinner-border-sm mr-1"
@@ -86,6 +86,7 @@ import { storeToRefs } from "pinia";
 
 import { useUsersStore, useAlertStore } from "@/stores";
 import { router } from "@/router";
+import type { IUser } from "@/types/interfaces";
 
 const usersStore = useUsersStore();
 const alertStore = useAlertStore();
@@ -93,7 +94,7 @@ const route = useRoute();
 const id = route.params.id;
 
 let title = "Add User";
-let user = null;
+let user: { value: { id: any } } | null = null;
 if (id) {
   // edit mode
   title = "Edit User";
@@ -112,7 +113,7 @@ const schema = Yup.object().shape({
     .min(6, "Password must be at least 6 characters"),
 });
 
-async function onSubmit(values) {
+async function onSubmit(values: IUser) {
   try {
     let message;
     if (user) {

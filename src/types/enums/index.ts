@@ -9,6 +9,9 @@ enum EEntityState {
   Close = "close",
   Unlocked = "unlocked",
   Blocked = "blocked",
+  Right = "right",
+  Wrong = "wrong",
+  Undefined = "undefined",
 }
 
 enum EEntityType {
@@ -18,6 +21,10 @@ enum EEntityType {
   Tests = "tests",
   EntranceTests = "entranceTests",
   Videos = "videos",
+  TestsQuestions = "testsQuestions",
+  TestsAnswers = "testsAnswers",
+  TabsAuthors = "tabsAuthors",
+  Guesses = "guesses",
 }
 
 enum EPercent {
@@ -29,7 +36,7 @@ enum EPercent {
   ThreeCoinHighBoundary = 100,
 }
 
-enum EGuessed {
+enum EGuess {
   Right = "right",
   Wrong = "wrong",
   Undefined = "undefined",
@@ -55,7 +62,7 @@ export {
   EEntityState,
   EEntityType,
   EPercent,
-  EGuessed,
+  EGuess,
   EProgressCaption,
   EPadding,
 };

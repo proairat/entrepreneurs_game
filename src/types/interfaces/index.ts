@@ -2,7 +2,7 @@ import type {
   EAlert,
   EEntityState,
   EEntityType,
-  EGuessed,
+  EGuess,
   EProgressCaption,
 } from "../enums";
 import type { TElemsList } from "../types";
@@ -39,7 +39,7 @@ interface IModule {
   title: string;
   duration: string;
   footer: string;
-  state: EEntityState.Active | EEntityState.Default;
+  state: EEntityState;
 }
 
 interface IModuleAdvanced {
@@ -51,20 +51,28 @@ interface IModuleAdvanced {
   title: string;
   duration: string;
   footer: string;
-  state: EEntityState.Active | EEntityState.Default | EEntityState.Blocked;
+  state: EEntityState;
   visibility: "visible" | "hidden";
   order: number;
+}
+
+interface IGuess {
+  id: number;
+  type: EEntityType.Guesses;
+  state: EEntityState;
+  slideNumber: number;
 }
 
 interface ITheme {
   id: number;
   type: EEntityType.Topics | EEntityType.Tests;
-  state: EEntityState.Active | EEntityState.Default;
+  state: EEntityState;
   title: string;
 }
 
 interface ITabsAuthors {
   id: number;
+  type: EEntityType.TabsAuthors;
   surname: string;
   name: string;
   patronymic: string;
@@ -78,7 +86,7 @@ interface IVideo {
   poster: string;
   videoType: string;
   duration?: number;
-  state: EEntityState.Active | EEntityState.Default;
+  state: EEntityState;
   title: string;
   authors: ITabsAuthors[];
   description: string;
@@ -89,26 +97,26 @@ interface ITest {
   type: EEntityType.Tests;
   title: string;
   description: string;
-  state: EEntityState.Active | EEntityState.Default;
+  state: EEntityState;
 }
 
-interface ITestContent {
+interface ITestQuestion {
   id: number;
+  type: EEntityType.TestsQuestions;
   category: string;
-  type: string;
   difficulty: string;
   slideNumber: number;
   question: string;
-  state: EEntityState.Active | EEntityState.Default;
+  state: EEntityState;
   idAnswerCorrect: number;
-  answers: IAnswer[];
-  guessed: EGuessed;
+  guesses: EGuess;
 }
 
-interface IAnswer {
-  idAnswer: number;
+interface ITestAnswer {
+  id: number;
+  type: EEntityType.TestsAnswers;
   answer: string;
-  state: EEntityState.Unlocked | EEntityState.Blocked;
+  state: EEntityState;
 }
 
 interface IEntranceTest {
@@ -116,21 +124,21 @@ interface IEntranceTest {
   type: EEntityType.EntranceTests;
   title: string;
   description: string;
-  state: EEntityState.Active | EEntityState.Default;
+  state: EEntityState;
 }
 
-interface IEntranceTestContent {
+interface IEntranceTestQuestion {
   id: number;
   category: string;
   type: string;
   difficulty: string;
   slideNumber: number;
   question: string;
-  state: EEntityState.Active | EEntityState.Default;
+  state: EEntityState;
   idAnswerCorrect: number;
   idAnswerUserSelected: number[];
-  answers: IAnswer[];
-  guessed: EGuessed;
+  answers: ITestAnswer[];
+  guesses: EGuess;
 }
 
 interface IProgressCaption {
@@ -138,6 +146,27 @@ interface IProgressCaption {
   topics: EProgressCaption.TopicsCaption;
   tests: EProgressCaption.TestsCaption;
   entranceTests: EProgressCaption.EntranceTestsCaption;
+}
+
+interface IUpdateArray {
+  entityId: number;
+  stateForFindElem: EEntityState;
+  stateForFindIndex: EEntityState;
+  stateForClickIndex: EEntityState;
+}
+
+interface IUpdateMapElem {
+  entityIdForListByEntityId: number;
+  entityIdForClickIndex: number;
+  stateForFindElem: EEntityState;
+  stateForFindIndex: EEntityState;
+  stateForClickIndex: EEntityState;
+}
+
+interface IUpdateMapElements {
+  entityIdForListByEntityId: number;
+  stateForListByEntityIdFiltered: EEntityState;
+  stateForListByEntityId: EEntityState;
 }
 
 interface IEduCommonElement<T> {
@@ -149,13 +178,21 @@ interface IEduCommonElement<T> {
 }
 
 interface IEduElementEntityArray<T> {
-  updateActiveElem(entityId: number): void;
-  getActiveElem(): T | undefined;
+  updateElemByState(updateArray: IUpdateArray): void;
+  getElemByState(state: EEntityState): T | undefined;
 }
 
 interface IEduElementEntityMap<T> {
-  updateActiveElem(entityId: number, themeId: number): void;
-  getActiveElem(entityByModuleId: T[] | undefined): T | undefined;
+  updateElemByState(updateMapElem: IUpdateMapElem): void;
+  updateElementsByState(updateMapElements: IUpdateMapElements): void;
+  getElemByState(
+    state: EEntityState,
+    listByEntityId: T[] | undefined
+  ): T | undefined;
+  getElementsByState(
+    state: EEntityState,
+    listByEntityId: T[] | undefined
+  ): T[] | undefined;
   getListByEntityId(entityId: number): T[] | undefined;
 }
 
@@ -165,15 +202,19 @@ export type {
   INavigation,
   IModule,
   IModuleAdvanced,
+  IGuess,
   ITheme,
   ITabsAuthors,
   IVideo,
   ITest,
-  ITestContent,
-  IAnswer,
+  ITestQuestion,
+  ITestAnswer,
   IEntranceTest,
-  IEntranceTestContent,
+  IEntranceTestQuestion,
   IProgressCaption,
+  IUpdateArray,
+  IUpdateMapElem,
+  IUpdateMapElements,
   IEduCommonElement,
   IEduElementEntityArray,
   IEduElementEntityMap,

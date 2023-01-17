@@ -1,5 +1,9 @@
-import { EEntityState } from "@/types/enums";
-import type { IEduElementEntityMap } from "@/types/interfaces";
+import type { EEntityState } from "@/types/enums";
+import type {
+  IEduElementEntityMap,
+  IUpdateMapElem,
+  IUpdateMapElements,
+} from "@/types/interfaces";
 import type { TElemsList, TExtendsMap } from "@/types/types";
 import { BaseEduElement } from "@/classes/BaseEduElement";
 
@@ -13,29 +17,76 @@ class EntityExtendedMap<T extends TExtendsMap>
     super();
     this.list = list;
   }
-  public updateActiveElem(entityId: number, themeId: number): void {
+
+  public updateElemByState(updateMapElem: IUpdateMapElem): void {
     if (this.list instanceof Map) {
-      const entityByModuleId = this.getListByEntityId(entityId);
-      const activeElem = this.getActiveElem(entityByModuleId);
-
-      if (Array.isArray(entityByModuleId) && activeElem) {
-        const activeIndex = super.findIndex(entityByModuleId, activeElem.id);
-        const clickIndex = super.findIndex(entityByModuleId, themeId);
-
-        if (activeIndex !== -1 && clickIndex !== -1) {
-          entityByModuleId[activeIndex]["state"] = EEntityState.Default;
-          entityByModuleId[clickIndex]["state"] = EEntityState.Active;
+      const listByEntityId = this.getListByEntityId(
+        updateMapElem.entityIdForListByEntityId
+      );
+      const findElem = this.getElemByState(
+        updateMapElem.stateForFindElem,
+        listByEntityId
+      );
+      if (Array.isArray(listByEntityId) && findElem) {
+        const findIndex = super.findIndex(findElem.id, listByEntityId);
+        const clickIndex = super.findIndex(
+          updateMapElem.entityIdForClickIndex,
+          listByEntityId
+        );
+        if (findIndex !== -1 && clickIndex !== -1) {
+          listByEntityId[findIndex]["state"] = updateMapElem.stateForFindIndex;
+          listByEntityId[clickIndex]["state"] =
+            updateMapElem.stateForClickIndex;
         }
       }
     }
   }
-  public getActiveElem(entityByModuleId: T[] | undefined): T | undefined {
-    if (Array.isArray(entityByModuleId)) {
-      return super.find(entityByModuleId);
+
+  public updateElementsByState(updateMapElements: IUpdateMapElements) {
+    if (this.list instanceof Map) {
+      const listByEntityId = this.getListByEntityId(
+        updateMapElements.entityIdForListByEntityId
+      );
+
+      const listByEntityIdFiltered = this.getElementsByState(
+        updateMapElements.stateForListByEntityIdFiltered,
+        listByEntityId
+      );
+
+      if (
+        Array.isArray(listByEntityId) &&
+        Array.isArray(listByEntityIdFiltered)
+      ) {
+        for (let i = 0; i < listByEntityId.length; i++) {
+          if (listByEntityIdFiltered.includes(listByEntityId[i])) {
+            listByEntityId[i]["state"] =
+              updateMapElements.stateForListByEntityId;
+          }
+        }
+      }
     }
   }
+
+  public getElemByState(
+    state: EEntityState,
+    listByEntityId: T[] | undefined
+  ): T | undefined {
+    if (Array.isArray(listByEntityId)) {
+      return super.find(state, listByEntityId);
+    }
+  }
+
+  public getElementsByState(
+    state: EEntityState,
+    listByEntityId: T[] | undefined
+  ): T[] | undefined {
+    if (Array.isArray(listByEntityId)) {
+      return super.filter(state, listByEntityId);
+    }
+  }
+
   public getListByEntityId(entityId: number): T[] | undefined {
-    if (this.list instanceof Map) {
+    if (this.list instanceof Map && entityId) {
       return this.list.get(entityId);
     }
   }

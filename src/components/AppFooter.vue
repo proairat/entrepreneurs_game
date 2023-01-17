@@ -1,14 +1,12 @@
 <template>
-  <footer class="text-center lg:text-left bg-indigo-100 text-indigo-900">
+  <footer
+    class="text-center lg:text-left bg-indigo-100 text-indigo-900 min-w-[35rem]"
+  >
     <div class="max-w-6xl mx-auto">
       <div class="mx-6 pt-6 text-center md:text-left">
         <div class="grid grid-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
           <div class="">
-            <img
-              class="h-11 w-[105px] academicCap m-auto"
-              :src="logo"
-              alt="Логотип"
-            />
+            <img class="h-11 w-[105px] m-auto" :src="logo" alt="Логотип" />
             <h6
               class="mt-4 uppercase font-semibold mb-4 flex items-center justify-center md:justify-start"
             >
@@ -70,18 +68,17 @@
                 focusable="false"
                 data-prefix="fas"
                 data-icon="home"
-                class="w-4 mr-4"
+                class="w-5 mr-4 md:w-8 sh-960:w-6 lg:w-14"
                 role="img"
                 xmlns="http://www.w3.org/2000/svg"
-                viewBox="0 0 576 512"
+                viewBox="0 0 560 560"
               >
                 <path
                   fill="currentColor"
                   d="M280.37 148.26L96 300.11V464a16 16 0 0 0 16 16l112.06-.29a16 16 0 0 0 15.92-16V368a16 16 0 0 1 16-16h64a16 16 0 0 1 16 16v95.64a16 16 0 0 0 16 16.05L464 480a16 16 0 0 0 16-16V300L295.67 148.26a12.19 12.19 0 0 0-15.3 0zM571.6 251.47L488 182.56V44.05a12 12 0 0 0-12-12h-56a12 12 0 0 0-12 12v72.61L318.47 43a48 48 0 0 0-61 0L4.34 251.47a12 12 0 0 0-1.6 16.9l25.5 31A12 12 0 0 0 45.15 301l235.22-193.74a12.19 12.19 0 0 1 15.3 0L530.9 301a12 12 0 0 0 16.9-1.6l25.5-31a12 12 0 0 0-1.7-16.93z"
                 ></path>
               </svg>
-              Республика Башкортостан, г. Стерлитамак, <br />пр. Ленина, 37, СФ
-              БашГУ
+              Республика Башкортостан, г. Стерлитамак, пр. Ленина, 37, СФ БашГУ
             </p>
             <p class="flex items-center justify-center md:justify-start mb-4">
               <svg
@@ -89,10 +86,10 @@
                 focusable="false"
                 data-prefix="fas"
                 data-icon="envelope"
-                class="w-4 mr-4"
+                class="w-5 mr-4"
                 role="img"
                 xmlns="http://www.w3.org/2000/svg"
-                viewBox="0 0 512 512"
+                viewBox="0 0 560 560"
               >
                 <path
                   fill="currentColor"
@@ -107,10 +104,10 @@
                 focusable="false"
                 data-prefix="fas"
                 data-icon="phone"
-                class="w-4 mr-4"
+                class="w-5 mr-4"
                 role="img"
                 xmlns="http://www.w3.org/2000/svg"
-                viewBox="0 0 512 512"
+                viewBox="0 0 560 560"
               >
                 <path
                   fill="currentColor"
@@ -125,10 +122,10 @@
                 focusable="false"
                 data-prefix="fas"
                 data-icon="print"
-                class="w-4 mr-4"
+                class="w-5 mr-4"
                 role="img"
                 xmlns="http://www.w3.org/2000/svg"
-                viewBox="0 0 512 512"
+                viewBox="0 0 560 560"
               >
                 <path
                   fill="currentColor"
@@ -155,10 +152,6 @@ const logo = await getImageUrl("academic-cap");
 </script>
 
 <style scoped lang="scss">
-.academicCap {
-  padding-right: 1rem;
-}
-
 h6 {
   font-size: $text-base-size;
   font-weight: $font-weight-medium;
