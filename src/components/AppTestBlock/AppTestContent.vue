@@ -5,9 +5,7 @@
     <AppTestQuestion />
     <AppTestAnswerBlock>
       <AppTestAnswer
-        v-for="{ id, answer, state } in getTestsAnswersByQuestionId(
-          activeQuestion.id
-        )"
+        v-for="{ id, answer, state } in answers"
         :key="id"
         :id="id"
         :answer="answer"
@@ -25,6 +23,7 @@ import { EEntityState } from "@/types/enums";
 import { storeToRefs } from "pinia";
 import { shuffle } from "@/helpers/commonFunctions";
 import type { ITestAnswer } from "@/types/interfaces";
+import { ref, watch } from "vue";
 
 const testsStore = useTestsStore();
 const { isLoading, activeQuestion, activeAnswer } = storeToRefs(testsStore);
@@ -33,8 +32,15 @@ const {
   getTestsAnswersByQuestionId,
   updateActiveAnswer,
 } = testsStore;
+const answers = ref(
+  shuffle<ITestAnswer>(getTestsAnswersByQuestionId(activeQuestion.value.id))
+);
 
-shuffle<ITestAnswer>(getTestsAnswersByQuestionId(activeQuestion.value.id));
+watch(activeQuestion, (changedActiveQuestion) => {
+  answers.value = shuffle<ITestAnswer>(
+    getTestsAnswersByQuestionId(changedActiveQuestion.id)
+  );
+});
 
 function clickAnswerHandler(answerId: number) {
   toggleIsAnswerSelected(true);

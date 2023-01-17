@@ -1,6 +1,6 @@
 // import { computed } from "vue";
 import type { Tfns } from "@/types/types";
-import cloneDeep from "lodash/cloneDeep";
+// import cloneDeep from "lodash/cloneDeep";
 
 /**
  * Функция для удаления свойства из объекта

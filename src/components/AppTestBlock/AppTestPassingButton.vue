@@ -39,7 +39,7 @@ const testsStore = useTestsStore();
 const { isAnswerSelected, isClickedCheckButton, activeQuestion, activeAnswer } =
   storeToRefs(testsStore);
 const {
-  checkAnswerNew,
+  checkAnswer,
   getNextQuestion,
   incrementProgressValue,
   toggleIsAnswerSelected,
@@ -54,7 +54,7 @@ function checkButton() {
     stateForListByEntityIdFiltered: EEntityState.Unlocked,
     stateForListByEntityId: EEntityState.Blocked,
   });
-  checkAnswerNew(activeAnswer.value.id);
+  checkAnswer(activeAnswer.value.id);
 }
 </script>
 

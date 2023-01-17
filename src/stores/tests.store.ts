@@ -1,5 +1,5 @@
 import { defineStore, storeToRefs } from "pinia";
-import { EEntityState, EGuess } from "@/types/enums";
+import { EEntityState } from "@/types/enums";
 import { ref } from "vue";
 import { testsQuestions, testsAnswers, guesses } from "@/fetch";
 import {
@@ -18,7 +18,7 @@ import type {
   IGuess,
 } from "@/types/interfaces";
 // import isEmpty from "lodash/isEmpty";
-import cloneDeep from "lodash/cloneDeep";
+// import cloneDeep from "lodash/cloneDeep";
 import { useModulesStore } from "@/stores";
 
 function getEduElement<T>(
@@ -176,20 +176,7 @@ export const useTestsStore = defineStore("tests", () => {
     return activeQuestion.value.idAnswerCorrect === answerId ? true : false;
   }
 
-  function setGuessed(value: EGuess) {
-    activeQuestion.value.guesses = value;
-  }
-
   function checkAnswer(answerId: number) {
-    if (isAnswerIsCorrect(answerId)) {
-      incrementScore();
-      setGuessed(EGuessed.Right);
-    } else {
-      setGuessed(EGuessed.Wrong);
-    }
-  }
-
-  function checkAnswerNew(answerId: number) {
     if (isAnswerIsCorrect(answerId)) {
       incrementScore();
       updateGuessesElem({
@@ -211,7 +198,6 @@ export const useTestsStore = defineStore("tests", () => {
   }
 
   function initializeTest() {
-    console.log("initializeTest");
     progressValue.value = 0;
     score.value = 0;
     step.value = 0;
@@ -221,6 +207,7 @@ export const useTestsStore = defineStore("tests", () => {
     questionNumber.value = 0;
     toggleIsAnswerSelected(false);
     toggleIsClickedCheckButton(false);
+    const guesses = getGuessesByTestId(activeTest.value.id);
 
     updateGuessesElementsByState({
       entityIdForListByEntityId: activeTest.value.id,
@@ -232,9 +219,6 @@ export const useTestsStore = defineStore("tests", () => {
       stateForListByEntityIdFiltered: EEntityState.Right,
       stateForListByEntityId: EEntityState.Undefined,
     });
-
-    const guesses = getGuessesByTestId(activeTest.value.id);
-
     updateGuessesElem({
       entityIdForListByEntityId: activeTest.value.id,
       entityIdForClickIndex: guesses[questionNumber.value].id,
@@ -249,7 +233,6 @@ export const useTestsStore = defineStore("tests", () => {
       stateForFindIndex: EEntityState.Undefined,
       stateForClickIndex: EEntityState.Active,
     });
-
     updateActiveQuestion({
       entityIdForListByEntityId: activeTest.value.id,
       entityIdForClickIndex: guesses[questionNumber.value].id,
@@ -322,7 +305,6 @@ export const useTestsStore = defineStore("tests", () => {
     getNextQuestion,
     startTest,
     checkAnswer,
-    checkAnswerNew,
     initializeTest,
     incrementScore,
     incrementProgressValue,
