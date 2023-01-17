@@ -133,7 +133,7 @@ const submitForm = async (formEl: FormInstance | undefined) => {
         console.error("Entrance test error", error);
       }
     } else {
-      console.error("'Entrance test  error fields", fields);
+      console.error("Entrance test  error fields", fields);
     }
   });
 };

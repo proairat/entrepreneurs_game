@@ -18,6 +18,9 @@ import { storeToRefs } from "pinia";
 
 const entranceTestsStore = useEntranceTestsStore();
 const { step } = storeToRefs(entranceTestsStore);
+const { initializeTest } = entranceTestsStore;
+
+initializeTest();
 </script>
 
 <style scoped lang="scss">
