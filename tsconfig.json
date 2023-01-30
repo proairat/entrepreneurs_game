@@ -12,15 +12,17 @@
     }
   ],
   "compilerOptions": {
-    "target": "esnext",
+    "lib": ["es2021"],
+    "target": "es2021",
     "module": "esnext",
     "strict": true,
     "allowJs": true,
     "jsx": "preserve",
     "esModuleInterop": true,
+    "removeComments": true,
     "allowSyntheticDefaultImports": true,
+    "skipLibCheck": true,
     "forceConsistentCasingInFileNames": true,
-    "useDefineForClassFields": true,
     "sourceMap": true,
     "types": ["element-plus/global"]
   }
