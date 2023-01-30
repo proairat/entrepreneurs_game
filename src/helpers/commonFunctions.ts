@@ -74,7 +74,7 @@ function getURLPathNameDigit(url: string): string | null {
  *
  * getImageUrl('academic-cap')
  */
-async function getImageUrl(name: string, extension: string = "svg") {
+async function getImageUrl(name: string, extension = "svg") {
   try {
     const dynamicImport = await import(`@/assets/img/${name}.${extension}`);
     return dynamicImport.default;

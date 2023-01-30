@@ -2,10 +2,13 @@
 require("@rushstack/eslint-patch/modern-module-resolution");
 
 module.exports = {
+  parser: "vue-eslint-parser",
   root: true,
+  plugins: ["@typescript-eslint/eslint-plugin"],
   extends: [
     "plugin:vue/vue3-essential",
     "eslint:recommended",
+    "plugin:@typescript-eslint/recommended",
     "@vue/eslint-config-typescript",
     "@vue/eslint-config-prettier",
   ],
@@ -16,6 +19,6 @@ module.exports = {
     },
   ],
   parserOptions: {
-    ecmaVersion: "latest",
+    parser: "@typescript-eslint/parser",
   },
 };
