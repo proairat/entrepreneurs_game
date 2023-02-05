@@ -1,7 +1,7 @@
 import { defineStore } from "pinia";
 import { fetchWrapper } from "@/helpers";
 import { useAuthStore } from "@/stores";
-import type { IUser } from "@/types/interfaces";
+import type { IUser } from "share/types/interfaces";
 
 const baseUrl = `${import.meta.env.VITE_API_URL}/users`;
 

@@ -1,5 +1,5 @@
-import { EAlert } from "@/types/enums";
-import type { IAlert } from "@/types/interfaces";
+import { EAlert } from "share/types/enums";
+import type { IAlert } from "share/types/interfaces";
 import { defineStore } from "pinia";
 
 export const useAlertStore = defineStore("alert", {

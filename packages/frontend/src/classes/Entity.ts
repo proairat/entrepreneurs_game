@@ -1,5 +1,5 @@
-import type { IEduCommonElement } from "@/types/interfaces";
-import type { TElemsList } from "@/types/types";
+import type { IEduCommonElement } from "share/types/interfaces";
+import type { TElemsList } from "share/types/types";
 
 class Entity<T> implements IEduCommonElement<T> {
   list: T[] | TElemsList<number, T> | undefined;

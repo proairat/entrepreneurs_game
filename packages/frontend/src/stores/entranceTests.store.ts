@@ -1,6 +1,6 @@
 import { defineStore } from "pinia";
 import { shuffle } from "@/helpers/commonFunctions";
-import { EEntityState, EGuess } from "@/types/enums";
+import { EEntityState, EGuess } from "share/types/enums";
 import { ref } from "vue";
 import { entranceTests, entranceTestsQuestions } from "@/fetch";
 import {
@@ -10,13 +10,13 @@ import {
   EntityCreatorExtendedArray,
   EntityCreatorExtendedMap,
 } from "@/classes";
-import type { TElemsList } from "@/types/types";
+import type { TElemsList } from "share/types/types";
 import type {
   IEduElementEntityArray,
   IEduElementEntityMap,
   IEntranceTest,
   IEntranceTestQuestion,
-} from "@/types/interfaces";
+} from "share/types/interfaces";
 import cloneDeep from "lodash/cloneDeep";
 
 function getEduElement<T>(

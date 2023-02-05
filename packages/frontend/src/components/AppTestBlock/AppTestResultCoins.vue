@@ -19,7 +19,7 @@
 import { useNavbarStore } from "@/stores";
 import { storeToRefs } from "pinia";
 import { getImageUrl } from "@/helpers/commonFunctions";
-import { EPercent } from "@/types/enums";
+import { EPercent } from "share/types/enums";
 import { computed } from "vue";
 
 const props = defineProps<{

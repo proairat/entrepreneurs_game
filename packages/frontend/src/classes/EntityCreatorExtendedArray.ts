@@ -1,5 +1,5 @@
-import type { IEduElementEntityArray } from "@/types/interfaces";
-import type { TExtendsArray } from "@/types/types";
+import type { IEduElementEntityArray } from "share/types/interfaces";
+import type { TExtendsArray } from "share/types/types";
 import { CreatorExtended, EntityExtendedArray } from "@/classes";
 
 class EntityCreatorExtendedArray<

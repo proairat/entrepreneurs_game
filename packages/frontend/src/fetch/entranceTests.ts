@@ -1,5 +1,5 @@
-import { EEntityState, EEntityType } from "@/types/enums";
-import type { IEntranceTest } from "@/types/interfaces";
+import { EEntityState, EEntityType } from "share/types/enums";
+import type { IEntranceTest } from "share/types/interfaces";
 
 /**
  * ENTRANCE TESTS

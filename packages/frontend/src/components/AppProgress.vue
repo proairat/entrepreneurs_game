@@ -18,11 +18,11 @@
 </template>
 
 <script setup lang="ts">
-import type { IProgressCaption } from "@/types/interfaces";
+import type { IProgressCaption } from "share/types/interfaces";
 import { computed } from "vue";
 import { useTestsStore, useEntranceTestsStore } from "@/stores";
 import { storeToRefs } from "pinia";
-import { EEntityType, EProgressCaption } from "@/types/enums";
+import { EEntityType, EProgressCaption } from "share/types/enums";
 
 /**
  * Due to the limitations of defineProps in TS, no interface is used

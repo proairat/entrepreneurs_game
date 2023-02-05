@@ -86,7 +86,7 @@ import { storeToRefs } from "pinia";
 
 import { useUsersStore, useAlertStore } from "@/stores";
 import { router } from "@/router";
-import type { IUser } from "@/types/interfaces";
+import type { IUser } from "share/types/interfaces";
 
 const usersStore = useUsersStore();
 const alertStore = useAlertStore();

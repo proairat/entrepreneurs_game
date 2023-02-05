@@ -1,5 +1,5 @@
 import { defineStore, storeToRefs } from "pinia";
-import { EEntityState } from "@/types/enums";
+import { EEntityState } from "share/types/enums";
 import { ref } from "vue";
 import { testsQuestions, testsAnswers, guesses } from "@/fetch";
 import {
@@ -8,7 +8,7 @@ import {
   CreatorExtended,
   EntityCreatorExtendedMap,
 } from "@/classes";
-import type { TElemsList } from "@/types/types";
+import type { TElemsList } from "share/types/types";
 import type {
   ITestAnswer,
   IEduElementEntityMap,
@@ -16,7 +16,7 @@ import type {
   IUpdateMapElem,
   IUpdateMapElements,
   IGuess,
-} from "@/types/interfaces";
+} from "share/types/interfaces";
 // import isEmpty from "lodash/isEmpty";
 // import cloneDeep from "lodash/cloneDeep";
 import { useModulesStore } from "@/stores";

@@ -1,5 +1,6 @@
 import { ApiProperty } from "@nestjs/swagger";
-
+import { EEntityType, EEntityState } from "share/types/enums";
+import type { IModule } from "share/types/interfaces";
 /**
  * interface IModule {
  * id: number;
@@ -14,8 +15,17 @@ import { ApiProperty } from "@nestjs/swagger";
 }
 */
 
+// export class Module implements IModule {
 export class Module {
-  readonly id: any;
+  /*readonly type!: EEntityType.Modules;
+  src: string;
+  alt: string;
+  header: string;
+  title: string;
+  duration: string;
+  footer: string;
+  state: EEntityState;
+  readonly id: any;*/
   /*
   @ApiProperty({ description: 'Module identifier', nullable: false })
   readonly id: number;

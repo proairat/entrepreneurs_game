@@ -7,7 +7,7 @@
 
 <script setup lang="ts">
 import { computed, h, resolveComponent } from "vue";
-import { EEntityState, EEntityType } from "@/types/enums";
+import { EEntityState, EEntityType } from "share/types/enums";
 
 /**
  * Due to the limitations of defineProps in TS, no "ITheme" interface is used

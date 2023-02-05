@@ -10,7 +10,7 @@ import type {
   IEduElementEntityMap,
   IUpdateMapElem,
   IUpdateArray,
-} from "@/types/interfaces";
+} from "share/types/interfaces";
 import {
   Creator,
   CreatorExtended,
@@ -18,9 +18,9 @@ import {
   EntityCreatorExtendedMap,
   EntityCreatorExtendedArray,
 } from "@/classes";
-import type { TElemsList } from "@/types/types";
+import type { TElemsList } from "share/types/types";
 import { modules, modulesAdvanced, themes, videos, tests } from "@/fetch";
-import { EEntityState } from "@/types/enums";
+import { EEntityState } from "share/types/enums";
 
 function getEduElement<T>(
   creator: Creator<T>,

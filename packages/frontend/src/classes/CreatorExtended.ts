@@ -1,7 +1,7 @@
 import type {
   IEduElementEntityArray,
   IEduElementEntityMap,
-} from "@/types/interfaces";
+} from "share/types/interfaces";
 
 abstract class CreatorExtended<T> {
   public abstract factoryMethod():

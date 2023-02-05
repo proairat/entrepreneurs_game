@@ -1,4 +1,4 @@
-import type { IEduCommonElement } from "@/types/interfaces";
+import type { IEduCommonElement } from "share/types/interfaces";
 import { Creator } from "@/classes/Creator";
 import { Entity } from "@/classes/Entity";
 

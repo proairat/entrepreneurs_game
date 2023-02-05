@@ -1,10 +1,10 @@
-import type { EEntityState } from "@/types/enums";
+import type { EEntityState } from "share/types/enums";
 import type {
   IEduElementEntityMap,
   IUpdateMapElem,
   IUpdateMapElements,
-} from "@/types/interfaces";
-import type { TElemsList, TExtendsMap } from "@/types/types";
+} from "share/types/interfaces";
+import type { TElemsList, TExtendsMap } from "share/types/types";
 import { BaseEduElement } from "@/classes/BaseEduElement";
 
 class EntityExtendedMap<T extends TExtendsMap>

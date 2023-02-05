@@ -32,7 +32,7 @@
 <script setup lang="ts">
 import { useEntranceTestsStore } from "@/stores";
 import { getImageUrl } from "@/helpers/commonFunctions";
-import { EPercent } from "@/types/enums";
+import { EPercent } from "share/types/enums";
 
 const props = defineProps<{
   percent: number;

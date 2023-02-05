@@ -1,6 +1,6 @@
 // Mock object represent database data
-import { EEntityState, EEntityType } from "@/types/enums";
-import type { IModule } from "@/types/interfaces";
+import { EEntityState, EEntityType } from "share/types/enums";
+import type { IModule } from "share/types/interfaces";
 
 /**
  * MODULES

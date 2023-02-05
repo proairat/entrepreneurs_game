@@ -32,7 +32,7 @@
 </template>
 
 <script setup lang="ts">
-import type { ITabsAuthors } from "@/types/interfaces";
+import type { ITabsAuthors } from "share/types/interfaces";
 
 const props = defineProps<{
   videoAuthors: ITabsAuthors[];

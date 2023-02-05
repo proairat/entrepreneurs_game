@@ -1,6 +1,9 @@
-import type { EEntityState } from "@/types/enums";
-import type { IEduElementEntityArray, IUpdateArray } from "@/types/interfaces";
-import type { TExtendsArray } from "@/types/types";
+import type { EEntityState } from "share/types/enums";
+import type {
+  IEduElementEntityArray,
+  IUpdateArray,
+} from "share/types/interfaces";
+import type { TExtendsArray } from "share/types/types";
 import { BaseEduElement } from "@/classes/BaseEduElement";
 
 class EntityExtendedArray<T extends TExtendsArray>

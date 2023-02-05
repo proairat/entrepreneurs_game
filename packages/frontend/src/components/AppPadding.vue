@@ -10,7 +10,7 @@
 </template>
 
 <script setup lang="ts">
-import { EPadding } from "@/types/enums";
+import { EPadding } from "share/types/enums";
 
 const props = defineProps<{
   padding: Record<EPadding, string>;

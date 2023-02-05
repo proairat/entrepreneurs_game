@@ -1,6 +1,6 @@
-import type { EEntityState } from "@/types/enums";
-import type { TExtendsArray } from "@/types/types";
-import type { TExtendsMap } from "@/types/types";
+import type { EEntityState } from "share/types/enums";
+import type { TExtendsArray } from "share/types/types";
+import type { TExtendsMap } from "share/types/types";
 
 class BaseEduElement {
   public find<T extends TExtendsMap | TExtendsArray>(
