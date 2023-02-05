@@ -1,4 +1,4 @@
-import type { IEduCommonElement } from "@/types/interfaces";
+import type { IEduCommonElement } from "share/types/interfaces";
 
 abstract class Creator<T> {
   public abstract factoryMethod(): IEduCommonElement<T>;

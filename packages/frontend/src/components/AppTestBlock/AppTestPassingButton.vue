@@ -32,7 +32,7 @@
 
 <script setup lang="ts">
 import { useTestsStore } from "@/stores";
-import { EEntityState } from "@/types/enums";
+import { EEntityState } from "share/types/enums";
 import { storeToRefs } from "pinia";
 
 const testsStore = useTestsStore();

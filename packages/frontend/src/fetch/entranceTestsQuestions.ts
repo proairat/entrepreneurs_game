@@ -1,7 +1,7 @@
 // Mock object represent database data
-import { EEntityState, EGuess } from "@/types/enums";
-import type { IEntranceTestQuestion } from "@/types/interfaces";
-import type { TElemsList } from "@/types/types";
+import { EEntityState, EGuess } from "share/types/enums";
+import type { IEntranceTestQuestion } from "share/types/interfaces";
+import type { TElemsList } from "share/types/types";
 
 /**
  * ENTRANCE TESTS QUESTIONS

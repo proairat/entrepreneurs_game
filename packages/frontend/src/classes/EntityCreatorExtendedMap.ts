@@ -1,5 +1,5 @@
-import type { IEduElementEntityMap } from "@/types/interfaces";
-import type { TElemsList, TExtendsMap } from "@/types/types";
+import type { IEduElementEntityMap } from "share/types/interfaces";
+import type { TElemsList, TExtendsMap } from "share/types/types";
 import { CreatorExtended, EntityExtendedMap } from "@/classes";
 
 class EntityCreatorExtendedMap<

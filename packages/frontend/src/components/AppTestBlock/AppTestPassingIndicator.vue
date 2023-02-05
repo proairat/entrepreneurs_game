@@ -33,7 +33,7 @@
 
 <script setup lang="ts">
 import { useTestsStore, useModulesStore } from "@/stores";
-import { EEntityState } from "@/types/enums";
+import { EEntityState } from "share/types/enums";
 import { computed } from "vue";
 import { storeToRefs } from "pinia";
 

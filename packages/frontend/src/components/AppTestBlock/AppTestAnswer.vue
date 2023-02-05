@@ -29,7 +29,7 @@
 <script setup lang="ts">
 import { useTestsStore } from "@/stores";
 import { storeToRefs } from "pinia";
-import { EEntityState } from "@/types/enums";
+import { EEntityState } from "share/types/enums";
 import { computed } from "vue";
 
 const props = defineProps<{

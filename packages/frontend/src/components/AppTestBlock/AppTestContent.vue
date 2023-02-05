@@ -19,10 +19,10 @@
 
 <script setup lang="ts">
 import { useTestsStore } from "@/stores";
-import { EEntityState } from "@/types/enums";
+import { EEntityState } from "share/types/enums";
 import { storeToRefs } from "pinia";
 import { shuffle } from "@/helpers/commonFunctions";
-import type { ITestAnswer } from "@/types/interfaces";
+import type { ITestAnswer } from "share/types/interfaces";
 import { ref, watch } from "vue";
 
 const testsStore = useTestsStore();

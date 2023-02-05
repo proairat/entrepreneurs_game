@@ -14,7 +14,7 @@
 <script setup lang="ts">
 import { storeToRefs } from "pinia";
 import { useModulesStore, useTestsStore } from "@/stores";
-import { EEntityState, EEntityType } from "@/types/enums";
+import { EEntityState, EEntityType } from "share/types/enums";
 
 const props = defineProps<{
   moduleId: number;

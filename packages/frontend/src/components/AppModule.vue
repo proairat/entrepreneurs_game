@@ -42,7 +42,7 @@
 </template>
 
 <script setup lang="ts">
-import { EEntityState, EEntityType } from "@/types/enums";
+import { EEntityState, EEntityType } from "share/types/enums";
 import { computed, h, resolveComponent } from "vue";
 import { useModulesStore } from "@/stores";
 import { getImageUrl } from "@/helpers/commonFunctions";

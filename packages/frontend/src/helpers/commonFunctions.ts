@@ -1,5 +1,5 @@
 // import { computed } from "vue";
-import type { Tfns } from "@/types/types";
+import type { Tfns } from "share/types/types";
 // import cloneDeep from "lodash/cloneDeep";
 
 /**

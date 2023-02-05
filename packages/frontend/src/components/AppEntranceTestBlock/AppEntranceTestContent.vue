@@ -23,7 +23,7 @@
 
 <script setup lang="ts">
 import { useEntranceTestsStore } from "@/stores";
-import { EEntityState } from "@/types/enums";
+import { EEntityState } from "share/types/enums";
 import { storeToRefs } from "pinia";
 
 const entranceTestsStore = useEntranceTestsStore();
