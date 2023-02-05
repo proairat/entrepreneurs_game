@@ -1,0 +1,14 @@
+{
+  "name": "share",
+  "version": "1.0.0",
+  "description": "Shareable for frontend and backend of Entrepreneurs game platform",
+  "author": "Shayakhmetov Airat Irekovich",
+  "main": "index.ts",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "license": "UNLICENSED",
+  "devDependencies": {
+    "typescript": "^4.7.4"
+  }
+}

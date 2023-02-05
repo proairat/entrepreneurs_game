@@ -1,6 +1,6 @@
-src/assets/video/
-src/assets/modules/
-src/assets/modulesAdvanced/
+packages/frontend/src/assets/video/
+packages/frontend/src/assets/modules/
+packages/frontend/src/assets/modulesAdvanced/
 
 # Logs
 logs
