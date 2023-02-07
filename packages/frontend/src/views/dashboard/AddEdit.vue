@@ -62,7 +62,7 @@
           ></span>
           Save
         </button>
-        <router-link to="/users" class="btn btn-link">Cancel</router-link>
+        <router-link to="/dashboard" class="btn btn-link">Cancel</router-link>
       </div>
     </Form>
   </template>
@@ -123,7 +123,7 @@ async function onSubmit(values: IUser) {
       await usersStore.register(values);
       message = "User added";
     }
-    await router.push("/users");
+    await router.push("/dashboard");
     alertStore.success(message);
   } catch (error) {
     alertStore.error(error);

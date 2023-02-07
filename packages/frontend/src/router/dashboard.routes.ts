@@ -1,9 +1,9 @@
-import { ViewUserManagement, AppList, AddEdit } from "@/views/users";
+import { ViewDashboard, AppList, AddEdit } from "@/views/dashboard";
 
 export default {
-  path: "/users",
-  name: "ViewUserManagement",
-  component: ViewUserManagement,
+  path: "/dashboard",
+  name: "ViewDashboard",
+  component: ViewDashboard,
   children: [
     { path: "", name: "AppList", component: AppList },
     { path: "add", name: "AddEdit", component: AddEdit },
