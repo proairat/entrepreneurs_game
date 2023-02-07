@@ -14,17 +14,18 @@ function fakeBackend() {
 
       function handleRoute() {
         switch (true) {
-          case url.endsWith("/users/authenticate") && opts.method === "POST":
+          case url.endsWith("/dashboard/authenticate") &&
+            opts.method === "POST":
             return authenticate();
-          case url.endsWith("/users/register") && opts.method === "POST":
+          case url.endsWith("/dashboard/register") && opts.method === "POST":
             return register();
-          case url.endsWith("/users") && opts.method === "GET":
+          case url.endsWith("/dashboard") && opts.method === "GET":
             return getUsers();
-          case url.match(/\/users\/\d+$/) && opts.method === "GET":
+          case url.match(/\/dashboard\/\d+$/) && opts.method === "GET":
             return getUserById();
-          case url.match(/\/users\/\d+$/) && opts.method === "PUT":
+          case url.match(/\/dashboard\/\d+$/) && opts.method === "PUT":
             return updateUser();
-          case url.match(/\/users\/\d+$/) && opts.method === "DELETE":
+          case url.match(/\/dashboard\/\d+$/) && opts.method === "DELETE":
             return deleteUser();
           default:
             // pass through any requests not handled above

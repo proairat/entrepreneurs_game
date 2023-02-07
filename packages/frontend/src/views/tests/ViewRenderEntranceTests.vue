@@ -5,7 +5,6 @@
       <router-view />
     </div>
     <AppFooter />
-    <!--<router-link to="/users">Управление пользователями</router-link>-->
   </div>
 </template>
 

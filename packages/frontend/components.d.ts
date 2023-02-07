@@ -61,6 +61,7 @@ declare module "@vue/runtime-core" {
     ElInput: typeof import("element-plus/es")["ElInput"];
     ElPopover: typeof import("element-plus/es")["ElPopover"];
     ElProgress: typeof import("element-plus/es")["ElProgress"];
+    ElTableV2: typeof import("element-plus/es")["ElTableV2"];
     ElTabPane: typeof import("element-plus/es")["ElTabPane"];
     ElTabs: typeof import("element-plus/es")["ElTabs"];
     HelloWorld: typeof import("./src/components/HelloWorld.vue")["default"];
