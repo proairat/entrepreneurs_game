@@ -2,7 +2,7 @@
   <AppTitleLine>
     <AppTitle> Базовый курс </AppTitle>
   </AppTitleLine>
-  <AppFetch />
+  <!--<AppFetch />-->
   <AppListOfModules type="modules" />
   <AppTitleLine>
     <AppTitle> Углубленный курс </AppTitle>

@@ -1,5 +1,5 @@
 <template>
-  <div class="theFormCenter">
+  <div class="the-form">
     <div class="entry-personal-data">Введите персональные данные</div>
     <el-form
       ref="ruleFormRef"

@@ -1,11 +1,11 @@
-import { ViewDashboard, AppList, AddEdit } from "@/views/dashboard";
+import { ViewRenderDashboard, ViewDashboard, AddEdit } from "@/views/dashboard";
 
 export default {
   path: "/dashboard",
-  name: "ViewDashboard",
-  component: ViewDashboard,
+  name: "ViewRenderDashboard",
+  component: ViewRenderDashboard,
   children: [
-    { path: "", name: "AppList", component: AppList },
+    { path: "", name: "ViewDashboard", component: ViewDashboard },
     { path: "add", name: "AddEdit", component: AddEdit },
     { path: "edit/:id", name: "AddEditId", component: AddEdit },
   ],

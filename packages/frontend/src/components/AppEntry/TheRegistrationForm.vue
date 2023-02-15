@@ -1,5 +1,5 @@
 <template>
-  <div class="theFormCenter">
+  <div class="the-form">
     <div class="entryRegistrationData">Введите регистрационные данные</div>
     <el-form
       ref="ruleFormRef"
