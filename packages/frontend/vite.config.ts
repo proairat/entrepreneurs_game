@@ -5,6 +5,7 @@ import vueJsx from "@vitejs/plugin-vue-jsx";
 import AutoImport from "unplugin-auto-import/vite";
 import Components from "unplugin-vue-components/vite";
 import { ElementPlusResolver } from "unplugin-vue-components/resolvers";
+import ElementPlus from "unplugin-element-plus/vite";
 import IconsResolver from "unplugin-icons/resolver";
 import Icons from "unplugin-icons/vite";
 import Inspect from "vite-plugin-inspect";
@@ -34,6 +35,7 @@ export default defineConfig({
       autoInstall: true,
     }),
     Inspect(),
+    ElementPlus(),
   ],
   resolve: {
     alias: {

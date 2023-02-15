@@ -1,5 +1,5 @@
 <template>
-  <div class="theFormCenter">
+  <div class="the-form">
     <div class="entryLoginAndPassword">Введите ваш логин и пароль</div>
     <el-form
       ref="ruleFormRef"
