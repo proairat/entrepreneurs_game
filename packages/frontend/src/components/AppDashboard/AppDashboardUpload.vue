@@ -3,35 +3,34 @@
   <!--v-model:file-list="fileList"-->
   <el-upload
     ref="upload"
-    class="upload-demo"
     action="http://localhost:3000/modules/upload"
     list-type="picture"
     :limit="1"
-    :on-preview="handlePreview"
+    :auto-upload="false"
     :on-remove="handleRemove"
-    :before-upload="handleBeforeUpload"
     :on-exceed="handleExceed"
     :on-success="handleSuccess"
     :on-error="handleError"
+    :on-change="handleChange"
   >
+    <template #tip>
+      <!--<div class="el-upload__tip text-red-600">
+        <div>Ограничения:</div>
+        <div>Количество файлов: 1</div>
+        <div>Тип файла: PNG, SVG</div>
+        <div>Размер файла: меньше 2 Мбайт</div>
+      </div>-->
+    </template>
     <template #trigger>
       <button class="bg-indigo-500 p-2 hover:bg-indigo-600 text-white">
         Выберите файл
       </button>
     </template>
-    <template #tip>
-      <div class="el-upload__tip text-red-600">
-        <div>Ограничения:</div>
-        <div>Количество файлов: 1</div>
-        <div>Тип файла: PNG, SVG</div>
-        <div>Размер файла: меньше 2 Мбайт</div>
-      </div>
-    </template>
   </el-upload>
 </template>
 
 <script lang="ts" setup>
-import { ref } from "vue";
+import { ref, watch } from "vue";
 import {
   ElMessage,
   genFileId,
@@ -40,21 +39,82 @@ import {
   type UploadRawFile,
 } from "element-plus";
 
-const handleRemove: UploadProps["onRemove"] = (uploadFile, uploadFiles) => {
-  console.log(uploadFile, uploadFiles);
-};
+/**
+ * 1 - Файл не выбран
+ * 2 - Файл выбран
+ * 3 - Файл успешно загружен
+ *  */
 
-const handlePreview: UploadProps["onPreview"] = (file) => {
-  console.log("handlePreview");
-};
+const props = defineProps<{
+  isCheckFileReadyPass: boolean;
+}>();
 
-const handleBeforeUpload: UploadProps["beforeUpload"] = (file) => {
-  return isComplianceWithRestrictions(file);
+const emits = defineEmits<{
+  (
+    e: "message-event",
+    value: {
+      message: string;
+      type: string;
+      appendTo: string;
+      idMessage: number;
+      shPayload: any;
+    }
+  ): void;
+}>();
+
+interface IElMessageUploadFile {
+  message: string;
+  type: MessageType;
+  appendTo: string;
+  idMessage: number;
+  shPayload: string;
+}
+type MessageType = "success" | "warning" | "info" | "error";
+
+const emitsObj = ref<IElMessageUploadFile>({
+  message: "Файл не выбран",
+  type: "error",
+  appendTo: ".el-message-wrapper",
+  idMessage: 1,
+  shPayload: "",
+});
+
+const upload = ref<UploadInstance>();
+
+function emitObjFunc(obj: any) {
+  const {
+    message = "Файл не выбран",
+    type = "error",
+    appendTo = ".el-message-wrapper",
+    idMessage = 1,
+    shPayload = "",
+  } = obj;
+  emitsObj.value.message = message;
+  emitsObj.value.type = type;
+  emitsObj.value.appendTo = appendTo;
+  emitsObj.value.idMessage = idMessage;
+  emitsObj.value.shPayload = shPayload;
+  emits("message-event", emitsObj.value);
+}
+
+watch(
+  () => props.isCheckFileReadyPass,
+  () => {
+    if (props.isCheckFileReadyPass) {
+      upload.value!.submit();
+    } else {
+      upload.value!.clearFiles();
+      emitObjFunc({});
+    }
+  }
+);
+
+const handleRemove: UploadProps["onRemove"] = () => {
+  emitObjFunc({});
 };
 
 function isComplianceWithRestrictions(file: UploadRawFile) {
   const allowTypes = ["image/svg+xml", "image/png"];
-  console.log("file", file);
   if (!allowTypes.includes(file.type)) {
     ElMessage({
       message: "Тип файла должен быть либо PNG, либо SVG",
@@ -72,50 +132,50 @@ function isComplianceWithRestrictions(file: UploadRawFile) {
     });
     return false;
   }
-
   return true;
 }
-
-const upload = ref<UploadInstance>();
 
 const handleExceed: UploadProps["onExceed"] = (files) => {
   const file = files[0] as UploadRawFile;
   file.uid = genFileId();
-
+  upload.value!.clearFiles();
   if (isComplianceWithRestrictions(file)) {
-    upload.value!.clearFiles();
     upload.value!.handleStart(file);
-    upload.value!.submit();
+  } else {
+    emitObjFunc({});
   }
 };
 
-const handleSuccess: UploadProps["onSuccess"] = (response, uploadFile) => {
-  console.log("response", response);
-  console.log("uploadFile", uploadFile);
-
-  ElMessage({
+const handleSuccess: UploadProps["onSuccess"] = (response) => {
+  emitObjFunc({
     message: "Файл успешно загружен!",
     type: "success",
-    appendTo: ".el-message-wrapper",
+    idMessage: 3,
+    shPayload: response.response,
   });
 };
 
-const handleError: UploadProps["onError"] = (error, file) => {
-  console.log("Error occurred!", error, "file", file);
+const handleError: UploadProps["onError"] = () => {
+  ElMessage({
+    message: "Произошла ошибка! Файл не был загружен.",
+    type: "error",
+    appendTo: ".el-message-wrapper",
+  });
+  emitObjFunc({});
 };
 
-/*
-const fileList = ref<UploadUserFile[]>([
-  {
-    name: 'food.jpeg',
-    url: 'https://fuss10.elemecdn.com/3/63/4e7f3a15429bfda99bce42a18cdd1jpeg.jpeg?imageMogr2/thumbnail/360x360/format/webp/quality/100',
-  },
-  {
-    name: 'food2.jpeg',
-    url: 'https://fuss10.elemecdn.com/3/63/4e7f3a15429bfda99bce42a18cdd1jpeg.jpeg?imageMogr2/thumbnail/360x360/format/webp/quality/100',
-  },
-])
-*/
+const handleChange: UploadProps["onChange"] = (uploadFile) => {
+  if (uploadFile.status === "ready") {
+    if (isComplianceWithRestrictions(uploadFile.raw as UploadRawFile)) {
+      emitObjFunc({ message: "Файл выбран", type: "warning", idMessage: 2 });
+    } else {
+      upload.value!.clearFiles();
+      emitObjFunc({});
+    }
+  }
+};
+
+emitObjFunc({});
 </script>
 
 <style scoped lang="scss">
@@ -128,6 +188,10 @@ const fileList = ref<UploadUserFile[]>([
 }
 
 :deep(.el-message--success) {
+  position: absolute;
+}
+
+:deep(.el-message--warning) {
   position: absolute;
 }
 </style>

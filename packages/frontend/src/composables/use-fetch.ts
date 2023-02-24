@@ -2,6 +2,8 @@
 import { useFetch } from "@vueuse/core";
 import { BASE_URL } from "../API";
 
+import { ElMessage } from "element-plus";
+
 export function useFetchComposable(
   urlConst: string,
   urlVar: string,
@@ -9,27 +11,18 @@ export function useFetchComposable(
   body: BodyInit | null
 ) {
   const url = `${BASE_URL}${urlConst}/${urlVar}`;
-  const {
-    isFinished,
-    data,
-    error,
-    onFetchError,
-    onFetchResponse,
-    onFetchFinally,
-  } = useFetch(
+  const { data, onFetchError, onFetchResponse, onFetchFinally } = useFetch(
     url,
     { method, body },
     {
       refetch: true,
     }
-  );
+  ).json();
 
   return {
-    isFinished,
     data,
-    error,
-    onFetchError,
     onFetchResponse,
     onFetchFinally,
+    onFetchError,
   };
 }

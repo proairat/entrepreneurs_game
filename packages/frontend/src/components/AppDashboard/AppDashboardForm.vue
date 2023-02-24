@@ -8,6 +8,7 @@
       :size="formSize"
       :status-icon="true"
       class="the-form"
+      @validate="validateFormHandler"
     >
       <el-form-item prop="header">
         <el-input
@@ -16,36 +17,61 @@
           placeholder="Заголовок"
         />
       </el-form-item>
-      <AppDashboardUpload />
-      <el-form-item>
-        <div class="submit-form__outer-start-test">
-          <el-button
-            type="primary"
-            class="submit-form__button-start-test rounded-md"
-            @click="submitForm(ruleFormRef)"
-            :loading="loading"
-          >
-            Создать карточку модуля</el-button
-          >
-        </div>
-      </el-form-item>
     </el-form>
+    <AppDashboardUpload
+      :is-check-file-ready-pass="isCheckFileReadyPass"
+      @message-event="messageEventHandler"
+    />
+    <div class="submit-form__outer-start-test">
+      <el-button
+        type="primary"
+        class="submit-form__button-start-test rounded-md"
+        @click="checkFormReadyHandler(ruleFormRef), checkFileReadyHandler()"
+      >
+        Создать карточку модуля</el-button
+      >
+    </div>
   </div>
-  <AppSpinner v-if="isSpinnerVisible"/>
+  <AppSpinner v-if="isSpinnerVisible" />
 </template>
 
 <script setup lang="ts">
-import { reactive, ref } from "vue";
-import type { FormInstance, FormRules } from "element-plus";
+import { reactive, ref, watch } from "vue";
+import type { FormItemProp, FormInstance, FormRules } from "element-plus";
 import { useFetchComposable } from "@/composables/use-fetch";
+import { ElMessage } from "element-plus";
+
+interface IElMessageUploadFile {
+  message: string;
+  type: MessageType;
+  appendTo: string;
+  idMessage: number;
+  shPayload: string;
+}
+type MessageType = "success" | "warning" | "info" | "error";
 
 const formSize = ref("large");
-const loading = ref(false);
 const ruleFormRef = ref<FormInstance>();
 const formModel = reactive({
   header: "",
 });
-
+const submitResult = ref({
+  formReady: false,
+  fileReady: false,
+});
+const overallResult = ref({
+  formResult: "",
+  fileResult: "",
+});
+const isCheckFileReadyPass = ref(false);
+const isSpinnerVisible = ref(false);
+const elMessageRef = ref<IElMessageUploadFile>({
+  message: "Файл не выбран",
+  type: "error",
+  appendTo: ".el-message-wrapper",
+  idMessage: 1,
+  shPayload: "",
+});
 const rules = reactive<FormRules>({
   header: [
     {
@@ -56,50 +82,116 @@ const rules = reactive<FormRules>({
   ],
 });
 
-let isSpinnerVisible = ref(false);
+function validateFormHandler(props: FormItemProp, isValid: boolean, message: string){
+  if (!isValid) {
+    submitResult.value.formReady = false;
+  } 
+}
 
-const submitForm = async (formEl: FormInstance | undefined) => {
+function checkFormReadyHandler(formEl: FormInstance | undefined) {
   if (!formEl) return;
-  await formEl.validate(async (valid, fields) => {
+    formEl.validate((valid) => {
     if (valid) {
-      try {
-        const formData = new FormData();
-
-        for (let item of Object.entries(formModel)) {
-          const [name, value] = item;
-          formData.append(name, value);
-        }
-
-        let {
-          data,
-          onFetchError,
-          onFetchResponse,
-          onFetchFinally,
-        } = useFetchComposable("/modules", "upload", "POST", formData);
-
-        isSpinnerVisible.value = true;
-
-        onFetchResponse((response)=>{
-          console.log("response", response);
-          console.log("data", data.value);
-        });
-
-        onFetchFinally(() => {
-          isSpinnerVisible.value = false;
-        });
-
-        onFetchError((err)=>{
-          console.error("error", err);
-        });
-
-      } catch (error) {
-        console.error("Dashboard error", error);
-      }
+      submitResult.value.formReady = true;
     } else {
-      console.error("Dashboard error fields", fields);
+      submitResult.value.formReady = false;
+      ElMessage({
+        message: "Не заполнены поля формы",
+        type: "error",
+        appendTo: ".el-message-wrapper",
+      });
     }
   });
-};
+}
+
+function checkFileReadyHandler() {
+  if (elMessageRef.value.idMessage === 1) {
+    // 1 - Файл не выбран
+    ElMessage(elMessageRef.value);
+    submitResult.value.fileReady = false;
+  }
+
+  if (elMessageRef.value.idMessage === 2) {
+    // 2 - Файл выбран
+    submitResult.value.fileReady = true;
+  }
+}
+
+watch(overallResult.value, () => {
+  if (
+    overallResult.value.fileResult === "OK" &&
+    overallResult.value.formResult === "OK"
+  ) {
+    isSpinnerVisible.value = false;
+    ElMessage({
+      message: "Карточка модуля успешно создана",
+      type: "success",
+      appendTo: ".el-message-wrapper",
+    });
+    ruleFormRef.value?.resetFields();
+    submitResult.value.formReady = false;
+    overallResult.value.formResult = "";
+  }
+});
+
+watch(elMessageRef.value, () => {
+  overallResult.value.fileResult = elMessageRef.value.shPayload;
+});
+
+watch(submitResult.value, () => {
+  if (submitResult.value.formReady && submitResult.value.fileReady) {
+    submitFormFields();
+    isCheckFileReadyPass.value = true;
+    isSpinnerVisible.value = true;
+  } else {
+    isCheckFileReadyPass.value = false;
+  }
+});
+
+function submitFormFields() {
+  try {
+    const formData = new FormData();
+
+    for (let item of Object.entries(formModel)) {
+      const [name, value] = item;
+      formData.append(name, value);
+    }
+
+    let { data, onFetchResponse, onFetchError } = useFetchComposable(
+      "/modules",
+      "upload",
+      "POST",
+      formData
+    );
+
+    onFetchResponse(() => {
+      if (data.value.response === "OK") {
+        overallResult.value.formResult = data.value.response;
+      }
+    });
+
+    onFetchError((err) => {
+      ElMessage({
+        message: `Произошла ошибка при загрузке полей формы!: ${err}`,
+        type: "error",
+        appendTo: ".el-message-wrapper",
+      });
+      submitResult.value.formReady = false;
+      overallResult.value.formResult = "";
+      ruleFormRef.value?.resetFields();
+    });
+  } catch (error) {
+    ElMessage({
+      message: `Произошла ошибка дашборда: ${error}`,
+      type: "error",
+      appendTo: ".el-message-wrapper",
+    });
+  }
+}
+
+function messageEventHandler(elMessage: IElMessageUploadFile) {
+  Object.assign(elMessageRef.value, elMessage);
+}
 </script>
 
 <style scoped lang="scss">
@@ -124,7 +216,6 @@ const submitForm = async (formEl: FormInstance | undefined) => {
       box-shadow: none;
     }
   }
-
   &:deep(.el-input__inner:-webkit-autofill) {
     -webkit-box-shadow: inset 0 0 0 50px #fff;
     box-shadow: inset 0 0 0 50px #fff;
