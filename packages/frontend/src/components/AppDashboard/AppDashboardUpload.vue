@@ -60,6 +60,7 @@ const emits = defineEmits<{
       shPayload: any;
     }
   ): void;
+  (e: "upload-file-error", isError: boolean): void;
 }>();
 
 interface IElMessageUploadFile {
@@ -155,13 +156,14 @@ const handleSuccess: UploadProps["onSuccess"] = (response) => {
   });
 };
 
-const handleError: UploadProps["onError"] = () => {
+const handleError: UploadProps["onError"] = (error: Error) => {
   ElMessage({
-    message: "Произошла ошибка! Файл не был загружен.",
+    message: `Файл не был загружен. Произошла ошибка: ${error}`,
     type: "error",
     appendTo: ".el-message-wrapper",
   });
   emitObjFunc({});
+  emits("upload-file-error", true);
 };
 
 const handleChange: UploadProps["onChange"] = (uploadFile) => {
@@ -176,6 +178,7 @@ const handleChange: UploadProps["onChange"] = (uploadFile) => {
 };
 
 emitObjFunc({});
+emits("upload-file-error", false);
 </script>
 
 <style scoped lang="scss">

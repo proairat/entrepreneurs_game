@@ -21,6 +21,7 @@
     <AppDashboardUpload
       :is-check-file-ready-pass="isCheckFileReadyPass"
       @message-event="messageEventHandler"
+      @upload-file-error="uploadFileErrorHandler"
     />
     <div class="submit-form__outer-start-test">
       <el-button
@@ -179,6 +180,7 @@ function submitFormFields() {
       submitResult.value.formReady = false;
       overallResult.value.formResult = "";
       ruleFormRef.value?.resetFields();
+      isSpinnerVisible.value = false;
     });
   } catch (error) {
     ElMessage({
@@ -191,6 +193,12 @@ function submitFormFields() {
 
 function messageEventHandler(elMessage: IElMessageUploadFile) {
   Object.assign(elMessageRef.value, elMessage);
+}
+
+function uploadFileErrorHandler(isError: boolean){
+  if (isError){
+    isSpinnerVisible.value = false;
+  }
 }
 </script>
 
