@@ -70,10 +70,9 @@ export class ModuleController {
       console.log("body? ну-ка", body);
     }
 
-    // throw new HttpException('Быстро исправил, ёпта!', HttpStatus.BAD_GATEWAY);
-    return {
-      response: 'OK'
-    };
+    // throw new HttpException('Быстро исправил!', HttpStatus.BAD_GATEWAY);
+
+    return { response: "OK" };
   }
 
   @Post()
