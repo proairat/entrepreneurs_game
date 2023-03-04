@@ -10,7 +10,7 @@ import {
   UploadedFile,
   ParseFilePipeBuilder,
 } from "@nestjs/common";
-import { ModuleService } from "./module.service";
+import { ModulesService } from "./modules.service";
 import { CreateModuleDto } from "./dto/create-module.dto";
 import { UpdateModuleDto } from "./dto/update-module.dto";
 import { FileInterceptor } from "@nestjs/platform-express";
@@ -41,8 +41,8 @@ const multerOptions = {
 };
 
 @Controller("modules")
-export class ModuleController {
-  constructor(private readonly moduleService: ModuleService) {}
+export class ModulesController {
+  constructor(private readonly modulesService: ModulesService) {}
 
   @Post("upload")
   @UseInterceptors(FileInterceptor("file", multerOptions))
@@ -77,27 +77,27 @@ export class ModuleController {
 
   @Post()
   create(@Body() createModuleDto: CreateModuleDto) {
-    return this.moduleService.create(createModuleDto);
+    return this.modulesService.create(createModuleDto);
   }
 
   @Get()
   findAll() {
-    return this.moduleService.findAll();
+    return this.modulesService.findAll();
   }
 
   @Get(":id")
   findOne(@Param("id") id: string) {
     console.log("Это действует? id", id);
-    return this.moduleService.findOne(+id);
+    return this.modulesService.findOne(+id);
   }
 
   @Patch(":id")
   update(@Param("id") id: string, @Body() updateModuleDto: UpdateModuleDto) {
-    return this.moduleService.update(+id, updateModuleDto);
+    return this.modulesService.update(+id, updateModuleDto);
   }
 
   @Delete(":id")
   remove(@Param("id") id: string) {
-    return this.moduleService.remove(+id);
+    return this.modulesService.remove(+id);
   }
 }

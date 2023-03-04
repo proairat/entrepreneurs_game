@@ -1,3 +1,4 @@
+require("module-alias/register");
 declare const module: any;
 import { NestFactory } from "@nestjs/core";
 import { SwaggerModule, DocumentBuilder } from "@nestjs/swagger";
@@ -26,5 +27,7 @@ async function bootstrap() {
     module.hot.accept();
     module.hot.dispose(() => app.close());
   }
+
+  console.log(`Application is running on: ${await app.getUrl()}`);
 }
 bootstrap();

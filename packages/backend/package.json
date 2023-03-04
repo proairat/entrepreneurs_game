@@ -10,8 +10,9 @@
     "format": "prettier --write \"src/**/*.ts\" \"test/**/*.ts\"",
     "start": "nest start",
     "start:dev": "nest start --watch",
+    "start:prod": "node dist/main.js",
     "start:debug": "nest start --debug --watch",
-    "start:prod": "node dist/main",
+    "start:live": "rimraf dist && nest build && node dist/src/main", 
     "lint": "eslint . --ext .js,.jsx,.cjs,.mjs,.ts,.tsx,.cts,.mts --fix",
     "test": "jest",
     "test:watch": "jest --watch",
@@ -20,7 +21,11 @@
     "test:e2e": "jest --config ./test/jest-e2e.json"
   },
   "comments": {
-    "start:dev": "nest build --webpack --webpackPath webpack-hmr.config.js --watch"
+    "start1": "tsc-watch src/main.ts",
+    "start2": "ts-node -r tsconfig-paths/register src/main.ts",
+    "start:dev1": "tsc-watch -p tsconfig.build.json --onSuccess \"node dist/src/main.js\"",
+    "start:dev2": "nest build --webpack --webpackPath webpack-hmr.config.js --watch",
+    "start:prod1": "node dist/main"
   },
   "dependencies": {
     "@nestjs/common": "^9.3.3",
@@ -28,10 +33,14 @@
     "@nestjs/mapped-types": "*",
     "@nestjs/platform-express": "^9.3.3",
     "@nestjs/swagger": "^6.2.1",
+    "@nestjs/typeorm": "^9.0.1",
+    "module-alias": "^2.2.2",
+    "mysql2": "^3.1.2",
     "reflect-metadata": "^0.1.13",
     "rxjs": "^7.8.0",
     "share": "^1.0.0",
     "swagger-ui-express": "^4.6.0",
+    "typeorm": "^0.3.12",
     "uuid": "^9.0.0"
   },
   "devDependencies": {
@@ -57,6 +66,7 @@
     "ts-jest": "29.0.3",
     "ts-loader": "^9.4.2",
     "ts-node": "^10.9.1",
+    "tsc-watch": "^6.0.0",
     "tsconfig-paths": "4.1.1",
     "typescript": "^4.7.4",
     "webpack": "^5.75.0",
@@ -78,5 +88,8 @@
     ],
     "coverageDirectory": "../coverage",
     "testEnvironment": "node"
-  }
+  },
+  "_moduleAliases": {
+    "@app": "./dist"
+ }
 }

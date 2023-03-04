@@ -1,8 +1,9 @@
 import { ApiProperty } from "@nestjs/swagger";
 import { EEntityType, EEntityState } from "share/types/enums";
 import type { IModule } from "share/types/interfaces";
+import { Entity, PrimaryGeneratedColumn } from "typeorm";
 
-export class Module implements IModule {
+export class Modules implements IModule {
   @ApiProperty({ description: "Module identifier", nullable: false })
   readonly id: number;
 
