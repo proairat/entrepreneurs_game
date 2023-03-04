@@ -20,6 +20,7 @@ videos.set(1, [
     authors: [
       {
         id: 1,
+        type: EEntityType.TabsAuthors,
         surname: "Сазонов",
         name: "Борис",
         patronymic: "",
@@ -40,6 +41,7 @@ videos.set(1, [
     authors: [
       {
         id: 1,
+        type: EEntityType.TabsAuthors,
         surname: "Сазонов",
         name: "Борис",
         patronymic: "",
@@ -61,6 +63,7 @@ videos.set(1, [
     authors: [
       {
         id: 1,
+        type: EEntityType.TabsAuthors,
         surname: "Сазонов",
         name: "Борис",
         patronymic: "",
@@ -81,6 +84,7 @@ videos.set(1, [
     authors: [
       {
         id: 1,
+        type: EEntityType.TabsAuthors,
         surname: "Сазонов",
         name: "Борис",
         patronymic: "",
@@ -101,6 +105,7 @@ videos.set(1, [
     authors: [
       {
         id: 1,
+        type: EEntityType.TabsAuthors,
         surname: "Иванов",
         name: "Игнат",
         patronymic: "Ираклиевич",
@@ -108,6 +113,7 @@ videos.set(1, [
       },
       {
         id: 2,
+        type: EEntityType.TabsAuthors,
         surname: "Калмыков",
         name: "Камиль",
         patronymic: "Камалетдинович",
@@ -115,6 +121,7 @@ videos.set(1, [
       },
       {
         id: 3,
+        type: EEntityType.TabsAuthors,
         surname: "Бахча",
         name: "Бергамот",
         patronymic: "Балыкович",
@@ -122,6 +129,7 @@ videos.set(1, [
       },
       {
         id: 4,
+        type: EEntityType.TabsAuthors,
         surname: "Савушкин",
         name: "Савелий",
         patronymic: "Севастьянович",
@@ -129,6 +137,7 @@ videos.set(1, [
       },
       {
         id: 5,
+        type: EEntityType.TabsAuthors,
         surname: "Гагаладзе",
         name: "Гар",
         patronymic: "Гора оглы",
