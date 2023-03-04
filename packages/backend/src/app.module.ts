@@ -1,8 +1,9 @@
 import { Module } from "@nestjs/common";
+import { TypeOrmModule } from "@nestjs/typeorm";
 import { AppController } from "./app.controller";
 import { AppService } from "./app.service";
 import { NotesModule } from "./notes/notes.module";
-import { ModuleModule } from "./module/module.module";
+import { ModulesModule } from "./modules/modules.module";
 import { ModuleAdvancedModule } from "./module-advanced/module-advanced.module";
 import { ThemeModule } from "./theme/theme.module";
 import { TabsAuthorsModule } from "./tabs-authors/tabs-authors.module";
@@ -14,7 +15,7 @@ import { TestAnswerModule } from "./test-answer/test-answer.module";
 @Module({
   imports: [
     NotesModule,
-    ModuleModule,
+    ModulesModule,
     ModuleAdvancedModule,
     ThemeModule,
     TabsAuthorsModule,
@@ -22,6 +23,17 @@ import { TestAnswerModule } from "./test-answer/test-answer.module";
     TestModule,
     TestQuestionModule,
     TestAnswerModule,
+    TypeOrmModule.forRoot({
+      type: "mysql",
+      host: "localhost",
+      port: 3306,
+      username: "root",
+      password:
+        "38A=96B90E695C406566083C91FAsdf107C!+E238_F00A7927D38730780D36639A75164E62",
+      database: "gpfed_database",
+      autoLoadEntities: true,
+      synchronize: true,
+    }),
   ],
   controllers: [AppController],
   providers: [AppService],
