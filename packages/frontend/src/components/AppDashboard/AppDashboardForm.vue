@@ -83,15 +83,19 @@ const rules = reactive<FormRules>({
   ],
 });
 
-function validateFormHandler(props: FormItemProp, isValid: boolean, message: string){
+function validateFormHandler(
+  props: FormItemProp,
+  isValid: boolean,
+  message: string
+) {
   if (!isValid) {
     submitResult.value.formReady = false;
-  } 
+  }
 }
 
 function checkFormReadyHandler(formEl: FormInstance | undefined) {
   if (!formEl) return;
-    formEl.validate((valid) => {
+  formEl.validate((valid) => {
     if (valid) {
       submitResult.value.formReady = true;
     } else {
@@ -195,8 +199,8 @@ function messageEventHandler(elMessage: IElMessageUploadFile) {
   Object.assign(elMessageRef.value, elMessage);
 }
 
-function uploadFileErrorHandler(isError: boolean){
-  if (isError){
+function uploadFileErrorHandler(isError: boolean) {
+  if (isError) {
     isSpinnerVisible.value = false;
   }
 }

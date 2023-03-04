@@ -24,6 +24,8 @@
     "skipLibCheck": true,
     "forceConsistentCasingInFileNames": true,
     "sourceMap": true,
-    "types": ["element-plus/global"]
+    "types": ["element-plus/global"],
+	  "declaration": true,
+    "declarationMap": true,
   }
 }
