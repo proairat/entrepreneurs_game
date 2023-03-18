@@ -10,7 +10,7 @@ modulesAdvanced.push(
   {
     id: 8,
     type: EEntityType.ModulesAdvanced,
-    src: "../assets/modulesAdvanced/cardCover/1.png",
+    path: "../assets/modulesAdvanced/cardCover/1.png",
     alt: "Модуль углубленный 1",
     header: "Углубленный курс",
     title: "Модуль углубленный 1",
@@ -23,7 +23,7 @@ modulesAdvanced.push(
   {
     id: 8,
     type: EEntityType.ModulesAdvanced,
-    src: "../assets/modulesAdvanced/cardCover/1.png",
+    path: "../assets/modulesAdvanced/cardCover/1.png",
     alt: "Модуль углубленный 1",
     header: "Углубленный курс",
     title: "Модуль углубленный 1",
@@ -36,7 +36,7 @@ modulesAdvanced.push(
   {
     id: 8,
     type: EEntityType.ModulesAdvanced,
-    src: "../assets/modulesAdvanced/cardCover/1.png",
+    path: "../assets/modulesAdvanced/cardCover/1.png",
     alt: "Модуль углубленный 1",
     header: "Углубленный курс",
     title: "Модуль углубленный 1",

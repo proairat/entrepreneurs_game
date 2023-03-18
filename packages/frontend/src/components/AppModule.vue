@@ -53,7 +53,7 @@ import { getImageUrl } from "@/helpers/commonFunctions";
 const props = defineProps<{
   id: number;
   type: EEntityType.Modules | EEntityType.ModulesAdvanced;
-  src: string;
+  path: string;
   alt: string;
   header: string;
   title: string;
@@ -81,7 +81,7 @@ const visibility = computed(() => {
       }
     : "";
 });
-const getModuleSrc = computed(() => new URL(props.src, import.meta.url).href);
+const getModuleSrc = computed(() => new URL(props.path, import.meta.url).href);
 const coin = await getImageUrl("coin");
 
 // Due to the fact that backtics does not work correctly, let's leave it like that

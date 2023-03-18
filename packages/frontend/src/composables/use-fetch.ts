@@ -2,8 +2,6 @@
 import { useFetch } from "@vueuse/core";
 import { BASE_URL } from "../API";
 
-import { ElMessage } from "element-plus";
-
 export function useFetchComposable(
   urlConst: string,
   urlVar: string,

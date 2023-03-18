@@ -14,7 +14,6 @@ import { ModulesService } from "./modules.service";
 import { CreateModuleDto } from "./dto/create-module.dto";
 import { UpdateModuleDto } from "./dto/update-module.dto";
 import { FileInterceptor } from "@nestjs/platform-express";
-import { FileDto } from "./dto/file.dto";
 import { diskStorage } from "multer";
 import { extname } from "path";
 import { existsSync, mkdirSync } from "fs";
@@ -47,7 +46,7 @@ export class ModulesController {
   @Post("upload")
   @UseInterceptors(FileInterceptor("file", multerOptions))
   uploadFileAndPassValidation(
-    @Body() body: FileDto,
+    @Body() body: CreateModuleDto,
     @UploadedFile(
       new ParseFilePipeBuilder()
         .addFileTypeValidator({
@@ -60,19 +59,9 @@ export class ModulesController {
           fileIsRequired: false,
         })
     )
-    file?: Express.Multer.File
+    file: Express.Multer.File
   ) {
-    if (file) {
-      console.log("file? ну-ка", file);
-    }
-
-    if (body) {
-      console.log("body? ну-ка", body);
-    }
-
-    // throw new HttpException('Быстро исправил!', HttpStatus.BAD_GATEWAY);
-
-    return { response: "OK" };
+    return this.modulesService.uploadFileAndPassValidation(body, file);
   }
 
   @Post()
@@ -86,9 +75,8 @@ export class ModulesController {
   }
 
   @Get(":id")
-  findOne(@Param("id") id: string) {
-    console.log("Это действует? id", id);
-    return this.modulesService.findOne(+id);
+  findOneById(@Param("id") id: string) {
+    return this.modulesService.findOneById(+id);
   }
 
   @Patch(":id")
