@@ -12,7 +12,7 @@
     "start:dev": "nest start --watch",
     "start:prod": "node dist/main.js",
     "start:debug": "nest start --debug --watch",
-    "start:live": "rimraf dist && nest build && node dist/src/main", 
+    "start:live": "rimraf dist && nest build && node dist/src/main",
     "lint": "eslint . --ext .js,.jsx,.cjs,.mjs,.ts,.tsx,.cts,.mts --fix",
     "test": "jest",
     "test:watch": "jest --watch",
@@ -34,6 +34,8 @@
     "@nestjs/platform-express": "^9.3.3",
     "@nestjs/swagger": "^6.2.1",
     "@nestjs/typeorm": "^9.0.1",
+    "@types/lodash": "^4.14.191",
+    "lodash": "^4.17.21",
     "module-alias": "^2.2.2",
     "mysql2": "^3.1.2",
     "reflect-metadata": "^0.1.13",
@@ -91,5 +93,5 @@
   },
   "_moduleAliases": {
     "@app": "./dist"
- }
+  }
 }

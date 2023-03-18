@@ -26,14 +26,14 @@ interface INavigation {
   name: string;
   current: boolean;
   href: string;
-  src: string;
+  path: string;
   alt: string;
 }
 
 interface IModule {
   id: number;
   type: EEntityType.Modules;
-  src: string;
+  path: string;
   alt: string;
   header: string;
   title: string;
@@ -45,7 +45,7 @@ interface IModule {
 interface IModuleAdvanced {
   id: number;
   type: EEntityType.ModulesAdvanced;
-  src: string;
+  path: string;
   alt: string;
   header: string;
   title: string;
@@ -82,7 +82,7 @@ interface ITabsAuthors {
 interface IVideo {
   id: number;
   type: EEntityType.Videos;
-  src: string;
+  path: string;
   poster: string;
   videoType: string;
   duration?: number;
