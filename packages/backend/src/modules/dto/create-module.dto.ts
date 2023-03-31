@@ -1,7 +1,7 @@
 import { EEntityState } from "@app/enums";
 
 export class CreateModuleDto {
-  path!: string;
+  filename!: string;
   alt!: string;
   header!: string;
   state!: EEntityState;

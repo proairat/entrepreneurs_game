@@ -31,7 +31,7 @@
 
 <script setup lang="ts">
 import { useTestsStore } from "@/stores";
-import { getImageUrl } from "@/helpers/commonFunctions";
+import { getImageUrlAwaitImport } from "@/helpers/commonFunctions";
 import { EPercent } from "share/types/enums";
 
 const props = defineProps<{
@@ -40,7 +40,7 @@ const props = defineProps<{
 
 const testsStore = useTestsStore();
 const { initializeTest } = testsStore;
-const restart = await getImageUrl("restart");
+const restart = await getImageUrlAwaitImport("restart");
 
 function checkBoundaryPercent() {
   return props.percent > EPercent.OneCoinLowBoundary ? true : false;

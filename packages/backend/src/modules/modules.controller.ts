@@ -9,9 +9,10 @@ import {
   UseInterceptors,
   UploadedFile,
   ParseFilePipeBuilder,
+  Req,
+  Sse,
 } from "@nestjs/common";
 import { ModulesService } from "./modules.service";
-import { CreateModuleDto } from "./dto/create-module.dto";
 import { UpdateModuleDto } from "./dto/update-module.dto";
 import { FileInterceptor } from "@nestjs/platform-express";
 import { diskStorage } from "multer";
@@ -19,12 +20,15 @@ import { extname } from "path";
 import { existsSync, mkdirSync } from "fs";
 import { v4 as uuid } from "uuid";
 import { HttpException, HttpStatus } from "@nestjs/common";
+import { Observable } from "rxjs";
+import { Socket } from "net";
+import { IModule } from "@app/interfaces";
 
 const multerOptions = {
   storage: diskStorage({
     // Destination storage path details
     destination: (req: any, file: any, cb: any) => {
-      const uploadPath = "./uploadFilesFolder";
+      const uploadPath = "./assets/modules/cardCover";
       // Create folder if doesn't exist
       if (!existsSync(uploadPath)) {
         mkdirSync(uploadPath);
@@ -46,14 +50,14 @@ export class ModulesController {
   @Post("upload")
   @UseInterceptors(FileInterceptor("file", multerOptions))
   uploadFileAndPassValidation(
-    @Body() body: CreateModuleDto,
+    @Body() body: UpdateModuleDto,
     @UploadedFile(
       new ParseFilePipeBuilder()
         .addFileTypeValidator({
           fileType: "png|svg",
         })
         .addMaxSizeValidator({
-          maxSize: 2097152, // 2 Mb
+          maxSize: 3145728, // 3 Mb
         })
         .build({
           fileIsRequired: false,
@@ -65,13 +69,21 @@ export class ModulesController {
   }
 
   @Post()
-  create(@Body() createModuleDto: CreateModuleDto) {
+  create(@Body() createModuleDto: UpdateModuleDto) {
     return this.modulesService.create(createModuleDto);
   }
 
   @Get()
   findAll() {
     return this.modulesService.findAll();
+  }
+
+  @Get("stream")
+  @Sse()
+  streamEvents(
+    @Req() req: Request & { socket: Socket }
+  ): Observable<{ data: IModule; id: number; retry: number }> {
+    return this.modulesService.streamEvents(req);
   }
 
   @Get(":id")

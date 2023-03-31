@@ -1,7 +1,7 @@
 <template>
   <h1>{{ title }}</h1>
   <template v-if="!(user?.loading || user?.error)">
-    <Form
+    <!--<Form
       @submit="onSubmit"
       :validation-schema="schema"
       :initial-values="user"
@@ -74,7 +74,8 @@
   <template v-if="user?.error">
     <div class="text-center m-5">
       <div class="text-danger">Error loading user: {{ user.error }}</div>
-    </div>
+    </div>-->
+    AddEdit.vue
   </template>
 </template>
 

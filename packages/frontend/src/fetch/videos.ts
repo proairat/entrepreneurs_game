@@ -12,7 +12,7 @@ videos.set(1, [
   {
     id: 1,
     type: EEntityType.Videos,
-    src: "../assets/video/srcs/1.mp4",
+    filename: "../assets/video/srcs/1.mp4",
     poster: "../assets/video/posters/1.png",
     videoType: "",
     state: EEntityState.Active,
@@ -33,7 +33,7 @@ videos.set(1, [
   {
     id: 2,
     type: EEntityType.Videos,
-    src: "../assets/video/srcs/2.mp4",
+    filename: "../assets/video/srcs/2.mp4",
     poster: "../assets/video/posters/2.png",
     videoType: "",
     state: EEntityState.Default,
@@ -55,7 +55,7 @@ videos.set(1, [
   {
     id: 3,
     type: EEntityType.Videos,
-    src: "../assets/video/srcs/3.mp4",
+    filename: "../assets/video/srcs/3.mp4",
     poster: "../assets/video/posters/3.png",
     videoType: "",
     state: EEntityState.Default,
@@ -76,7 +76,7 @@ videos.set(1, [
   {
     id: 4,
     type: EEntityType.Videos,
-    src: "../assets/video/srcs/4.mp4",
+    filename: "../assets/video/srcs/4.mp4",
     poster: "../assets/video/posters/4.png",
     videoType: "",
     state: EEntityState.Default,
@@ -97,7 +97,7 @@ videos.set(1, [
   {
     id: 5,
     type: EEntityType.Videos,
-    src: "https://vjs.zencdn.net/v/oceans.mp4",
+    filename: "https://vjs.zencdn.net/v/oceans.mp4",
     poster: "https://vjs.zencdn.net/v/oceans.png",
     videoType: "",
     state: EEntityState.Default,
@@ -149,7 +149,7 @@ videos.set(1, [
   {
     id: 6,
     type: EEntityType.Videos,
-    src: "https://vjs.zencdn.net/v/oceans.mp4",
+    filename: "https://vjs.zencdn.net/v/oceans.mp4",
     poster: "https://vjs.zencdn.net/v/oceans.png",
     videoType: "",
     state: EEntityState.Default,
@@ -160,7 +160,7 @@ videos.set(1, [
   {
     id: 8,
     type: EEntityType.Videos,
-    src: "https://vjs.zencdn.net/v/oceans.mp4",
+    filename: "https://vjs.zencdn.net/v/oceans.mp4",
     poster: "https://vjs.zencdn.net/v/oceans.png",
     videoType: "",
     state: EEntityState.Default,
@@ -171,7 +171,7 @@ videos.set(1, [
   {
     id: 9,
     type: EEntityType.Videos,
-    src: "https://vjs.zencdn.net/v/oceans.mp4",
+    filename: "https://vjs.zencdn.net/v/oceans.mp4",
     poster: "https://vjs.zencdn.net/v/oceans.png",
     videoType: "",
     state: EEntityState.Default,
@@ -182,7 +182,7 @@ videos.set(1, [
   {
     id: 10,
     type: EEntityType.Videos,
-    src: "https://vjs.zencdn.net/v/oceans.mp4",
+    filename: "https://vjs.zencdn.net/v/oceans.mp4",
     poster: "https://vjs.zencdn.net/v/oceans.png",
     videoType: "",
     state: EEntityState.Default,
@@ -193,7 +193,7 @@ videos.set(1, [
   {
     id: 11,
     type: EEntityType.Videos,
-    src: "https://vjs.zencdn.net/v/oceans.mp4",
+    filename: "https://vjs.zencdn.net/v/oceans.mp4",
     poster: "https://vjs.zencdn.net/v/oceans.png",
     videoType: "",
     state: EEntityState.Default,
@@ -204,7 +204,7 @@ videos.set(1, [
   {
     id: 12,
     type: EEntityType.Videos,
-    src: "https://vjs.zencdn.net/v/oceans.mp4",
+    filename: "https://vjs.zencdn.net/v/oceans.mp4",
     poster: "https://vjs.zencdn.net/v/oceans.png",
     videoType: "",
     state: EEntityState.Default,
@@ -215,7 +215,7 @@ videos.set(1, [
   {
     id: 13,
     type: EEntityType.Videos,
-    src: "https://vjs.zencdn.net/v/oceans.mp4",
+    filename: "https://vjs.zencdn.net/v/oceans.mp4",
     poster: "https://vjs.zencdn.net/v/oceans.png",
     videoType: "",
     state: EEntityState.Default,
@@ -226,7 +226,7 @@ videos.set(1, [
   {
     id: 15,
     type: EEntityType.Videos,
-    src: "https://vjs.zencdn.net/v/oceans.mp4",
+    filename: "https://vjs.zencdn.net/v/oceans.mp4",
     poster: "https://vjs.zencdn.net/v/oceans.png",
     videoType: "",
     state: EEntityState.Default,
@@ -237,7 +237,7 @@ videos.set(1, [
   {
     id: 16,
     type: EEntityType.Videos,
-    src: "https://vjs.zencdn.net/v/oceans.mp4",
+    filename: "https://vjs.zencdn.net/v/oceans.mp4",
     poster: "https://vjs.zencdn.net/v/oceans.png",
     videoType: "",
     state: EEntityState.Default,
@@ -248,7 +248,7 @@ videos.set(1, [
   {
     id: 17,
     type: EEntityType.Videos,
-    src: "https://vjs.zencdn.net/v/oceans.mp4",
+    filename: "https://vjs.zencdn.net/v/oceans.mp4",
     poster: "https://vjs.zencdn.net/v/oceans.png",
     videoType: "",
     state: EEntityState.Default,
@@ -259,7 +259,7 @@ videos.set(1, [
   {
     id: 18,
     type: EEntityType.Videos,
-    src: "https://vjs.zencdn.net/v/oceans.mp4",
+    filename: "https://vjs.zencdn.net/v/oceans.mp4",
     poster: "https://vjs.zencdn.net/v/oceans.png",
     videoType: "",
     state: EEntityState.Default,
@@ -270,7 +270,7 @@ videos.set(1, [
   {
     id: 19,
     type: EEntityType.Videos,
-    src: "https://vjs.zencdn.net/v/oceans.mp4",
+    filename: "https://vjs.zencdn.net/v/oceans.mp4",
     poster: "https://vjs.zencdn.net/v/oceans.png",
     videoType: "",
     state: EEntityState.Default,
@@ -281,7 +281,7 @@ videos.set(1, [
   {
     id: 20,
     type: EEntityType.Videos,
-    src: "https://vjs.zencdn.net/v/oceans.mp4",
+    filename: "https://vjs.zencdn.net/v/oceans.mp4",
     poster: "https://vjs.zencdn.net/v/oceans.png",
     videoType: "",
     state: EEntityState.Default,
@@ -292,7 +292,7 @@ videos.set(1, [
   {
     id: 21,
     type: EEntityType.Videos,
-    src: "https://vjs.zencdn.net/v/oceans.mp4",
+    filename: "https://vjs.zencdn.net/v/oceans.mp4",
     poster: "https://vjs.zencdn.net/v/oceans.png",
     videoType: "",
     state: EEntityState.Default,
@@ -303,7 +303,7 @@ videos.set(1, [
   {
     id: 22,
     type: EEntityType.Videos,
-    src: "https://vjs.zencdn.net/v/oceans.mp4",
+    filename: "https://vjs.zencdn.net/v/oceans.mp4",
     poster: "https://vjs.zencdn.net/v/oceans.png",
     videoType: "",
     state: EEntityState.Default,
@@ -314,7 +314,7 @@ videos.set(1, [
   {
     id: 23,
     type: EEntityType.Videos,
-    src: "https://vjs.zencdn.net/v/oceans.mp4",
+    filename: "https://vjs.zencdn.net/v/oceans.mp4",
     poster: "https://vjs.zencdn.net/v/oceans.png",
     videoType: "",
     state: EEntityState.Default,
@@ -325,7 +325,7 @@ videos.set(1, [
   {
     id: 24,
     type: EEntityType.Videos,
-    src: "https://vjs.zencdn.net/v/oceans.mp4",
+    filename: "https://vjs.zencdn.net/v/oceans.mp4",
     poster: "https://vjs.zencdn.net/v/oceans.png",
     videoType: "",
     state: EEntityState.Default,
@@ -336,7 +336,7 @@ videos.set(1, [
   {
     id: 25,
     type: EEntityType.Videos,
-    src: "https://vjs.zencdn.net/v/oceans.mp4",
+    filename: "https://vjs.zencdn.net/v/oceans.mp4",
     poster: "https://vjs.zencdn.net/v/oceans.png",
     videoType: "",
     state: EEntityState.Default,
@@ -347,7 +347,7 @@ videos.set(1, [
   {
     id: 26,
     type: EEntityType.Videos,
-    src: "https://vjs.zencdn.net/v/oceans.mp4",
+    filename: "https://vjs.zencdn.net/v/oceans.mp4",
     poster: "https://vjs.zencdn.net/v/oceans.png",
     videoType: "",
     state: EEntityState.Default,
@@ -358,7 +358,7 @@ videos.set(1, [
   {
     id: 27,
     type: EEntityType.Videos,
-    src: "https://vjs.zencdn.net/v/oceans.mp4",
+    filename: "https://vjs.zencdn.net/v/oceans.mp4",
     poster: "https://vjs.zencdn.net/v/oceans.png",
     videoType: "",
     state: EEntityState.Default,
@@ -373,7 +373,7 @@ videos.set(2, [
   {
     id: 29,
     type: EEntityType.Videos,
-    src: "https://vjs.zencdn.net/v/oceans.mp4",
+    filename: "https://vjs.zencdn.net/v/oceans.mp4",
     poster: "https://vjs.zencdn.net/v/oceans.png",
     videoType: "",
     state: EEntityState.Active,
@@ -384,7 +384,7 @@ videos.set(2, [
   {
     id: 30,
     type: EEntityType.Videos,
-    src: "https://vjs.zencdn.net/v/oceans.mp4",
+    filename: "https://vjs.zencdn.net/v/oceans.mp4",
     poster: "https://vjs.zencdn.net/v/oceans.png",
     videoType: "",
     state: EEntityState.Default,
@@ -395,7 +395,7 @@ videos.set(2, [
   {
     id: 31,
     type: EEntityType.Videos,
-    src: "https://vjs.zencdn.net/v/oceans.mp4",
+    filename: "https://vjs.zencdn.net/v/oceans.mp4",
     poster: "https://vjs.zencdn.net/v/oceans.png",
     videoType: "",
     state: EEntityState.Default,
@@ -406,7 +406,7 @@ videos.set(2, [
   {
     id: 32,
     type: EEntityType.Videos,
-    src: "https://vjs.zencdn.net/v/oceans.mp4",
+    filename: "https://vjs.zencdn.net/v/oceans.mp4",
     poster: "https://vjs.zencdn.net/v/oceans.png",
     videoType: "",
     state: EEntityState.Default,
@@ -417,7 +417,7 @@ videos.set(2, [
   {
     id: 33,
     type: EEntityType.Videos,
-    src: "https://vjs.zencdn.net/v/oceans.mp4",
+    filename: "https://vjs.zencdn.net/v/oceans.mp4",
     poster: "https://vjs.zencdn.net/v/oceans.png",
     videoType: "",
     state: EEntityState.Default,
@@ -428,7 +428,7 @@ videos.set(2, [
   {
     id: 34,
     type: EEntityType.Videos,
-    src: "https://vjs.zencdn.net/v/oceans.mp4",
+    filename: "https://vjs.zencdn.net/v/oceans.mp4",
     poster: "https://vjs.zencdn.net/v/oceans.png",
     videoType: "",
     state: EEntityState.Default,
@@ -439,7 +439,7 @@ videos.set(2, [
   {
     id: 35,
     type: EEntityType.Videos,
-    src: "https://vjs.zencdn.net/v/oceans.mp4",
+    filename: "https://vjs.zencdn.net/v/oceans.mp4",
     poster: "https://vjs.zencdn.net/v/oceans.png",
     videoType: "",
     state: EEntityState.Default,
@@ -450,7 +450,7 @@ videos.set(2, [
   {
     id: 36,
     type: EEntityType.Videos,
-    src: "https://vjs.zencdn.net/v/oceans.mp4",
+    filename: "https://vjs.zencdn.net/v/oceans.mp4",
     poster: "https://vjs.zencdn.net/v/oceans.png",
     videoType: "",
     state: EEntityState.Default,
@@ -461,7 +461,7 @@ videos.set(2, [
   {
     id: 37,
     type: EEntityType.Videos,
-    src: "https://vjs.zencdn.net/v/oceans.mp4",
+    filename: "https://vjs.zencdn.net/v/oceans.mp4",
     poster: "https://vjs.zencdn.net/v/oceans.png",
     videoType: "",
     state: EEntityState.Default,
@@ -472,7 +472,7 @@ videos.set(2, [
   {
     id: 38,
     type: EEntityType.Videos,
-    src: "https://vjs.zencdn.net/v/oceans.mp4",
+    filename: "https://vjs.zencdn.net/v/oceans.mp4",
     poster: "https://vjs.zencdn.net/v/oceans.png",
     videoType: "",
     state: EEntityState.Default,
@@ -487,7 +487,7 @@ videos.set(3, [
   {
     id: 40,
     type: EEntityType.Videos,
-    src: "https://vjs.zencdn.net/v/oceans.mp4",
+    filename: "https://vjs.zencdn.net/v/oceans.mp4",
     poster: "https://vjs.zencdn.net/v/oceans.png",
     videoType: "",
     state: EEntityState.Active,
@@ -498,7 +498,7 @@ videos.set(3, [
   {
     id: 41,
     type: EEntityType.Videos,
-    src: "https://vjs.zencdn.net/v/oceans.mp4",
+    filename: "https://vjs.zencdn.net/v/oceans.mp4",
     poster: "https://vjs.zencdn.net/v/oceans.png",
     videoType: "",
     state: EEntityState.Default,
@@ -509,7 +509,7 @@ videos.set(3, [
   {
     id: 42,
     type: EEntityType.Videos,
-    src: "https://vjs.zencdn.net/v/oceans.mp4",
+    filename: "https://vjs.zencdn.net/v/oceans.mp4",
     poster: "https://vjs.zencdn.net/v/oceans.png",
     videoType: "",
     state: EEntityState.Default,
@@ -520,7 +520,7 @@ videos.set(3, [
   {
     id: 43,
     type: EEntityType.Videos,
-    src: "https://vjs.zencdn.net/v/oceans.mp4",
+    filename: "https://vjs.zencdn.net/v/oceans.mp4",
     poster: "https://vjs.zencdn.net/v/oceans.png",
     videoType: "",
     state: EEntityState.Default,
@@ -531,7 +531,7 @@ videos.set(3, [
   {
     id: 44,
     type: EEntityType.Videos,
-    src: "https://vjs.zencdn.net/v/oceans.mp4",
+    filename: "https://vjs.zencdn.net/v/oceans.mp4",
     poster: "https://vjs.zencdn.net/v/oceans.png",
     videoType: "",
     state: EEntityState.Default,
@@ -542,7 +542,7 @@ videos.set(3, [
   {
     id: 45,
     type: EEntityType.Videos,
-    src: "https://vjs.zencdn.net/v/oceans.mp4",
+    filename: "https://vjs.zencdn.net/v/oceans.mp4",
     poster: "https://vjs.zencdn.net/v/oceans.png",
     videoType: "",
     state: EEntityState.Default,
@@ -553,7 +553,7 @@ videos.set(3, [
   {
     id: 46,
     type: EEntityType.Videos,
-    src: "https://vjs.zencdn.net/v/oceans.mp4",
+    filename: "https://vjs.zencdn.net/v/oceans.mp4",
     poster: "https://vjs.zencdn.net/v/oceans.png",
     videoType: "",
     state: EEntityState.Default,
@@ -564,7 +564,7 @@ videos.set(3, [
   {
     id: 47,
     type: EEntityType.Videos,
-    src: "https://vjs.zencdn.net/v/oceans.mp4",
+    filename: "https://vjs.zencdn.net/v/oceans.mp4",
     poster: "https://vjs.zencdn.net/v/oceans.png",
     videoType: "",
     state: EEntityState.Default,
@@ -575,7 +575,7 @@ videos.set(3, [
   {
     id: 48,
     type: EEntityType.Videos,
-    src: "https://vjs.zencdn.net/v/oceans.mp4",
+    filename: "https://vjs.zencdn.net/v/oceans.mp4",
     poster: "https://vjs.zencdn.net/v/oceans.png",
     videoType: "",
     state: EEntityState.Default,
@@ -586,7 +586,7 @@ videos.set(3, [
   {
     id: 49,
     type: EEntityType.Videos,
-    src: "https://vjs.zencdn.net/v/oceans.mp4",
+    filename: "https://vjs.zencdn.net/v/oceans.mp4",
     poster: "https://vjs.zencdn.net/v/oceans.png",
     videoType: "",
     state: EEntityState.Default,
@@ -601,7 +601,7 @@ videos.set(4, [
   {
     id: 51,
     type: EEntityType.Videos,
-    src: "https://vjs.zencdn.net/v/oceans.mp4",
+    filename: "https://vjs.zencdn.net/v/oceans.mp4",
     poster: "https://vjs.zencdn.net/v/oceans.png",
     videoType: "",
     state: EEntityState.Default,
@@ -612,7 +612,7 @@ videos.set(4, [
   {
     id: 52,
     type: EEntityType.Videos,
-    src: "https://vjs.zencdn.net/v/oceans.mp4",
+    filename: "https://vjs.zencdn.net/v/oceans.mp4",
     poster: "https://vjs.zencdn.net/v/oceans.png",
     videoType: "",
     state: EEntityState.Active,
@@ -623,7 +623,7 @@ videos.set(4, [
   {
     id: 53,
     type: EEntityType.Videos,
-    src: "https://vjs.zencdn.net/v/oceans.mp4",
+    filename: "https://vjs.zencdn.net/v/oceans.mp4",
     poster: "https://vjs.zencdn.net/v/oceans.png",
     videoType: "",
     state: EEntityState.Default,
@@ -634,7 +634,7 @@ videos.set(4, [
   {
     id: 54,
     type: EEntityType.Videos,
-    src: "https://vjs.zencdn.net/v/oceans.mp4",
+    filename: "https://vjs.zencdn.net/v/oceans.mp4",
     poster: "https://vjs.zencdn.net/v/oceans.png",
     videoType: "",
     state: EEntityState.Default,
@@ -645,7 +645,7 @@ videos.set(4, [
   {
     id: 55,
     type: EEntityType.Videos,
-    src: "https://vjs.zencdn.net/v/oceans.mp4",
+    filename: "https://vjs.zencdn.net/v/oceans.mp4",
     poster: "https://vjs.zencdn.net/v/oceans.png",
     videoType: "",
     state: EEntityState.Default,
@@ -656,7 +656,7 @@ videos.set(4, [
   {
     id: 56,
     type: EEntityType.Videos,
-    src: "https://vjs.zencdn.net/v/oceans.mp4",
+    filename: "https://vjs.zencdn.net/v/oceans.mp4",
     poster: "https://vjs.zencdn.net/v/oceans.png",
     videoType: "",
     state: EEntityState.Default,
@@ -667,7 +667,7 @@ videos.set(4, [
   {
     id: 57,
     type: EEntityType.Videos,
-    src: "https://vjs.zencdn.net/v/oceans.mp4",
+    filename: "https://vjs.zencdn.net/v/oceans.mp4",
     poster: "https://vjs.zencdn.net/v/oceans.png",
     videoType: "",
     state: EEntityState.Default,
@@ -678,7 +678,7 @@ videos.set(4, [
   {
     id: 58,
     type: EEntityType.Videos,
-    src: "https://vjs.zencdn.net/v/oceans.mp4",
+    filename: "https://vjs.zencdn.net/v/oceans.mp4",
     poster: "https://vjs.zencdn.net/v/oceans.png",
     videoType: "",
     state: EEntityState.Default,
@@ -689,7 +689,7 @@ videos.set(4, [
   {
     id: 59,
     type: EEntityType.Videos,
-    src: "https://vjs.zencdn.net/v/oceans.mp4",
+    filename: "https://vjs.zencdn.net/v/oceans.mp4",
     poster: "https://vjs.zencdn.net/v/oceans.png",
     videoType: "",
     state: EEntityState.Default,
@@ -700,7 +700,7 @@ videos.set(4, [
   {
     id: 60,
     type: EEntityType.Videos,
-    src: "https://vjs.zencdn.net/v/oceans.mp4",
+    filename: "https://vjs.zencdn.net/v/oceans.mp4",
     poster: "https://vjs.zencdn.net/v/oceans.png",
     videoType: "",
     state: EEntityState.Default,
@@ -711,7 +711,7 @@ videos.set(4, [
   {
     id: 61,
     type: EEntityType.Videos,
-    src: "https://vjs.zencdn.net/v/oceans.mp4",
+    filename: "https://vjs.zencdn.net/v/oceans.mp4",
     poster: "https://vjs.zencdn.net/v/oceans.png",
     videoType: "",
     state: EEntityState.Default,
@@ -722,7 +722,7 @@ videos.set(4, [
   {
     id: 62,
     type: EEntityType.Videos,
-    src: "https://vjs.zencdn.net/v/oceans.mp4",
+    filename: "https://vjs.zencdn.net/v/oceans.mp4",
     poster: "https://vjs.zencdn.net/v/oceans.png",
     videoType: "",
     state: EEntityState.Default,
@@ -733,7 +733,7 @@ videos.set(4, [
   {
     id: 63,
     type: EEntityType.Videos,
-    src: "https://vjs.zencdn.net/v/oceans.mp4",
+    filename: "https://vjs.zencdn.net/v/oceans.mp4",
     poster: "https://vjs.zencdn.net/v/oceans.png",
     videoType: "",
     state: EEntityState.Default,
@@ -744,7 +744,7 @@ videos.set(4, [
   {
     id: 64,
     type: EEntityType.Videos,
-    src: "https://vjs.zencdn.net/v/oceans.mp4",
+    filename: "https://vjs.zencdn.net/v/oceans.mp4",
     poster: "https://vjs.zencdn.net/v/oceans.png",
     videoType: "",
     state: EEntityState.Default,
@@ -759,7 +759,7 @@ videos.set(5, [
   {
     id: 66,
     type: EEntityType.Videos,
-    src: "https://vjs.zencdn.net/v/oceans.mp4",
+    filename: "https://vjs.zencdn.net/v/oceans.mp4",
     poster: "https://vjs.zencdn.net/v/oceans.png",
     videoType: "",
     state: EEntityState.Active,
@@ -770,7 +770,7 @@ videos.set(5, [
   {
     id: 67,
     type: EEntityType.Videos,
-    src: "https://vjs.zencdn.net/v/oceans.mp4",
+    filename: "https://vjs.zencdn.net/v/oceans.mp4",
     poster: "https://vjs.zencdn.net/v/oceans.png",
     videoType: "",
     state: EEntityState.Default,
@@ -781,7 +781,7 @@ videos.set(5, [
   {
     id: 68,
     type: EEntityType.Videos,
-    src: "https://vjs.zencdn.net/v/oceans.mp4",
+    filename: "https://vjs.zencdn.net/v/oceans.mp4",
     poster: "https://vjs.zencdn.net/v/oceans.png",
     videoType: "",
     state: EEntityState.Default,
@@ -792,7 +792,7 @@ videos.set(5, [
   {
     id: 69,
     type: EEntityType.Videos,
-    src: "https://vjs.zencdn.net/v/oceans.mp4",
+    filename: "https://vjs.zencdn.net/v/oceans.mp4",
     poster: "https://vjs.zencdn.net/v/oceans.png",
     videoType: "",
     state: EEntityState.Default,
@@ -803,7 +803,7 @@ videos.set(5, [
   {
     id: 70,
     type: EEntityType.Videos,
-    src: "https://vjs.zencdn.net/v/oceans.mp4",
+    filename: "https://vjs.zencdn.net/v/oceans.mp4",
     poster: "https://vjs.zencdn.net/v/oceans.png",
     videoType: "",
     state: EEntityState.Default,
@@ -818,7 +818,7 @@ videos.set(6, [
   {
     id: 72,
     type: EEntityType.Videos,
-    src: "https://vjs.zencdn.net/v/oceans.mp4",
+    filename: "https://vjs.zencdn.net/v/oceans.mp4",
     poster: "https://vjs.zencdn.net/v/oceans.png",
     videoType: "",
     state: EEntityState.Default,
@@ -829,7 +829,7 @@ videos.set(6, [
   {
     id: 73,
     type: EEntityType.Videos,
-    src: "https://vjs.zencdn.net/v/oceans.mp4",
+    filename: "https://vjs.zencdn.net/v/oceans.mp4",
     poster: "https://vjs.zencdn.net/v/oceans.png",
     videoType: "",
     state: EEntityState.Default,
@@ -840,7 +840,7 @@ videos.set(6, [
   {
     id: 74,
     type: EEntityType.Videos,
-    src: "https://vjs.zencdn.net/v/oceans.mp4",
+    filename: "https://vjs.zencdn.net/v/oceans.mp4",
     poster: "https://vjs.zencdn.net/v/oceans.png",
     videoType: "",
     state: EEntityState.Default,
@@ -851,7 +851,7 @@ videos.set(6, [
   {
     id: 75,
     type: EEntityType.Videos,
-    src: "https://vjs.zencdn.net/v/oceans.mp4",
+    filename: "https://vjs.zencdn.net/v/oceans.mp4",
     poster: "https://vjs.zencdn.net/v/oceans.png",
     videoType: "",
     state: EEntityState.Active,
@@ -862,7 +862,7 @@ videos.set(6, [
   {
     id: 76,
     type: EEntityType.Videos,
-    src: "https://vjs.zencdn.net/v/oceans.mp4",
+    filename: "https://vjs.zencdn.net/v/oceans.mp4",
     poster: "https://vjs.zencdn.net/v/oceans.png",
     videoType: "",
     state: EEntityState.Default,
@@ -873,7 +873,7 @@ videos.set(6, [
   {
     id: 77,
     type: EEntityType.Videos,
-    src: "https://vjs.zencdn.net/v/oceans.mp4",
+    filename: "https://vjs.zencdn.net/v/oceans.mp4",
     poster: "https://vjs.zencdn.net/v/oceans.png",
     videoType: "",
     state: EEntityState.Default,
@@ -884,7 +884,7 @@ videos.set(6, [
   {
     id: 78,
     type: EEntityType.Videos,
-    src: "https://vjs.zencdn.net/v/oceans.mp4",
+    filename: "https://vjs.zencdn.net/v/oceans.mp4",
     poster: "https://vjs.zencdn.net/v/oceans.png",
     videoType: "",
     state: EEntityState.Default,

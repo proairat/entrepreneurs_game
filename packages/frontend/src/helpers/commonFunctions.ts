@@ -61,7 +61,6 @@ function getURLParamValue(url: string, param: string) {
 
 function getURLPathNameDigit(url: string): string | null {
   const result = new URL(url).pathname.match(/[0-9]+/);
-
   return Array.isArray(result) ? result[0] : null;
 }
 
@@ -72,9 +71,9 @@ function getURLPathNameDigit(url: string): string | null {
  * @param {string} extension - расширение файла
  * @returns {string | undefined} путь к файлу изображения
  *
- * getImageUrl('academic-cap')
+ * getImageUrlAwaitImport('academic-cap')
  */
-async function getImageUrl(name: string, extension = "svg") {
+async function getImageUrlAwaitImport(name: string, extension = "svg") {
   try {
     const dynamicImport = await import(`@/assets/img/${name}.${extension}`);
     return dynamicImport.default;
@@ -162,7 +161,7 @@ export {
   FulfillRequests,
   getURLParamValue,
   getURLPathNameDigit,
-  getImageUrl,
+  getImageUrlAwaitImport,
   removeObjectProperty,
   shuffle,
   compose,

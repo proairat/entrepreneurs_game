@@ -1,5 +1,6 @@
 export * from "./modules";
 export * from "./modulesAdvanced";
+export * from "./modulesFromDatabase";
 export * from "./themes";
 export * from "./videos";
 export * from "./tests";

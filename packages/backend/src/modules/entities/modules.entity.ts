@@ -19,11 +19,11 @@ export class Modules implements IModule {
   })
   type: EEntityType.Modules;
 
-  @ApiProperty({ description: "Source path", nullable: true })
+  @ApiProperty({ description: "Filename", nullable: true })
   @Column({
     length: 700,
   })
-  path: string;
+  filename: string;
 
   @ApiProperty({ description: "Alternative text for images", nullable: true })
   @Column()
@@ -52,12 +52,12 @@ export class Modules implements IModule {
   @Column({
     type: "enum",
     enum: EEntityState,
-    default: EEntityState.Active,
+    default: EEntityState.Default,
   })
   state: EEntityState;
 
   constructor(
-    path = "",
+    filename = "",
     alt = "",
     header = "",
     title = "",
@@ -65,12 +65,12 @@ export class Modules implements IModule {
     footer = ""
   ) {
     this.type = EEntityType.Modules;
-    this.path = path;
+    this.filename = filename;
     this.alt = alt;
     this.header = header;
     this.title = title;
     this.duration = duration;
     this.footer = footer;
-    this.state = EEntityState.Active;
+    this.state = EEntityState.Default;
   }
 }

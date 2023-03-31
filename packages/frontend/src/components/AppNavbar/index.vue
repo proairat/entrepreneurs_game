@@ -72,7 +72,7 @@ export default {
 import { Disclosure, DisclosureButton, DisclosurePanel } from "@headlessui/vue";
 import { XMarkIcon, Bars3Icon } from "@heroicons/vue/24/outline";
 import { ref, h, watch } from "vue";
-import { getImageUrl } from "@/helpers/commonFunctions";
+import { getImageUrlAwaitImport } from "@/helpers/commonFunctions";
 import type { INavigation } from "share/types/interfaces";
 import { useNavbarStore } from "@/stores";
 import { storeToRefs } from "pinia";
@@ -84,7 +84,7 @@ const props = defineProps<{
 
 const navbarStore = useNavbarStore();
 const { coins } = storeToRefs(navbarStore);
-const logo = await getImageUrl("academic-cap");
+const logo = await getImageUrlAwaitImport("academic-cap");
 const search = ref("");
 const navigation = ref([
   {
@@ -92,7 +92,7 @@ const navigation = ref([
     name: String(coins.value),
     href: "#",
     current: true,
-    src: await getImageUrl("coin"),
+    src: await getImageUrlAwaitImport("coin"),
     alt: String(coins.value),
   },
   {
@@ -100,7 +100,7 @@ const navigation = ref([
     name: "Настройки",
     href: "#",
     current: false,
-    src: await getImageUrl("settings"),
+    src: await getImageUrlAwaitImport("settings"),
     alt: "Настройки",
   },
   {
@@ -110,7 +110,7 @@ const navigation = ref([
     href: "#",
     componentName: "ViewLogin",
     current: false,
-    src: await getImageUrl("exit"),
+    src: await getImageUrlAwaitImport("exit"),
     alt: "Выход",
     handlers: { click: props.logout },
   },

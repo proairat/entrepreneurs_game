@@ -1,88 +1,127 @@
 <template>
   <el-table-v2
+    :width="800"
+    :height="500"
     :columns="columns"
-    :data="data"
-    :row-class="rowClass"
-    :width="700"
-    :height="400"
-  />
+    :data="tableData"
+    :row-height="100"
+  >
+    <template #empty> Данные загружаются... </template>
+  </el-table-v2>
 </template>
 
 <script lang="tsx" setup>
-import { ref } from "vue";
-import dayjs from "dayjs";
-import {
-  ElButton,
-  ElIcon,
-  ElTag,
-  ElTooltip,
-  TableV2FixedDir,
-} from "element-plus";
-import { Timer } from "@element-plus/icons-vue";
+import { ref, onMounted } from "vue";
+import { TableV2FixedDir } from "element-plus";
+import { useFetchComposable } from "@/composables/use-fetch";
+import { ElMessage } from "element-plus";
+import { URL_MODULES_IMAGES } from "@/API";
+import type { Column } from "element-plus";
+import { useDashboardStore } from "@/stores";
+import type { IModule } from "share/types/interfaces";
 
-import type { Column, RowClassNameGetter } from "element-plus";
-
-let id = 0;
-
-const dataGenerator = () => ({
-  id: `random-id-${++id}`,
-  name: "Tom",
-  date: "2020-10-1",
-});
-
+const modulesStore = useDashboardStore();
+const { getModulesList } = modulesStore;
+const tableData = ref<IModule[]>([]);
 const columns: Column<any>[] = [
   {
-    key: "date",
-    title: "Date",
-    dataKey: "date",
-    width: 150,
+    key: "id",
+    title: "№",
+    dataKey: "id",
+    width: 50,
+    align: "center",
     fixed: TableV2FixedDir.LEFT,
-    cellRenderer: ({ cellData: date }) => (
-      <ElTooltip content={dayjs(date).format("YYYY/MM/DD")}>
-        {
-          <span class="flex items-center">
-            <ElIcon class="mr-3">
-              <Timer />
-            </ElIcon>
-            {dayjs(date).format("YYYY/MM/DD")}
-          </span>
-        }
-      </ElTooltip>
-    ),
   },
   {
-    key: "name",
-    title: "Name",
-    dataKey: "name",
+    key: "header",
+    title: "Заголовок",
+    dataKey: "header",
+    width: 250,
+    align: "center",
+    cellRenderer: ({ cellData: header }) => header,
+  },
+  {
+    key: "filename",
+    title: "Обложка",
+    dataKey: "filename",
     width: 150,
     align: "center",
-    cellRenderer: ({ cellData: name }) => <ElTag>{name}</ElTag>,
+    cellRenderer: ({ cellData: filename }) => (
+      <img src={`${URL_MODULES_IMAGES}/${filename}`} class="tune-image"/>
+    ),
   },
   {
     key: "operations",
-    title: "Operations",
-    cellRenderer: () => (
+    title: "Действия",
+    cellRenderer: (cellData) => (
       <>
-        <ElButton size="small">Edit</ElButton>
-        <ElButton size="small" type="danger">
-          Delete
-        </ElButton>
+        <LightButton
+          onClick={() => {
+            editHandler(cellData);
+          }}
+        >
+          Редактировать
+        </LightButton>
+        <DangerButton>Удалить</DangerButton>
       </>
     ),
-    width: 150,
+    width: 300,
     align: "center",
-    flexGrow: 1,
   },
 ];
 
-const data = ref(Array.from({ length: 200 }).map(dataGenerator));
+console.log("AppDashboardList.vue -> getModulesList", getModulesList());
 
+onMounted(() => {
+  let { data, onFetchResponse, onFetchError } = useFetchComposable({
+    urlConst: "/modules",
+    urlVar: "",
+    method: "GET",
+    body: null,
+  });
+
+  onFetchResponse(() => {
+    console.log("data.value", data.value);
+    tableData.value = data.value;
+    let id = 0;
+    for (let item of tableData.value ){
+      item.id = ++id;
+    }
+  });
+
+  onFetchError((err) => {
+    ElMessage({
+      message: `Произошла ошибка при загрузке данных о модуле: ${err}`,
+      type: "error",
+      appendTo: ".el-message-wrapper",
+    });
+  });
+});
+
+function editHandler(cellData: any) {
+  console.log("Нажатие обрабатывается на редактирование!");
+  console.log("CellData", cellData);
+}
+</script>
+
+<style scoped lang="scss">
+.example-showcase .el-table-v2__overlay {
+  z-index: 9;
+}
+
+:deep(.tune-image) {
+  object-fit: contain;
+  height: 100px;
+  width: 100px;
+}
+</style>
+
+<!--
+/*
 const rowClass = ({ rowIndex }: Parameters<RowClassNameGetter<any>>[0]) => {
-  if (rowIndex % 10 === 5) {
-    return "bg-red-100";
-  } else if (rowIndex % 10 === 0) {
-    return "bg-blue-200";
-  }
+  if (rowIndex % 2 === 0) {
+    return "bg-gray-100";
+  } 
   return "";
 };
-</script>
+-->

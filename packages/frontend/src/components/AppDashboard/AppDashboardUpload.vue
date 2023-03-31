@@ -3,7 +3,7 @@
   <!--v-model:file-list="fileList"-->
   <el-upload
     ref="upload"
-    action="http://localhost:3000/modules/upload"
+    :action="URL_MODULES_UPLOAD"
     list-type="picture"
     :limit="1"
     :auto-upload="false"
@@ -18,11 +18,14 @@
         <div>Ограничения:</div>
         <div>Количество файлов: 1</div>
         <div>Тип файла: PNG, SVG</div>
-        <div>Размер файла: меньше 2 Мбайт</div>
+        <div>Размер файла: не более 3 Мбайт</div>
       </div>-->
     </template>
     <template #trigger>
-      <button class="bg-indigo-500 p-2 hover:bg-indigo-600 text-white">
+      <button
+        type="button"
+        class="bg-indigo-500 p-2 hover:bg-indigo-600 text-white"
+      >
         Выберите файл
       </button>
     </template>
@@ -38,6 +41,7 @@ import {
   type UploadProps,
   type UploadRawFile,
 } from "element-plus";
+import { URL_MODULES_UPLOAD } from "@/API";
 
 /**
  * 1 - Файл не выбран
@@ -125,9 +129,9 @@ function isComplianceWithRestrictions(file: UploadRawFile) {
     return false;
   }
 
-  if (file.size / 1024 / 1024 > 2) {
+  if (file.size / 1024 / 1024 > 3) {
     ElMessage({
-      message: "Размер файла не должен превышать 2 Мбайт",
+      message: "Размер файла не должен превышать 3 Мбайт",
       type: "error",
       appendTo: ".el-message-wrapper",
     });

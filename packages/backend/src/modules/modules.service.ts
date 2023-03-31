@@ -5,6 +5,12 @@ import { UpdateModuleDto } from "./dto/update-module.dto";
 import { Modules } from "./entities/modules.entity";
 import { isEmpty, isNull } from "lodash";
 import { EEntityState } from "@app/enums";
+import { IModule } from "@app/interfaces";
+import { EventEmitter } from "events";
+import { Observable } from "rxjs";
+import { Socket } from "net";
+
+const eventEmitter = new EventEmitter();
 
 @Injectable()
 export class ModulesService {
@@ -33,17 +39,13 @@ export class ModulesService {
     file: Express.Multer.File
   ) {
     type Body = { header: string };
-    type File = { path: string };
+    type File = { filename: string };
 
     function isFile(entity: Body | File): entity is File {
-      return (entity as File).path !== undefined;
+      return (entity as File).filename !== undefined;
     }
 
     if (!this.cache.has("id")) {
-      const activeElem = await this.findOneByState(EEntityState.Active);
-      if (!isNull(activeElem)) {
-        await this.update(activeElem.id, { state: EEntityState.Default });
-      }
       this.cache.set("id", await this.create({}));
     }
 
@@ -51,29 +53,32 @@ export class ModulesService {
       let updateModuleDto: {
         [index: string]: string;
       };
+      const id = this.cache.has("id") ? this.cache.get("id") : undefined;
       if (isFile(p)) {
-        updateModuleDto = { path: p.path };
+        updateModuleDto = { filename: p.filename };
         this.flags.file = true;
       } else {
         updateModuleDto = { header: p.header };
         this.flags.body = true;
       }
-      if (this.cache.has("id")) {
-        const id = this.cache.get("id");
-        if (id) {
-          await this.update(id, updateModuleDto);
-        }
+      if (id) {
+        await this.update(id, updateModuleDto);
       }
       if (this.flags.body && this.flags.file) {
-        this.cache.delete("id");
-        this.flags.body = false;
-        this.flags.file = false;
+        if (id) {
+          eventEmitter.emit("message", await this.findOneById(id));
+          this.flags.body = false;
+          this.flags.file = false;
+          this.cache.delete("id");
+        }
       }
       return { response: "OK" };
     };
 
     if (!isEmpty(file)) {
-      return await updateEntity<File>({ path: file.path ?? "no value" });
+      return await updateEntity<File>({
+        filename: file.filename ?? "no value",
+      });
     }
 
     if (!isEmpty(body)) {
@@ -81,31 +86,62 @@ export class ModulesService {
     }
   }
 
-  findAll(): Promise<Modules[]> {
-    return this.modulesRepository.find();
+  async findAll(): Promise<Modules[]> {
+    return await this.modulesRepository.find();
   }
 
   async findOneByState(state: EEntityState): Promise<Modules | null> {
     return await this.modulesRepository.findOneBy({ state });
   }
 
-  findOneById(id: number): Promise<Modules | null> {
-    return this.modulesRepository.findOneBy({ id });
+  async findOneById(id: number): Promise<Modules | null> {
+    return await this.modulesRepository.findOneBy({ id });
   }
 
   async update(id: number, updateModuleDto: UpdateModuleDto) {
     const row = await this.findOneById(id);
     if (!isNull(row)) {
-      Object.entries(updateModuleDto).map(([key, value]: Array<any>) => {
+      Object.entries(updateModuleDto).map(([key, value]: [any, any]) => {
         const opa: keyof UpdateModuleDto = key;
         row[opa] = value;
       });
       await this.modulesRepository.save(row);
     }
-    // return `This action updates a #${id} module`;
+  }
+
+  async getLastInsertedRow() {
+    return await this.modulesRepository
+      .createQueryBuilder()
+      .select("m.id")
+      .from(Modules, "m")
+      .orderBy("m.id", "DESC")
+      .getOne();
   }
 
   async remove(id: number): Promise<void> {
     await this.modulesRepository.delete(id);
+  }
+
+  streamEvents(
+    req: Request & { socket: Socket }
+  ): Observable<{ data: IModule; id: number; retry: number }> {
+    req.socket.on("close", () => {
+      eventEmitter.removeAllListeners();
+    });
+
+    return new Observable((observer) => {
+      eventEmitter.on("message", (data: IModule) => {
+        observer.next({ data, id: data.id, retry: 100 });
+      });
+
+      eventEmitter.on("error", (err) => {
+        observer.error(err);
+        observer.complete();
+      });
+
+      eventEmitter.on("close", () => {
+        observer.complete();
+      });
+    });
   }
 }

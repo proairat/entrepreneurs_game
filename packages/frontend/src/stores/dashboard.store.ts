@@ -1,72 +1,65 @@
 import { defineStore } from "pinia";
 import { ref } from "vue";
-import { fetchWrapper } from "@/helpers";
-import { useAuthStore } from "@/stores";
-import type { IUser } from "share/types/interfaces";
+import type {
+  IModule,
+  IEduElementEntityArray,
+  IUpdateArray,
+} from "share/types/interfaces";
+import {
+  Creator,
+  CreatorExtended,
+  EntityCreator,
+  EntityCreatorExtendedArray,
+} from "@/classes";
+import type { TElemsList } from "share/types/types";
+import { modulesFromDatabase } from "@/fetch";
+import { EEntityState } from "share/types/enums";
 
-const baseUrl = `${import.meta.env.VITE_API_URL}/dashboard`;
-
-export const useUsersStore = defineStore("users", () => {
-  const users = ref({});
-  const user = ref({});
-
-  async function register(user: IUser) {
-    user.entranceTesting = false;
-    await fetchWrapper.post(`${baseUrl}/register`, user);
+function getEduElement<T>(
+  creator: Creator<T>,
+  fromDB: T[] | TElemsList<number, T> | undefined
+) {
+  const eduElement = creator.getEduElement();
+  if (fromDB) {
+    eduElement.createList(fromDB);
+    eduElement.addToList(fromDB);
   }
-  async function getAll() {
-    users.value = { loading: true };
-    try {
-      users.value = await fetchWrapper.get(baseUrl);
-    } catch (error) {
-      users.value = { error };
-    }
+  return eduElement;
+}
+
+function getEduElementExtended<T>(creator: CreatorExtended<T>) {
+  const eduElement = creator.getEduElement();
+  return eduElement;
+}
+
+const eduElementModules = getEduElement(new EntityCreator<IModule>(), modulesFromDatabase);
+const eduElementModulesExtended = getEduElementExtended(
+  new EntityCreatorExtendedArray<IModule>(
+    ref(eduElementModules.getList()).value as IModule[]
+  )
+) as IEduElementEntityArray<IModule>;
+
+export const useDashboardStore = defineStore("dashboard", () => {
+  const activeModule = ref(getActiveModule());
+    
+  function updateActiveModule(updateArray: IUpdateArray) {
+    eduElementModulesExtended.updateElemByState(updateArray);
+    activeModule.value = getActiveModule();
   }
-  async function getById(id: string | string[]) {
-    user.value = { loading: true };
-    try {
-      user.value = await fetchWrapper.get(`${baseUrl}/${id}`);
-    } catch (error) {
-      user.value = { error };
-    }
+
+  function getModulesList() {
+    return ref(eduElementModules.getList()).value as IModule[];
   }
-  async function update(id, params) {
-    await fetchWrapper.put(`${baseUrl}/${id}`, params);
 
-    // update stored user if the logged in user updated their own record
-    const authStore = useAuthStore();
-    if (id === authStore.user.id) {
-      // update local storage
-      const user = { ...authStore.user, ...params };
-      localStorage.setItem("user", JSON.stringify(user));
-
-      // update auth user in pinia state
-      authStore.user = user;
-    }
-  }
-  async function del(id) {
-    // add isDeleting prop to user being deleted
-    users.value.find((x) => x.id === id).isDeleting = true;
-
-    await fetchWrapper.delete(`${baseUrl}/${id}`);
-
-    // remove user from list after deleted
-    users.value = users.value.filter((x) => x.id !== id);
-
-    // auto logout if the logged in user deleted their own record
-    const authStore = useAuthStore();
-    if (id === authStore.user.id) {
-      authStore.logout();
-    }
+  function getActiveModule() {
+    return eduElementModulesExtended.getElemByState(
+      EEntityState.Active
+    ) as IModule;
   }
 
   return {
-    users,
-    user,
-    register,
-    getAll,
-    getById,
-    update,
-    del,
+    activeModule,
+    getModulesList,
+    updateActiveModule,
   };
 });

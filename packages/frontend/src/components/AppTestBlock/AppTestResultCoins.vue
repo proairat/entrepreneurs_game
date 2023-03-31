@@ -18,7 +18,7 @@
 <script setup lang="ts">
 import { useNavbarStore } from "@/stores";
 import { storeToRefs } from "pinia";
-import { getImageUrl } from "@/helpers/commonFunctions";
+import { getImageUrlAwaitImport } from "@/helpers/commonFunctions";
 import { EPercent } from "share/types/enums";
 import { computed } from "vue";
 
@@ -26,7 +26,7 @@ const props = defineProps<{
   percent: number;
 }>();
 
-const coin = await getImageUrl("coin");
+const coin = await getImageUrlAwaitImport("coin");
 const navbarStore = useNavbarStore();
 const { coins } = storeToRefs(navbarStore);
 const countCoins = computed(() => {
