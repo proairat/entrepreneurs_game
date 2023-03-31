@@ -39,6 +39,8 @@ function getEduElementExtended<T>(creator: CreatorExtended<T>) {
   return eduElement;
 }
 
+console.log("modules.store modules!", modules);
+
 const eduElementModules = getEduElement(new EntityCreator<IModule>(), modules);
 const eduElementModulesAdvanced = getEduElement(
   new EntityCreator<IModuleAdvanced>(),
@@ -80,6 +82,7 @@ const eduElementTestsExtended = getEduElementExtended(
 
 export const useModulesStore = defineStore("modules", () => {
   const activeModule = ref(getActiveModule());
+  console.log("activeModule!", activeModule.value);
   const activeModuleAdvanced = ref(getActiveModuleAdvanced());
   const activeTheme = ref(getActiveTheme(activeModule.value.id));
   const activeVideo = ref(getActiveVideo(activeModule.value.id));

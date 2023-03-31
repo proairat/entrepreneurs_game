@@ -45,7 +45,7 @@
 import { EEntityState, EEntityType } from "share/types/enums";
 import { computed, h, resolveComponent } from "vue";
 import { useModulesStore } from "@/stores";
-import { getImageUrl } from "@/helpers/commonFunctions";
+import { getImageUrlAwaitImport } from "@/helpers/commonFunctions";
 
 /**
  * Due to the limitations of defineProps in TS, no "IModule" interface is used
@@ -53,7 +53,7 @@ import { getImageUrl } from "@/helpers/commonFunctions";
 const props = defineProps<{
   id: number;
   type: EEntityType.Modules | EEntityType.ModulesAdvanced;
-  path: string;
+  filename: string;
   alt: string;
   header: string;
   title: string;
@@ -81,8 +81,10 @@ const visibility = computed(() => {
       }
     : "";
 });
-const getModuleSrc = computed(() => new URL(props.path, import.meta.url).href);
-const coin = await getImageUrl("coin");
+const getModuleSrc = computed(
+  () => new URL(props.filename, import.meta.url).href
+);
+const coin = await getImageUrlAwaitImport("coin");
 
 // Due to the fact that backtics does not work correctly, let's leave it like that
 const stateIcon = computed(() => ({

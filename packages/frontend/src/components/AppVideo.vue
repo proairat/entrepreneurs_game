@@ -42,7 +42,7 @@ const modulesStore = useModulesStore();
 const { activeVideo } = storeToRefs(modulesStore);
 const getVideoTitle = computed(() => activeVideo.value.title);
 const getVideoSrc = computed(
-  () => new URL(activeVideo.value.src, import.meta.url).href
+  () => new URL(activeVideo.value.filename, import.meta.url).href
 );
 const getVideoPoster = computed(
   () => new URL(activeVideo.value.poster, import.meta.url).href

@@ -8,6 +8,7 @@
       :size="formSize"
       :status-icon="true"
       class="the-form"
+      @submit.prevent="submitPreventHandler"
       @validate="validateFormHandler"
     >
       <el-form-item prop="header">
@@ -19,7 +20,7 @@
       </el-form-item>
     </el-form>
     <AppDashboardUpload
-      :is-check-file-ready-pass="isCheckFileReadyPass"
+      :isCheckFileReadyPass="isCheckFileReadyPass"
       @message-event="messageEventHandler"
       @upload-file-error="uploadFileErrorHandler"
     />
@@ -41,6 +42,7 @@ import { reactive, ref, watch } from "vue";
 import type { FormItemProp, FormInstance, FormRules } from "element-plus";
 import { useFetchComposable } from "@/composables/use-fetch";
 import { ElMessage } from "element-plus";
+import type { IModule, INavigation } from "share/types/interfaces";
 
 interface IElMessageUploadFile {
   message: string;
@@ -82,6 +84,10 @@ const rules = reactive<FormRules>({
     },
   ],
 });
+
+function submitPreventHandler(e: Event) {
+  console.log("submitPreventHandler e", e);
+}
 
 function validateFormHandler(
   props: FormItemProp,
@@ -135,7 +141,9 @@ watch(overallResult.value, () => {
     });
     ruleFormRef.value?.resetFields();
     submitResult.value.formReady = false;
+    submitResult.value.fileReady = false;
     overallResult.value.formResult = "";
+    overallResult.value.fileResult = "";
   }
 });
 
@@ -145,6 +153,22 @@ watch(elMessageRef.value, () => {
 
 watch(submitResult.value, () => {
   if (submitResult.value.formReady && submitResult.value.fileReady) {
+    const eventSource = new EventSource('http://localhost/modules/stream');
+    /*
+    eventSource.onopen = () => {
+      console.log('Произошло открытие потока!');
+    }
+    */
+    eventSource.onmessage =  (event => {
+      const data:IModule = JSON.parse(event.data);
+      console.log('Получено сообщение');
+      console.log(data);  
+      eventSource.close();
+    });
+    eventSource.onerror = (e) => {
+      console.error('error occured in EventSource...');
+      eventSource.close();
+    }
     submitFormFields();
     isCheckFileReadyPass.value = true;
     isSpinnerVisible.value = true;
@@ -154,55 +178,49 @@ watch(submitResult.value, () => {
 });
 
 function submitFormFields() {
-  try {
-    const formData = new FormData();
+  const formData = new FormData();
 
-    for (let item of Object.entries(formModel)) {
-      const [name, value] = item;
-      formData.append(name, value);
+  for (let item of Object.entries(formModel)) {
+    const [name, value] = item;
+    formData.append(name, value);
+  }
+
+  let { data, onFetchResponse, onFetchError } = useFetchComposable({
+    urlConst: "/modules",
+    urlVar: "/upload",
+    method: "POST",
+    body: formData,
+  });
+
+  onFetchResponse(() => {
+    if (data.value.response === "OK") {
+      overallResult.value.formResult = data.value.response;
     }
+  });
 
-    let { data, onFetchResponse, onFetchError } = useFetchComposable(
-      "/modules",
-      "upload",
-      "POST",
-      formData
-    );
-
-    onFetchResponse(() => {
-      if (data.value.response === "OK") {
-        overallResult.value.formResult = data.value.response;
-      }
-    });
-
-    onFetchError((err) => {
-      ElMessage({
-        message: `Произошла ошибка при загрузке полей формы!: ${err}`,
-        type: "error",
-        appendTo: ".el-message-wrapper",
-      });
-      submitResult.value.formReady = false;
-      overallResult.value.formResult = "";
-      ruleFormRef.value?.resetFields();
-      isSpinnerVisible.value = false;
-    });
-  } catch (error) {
+  onFetchError((err) => {
     ElMessage({
-      message: `Произошла ошибка дашборда: ${error}`,
+      message: `Произошла ошибка при загрузке полей формы!: ${err}`,
       type: "error",
       appendTo: ".el-message-wrapper",
     });
+    ruleFormRef.value?.resetFields();
+    submitResult.value.formReady = false;
+    overallResult.value.formResult = "";
+    isSpinnerVisible.value = false;
+  });
+}
+
+function uploadFileErrorHandler(isError: boolean) {
+  if (isError) {
+    submitResult.value.fileReady = false;
+    overallResult.value.fileResult = "";
+    isSpinnerVisible.value = false;
   }
 }
 
 function messageEventHandler(elMessage: IElMessageUploadFile) {
   Object.assign(elMessageRef.value, elMessage);
-}
-
-function uploadFileErrorHandler(isError: boolean) {
-  if (isError) {
-    isSpinnerVisible.value = false;
-  }
 }
 </script>
 

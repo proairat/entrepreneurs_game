@@ -147,8 +147,8 @@
 </template>
 
 <script setup lang="ts">
-import { getImageUrl } from "@/helpers/commonFunctions";
-const logo = await getImageUrl("academic-cap");
+import { getImageUrlAwaitImport } from "@/helpers/commonFunctions";
+const logo = await getImageUrlAwaitImport("academic-cap");
 </script>
 
 <style scoped lang="scss">

@@ -12,14 +12,14 @@ export default {
 
 <script setup lang="ts">
 import { ref } from "vue";
-import { getImageUrl } from "@/helpers/commonFunctions";
+import { getImageUrlAwaitImport } from "@/helpers/commonFunctions";
 
 const icons = ref([
-  { id: 1, src: await getImageUrl("gosuslugi") },
-  { id: 2, src: await getImageUrl("vk") },
+  { id: 1, src: await getImageUrlAwaitImport("gosuslugi") },
+  { id: 2, src: await getImageUrlAwaitImport("vk") },
   {
     id: 3,
-    src: await getImageUrl("google"),
+    src: await getImageUrlAwaitImport("google"),
   },
 ]);
 </script>
