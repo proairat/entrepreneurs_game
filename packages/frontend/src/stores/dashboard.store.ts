@@ -32,7 +32,10 @@ function getEduElementExtended<T>(creator: CreatorExtended<T>) {
   return eduElement;
 }
 
-const eduElementModules = getEduElement(new EntityCreator<IModule>(), modulesFromDatabase);
+const eduElementModules = getEduElement(
+  new EntityCreator<IModule>(),
+  modulesFromDatabase
+);
 const eduElementModulesExtended = getEduElementExtended(
   new EntityCreatorExtendedArray<IModule>(
     ref(eduElementModules.getList()).value as IModule[]
@@ -41,10 +44,15 @@ const eduElementModulesExtended = getEduElementExtended(
 
 export const useDashboardStore = defineStore("dashboard", () => {
   const activeModule = ref(getActiveModule());
-    
+  const rowJustInserted = ref({} as IModule);
+
   function updateActiveModule(updateArray: IUpdateArray) {
     eduElementModulesExtended.updateElemByState(updateArray);
     activeModule.value = getActiveModule();
+  }
+
+  function updateRowJustInserted(row: IModule) {
+    rowJustInserted.value = row;
   }
 
   function getModulesList() {
@@ -59,7 +67,9 @@ export const useDashboardStore = defineStore("dashboard", () => {
 
   return {
     activeModule,
+    rowJustInserted,
     getModulesList,
     updateActiveModule,
+    updateRowJustInserted,
   };
 });

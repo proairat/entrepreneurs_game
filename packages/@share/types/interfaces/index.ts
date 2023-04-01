@@ -5,7 +5,7 @@ import type {
   EGuess,
   EProgressCaption,
 } from "../enums";
-import type { TElemsList } from "../types";
+import type { TElemsList, TMessageType } from "../types";
 
 interface IUser {
   surname: string;
@@ -196,6 +196,14 @@ interface IEduElementEntityMap<T> {
   getListByEntityId(entityId: number): T[] | undefined;
 }
 
+interface IElMessageUploadFile {
+  message: string;
+  type: TMessageType;
+  appendTo: string;
+  idMessage: number;
+  shPayload: string;
+}
+
 export type {
   IUser,
   IAlert,
@@ -218,4 +226,5 @@ export type {
   IEduCommonElement,
   IEduElementEntityArray,
   IEduElementEntityMap,
+  IElMessageUploadFile,
 };

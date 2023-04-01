@@ -82,7 +82,6 @@ const eduElementTestsExtended = getEduElementExtended(
 
 export const useModulesStore = defineStore("modules", () => {
   const activeModule = ref(getActiveModule());
-  console.log("activeModule!", activeModule.value);
   const activeModuleAdvanced = ref(getActiveModuleAdvanced());
   const activeTheme = ref(getActiveTheme(activeModule.value.id));
   const activeVideo = ref(getActiveVideo(activeModule.value.id));

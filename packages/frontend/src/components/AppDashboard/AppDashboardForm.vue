@@ -42,16 +42,11 @@ import { reactive, ref, watch } from "vue";
 import type { FormItemProp, FormInstance, FormRules } from "element-plus";
 import { useFetchComposable } from "@/composables/use-fetch";
 import { ElMessage } from "element-plus";
-import type { IModule, INavigation } from "share/types/interfaces";
+import { useDashboardStore } from "@/stores";
+import type { IModule, IElMessageUploadFile } from "share/types/interfaces";
 
-interface IElMessageUploadFile {
-  message: string;
-  type: MessageType;
-  appendTo: string;
-  idMessage: number;
-  shPayload: string;
-}
-type MessageType = "success" | "warning" | "info" | "error";
+const dashboardStore = useDashboardStore();
+const { updateRowJustInserted } = dashboardStore;
 
 const formSize = ref("large");
 const ruleFormRef = ref<FormInstance>();
@@ -153,22 +148,19 @@ watch(elMessageRef.value, () => {
 
 watch(submitResult.value, () => {
   if (submitResult.value.formReady && submitResult.value.fileReady) {
-    const eventSource = new EventSource('http://localhost/modules/stream');
-    /*
+    const eventSource = new EventSource("http://localhost/modules/stream");
     eventSource.onopen = () => {
-      console.log('Произошло открытие потока!');
+      console.log('Произошло открытие потока');
     }
-    */
-    eventSource.onmessage =  (event => {
-      const data:IModule = JSON.parse(event.data);
-      console.log('Получено сообщение');
-      console.log(data);  
+    eventSource.onmessage = (event) => {
+      const data: IModule = JSON.parse(event.data);
+      updateRowJustInserted(data);
       eventSource.close();
-    });
+    };
     eventSource.onerror = (e) => {
-      console.error('error occured in EventSource...');
+      console.error("error occured in EventSource...");
       eventSource.close();
-    }
+    };
     submitFormFields();
     isCheckFileReadyPass.value = true;
     isSpinnerVisible.value = true;
