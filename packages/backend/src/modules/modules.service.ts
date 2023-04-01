@@ -10,11 +10,12 @@ import { EventEmitter } from "events";
 import { Observable } from "rxjs";
 import { Socket } from "net";
 
-const eventEmitter = new EventEmitter();
+// const eventEmitter = new EventEmitter();
 
 @Injectable()
 export class ModulesService {
   private cache: Map<string, number> = new Map<string, number>();
+  private eventEmitter: EventEmitter = new EventEmitter();
   private flags: { body: boolean; file: boolean } = {
     body: false,
     file: false,
@@ -66,7 +67,7 @@ export class ModulesService {
       }
       if (this.flags.body && this.flags.file) {
         if (id) {
-          eventEmitter.emit("message", await this.findOneById(id));
+          this.eventEmitter.emit("message", await this.findOneById(id));
           this.flags.body = false;
           this.flags.file = false;
           this.cache.delete("id");
@@ -126,20 +127,20 @@ export class ModulesService {
     req: Request & { socket: Socket }
   ): Observable<{ data: IModule; id: number; retry: number }> {
     req.socket.on("close", () => {
-      eventEmitter.removeAllListeners();
+      this.eventEmitter.removeAllListeners();
     });
 
     return new Observable((observer) => {
-      eventEmitter.on("message", (data: IModule) => {
+      this.eventEmitter.on("message", (data: IModule) => {
         observer.next({ data, id: data.id, retry: 100 });
       });
 
-      eventEmitter.on("error", (err) => {
+      this.eventEmitter.on("error", (err) => {
         observer.error(err);
         observer.complete();
       });
 
-      eventEmitter.on("close", () => {
+      this.eventEmitter.on("close", () => {
         observer.complete();
       });
     });

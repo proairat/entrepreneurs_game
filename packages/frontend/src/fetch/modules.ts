@@ -9,33 +9,6 @@ import { URL_MODULES_IMAGES } from "@/API";
  */
 const modules: IModule[] | undefined = [];
 
-/*
-async function fetchData() {
-  let { data, onFetchResponse, onFetchError } = useFetchComposable({
-    urlConst: "/modules",
-    urlVar: "",
-    method: "GET",
-    body: null,
-  });
-
-  await new Promise((resolve) => {
-    onFetchResponse(() => {
-      for (let item of data.value) {
-        item.filename = `${URL_MODULES_IMAGES}/${item.filename}`;
-        modules!.push(item);
-      }
-      resolve('');
-    });
-  });
-
-  onFetchError((err) => {
-    console.error(`Произошла ошибка при загрузке модулей ${err}`);
-  });
-};
-
-await fetchData();
-*/
-
 modules.push(
   {
     id: 1,

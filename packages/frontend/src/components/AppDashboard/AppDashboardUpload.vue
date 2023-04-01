@@ -42,6 +42,7 @@ import {
   type UploadRawFile,
 } from "element-plus";
 import { URL_MODULES_UPLOAD } from "@/API";
+import type { IElMessageUploadFile } from "share/types/interfaces";
 
 /**
  * 1 - Файл не выбран
@@ -66,15 +67,6 @@ const emits = defineEmits<{
   ): void;
   (e: "upload-file-error", isError: boolean): void;
 }>();
-
-interface IElMessageUploadFile {
-  message: string;
-  type: MessageType;
-  appendTo: string;
-  idMessage: number;
-  shPayload: string;
-}
-type MessageType = "success" | "warning" | "info" | "error";
 
 const emitsObj = ref<IElMessageUploadFile>({
   message: "Файл не выбран",

@@ -11,18 +11,14 @@
 </template>
 
 <script lang="tsx" setup>
-import { ref, onMounted } from "vue";
 import { TableV2FixedDir } from "element-plus";
-import { useFetchComposable } from "@/composables/use-fetch";
-import { ElMessage } from "element-plus";
 import { URL_MODULES_IMAGES } from "@/API";
-import type { Column } from "element-plus";
 import { useDashboardStore } from "@/stores";
-import type { IModule } from "share/types/interfaces";
+import type { Column } from "element-plus";
 
-const modulesStore = useDashboardStore();
-const { getModulesList } = modulesStore;
-const tableData = ref<IModule[]>([]);
+const dashboardStore = useDashboardStore();
+const { getModulesList } = dashboardStore;
+const tableData = getModulesList();
 const columns: Column<any>[] = [
   {
     key: "id",
@@ -47,7 +43,7 @@ const columns: Column<any>[] = [
     width: 150,
     align: "center",
     cellRenderer: ({ cellData: filename }) => (
-      <img src={`${URL_MODULES_IMAGES}/${filename}`} class="tune-image"/>
+      <img src={`${URL_MODULES_IMAGES}/${filename}`} class="tune-image" />
     ),
   },
   {
@@ -70,32 +66,8 @@ const columns: Column<any>[] = [
   },
 ];
 
-console.log("AppDashboardList.vue -> getModulesList", getModulesList());
-
-onMounted(() => {
-  let { data, onFetchResponse, onFetchError } = useFetchComposable({
-    urlConst: "/modules",
-    urlVar: "",
-    method: "GET",
-    body: null,
-  });
-
-  onFetchResponse(() => {
-    console.log("data.value", data.value);
-    tableData.value = data.value;
-    let id = 0;
-    for (let item of tableData.value ){
-      item.id = ++id;
-    }
-  });
-
-  onFetchError((err) => {
-    ElMessage({
-      message: `Произошла ошибка при загрузке данных о модуле: ${err}`,
-      type: "error",
-      appendTo: ".el-message-wrapper",
-    });
-  });
+dashboardStore.$subscribe((mutation, state) => {
+  tableData.push(state.rowJustInserted);
 });
 
 function editHandler(cellData: any) {

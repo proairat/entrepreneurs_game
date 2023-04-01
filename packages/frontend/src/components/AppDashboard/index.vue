@@ -1,7 +1,7 @@
 <template>
   <div class="max-w-6xl mx-auto min-w-[35rem]">
-    <AppDashboardForm />
     <AppDashboardList />
+    <AppDashboardForm />
   </div>
 </template>
 

@@ -21,5 +21,6 @@ type TExtendsMap =
   | ITestQuestion
   | ITestAnswer
   | IGuess;
+  type TMessageType = "success" | "warning" | "info" | "error";
 
-export type { Tfns, TElemsList, TExtendsArray, TExtendsMap };
+export type { Tfns, TElemsList, TExtendsArray, TExtendsMap, TMessageType };
