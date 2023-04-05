@@ -39,8 +39,6 @@ function getEduElementExtended<T>(creator: CreatorExtended<T>) {
   return eduElement;
 }
 
-console.log("modules.store modules!", modules);
-
 const eduElementModules = getEduElement(new EntityCreator<IModule>(), modules);
 const eduElementModulesAdvanced = getEduElement(
   new EntityCreator<IModuleAdvanced>(),

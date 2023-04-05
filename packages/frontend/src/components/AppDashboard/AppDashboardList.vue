@@ -6,7 +6,11 @@
     :data="tableData"
     :row-height="100"
   >
-    <template #empty> Данные загружаются... </template>
+    <template #empty>
+      <div class="flex items-center justify-center h-100%">
+        <el-empty description="Нет данных"></el-empty>
+      </div>
+    </template>
   </el-table-v2>
 </template>
 
@@ -14,10 +18,19 @@
 import { TableV2FixedDir } from "element-plus";
 import { URL_MODULES_IMAGES } from "@/API";
 import { useDashboardStore } from "@/stores";
+import { watch } from "vue";
+import { storeToRefs } from "pinia";
 import type { Column } from "element-plus";
+import { EEntityState } from "share/types/enums";
 
 const dashboardStore = useDashboardStore();
-const { getModulesList } = dashboardStore;
+const {
+  toggleIsDialogFormVisible,
+  getModulesList,
+  updateActiveModule,
+  updateDialogFormTitle,
+} = dashboardStore;
+const { rowJustInserted } = storeToRefs(dashboardStore);
 const tableData = getModulesList();
 const columns: Column<any>[] = [
   {
@@ -51,14 +64,12 @@ const columns: Column<any>[] = [
     title: "Действия",
     cellRenderer: (cellData) => (
       <>
-        <LightButton
-          onClick={() => {
-            editHandler(cellData);
-          }}
-        >
+        <SuccessButton onClick={() => editHandler(cellData)} class="mr-3">
           Редактировать
-        </LightButton>
-        <DangerButton>Удалить</DangerButton>
+        </SuccessButton>
+        <DangerButton onClick={() => deleteHandler(cellData)}>
+          Удалить
+        </DangerButton>
       </>
     ),
     width: 300,
@@ -66,21 +77,36 @@ const columns: Column<any>[] = [
   },
 ];
 
-dashboardStore.$subscribe((mutation, state) => {
-  tableData.push(state.rowJustInserted);
+watch(rowJustInserted, (updatedRowJustInserted) => {
+  tableData.push(updatedRowJustInserted);
+  console.log("tableData", tableData);
+  if (tableData.length === 1) {
+    updateActiveModule({
+      entityId: updatedRowJustInserted.id,
+      stateForFindElem: EEntityState.Default,
+      stateForFindIndex: EEntityState.Default,
+      stateForClickIndex: EEntityState.Active,
+    });
+  }
 });
 
 function editHandler(cellData: any) {
-  console.log("Нажатие обрабатывается на редактирование!");
-  console.log("CellData", cellData);
+  toggleIsDialogFormVisible(true);
+  updateDialogFormTitle(`Строка №${cellData.rowData.id}`);
+  updateActiveModule({
+    entityId: cellData.rowData.id,
+    stateForFindElem: EEntityState.Active,
+    stateForFindIndex: EEntityState.Default,
+    stateForClickIndex: EEntityState.Active,
+  });
+}
+
+function deleteHandler(cellData: any) {
+  console.log("deleteHandler");
 }
 </script>
 
 <style scoped lang="scss">
-.example-showcase .el-table-v2__overlay {
-  z-index: 9;
-}
-
 :deep(.tune-image) {
   object-fit: contain;
   height: 100px;

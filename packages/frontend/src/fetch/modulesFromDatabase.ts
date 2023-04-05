@@ -28,7 +28,8 @@ async function fetchData() {
 
 await fetchData();
 
-if (modulesFromDatabase.length) { 
+if (modulesFromDatabase.length) {
+  // в данном случае, первый элемент набора становится активным
   modulesFromDatabase[0].state = EEntityState.Active;
 }
 
