@@ -1,54 +1,70 @@
 <template>
-  <div class="entry-personal-data">Введите данные карточки модуля</div>
-  <el-form
-    ref="ruleFormRef"
-    :model="formModel"
-    :rules="rules"
-    :size="formSize"
-    :status-icon="true"
-    @validate="validateFormHandler"
+  <el-dialog
+    v-model="isDialogFormVisible"
+    :title="dialogFormTitle"
+    class="dialog-outer"
+    @close="handleClose(ruleFormRef)"
+    :open-delay="50"
   >
-    <el-form-item prop="header" label="Заголовок">
-      <el-input
-        v-model="formModel.header"
-        type="text"
-        placeholder="Заголовок"
+    <el-form
+      ref="ruleFormRef"
+      :model="formModel"
+      :rules="rules"
+      :size="formSize"
+      :status-icon="true"
+      @validate="validateFormHandler"
+    >
+      <el-form-item prop="header" label="Заголовок">
+        <el-input
+          v-model="formModel.header"
+          type="text"
+          placeholder="Заголовок"
+        />
+      </el-form-item>
+      <AppDashboardUpload
+        :isCheckFileReadyPass="isCheckFileReadyPass"
+        :fileList="fileList"
+        :class="appendTo"
+        @message-event="messageEventHandler"
+        @upload-file-error="uploadFileErrorHandler"
       />
-    </el-form-item>
-    <AppDashboardUpload
-      :isCheckFileReadyPass="isCheckFileReadyPass"
-      :class="appendTo"
-      @message-event="messageEventHandler"
-      @upload-file-error="uploadFileErrorHandler"
-    />
-    <div class="create-module-card__outer">
-      <PrimaryButton
-        @click="checkFormReadyHandler(ruleFormRef), checkFileReadyHandler()"
-      >
-        Создать карточку модуля
-      </PrimaryButton>
-    </div>
-  </el-form>
-  <AppSpinner v-if="isSpinnerVisible" />
+    </el-form>
+    <AppSpinner v-if="isSpinnerVisible" />
+    <template #footer>
+      <span class="dialog-footer">
+        <LightButton @click="isDialogFormVisible = false">Отмена</LightButton>
+        <PrimaryButton
+          @click="checkFormReadyHandler(ruleFormRef), checkFileReadyHandler()"
+          >Обновить карточку модуля</PrimaryButton
+        >
+      </span>
+    </template>
+  </el-dialog>
 </template>
 
-<script setup lang="ts">
+<script lang="ts" setup>
+import { useDashboardStore } from "@/stores";
+import { storeToRefs } from "pinia";
 import { reactive, ref, watch } from "vue";
-import type { FormItemProp, FormInstance, FormRules } from "element-plus";
+import type {
+  FormItemProp,
+  FormInstance,
+  FormRules,
+  UploadUserFile,
+} from "element-plus";
 import { useFetchComposable } from "@/composables/use-fetch";
 import { ElMessage } from "element-plus";
-import { useDashboardStore } from "@/stores";
 import type { IModule, IElMessageUploadFile } from "share/types/interfaces";
-import { storeToRefs } from "pinia";
+import { URL_MODULES_IMAGES } from "@/API";
 
 const dashboardStore = useDashboardStore();
-const { updateRowJustInserted, updateActiveModule, getModulesList } =
-  dashboardStore;
-const { activeModule } = storeToRefs(dashboardStore);
+const { isDialogFormVisible, dialogFormTitle, activeModule } =
+  storeToRefs(dashboardStore);
+const { updateRowJustInserted } = dashboardStore;
 const formSize = ref("large");
 const ruleFormRef = ref<FormInstance>();
 const formModel = reactive({
-  header: "",
+  header: activeModule.value?.header,
 });
 const submitResult = ref({
   formReady: false,
@@ -60,7 +76,7 @@ const overallResult = ref({
 });
 const isCheckFileReadyPass = ref(false);
 const isSpinnerVisible = ref(false);
-const appendTo = "el-message-wrapper-main";
+const appendTo = "el-message-wrapper-dialog";
 const elMessageRef = ref<IElMessageUploadFile>({
   message: "Файл не выбран",
   type: "error",
@@ -77,6 +93,16 @@ const rules = reactive<FormRules>({
     },
   ],
 });
+const handleClose = (formEl: FormInstance | undefined) => {
+  if (!formEl) return;
+  formEl.resetFields();
+};
+const fileList = ref<UploadUserFile[]>([
+  {
+    name: activeModule.value?.filename,
+    url: `${URL_MODULES_IMAGES}/${activeModule.value?.filename}`,
+  },
+]);
 
 function validateFormHandler(
   props: FormItemProp,
@@ -170,7 +196,7 @@ watch(overallResult.value, () => {
   ) {
     isSpinnerVisible.value = false;
     ElMessage({
-      message: "Карточка модуля успешно создана!",
+      message: "Карточка модуля успешно обновлена!",
       type: "success",
       appendTo: `.${appendTo}`,
     });
@@ -210,15 +236,24 @@ watch(submitResult.value, () => {
     isCheckFileReadyPass.value = false;
   }
 });
+
+watch(activeModule, (updatedActiveModule) => {
+  formModel.header = updatedActiveModule.header;
+  fileList.value = [
+    {
+      name: activeModule.value.filename,
+      url: `${URL_MODULES_IMAGES}/${activeModule.value.filename}`,
+    },
+  ];
+});
 </script>
 
 <style scoped lang="scss">
-.entry-personal-data {
-  padding: 1.5rem 0;
-  text-align: center;
-  font-size: $text-size-h5;
+/*
+.dialog-outer {
+  font-size: 1rem;
 }
-
+*/
 .el-input {
   background-color: transparent;
 
@@ -254,6 +289,13 @@ watch(submitResult.value, () => {
   &__outer {
     display: flex;
     justify-content: center;
+    font-size: 1rem;
+  }
+}
+
+.dialog-footer {
+  & > button:first-child {
+    margin-right: 0.75rem;
   }
 }
 </style>

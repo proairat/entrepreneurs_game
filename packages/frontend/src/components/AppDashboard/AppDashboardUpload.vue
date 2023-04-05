@@ -1,6 +1,5 @@
 <template>
-  <div class="el-message-wrapper"></div>
-  <!--v-model:file-list="fileList"-->
+  <div v-bind="$attrs"></div>
   <el-upload
     ref="upload"
     :action="URL_MODULES_UPLOAD"
@@ -12,7 +11,11 @@
     :on-success="handleSuccess"
     :on-error="handleError"
     :on-change="handleChange"
+    :file-list="props.fileList"
   >
+    <!--<transition-group name="">
+      <el-upload-list></el-upload-list>
+    </transition-group>-->
     <template #tip>
       <!--<div class="el-upload__tip text-red-600">
         <div>Ограничения:</div>
@@ -22,18 +25,19 @@
       </div>-->
     </template>
     <template #trigger>
-      <button
-        type="button"
-        class="bg-indigo-500 p-2 hover:bg-indigo-600 text-white"
-      >
-        Выберите файл
-      </button>
+      <InfoButton> Выберите файл </InfoButton>
     </template>
   </el-upload>
 </template>
 
+<script lang="ts">
+export default {
+  inheritAttrs: false,
+};
+</script>
+
 <script lang="ts" setup>
-import { ref, watch } from "vue";
+import { ref, watch, useAttrs } from "vue";
 import {
   ElMessage,
   genFileId,
@@ -45,15 +49,17 @@ import { URL_MODULES_UPLOAD } from "@/API";
 import type { IElMessageUploadFile } from "share/types/interfaces";
 
 /**
+ * Состояния, передаваемые родительскому компоненту
  * 1 - Файл не выбран
  * 2 - Файл выбран
  * 3 - Файл успешно загружен
  *  */
 
+const { class: appendTo } = useAttrs();
 const props = defineProps<{
   isCheckFileReadyPass: boolean;
+  fileList?: Array<any>;
 }>();
-
 const emits = defineEmits<{
   (
     e: "message-event",
@@ -67,22 +73,74 @@ const emits = defineEmits<{
   ): void;
   (e: "upload-file-error", isError: boolean): void;
 }>();
-
 const emitsObj = ref<IElMessageUploadFile>({
   message: "Файл не выбран",
   type: "error",
-  appendTo: ".el-message-wrapper",
+  appendTo: `.${appendTo}`,
   idMessage: 1,
   shPayload: "",
 });
-
 const upload = ref<UploadInstance>();
+const handleRemove: UploadProps["onRemove"] = () => {
+  emitObjFunc({
+    appendTo: `.${appendTo}`,
+  });
+};
+const handleExceed: UploadProps["onExceed"] = (files) => {
+  const file = files[0] as UploadRawFile;
+  file.uid = genFileId();
+  upload.value!.clearFiles();
+  if (isComplianceWithRestrictions(file)) {
+    upload.value!.handleStart(file);
+  } else {
+    emitObjFunc({
+      appendTo: `.${appendTo}`,
+    });
+  }
+};
+const handleSuccess: UploadProps["onSuccess"] = (response) => {
+  emitObjFunc({
+    message: "Файл успешно загружен!",
+    type: "success",
+    idMessage: 3,
+    shPayload: response.response,
+    appendTo: `.${appendTo}`,
+  });
+};
+const handleError: UploadProps["onError"] = (error: Error) => {
+  ElMessage({
+    message: `Файл не был загружен. Произошла ошибка: ${error}`,
+    type: "error",
+    appendTo: `.${appendTo}`,
+  });
+  emitObjFunc({
+    appendTo: `.${appendTo}`,
+  });
+  emits("upload-file-error", true);
+};
+const handleChange: UploadProps["onChange"] = (uploadFile) => {
+  if (uploadFile.status === "ready") {
+    if (isComplianceWithRestrictions(uploadFile.raw as UploadRawFile)) {
+      emitObjFunc({
+        message: "Файл выбран",
+        type: "warning",
+        idMessage: 2,
+        appendTo: `.${appendTo}`,
+      });
+    } else {
+      upload.value!.clearFiles();
+      emitObjFunc({
+        appendTo: `.${appendTo}`,
+      });
+    }
+  }
+};
 
 function emitObjFunc(obj: any) {
   const {
     message = "Файл не выбран",
     type = "error",
-    appendTo = ".el-message-wrapper",
+    appendTo = "",
     idMessage = 1,
     shPayload = "",
   } = obj;
@@ -94,29 +152,13 @@ function emitObjFunc(obj: any) {
   emits("message-event", emitsObj.value);
 }
 
-watch(
-  () => props.isCheckFileReadyPass,
-  () => {
-    if (props.isCheckFileReadyPass) {
-      upload.value!.submit();
-    } else {
-      upload.value!.clearFiles();
-      emitObjFunc({});
-    }
-  }
-);
-
-const handleRemove: UploadProps["onRemove"] = () => {
-  emitObjFunc({});
-};
-
 function isComplianceWithRestrictions(file: UploadRawFile) {
   const allowTypes = ["image/svg+xml", "image/png"];
   if (!allowTypes.includes(file.type)) {
     ElMessage({
       message: "Тип файла должен быть либо PNG, либо SVG",
       type: "error",
-      appendTo: ".el-message-wrapper",
+      appendTo: `.${appendTo}`,
     });
     return false;
   }
@@ -125,60 +167,35 @@ function isComplianceWithRestrictions(file: UploadRawFile) {
     ElMessage({
       message: "Размер файла не должен превышать 3 Мбайт",
       type: "error",
-      appendTo: ".el-message-wrapper",
+      appendTo: `.${appendTo}`,
     });
     return false;
   }
   return true;
 }
 
-const handleExceed: UploadProps["onExceed"] = (files) => {
-  const file = files[0] as UploadRawFile;
-  file.uid = genFileId();
-  upload.value!.clearFiles();
-  if (isComplianceWithRestrictions(file)) {
-    upload.value!.handleStart(file);
-  } else {
-    emitObjFunc({});
-  }
-};
-
-const handleSuccess: UploadProps["onSuccess"] = (response) => {
-  emitObjFunc({
-    message: "Файл успешно загружен!",
-    type: "success",
-    idMessage: 3,
-    shPayload: response.response,
-  });
-};
-
-const handleError: UploadProps["onError"] = (error: Error) => {
-  ElMessage({
-    message: `Файл не был загружен. Произошла ошибка: ${error}`,
-    type: "error",
-    appendTo: ".el-message-wrapper",
-  });
-  emitObjFunc({});
-  emits("upload-file-error", true);
-};
-
-const handleChange: UploadProps["onChange"] = (uploadFile) => {
-  if (uploadFile.status === "ready") {
-    if (isComplianceWithRestrictions(uploadFile.raw as UploadRawFile)) {
-      emitObjFunc({ message: "Файл выбран", type: "warning", idMessage: 2 });
+watch(
+  () => props.isCheckFileReadyPass,
+  () => {
+    if (props.isCheckFileReadyPass) {
+      upload.value!.submit();
     } else {
       upload.value!.clearFiles();
-      emitObjFunc({});
+      emitObjFunc({ appendTo: `.${appendTo}` });
     }
   }
-};
+);
 
-emitObjFunc({});
+emitObjFunc({ appendTo: `.${appendTo}` });
 emits("upload-file-error", false);
 </script>
 
 <style scoped lang="scss">
-.el-message-wrapper {
+.el-message-wrapper-main {
+  position: relative;
+}
+
+.el-message-wrapper-dialog {
   position: relative;
 }
 

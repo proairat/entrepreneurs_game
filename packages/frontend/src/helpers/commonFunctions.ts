@@ -137,7 +137,7 @@ function isObjectEmpty(value: any) {
   );
 }
 
-function groupByKey(key: any) {
+function groupByKey(key: string) {
   return (array: any) =>
     array.reduce((prev: any, current: any) => {
       /*

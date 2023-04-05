@@ -10,8 +10,6 @@ import { EventEmitter } from "events";
 import { Observable } from "rxjs";
 import { Socket } from "net";
 
-// const eventEmitter = new EventEmitter();
-
 @Injectable()
 export class ModulesService {
   private cache: Map<string, number> = new Map<string, number>();
@@ -75,13 +73,11 @@ export class ModulesService {
       }
       return { response: "OK" };
     };
-
     if (!isEmpty(file)) {
       return await updateEntity<File>({
         filename: file.filename ?? "no value",
       });
     }
-
     if (!isEmpty(body)) {
       return await updateEntity<Body>({ header: body.header ?? "no value" });
     }

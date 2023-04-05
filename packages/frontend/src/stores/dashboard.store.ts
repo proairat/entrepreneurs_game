@@ -36,6 +36,7 @@ const eduElementModules = getEduElement(
   new EntityCreator<IModule>(),
   modulesFromDatabase
 );
+
 const eduElementModulesExtended = getEduElementExtended(
   new EntityCreatorExtendedArray<IModule>(
     ref(eduElementModules.getList()).value as IModule[]
@@ -45,6 +46,8 @@ const eduElementModulesExtended = getEduElementExtended(
 export const useDashboardStore = defineStore("dashboard", () => {
   const activeModule = ref(getActiveModule());
   const rowJustInserted = ref({} as IModule);
+  const isDialogFormVisible = ref(false);
+  const dialogFormTitle = ref("");
 
   function updateActiveModule(updateArray: IUpdateArray) {
     eduElementModulesExtended.updateElemByState(updateArray);
@@ -53,6 +56,14 @@ export const useDashboardStore = defineStore("dashboard", () => {
 
   function updateRowJustInserted(row: IModule) {
     rowJustInserted.value = row;
+  }
+
+  function toggleIsDialogFormVisible(value: boolean) {
+    isDialogFormVisible.value = value;
+  }
+
+  function updateDialogFormTitle(title: string) {
+    dialogFormTitle.value = title;
   }
 
   function getModulesList() {
@@ -68,8 +79,12 @@ export const useDashboardStore = defineStore("dashboard", () => {
   return {
     activeModule,
     rowJustInserted,
-    getModulesList,
+    isDialogFormVisible,
+    dialogFormTitle,
     updateActiveModule,
     updateRowJustInserted,
+    toggleIsDialogFormVisible,
+    updateDialogFormTitle,
+    getModulesList,
   };
 });

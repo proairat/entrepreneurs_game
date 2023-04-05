@@ -2,6 +2,7 @@
   <div class="max-w-6xl mx-auto min-w-[35rem]">
     <AppDashboardList />
     <AppDashboardForm />
+    <AppDashboardDialog />
   </div>
 </template>
 
