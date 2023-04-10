@@ -22,6 +22,8 @@
         />
       </el-form-item>
       <AppDashboardUpload
+        :additionalData="{ id: activeModule.id }"
+        :method="method.toLowerCase()"
         :isCheckFileReadyPass="isCheckFileReadyPass"
         :fileList="fileList"
         :class="appendTo"
@@ -103,6 +105,7 @@ const fileList = ref<UploadUserFile[]>([
     url: `${URL_MODULES_IMAGES}/${activeModule.value?.filename}`,
   },
 ]);
+const method = ref("PUT");
 
 function validateFormHandler(
   props: FormItemProp,
@@ -146,6 +149,8 @@ function checkFileReadyHandler() {
 function submitFormFields() {
   const formData = new FormData();
 
+  formData.append("id", String(activeModule.value.id));
+
   for (let item of Object.entries(formModel)) {
     const [name, value] = item;
     formData.append(name, value);
@@ -154,7 +159,7 @@ function submitFormFields() {
   let { data, onFetchResponse, onFetchError } = useFetchComposable({
     urlConst: "/modules",
     urlVar: "/upload",
-    method: "POST",
+    method: "PUT",
     body: formData,
   });
 

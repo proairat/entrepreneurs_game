@@ -21,7 +21,7 @@ import { useDashboardStore } from "@/stores";
 import { watch } from "vue";
 import { storeToRefs } from "pinia";
 import type { Column } from "element-plus";
-import { EEntityState } from "share/types/enums";
+import { EEntityState, EEntityType } from "share/types/enums";
 
 const dashboardStore = useDashboardStore();
 const {
@@ -29,8 +29,9 @@ const {
   getModulesList,
   updateActiveModule,
   updateDialogFormTitle,
+  updateElemFields,
 } = dashboardStore;
-const { rowJustInserted } = storeToRefs(dashboardStore);
+const { rowJustInserted, activeModule } = storeToRefs(dashboardStore);
 const tableData = getModulesList();
 const columns: Column<any>[] = [
   {
@@ -78,8 +79,12 @@ const columns: Column<any>[] = [
 ];
 
 watch(rowJustInserted, (updatedRowJustInserted) => {
-  tableData.push(updatedRowJustInserted);
+  if (rowJustInserted.value.id !== activeModule.value.id) {
+    tableData.push(updatedRowJustInserted);
+  }
   console.log("tableData", tableData);
+  updateElemFields(rowJustInserted.value);
+
   if (tableData.length === 1) {
     updateActiveModule({
       entityId: updatedRowJustInserted.id,

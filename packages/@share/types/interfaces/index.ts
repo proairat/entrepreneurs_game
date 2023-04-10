@@ -5,7 +5,7 @@ import type {
   EGuess,
   EProgressCaption,
 } from "../enums";
-import type { TElemsList, TMessageType } from "../types";
+import type { TElemsList, TExtendsArray, TMessageType } from "../types";
 
 interface IUser {
   surname: string;
@@ -32,7 +32,7 @@ interface INavigation {
 
 interface IModule {
   id: number;
-  type: EEntityType.Modules;
+  type: EEntityType;
   filename: string;
   alt: string;
   header: string;
@@ -44,7 +44,7 @@ interface IModule {
 
 interface IModuleAdvanced {
   id: number;
-  type: EEntityType.ModulesAdvanced;
+  type: EEntityType;
   filename: string;
   alt: string;
   header: string;
@@ -58,21 +58,21 @@ interface IModuleAdvanced {
 
 interface IGuess {
   id: number;
-  type: EEntityType.Guesses;
+  type: EEntityType;
   state: EEntityState;
   slideNumber: number;
 }
 
 interface ITheme {
   id: number;
-  type: EEntityType.Topics | EEntityType.Tests;
+  type: EEntityType;
   state: EEntityState;
   title: string;
 }
 
 interface ITabsAuthors {
   id: number;
-  type: EEntityType.TabsAuthors;
+  type: EEntityType;
   surname: string;
   name: string;
   patronymic: string;
@@ -81,7 +81,7 @@ interface ITabsAuthors {
 
 interface IVideo {
   id: number;
-  type: EEntityType.Videos;
+  type: EEntityType;
   filename: string;
   poster: string;
   videoType: string;
@@ -94,7 +94,7 @@ interface IVideo {
 
 interface ITest {
   id: number;
-  type: EEntityType.Tests;
+  type: EEntityType;
   title: string;
   description: string;
   state: EEntityState;
@@ -102,7 +102,7 @@ interface ITest {
 
 interface ITestQuestion {
   id: number;
-  type: EEntityType.TestsQuestions;
+  type: EEntityType;
   category: string;
   difficulty: string;
   slideNumber: number;
@@ -114,14 +114,14 @@ interface ITestQuestion {
 
 interface ITestAnswer {
   id: number;
-  type: EEntityType.TestsAnswers;
+  type: EEntityType;
   answer: string;
   state: EEntityState;
 }
 
 interface IEntranceTest {
   id: number;
-  type: EEntityType.EntranceTests;
+  type: EEntityType;
   title: string;
   description: string;
   state: EEntityState;
@@ -130,7 +130,7 @@ interface IEntranceTest {
 interface IEntranceTestQuestion {
   id: number;
   category: string;
-  type: string;
+  type: EEntityType;
   difficulty: string;
   slideNumber: number;
   question: string;
@@ -180,6 +180,7 @@ interface IEduCommonElement<T> {
 interface IEduElementEntityArray<T> {
   updateElemByState(updateArray: IUpdateArray): void;
   getElemByState(state: EEntityState): T | undefined;
+  updateElemFields(elem: TExtendsArray): void;
 }
 
 interface IEduElementEntityMap<T> {
@@ -204,6 +205,14 @@ interface IElMessageUploadFile {
   shPayload: string;
 }
 
+interface IModuleBody { 
+  header: string 
+};
+
+interface IModuleFile { 
+  filename: string 
+};
+
 export type {
   IUser,
   IAlert,
@@ -227,4 +236,6 @@ export type {
   IEduElementEntityArray,
   IEduElementEntityMap,
   IElMessageUploadFile,
+  IModuleBody,
+  IModuleFile,
 };

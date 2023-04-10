@@ -16,6 +16,7 @@
       />
     </el-form-item>
     <AppDashboardUpload
+      :method="method.toLowerCase()"
       :isCheckFileReadyPass="isCheckFileReadyPass"
       :class="appendTo"
       @message-event="messageEventHandler"
@@ -77,6 +78,7 @@ const rules = reactive<FormRules>({
     },
   ],
 });
+const method = ref("POST");
 
 function validateFormHandler(
   props: FormItemProp,
@@ -128,7 +130,7 @@ function submitFormFields() {
   let { data, onFetchResponse, onFetchError } = useFetchComposable({
     urlConst: "/modules",
     urlVar: "/upload",
-    method: "POST",
+    method: method.value,
     body: formData,
   });
 

@@ -2,9 +2,11 @@
   <div v-bind="$attrs"></div>
   <el-upload
     ref="upload"
+    :method="props.method"
     :action="URL_MODULES_UPLOAD"
     list-type="picture"
     :limit="1"
+    :data="props.additionalData"
     :auto-upload="false"
     :on-remove="handleRemove"
     :on-exceed="handleExceed"
@@ -59,6 +61,8 @@ const { class: appendTo } = useAttrs();
 const props = defineProps<{
   isCheckFileReadyPass: boolean;
   fileList?: Array<any>;
+  method: string;
+  additionalData?: { id: string };
 }>();
 const emits = defineEmits<{
   (
