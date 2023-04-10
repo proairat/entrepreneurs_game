@@ -1,12 +1,31 @@
-import type { EEntityState } from "share/types/enums";
+import { EEntityState, EEntityType } from "share/types/enums";
 import type {
   IEduElementEntityArray,
+  IEntranceTest,
+  IModule,
+  IModuleAdvanced,
   IUpdateArray,
 } from "share/types/interfaces";
-import type { TExtendsArray } from "share/types/types";
+import type {
+  TExtendsArray,
+  TExtendsArrayCombination,
+  TModuleBodyFile,
+} from "share/types/types";
 import { BaseEduElement } from "@/classes/BaseEduElement";
 
-class EntityExtendedArray<T extends TExtendsArray>
+function isIModule(entity: TExtendsArray): entity is IModule {
+  return (entity as IModule).type === EEntityType.Modules;
+}
+
+function isIModuleAdvanced(entity: TExtendsArray): entity is IModuleAdvanced {
+  return (entity as IModuleAdvanced).type === EEntityType.ModulesAdvanced;
+}
+
+function isIEntranceTest(entity: TExtendsArray): entity is IEntranceTest {
+  return (entity as IEntranceTest).type === EEntityType.EntranceTests;
+}
+
+class EntityExtendedArray<T extends TExtendsArrayCombination>
   extends BaseEduElement
   implements IEduElementEntityArray<T>
 {
@@ -35,6 +54,33 @@ class EntityExtendedArray<T extends TExtendsArray>
   public getElemByState(state: EEntityState): T | undefined {
     if (Array.isArray(this.list)) {
       return super.find(state, this.list);
+    }
+  }
+
+  public updateElemFields(elem: TExtendsArray): void {
+    if (Array.isArray(this.list)) {
+      const thisList = this.list;
+      const findIndex = super.findIndex(elem.id, thisList);
+      if (isIModule(elem)) {
+        const subsample: TModuleBodyFile = {
+          header: elem.header,
+          filename: elem.filename,
+        };
+        Object.entries(subsample).forEach(
+          ([key, value]: [string, TModuleBodyFile[keyof TModuleBodyFile]]) => {
+            const opa = key as keyof TModuleBodyFile;
+            thisList[findIndex][opa] = value;
+          }
+        );
+      }
+
+      if (isIModuleAdvanced(elem)) {
+        elem;
+      }
+
+      if (isIEntranceTest(elem)) {
+        elem;
+      }
     }
   }
 }

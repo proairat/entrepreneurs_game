@@ -5,7 +5,7 @@ import { UpdateModuleDto } from "./dto/update-module.dto";
 import { Modules } from "./entities/modules.entity";
 import { isEmpty, isNull } from "lodash";
 import { EEntityState } from "@app/enums";
-import { IModule } from "@app/interfaces";
+import { IModule, IModuleBody, IModuleFile } from "@app/interfaces";
 import { EventEmitter } from "events";
 import { Observable } from "rxjs";
 import { Socket } from "net";
@@ -23,7 +23,7 @@ export class ModulesService {
     private readonly modulesRepository: Repository<Modules>
   ) {}
 
-  async create({ alt = "Карточка модуля" }: UpdateModuleDto): Promise<number> {
+  async create({ alt = "Карточка модуля!" }: UpdateModuleDto): Promise<number> {
     const module = new Modules();
     module.alt = alt;
     // module.title = title;
@@ -33,22 +33,19 @@ export class ModulesService {
     return id;
   }
 
-  async uploadFileAndPassValidation(
+  async uploadFileAndPassValidationPost(
     body: UpdateModuleDto,
     file: Express.Multer.File
   ) {
-    type Body = { header: string };
-    type File = { filename: string };
-
-    function isFile(entity: Body | File): entity is File {
-      return (entity as File).filename !== undefined;
+    function isFile(entity: IModuleBody | IModuleFile): entity is IModuleFile {
+      return (entity as IModuleFile).filename !== undefined;
     }
 
     if (!this.cache.has("id")) {
       this.cache.set("id", await this.create({}));
     }
 
-    const updateEntity = async <T extends File | Body>(p: T) => {
+    const updateEntity = async <T extends IModuleFile | IModuleBody>(p: T) => {
       let updateModuleDto: {
         [index: string]: string;
       };
@@ -74,12 +71,62 @@ export class ModulesService {
       return { response: "OK" };
     };
     if (!isEmpty(file)) {
-      return await updateEntity<File>({
+      return await updateEntity<IModuleFile>({
         filename: file.filename ?? "no value",
       });
     }
     if (!isEmpty(body)) {
-      return await updateEntity<Body>({ header: body.header ?? "no value" });
+      return await updateEntity<IModuleBody>({ header: body.header ?? "no value" });
+    }
+  }
+
+  async uploadFileAndPassValidationPut(
+    body: UpdateModuleDto & { id?: number},
+    file: Express.Multer.File
+  ) {
+    function isFile(entity: IModuleBody | IModuleFile): entity is IModuleFile {
+      return (entity as IModuleFile).filename !== undefined;
+    }
+
+    console.log('uploadFileAndPassValidationPut body', body);
+    console.log('uploadFileAndPassValidationPut file', file);
+
+    const id = body.id;
+    console.log('Вот и идентификатор в деле id', id);
+
+    const updateEntity = async <T extends IModuleFile | IModuleBody>(p: T) => {
+      let updateModuleDto: {
+        [index: string]: string;
+      };
+      if (isFile(p)) {
+        updateModuleDto = { filename: p.filename };
+        this.flags.file = true;
+      } else {
+        updateModuleDto = { header: p.header };
+        this.flags.body = true;
+      }
+      if (id) {
+        await this.update(id, updateModuleDto);
+      }
+      if (this.flags.body && this.flags.file) {
+        if (id) {
+          this.eventEmitter.emit("message", await this.findOneById(id));
+          this.flags.body = false;
+          this.flags.file = false;
+          this.cache.delete("id");
+        }
+      }
+      return { response: "OK" };
+    };
+    if (!isEmpty(file)) {
+      return await updateEntity<IModuleFile>({
+        filename: file.filename ?? "no value",
+      });
+    }
+    if (!isEmpty(body)) {
+      if (id){
+        return await updateEntity<IModuleBody>({ header: body.header ?? "no value" });
+      }
     }
   }
 
@@ -97,6 +144,8 @@ export class ModulesService {
 
   async update(id: number, updateModuleDto: UpdateModuleDto) {
     const row = await this.findOneById(id);
+    // console.log('row', row);
+    // console.log('updateModuleDto', updateModuleDto);
     if (!isNull(row)) {
       Object.entries(updateModuleDto).map(([key, value]: [any, any]) => {
         const opa: keyof UpdateModuleDto = key;

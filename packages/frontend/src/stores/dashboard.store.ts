@@ -11,7 +11,7 @@ import {
   EntityCreator,
   EntityCreatorExtendedArray,
 } from "@/classes";
-import type { TElemsList } from "share/types/types";
+import type { TElemsList, TExtendsArray } from "share/types/types";
 import { modulesFromDatabase } from "@/fetch";
 import { EEntityState } from "share/types/enums";
 
@@ -76,6 +76,10 @@ export const useDashboardStore = defineStore("dashboard", () => {
     ) as IModule;
   }
 
+  function updateElemFields(elem: TExtendsArray) {
+    eduElementModulesExtended.updateElemFields(elem);
+  }
+
   return {
     activeModule,
     rowJustInserted,
@@ -86,5 +90,6 @@ export const useDashboardStore = defineStore("dashboard", () => {
     toggleIsDialogFormVisible,
     updateDialogFormTitle,
     getModulesList,
+    updateElemFields,
   };
 });

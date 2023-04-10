@@ -11,6 +11,7 @@ import {
   ParseFilePipeBuilder,
   Req,
   Sse,
+  Put,
 } from "@nestjs/common";
 import { ModulesService } from "./modules.service";
 import { UpdateModuleDto } from "./dto/update-module.dto";
@@ -49,7 +50,7 @@ export class ModulesController {
 
   @Post("upload")
   @UseInterceptors(FileInterceptor("file", multerOptions))
-  uploadFileAndPassValidation(
+  uploadFileAndPassValidationPost(
     @Body() body: UpdateModuleDto,
     @UploadedFile(
       new ParseFilePipeBuilder()
@@ -65,7 +66,28 @@ export class ModulesController {
     )
     file: Express.Multer.File
   ) {
-    return this.modulesService.uploadFileAndPassValidation(body, file);
+    return this.modulesService.uploadFileAndPassValidationPost(body, file);
+  }
+
+  @Put("upload")
+  @UseInterceptors(FileInterceptor("file", multerOptions))
+  uploadFileAndPassValidationPut(
+    @Body() body: UpdateModuleDto,
+    @UploadedFile(
+      new ParseFilePipeBuilder()
+        .addFileTypeValidator({
+          fileType: "png|svg",
+        })
+        .addMaxSizeValidator({
+          maxSize: 3145728, // 3 Mb
+        })
+        .build({
+          fileIsRequired: false,
+        })
+    )
+    file: Express.Multer.File
+  ) {
+    return this.modulesService.uploadFileAndPassValidationPut(body, file);
   }
 
   @Post()
