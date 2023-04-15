@@ -46,7 +46,9 @@ function validateFormHandler(
   props: FormItemProp,
   isValid: boolean,
   message: string
-) {}
+) {
+  console.log("validateFormHandler");
+}
 
 watch(
   activeModule,
@@ -57,5 +59,6 @@ watch(
 );
 
 function clickHandler() {
+  console.log("clickHandler");
 }
 </script>

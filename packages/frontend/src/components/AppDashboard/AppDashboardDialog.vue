@@ -141,7 +141,7 @@ function submitFormFields() {
   let { data, onFetchResponse, onFetchError } = useFetchComposable({
     urlConst: "/modules",
     urlVar: "/upload",
-    method: "PUT",
+    method: method.value,
     body: formData,
   });
 

@@ -21,6 +21,13 @@ class BaseEduElement {
   ): T[] {
     return list.filter((item: T) => item.state === state);
   }
+  public delete<T extends TExtendsMap | TExtendsArray>(
+    index: number,
+    list: T[],
+    count = 1
+  ) {
+    return list.splice(index, count);
+  }
 }
 
 export { BaseEduElement };

@@ -23,6 +23,8 @@ import { storeToRefs } from "pinia";
 import type { Column } from "element-plus";
 import { EEntityState } from "share/types/enums";
 import cloneDeep from "lodash/cloneDeep";
+import { useFetchComposable } from "@/composables/use-fetch";
+import { ElMessage } from "element-plus";
 
 const dashboardStore = useDashboardStore();
 const {
@@ -31,6 +33,7 @@ const {
   updateActiveModule,
   updateDialogFormTitle,
   updateElemFields,
+  deleteFromList,
 } = dashboardStore;
 const { rowJustInserted, activeModule } = storeToRefs(dashboardStore);
 const tableData = getModulesList();
@@ -85,9 +88,7 @@ watch(
     if (updatedRowJustInserted.id !== activeModule.value?.id) {
       tableData.push(cloneDeep(updatedRowJustInserted));
     }
-
     updateElemFields(updatedRowJustInserted);
-
     if (tableData.length === 1) {
       updateActiveModule({
         entityId: updatedRowJustInserted.id,
@@ -112,7 +113,36 @@ function editHandler(cellData: any) {
 }
 
 function deleteHandler(cellData: any) {
-  console.log("deleteHandler");
+  let { data, onFetchResponse, onFetchError } = useFetchComposable({
+    urlConst: "/modules",
+    urlVar: `/${cellData.rowData.id}`,
+    method: "DELETE",
+    body: null,
+  });
+  onFetchResponse(() => {
+    if (data.value.response === "OK") {
+      deleteFromList(cellData.rowData);
+      if (tableData.length && cellData.rowData.state === EEntityState.Active) {
+        updateActiveModule({
+          entityId: tableData[0].id,
+          stateForFindElem: EEntityState.Default,
+          stateForFindIndex: EEntityState.Default,
+          stateForClickIndex: EEntityState.Active,
+        });
+      }
+      ElMessage({
+        message: `Запись успешно удалена!`,
+        type: "success",
+      });
+    }
+  });
+
+  onFetchError((err) => {
+    ElMessage({
+      message: `Произошла ошибка при удалении записи: ${err}`,
+      type: "error",
+    });
+  });
 }
 </script>
 

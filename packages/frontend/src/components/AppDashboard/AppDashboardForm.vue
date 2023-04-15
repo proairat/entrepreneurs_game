@@ -40,11 +40,9 @@ import { useFetchComposable } from "@/composables/use-fetch";
 import { ElMessage } from "element-plus";
 import { useDashboardStore } from "@/stores";
 import type { IModule, IElMessageUploadFile } from "share/types/interfaces";
-import { storeToRefs } from "pinia";
 
 const dashboardStore = useDashboardStore();
-const { updateRowJustInserted, updateActiveModule, getModulesList } =
-  dashboardStore;
+const { updateRowJustInserted } = dashboardStore;
 const formSize = ref("large");
 const ruleFormRef = ref<FormInstance>();
 const formModel = reactive({

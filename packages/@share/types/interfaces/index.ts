@@ -181,6 +181,7 @@ interface IEduElementEntityArray<T> {
   updateElemByState(updateArray: IUpdateArray): void;
   getElemByState(state: EEntityState): T | undefined;
   updateElemFields(elem: TExtendsArray): void;
+  deleteFromList(elem: TExtendsArray): void;
 }
 
 interface IEduElementEntityMap<T> {
