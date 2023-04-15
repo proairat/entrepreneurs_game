@@ -45,7 +45,6 @@ import { storeToRefs } from "pinia";
 const dashboardStore = useDashboardStore();
 const { updateRowJustInserted, updateActiveModule, getModulesList } =
   dashboardStore;
-const { activeModule } = storeToRefs(dashboardStore);
 const formSize = ref("large");
 const ruleFormRef = ref<FormInstance>();
 const formModel = reactive({
@@ -165,53 +164,63 @@ function messageEventHandler(elMessage: IElMessageUploadFile) {
   Object.assign(elMessageRef.value, elMessage);
 }
 
-watch(overallResult.value, () => {
-  if (
-    overallResult.value.fileResult === "OK" &&
-    overallResult.value.formResult === "OK"
-  ) {
-    isSpinnerVisible.value = false;
-    ElMessage({
-      message: "Карточка модуля успешно создана!",
-      type: "success",
-      appendTo: `.${appendTo}`,
-    });
-    ruleFormRef.value?.resetFields();
-    submitResult.value.formReady = false;
-    submitResult.value.fileReady = false;
-    overallResult.value.formResult = "";
-    overallResult.value.fileResult = "";
-  }
-});
+watch(
+  overallResult,
+  () => {
+    if (
+      overallResult.value.fileResult === "OK" &&
+      overallResult.value.formResult === "OK"
+    ) {
+      isSpinnerVisible.value = false;
+      ElMessage({
+        message: "Карточка модуля успешно создана!",
+        type: "success",
+        appendTo: `.${appendTo}`,
+      });
+      ruleFormRef.value?.resetFields();
+      submitResult.value.formReady = false;
+      submitResult.value.fileReady = false;
+      overallResult.value.formResult = "";
+      overallResult.value.fileResult = "";
+    }
+  },
+  { deep: true }
+);
 
-watch(elMessageRef.value, () => {
-  overallResult.value.fileResult = elMessageRef.value.shPayload;
-});
+watch(
+  elMessageRef,
+  () => {
+    overallResult.value.fileResult = elMessageRef.value.shPayload;
+  },
+  { deep: true }
+);
 
-watch(submitResult.value, () => {
-  if (submitResult.value.formReady && submitResult.value.fileReady) {
-    const eventSource = new EventSource("http://localhost/modules/stream");
-    /*
-    eventSource.onopen = () => {
-      console.log("Произошло открытие потока");
-    };
-    */
-    eventSource.onmessage = (event) => {
-      const data: IModule = JSON.parse(event.data);
-      updateRowJustInserted(data);
-      eventSource.close();
-    };
-    eventSource.onerror = (e) => {
-      console.error("error occured in EventSource...");
-      eventSource.close();
-    };
-    submitFormFields();
-    isCheckFileReadyPass.value = true;
-    isSpinnerVisible.value = true;
-  } else {
-    isCheckFileReadyPass.value = false;
-  }
-});
+watch(
+  submitResult,
+  () => {
+    if (submitResult.value.formReady && submitResult.value.fileReady) {
+      const eventSource = new EventSource("http://localhost/modules/stream");
+      eventSource.onopen = () => {
+        console.log("Произошло открытие потока в AppDashboardForm.vue");
+      };
+      eventSource.onmessage = (event) => {
+        const data: IModule = JSON.parse(event.data);
+        updateRowJustInserted(data);
+        eventSource.close();
+      };
+      eventSource.onerror = (e) => {
+        console.error("error occured in EventSource...");
+        eventSource.close();
+      };
+      submitFormFields();
+      isCheckFileReadyPass.value = true;
+      isSpinnerVisible.value = true;
+    } else {
+      isCheckFileReadyPass.value = false;
+    }
+  },
+  { deep: true }
+);
 </script>
 
 <style scoped lang="scss">

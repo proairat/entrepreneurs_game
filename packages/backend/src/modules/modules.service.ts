@@ -76,24 +76,21 @@ export class ModulesService {
       });
     }
     if (!isEmpty(body)) {
-      return await updateEntity<IModuleBody>({ header: body.header ?? "no value" });
+      return await updateEntity<IModuleBody>({
+        header: body.header ?? "no value",
+      });
     }
   }
 
   async uploadFileAndPassValidationPut(
-    body: UpdateModuleDto & { id?: number},
+    body: UpdateModuleDto & { id?: number },
     file: Express.Multer.File
   ) {
     function isFile(entity: IModuleBody | IModuleFile): entity is IModuleFile {
       return (entity as IModuleFile).filename !== undefined;
     }
 
-    console.log('uploadFileAndPassValidationPut body', body);
-    console.log('uploadFileAndPassValidationPut file', file);
-
-    const id = body.id;
-    console.log('Вот и идентификатор в деле id', id);
-
+    const id = body.id
     const updateEntity = async <T extends IModuleFile | IModuleBody>(p: T) => {
       let updateModuleDto: {
         [index: string]: string;
@@ -113,7 +110,6 @@ export class ModulesService {
           this.eventEmitter.emit("message", await this.findOneById(id));
           this.flags.body = false;
           this.flags.file = false;
-          this.cache.delete("id");
         }
       }
       return { response: "OK" };
@@ -124,8 +120,10 @@ export class ModulesService {
       });
     }
     if (!isEmpty(body)) {
-      if (id){
-        return await updateEntity<IModuleBody>({ header: body.header ?? "no value" });
+      if (id) {
+        return await updateEntity<IModuleBody>({
+          header: body.header ?? "no value",
+        });
       }
     }
   }
@@ -144,8 +142,6 @@ export class ModulesService {
 
   async update(id: number, updateModuleDto: UpdateModuleDto) {
     const row = await this.findOneById(id);
-    // console.log('row', row);
-    // console.log('updateModuleDto', updateModuleDto);
     if (!isNull(row)) {
       Object.entries(updateModuleDto).map(([key, value]: [any, any]) => {
         const opa: keyof UpdateModuleDto = key;
