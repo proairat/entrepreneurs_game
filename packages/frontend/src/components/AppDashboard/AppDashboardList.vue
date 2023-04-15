@@ -21,7 +21,8 @@ import { useDashboardStore } from "@/stores";
 import { watch } from "vue";
 import { storeToRefs } from "pinia";
 import type { Column } from "element-plus";
-import { EEntityState, EEntityType } from "share/types/enums";
+import { EEntityState } from "share/types/enums";
+import cloneDeep from "lodash/cloneDeep";
 
 const dashboardStore = useDashboardStore();
 const {
@@ -78,22 +79,26 @@ const columns: Column<any>[] = [
   },
 ];
 
-watch(rowJustInserted, (updatedRowJustInserted) => {
-  if (rowJustInserted.value.id !== activeModule.value.id) {
-    tableData.push(updatedRowJustInserted);
-  }
-  console.log("tableData", tableData);
-  updateElemFields(rowJustInserted.value);
+watch(
+  rowJustInserted,
+  (updatedRowJustInserted) => {
+    if (updatedRowJustInserted.id !== activeModule.value?.id) {
+      tableData.push(cloneDeep(updatedRowJustInserted));
+    }
 
-  if (tableData.length === 1) {
-    updateActiveModule({
-      entityId: updatedRowJustInserted.id,
-      stateForFindElem: EEntityState.Default,
-      stateForFindIndex: EEntityState.Default,
-      stateForClickIndex: EEntityState.Active,
-    });
-  }
-});
+    updateElemFields(updatedRowJustInserted);
+
+    if (tableData.length === 1) {
+      updateActiveModule({
+        entityId: updatedRowJustInserted.id,
+        stateForFindElem: EEntityState.Default,
+        stateForFindIndex: EEntityState.Default,
+        stateForClickIndex: EEntityState.Active,
+      });
+    }
+  },
+  { deep: true }
+);
 
 function editHandler(cellData: any) {
   toggleIsDialogFormVisible(true);

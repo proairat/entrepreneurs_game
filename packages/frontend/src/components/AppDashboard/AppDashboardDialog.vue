@@ -3,7 +3,6 @@
     v-model="isDialogFormVisible"
     :title="dialogFormTitle"
     class="dialog-outer"
-    @close="handleClose(ruleFormRef)"
     :open-delay="50"
   >
     <el-form
@@ -25,7 +24,6 @@
         :additionalData="{ id: activeModule.id }"
         :method="method.toLowerCase()"
         :isCheckFileReadyPass="isCheckFileReadyPass"
-        :fileList="fileList"
         :class="appendTo"
         @message-event="messageEventHandler"
         @upload-file-error="uploadFileErrorHandler"
@@ -48,25 +46,19 @@
 import { useDashboardStore } from "@/stores";
 import { storeToRefs } from "pinia";
 import { reactive, ref, watch } from "vue";
-import type {
-  FormItemProp,
-  FormInstance,
-  FormRules,
-  UploadUserFile,
-} from "element-plus";
+import type { FormItemProp, FormInstance, FormRules } from "element-plus";
 import { useFetchComposable } from "@/composables/use-fetch";
 import { ElMessage } from "element-plus";
 import type { IModule, IElMessageUploadFile } from "share/types/interfaces";
-import { URL_MODULES_IMAGES } from "@/API";
 
 const dashboardStore = useDashboardStore();
 const { isDialogFormVisible, dialogFormTitle, activeModule } =
   storeToRefs(dashboardStore);
-const { updateRowJustInserted } = dashboardStore;
+const { updateRowJustInserted, toggleIsDialogFormVisible } = dashboardStore;
 const formSize = ref("large");
 const ruleFormRef = ref<FormInstance>();
 const formModel = reactive({
-  header: activeModule.value?.header,
+  header: "",
 });
 const submitResult = ref({
   formReady: false,
@@ -95,16 +87,6 @@ const rules = reactive<FormRules>({
     },
   ],
 });
-const handleClose = (formEl: FormInstance | undefined) => {
-  if (!formEl) return;
-  formEl.resetFields();
-};
-const fileList = ref<UploadUserFile[]>([
-  {
-    name: activeModule.value?.filename,
-    url: `${URL_MODULES_IMAGES}/${activeModule.value?.filename}`,
-  },
-]);
 const method = ref("PUT");
 
 function validateFormHandler(
@@ -194,63 +176,72 @@ function messageEventHandler(elMessage: IElMessageUploadFile) {
   Object.assign(elMessageRef.value, elMessage);
 }
 
-watch(overallResult.value, () => {
-  if (
-    overallResult.value.fileResult === "OK" &&
-    overallResult.value.formResult === "OK"
-  ) {
-    isSpinnerVisible.value = false;
-    ElMessage({
-      message: "Карточка модуля успешно обновлена!",
-      type: "success",
-      appendTo: `.${appendTo}`,
-    });
-    ruleFormRef.value?.resetFields();
-    submitResult.value.formReady = false;
-    submitResult.value.fileReady = false;
-    overallResult.value.formResult = "";
-    overallResult.value.fileResult = "";
-  }
-});
+watch(
+  overallResult,
+  () => {
+    if (
+      overallResult.value.fileResult === "OK" &&
+      overallResult.value.formResult === "OK"
+    ) {
+      isSpinnerVisible.value = false;
+      ElMessage({
+        message: "Карточка модуля успешно обновлена!",
+        type: "success",
+        appendTo: `.${appendTo}`,
+      });
+      // ruleFormRef.value?.resetFields();
+      submitResult.value.formReady = false;
+      submitResult.value.fileReady = false;
+      overallResult.value.formResult = "";
+      overallResult.value.fileResult = "";
+      setTimeout(() => toggleIsDialogFormVisible(false), 1200);
+    }
+  },
+  { deep: true }
+);
 
-watch(elMessageRef.value, () => {
-  overallResult.value.fileResult = elMessageRef.value.shPayload;
-});
+watch(
+  elMessageRef,
+  () => {
+    overallResult.value.fileResult = elMessageRef.value.shPayload;
+  },
+  { deep: true }
+);
 
-watch(submitResult.value, () => {
-  if (submitResult.value.formReady && submitResult.value.fileReady) {
-    const eventSource = new EventSource("http://localhost/modules/stream");
-    /*
-    eventSource.onopen = () => {
-      console.log("Произошло открытие потока");
-    };
-    */
-    eventSource.onmessage = (event) => {
-      const data: IModule = JSON.parse(event.data);
-      updateRowJustInserted(data);
-      eventSource.close();
-    };
-    eventSource.onerror = (e) => {
-      console.error("error occured in EventSource...");
-      eventSource.close();
-    };
-    submitFormFields();
-    isCheckFileReadyPass.value = true;
-    isSpinnerVisible.value = true;
-  } else {
-    isCheckFileReadyPass.value = false;
-  }
-});
+watch(
+  submitResult,
+  () => {
+    if (submitResult.value.formReady && submitResult.value.fileReady) {
+      const eventSource = new EventSource("http://localhost/modules/stream");
+      eventSource.onopen = () => {
+        console.log("Произошло открытие потока в AppDashboardDialog.vue");
+      };
+      eventSource.onmessage = (event) => {
+        const data: IModule = JSON.parse(event.data);
+        updateRowJustInserted(data);
+        eventSource.close();
+      };
+      eventSource.onerror = (e) => {
+        console.error("error occured in EventSource...");
+        eventSource.close();
+      };
+      submitFormFields();
+      isCheckFileReadyPass.value = true;
+      isSpinnerVisible.value = true;
+    } else {
+      isCheckFileReadyPass.value = false;
+    }
+  },
+  { deep: true }
+);
 
-watch(activeModule, (updatedActiveModule) => {
-  formModel.header = updatedActiveModule.header;
-  fileList.value = [
-    {
-      name: activeModule.value.filename,
-      url: `${URL_MODULES_IMAGES}/${activeModule.value.filename}`,
-    },
-  ];
-});
+watch(
+  activeModule,
+  (newActiveModule) => {
+    formModel.header = newActiveModule.header;
+  },
+  { deep: true }
+);
 </script>
 
 <style scoped lang="scss">

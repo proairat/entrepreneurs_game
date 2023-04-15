@@ -13,7 +13,6 @@
     :on-success="handleSuccess"
     :on-error="handleError"
     :on-change="handleChange"
-    :file-list="props.fileList"
   >
     <!--<transition-group name="">
       <el-upload-list></el-upload-list>
@@ -60,7 +59,6 @@ import type { IElMessageUploadFile } from "share/types/interfaces";
 const { class: appendTo } = useAttrs();
 const props = defineProps<{
   isCheckFileReadyPass: boolean;
-  fileList?: Array<any>;
   method: string;
   additionalData?: { id: string };
 }>();

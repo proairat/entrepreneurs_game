@@ -48,7 +48,7 @@ export const useDashboardStore = defineStore("dashboard", () => {
   const rowJustInserted = ref({} as IModule);
   const isDialogFormVisible = ref(false);
   const dialogFormTitle = ref("");
-
+ 
   function updateActiveModule(updateArray: IUpdateArray) {
     eduElementModulesExtended.updateElemByState(updateArray);
     activeModule.value = getActiveModule();
