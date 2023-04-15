@@ -83,6 +83,14 @@ class EntityExtendedArray<T extends TExtendsArrayCombination>
       }
     }
   }
+
+  public deleteFromList(elem: TExtendsArray): void {
+    if (Array.isArray(this.list) && this.list.length !== 0) {
+      const thisList = this.list;
+      const findIndex = super.findIndex(elem.id, thisList);
+      super.delete(findIndex, this.list);
+    }
+  }
 }
 
 export { EntityExtendedArray };

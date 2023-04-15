@@ -1,9 +1,9 @@
 import type { IEduElementEntityArray } from "share/types/interfaces";
-import type { TExtendsArray } from "share/types/types";
+import type { TExtendsArrayCombination } from "share/types/types";
 import { CreatorExtended, EntityExtendedArray } from "@/classes";
 
 class EntityCreatorExtendedArray<
-  C extends TExtendsArray
+  C extends TExtendsArrayCombination
 > extends CreatorExtended<C> {
   list: C[];
 

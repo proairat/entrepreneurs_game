@@ -90,7 +90,7 @@ export class ModulesService {
       return (entity as IModuleFile).filename !== undefined;
     }
 
-    const id = body.id
+    const id = body.id;
     const updateEntity = async <T extends IModuleFile | IModuleBody>(p: T) => {
       let updateModuleDto: {
         [index: string]: string;
@@ -160,8 +160,9 @@ export class ModulesService {
       .getOne();
   }
 
-  async remove(id: number): Promise<void> {
-    await this.modulesRepository.delete(id);
+  async remove(id: number): Promise<{ response: string }> {
+    const { affected } = await this.modulesRepository.delete(id);
+    return affected ? { response: "OK" } : { response: "error" };
   }
 
   streamEvents(
