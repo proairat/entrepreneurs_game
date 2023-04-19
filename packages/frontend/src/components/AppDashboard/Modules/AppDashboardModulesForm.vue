@@ -1,60 +1,48 @@
 <template>
-  <el-dialog
-    v-model="isDialogFormVisible"
-    :title="dialogFormTitle"
-    class="dialog-outer"
-    :open-delay="50"
+  <div class="entry-personal-data">Введите данные карточки модуля</div>
+  <el-form
+    ref="ruleFormRef"
+    :model="formModel"
+    :rules="rules"
+    :size="formSize"
+    :status-icon="true"
+    @validate="validateFormHandler"
   >
-    <el-form
-      ref="ruleFormRef"
-      :model="formModel"
-      :rules="rules"
-      :size="formSize"
-      :status-icon="true"
-      @validate="validateFormHandler"
-    >
-      <el-form-item prop="header" label="Заголовок">
-        <el-input
-          v-model="formModel.header"
-          type="text"
-          placeholder="Заголовок"
-        />
-      </el-form-item>
-      <AppDashboardUpload
-        :additionalData="{ id: activeModule.id }"
-        :method="method.toLowerCase()"
-        :isCheckFileReadyPass="isCheckFileReadyPass"
-        :class="appendTo"
-        @message-event="messageEventHandler"
-        @upload-file-error="uploadFileErrorHandler"
+    <el-form-item prop="header" label="Заголовок">
+      <el-input
+        v-model="formModel.header"
+        type="text"
+        placeholder="Заголовок"
       />
-    </el-form>
-    <AppSpinner v-if="isSpinnerVisible" />
-    <template #footer>
-      <span class="dialog-footer">
-        <LightButton @click="isDialogFormVisible = false">Отмена</LightButton>
-        <PrimaryButton
-          @click="checkFormReadyHandler(ruleFormRef), checkFileReadyHandler()"
-          >Обновить карточку модуля</PrimaryButton
-        >
-      </span>
-    </template>
-  </el-dialog>
+    </el-form-item>
+    <AppDashboardModulesUpload
+      :method="method.toLowerCase()"
+      :isCheckFileReadyPass="isCheckFileReadyPass"
+      :class="appendTo"
+      @message-event="messageEventHandler"
+      @upload-file-error="uploadFileErrorHandler"
+    />
+    <div class="create-module-card__outer">
+      <PrimaryButton
+        @click="checkFormReadyHandler(ruleFormRef), checkFileReadyHandler()"
+      >
+        Создать карточку модуля
+      </PrimaryButton>
+    </div>
+  </el-form>
+  <AppSpinner v-if="isSpinnerVisible" />
 </template>
 
-<script lang="ts" setup>
-import { useDashboardStore } from "@/stores";
-import { storeToRefs } from "pinia";
+<script setup lang="ts">
 import { reactive, ref, watch } from "vue";
 import type { FormItemProp, FormInstance, FormRules } from "element-plus";
 import { useFetchComposable } from "@/composables/use-fetch";
 import { ElMessage } from "element-plus";
+import { useDashboardStore } from "@/stores";
 import type { IModule, IElMessageUploadFile } from "share/types/interfaces";
 
 const dashboardStore = useDashboardStore();
-const { isDialogFormVisible, dialogFormTitle, activeModule } =
-  storeToRefs(dashboardStore);
-const { updateRowJustInserted, toggleIsDialogFormVisible } = dashboardStore;
+const { updateRowJustInserted } = dashboardStore;
 const formSize = ref("large");
 const ruleFormRef = ref<FormInstance>();
 const formModel = reactive({
@@ -70,7 +58,7 @@ const overallResult = ref({
 });
 const isCheckFileReadyPass = ref(false);
 const isSpinnerVisible = ref(false);
-const appendTo = "el-message-wrapper-dialog";
+const appendTo = "el-message-wrapper-main";
 const elMessageRef = ref<IElMessageUploadFile>({
   message: "Файл не выбран",
   type: "error",
@@ -87,7 +75,7 @@ const rules = reactive<FormRules>({
     },
   ],
 });
-const method = ref("PUT");
+const method = ref("POST");
 
 function validateFormHandler(
   props: FormItemProp,
@@ -130,8 +118,6 @@ function checkFileReadyHandler() {
 
 function submitFormFields() {
   const formData = new FormData();
-
-  formData.append("id", String(activeModule.value.id));
 
   for (let item of Object.entries(formModel)) {
     const [name, value] = item;
@@ -185,16 +171,15 @@ watch(
     ) {
       isSpinnerVisible.value = false;
       ElMessage({
-        message: "Карточка модуля успешно обновлена!",
+        message: "Карточка модуля успешно создана!",
         type: "success",
         appendTo: `.${appendTo}`,
       });
-      // ruleFormRef.value?.resetFields();
+      ruleFormRef.value?.resetFields();
       submitResult.value.formReady = false;
       submitResult.value.fileReady = false;
       overallResult.value.formResult = "";
       overallResult.value.fileResult = "";
-      setTimeout(() => toggleIsDialogFormVisible(false), 1200);
     }
   },
   { deep: true }
@@ -214,7 +199,7 @@ watch(
     if (submitResult.value.formReady && submitResult.value.fileReady) {
       const eventSource = new EventSource("http://localhost/modules/stream");
       eventSource.onopen = () => {
-        console.log("Произошло открытие потока в AppDashboardDialog.vue");
+        console.log("Произошло открытие потока в AppDashboardForm.vue");
       };
       eventSource.onmessage = (event) => {
         const data: IModule = JSON.parse(event.data);
@@ -234,22 +219,15 @@ watch(
   },
   { deep: true }
 );
-
-watch(
-  activeModule,
-  (newActiveModule) => {
-    formModel.header = newActiveModule.header;
-  },
-  { deep: true }
-);
 </script>
 
 <style scoped lang="scss">
-/*
-.dialog-outer {
-  font-size: 1rem;
+.entry-personal-data {
+  padding: 1.5rem 0;
+  text-align: center;
+  font-size: $text-size-h5;
 }
-*/
+
 .el-input {
   background-color: transparent;
 
@@ -285,13 +263,6 @@ watch(
   &__outer {
     display: flex;
     justify-content: center;
-    font-size: 1rem;
-  }
-}
-
-.dialog-footer {
-  & > button:first-child {
-    margin-right: 0.75rem;
   }
 }
 </style>
