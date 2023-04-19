@@ -104,9 +104,8 @@ async function getImageUrlAwaitImport(name: string, extension = "svg") {
 function compose(...fns: Tfns<number>) {
   return (...params: Array<number>) => {
     return fns.reduceRight((parameters: Array<number> | number, current) => {
-      return current.apply(
-        null,
-        Array.isArray(parameters) ? parameters : [parameters]
+      return current(
+        ...(Array.isArray(parameters) ? parameters : [parameters])
       );
     }, params);
   };

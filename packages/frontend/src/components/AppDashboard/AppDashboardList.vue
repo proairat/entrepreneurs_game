@@ -18,13 +18,17 @@
 import { TableV2FixedDir } from "element-plus";
 import { URL_MODULES_IMAGES } from "@/API";
 import { useDashboardStore } from "@/stores";
-import { watch } from "vue";
+import { onMounted, ref, watch, onUnmounted } from "vue";
 import { storeToRefs } from "pinia";
 import type { Column } from "element-plus";
 import { EEntityState } from "share/types/enums";
 import cloneDeep from "lodash/cloneDeep";
+import pickBy from "lodash/pickBy";
 import { useFetchComposable } from "@/composables/use-fetch";
 import { ElMessage } from "element-plus";
+import SuccessButton from "@/components/AppButtons/SuccessButton.vue";
+import AppPopover from "@/components/AppPopover.vue";
+import type { CellRendererParams } from "element-plus/es/components/table-v2/src/types";
 
 const dashboardStore = useDashboardStore();
 const {
@@ -37,6 +41,12 @@ const {
 } = dashboardStore;
 const { rowJustInserted, activeModule } = storeToRefs(dashboardStore);
 const tableData = getModulesList();
+const visible = ref<Record<number, boolean>>({});
+let flag1 = false;
+let flag2 = false;
+
+tableData.forEach((item) => (visible.value[item.id] = false));
+
 const columns: Column<any>[] = [
   {
     key: "id",
@@ -67,14 +77,22 @@ const columns: Column<any>[] = [
   {
     key: "operations",
     title: "Действия",
+    dataKey: "operations",
     cellRenderer: (cellData) => (
       <>
-        <SuccessButton onClick={() => editHandler(cellData)} class="mr-3">
+        <SuccessButton
+          onClick={() => editHandler(cellData.rowData.id)}
+          class="mr-3"
+        >
           Редактировать
         </SuccessButton>
-        <DangerButton onClick={() => deleteHandler(cellData)}>
-          Удалить
-        </DangerButton>
+        <AppPopover
+          onClickDangerButton={changeVisibilityHandler}
+          onClickCancelButton={changeVisibilityHandler}
+          onClickDeleteButton={() => deleteHandler(cellData)}
+          visible={visible.value[cellData.rowData.id]}
+          visibleKey={cellData.rowData.id}
+        ></AppPopover>
       </>
     ),
     width: 300,
@@ -87,6 +105,7 @@ watch(
   (updatedRowJustInserted) => {
     if (updatedRowJustInserted.id !== activeModule.value?.id) {
       tableData.push(cloneDeep(updatedRowJustInserted));
+      visible.value[updatedRowJustInserted.id] = false;
     }
     updateElemFields(updatedRowJustInserted);
     if (tableData.length === 1) {
@@ -101,18 +120,52 @@ watch(
   { deep: true }
 );
 
-function editHandler(cellData: any) {
+function editHandler(id: number) {
   toggleIsDialogFormVisible(true);
-  updateDialogFormTitle(`Строка №${cellData.rowData.id}`);
+  updateDialogFormTitle(`Строка №${id}`);
   updateActiveModule({
-    entityId: cellData.rowData.id,
+    entityId: id,
     stateForFindElem: EEntityState.Active,
     stateForFindIndex: EEntityState.Default,
     stateForClickIndex: EEntityState.Active,
   });
 }
 
-function deleteHandler(cellData: any) {
+function changeVisibilityHandler(value: boolean, id: number) {
+  flag2 = false;
+  visible.value = Object.fromEntries(
+    Object.entries(visible.value).map(([key, value]) => [key, false])
+  );
+  visible.value[id] = value;
+  flag1 = true;
+}
+
+function handleClickOutside(event: MouseEvent) {
+  let elPopper = (event.target as Element).closest(".el-popper");
+  if (!elPopper) {
+    const trueth = Number(
+      Object.keys(pickBy(visible.value, (v) => v === true))[0]
+    );
+    if (trueth && flag2) {
+      flag2 = false;
+      visible.value[trueth] = false;
+    }
+    if (trueth && flag1) {
+      flag1 = false;
+      flag2 = true;
+    }
+  }
+};
+
+onMounted(() => {
+  document.addEventListener("click", handleClickOutside);
+});
+
+onUnmounted(() => {
+  document.removeEventListener("click", handleClickOutside);
+});
+
+function deleteHandler(cellData: CellRendererParams<any>) {
   let { data, onFetchResponse, onFetchError } = useFetchComposable({
     urlConst: "/modules",
     urlVar: `/${cellData.rowData.id}`,
@@ -136,7 +189,6 @@ function deleteHandler(cellData: any) {
       });
     }
   });
-
   onFetchError((err) => {
     ElMessage({
       message: `Произошла ошибка при удалении записи: ${err}`,
