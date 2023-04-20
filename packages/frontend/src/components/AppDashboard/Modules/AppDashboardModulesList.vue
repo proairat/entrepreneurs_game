@@ -204,9 +204,6 @@ function deleteHandler(cellData: CellRendererParams<any>) {
   height: 100px;
   width: 100px;
 }
-:deep(.snmt) {
-  background-color: green;
-}
 </style>
 
 <!--
