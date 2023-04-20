@@ -14,7 +14,7 @@
   </el-table-v2>
 </template>
 
-<script lang="tsx" setup>
+<script setup lang="tsx">
 import { TableV2FixedDir } from "element-plus";
 import { URL_MODULES_IMAGES } from "@/API";
 import { useDashboardStore } from "@/stores";
@@ -155,7 +155,7 @@ function handleClickOutside(event: MouseEvent) {
       flag2 = true;
     }
   }
-};
+}
 
 onMounted(() => {
   document.addEventListener("click", handleClickOutside);
