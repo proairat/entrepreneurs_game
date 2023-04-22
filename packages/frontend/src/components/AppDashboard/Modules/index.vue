@@ -1,4 +1,7 @@
 <template>
+  <AppTitleLine>
+    <AppTitle>Управление модулями</AppTitle>
+  </AppTitleLine>
   <AppDashboardModulesList />
   <AppDashboardModulesForm />
   <AppDashboardModulesDialog />

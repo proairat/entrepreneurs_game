@@ -74,6 +74,10 @@ export const useDashboardStore = defineStore("dashboard", () => {
     return ref(eduElementModules.getList()).value as IModule[];
   }
 
+  function getVideosList() {
+    return [];
+  }
+
   function getActiveModule() {
     return eduElementModulesExtended.getElemByState(
       EEntityState.Active
@@ -100,5 +104,6 @@ export const useDashboardStore = defineStore("dashboard", () => {
     getModulesList,
     updateElemFields,
     deleteFromList,
+    getVideosList,
   };
 });

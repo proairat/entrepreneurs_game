@@ -57,6 +57,12 @@ enum EPadding {
   Left = "paddingLeft",
 }
 
+enum EVideoTypes {
+  MP4 = "MP4",
+  FLV = "FLV",
+  AVI = "AVI",
+}
+
 export {
   EAlert,
   EEntityState,
@@ -65,4 +71,5 @@ export {
   EGuess,
   EProgressCaption,
   EPadding,
+  EVideoTypes,
 };

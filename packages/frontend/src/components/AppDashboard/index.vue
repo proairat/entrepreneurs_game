@@ -21,14 +21,14 @@ export default {
 <script setup lang="ts">
 import { ref } from "vue";
 import AppDashboardModules from "@/components/AppDashboard/Modules/index.vue";
-import AppTest2 from "@/components/AppDashboard/AppTest2.vue";
+import AppDashboardVideos from "@/components/AppDashboard/Videos/index.vue";
 import AppTest3 from "@/components/AppDashboard/AppTest3.vue";
 
-const currentTab = ref("AppDashboardModules");
+const currentTab = ref("AppDashboardVideos");
 
 const tabs = {
   AppDashboardModules,
-  AppTest2,
+  AppDashboardVideos,
   AppTest3,
 };
 

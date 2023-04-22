@@ -4,6 +4,7 @@ import type {
   EEntityType,
   EGuess,
   EProgressCaption,
+  EVideoTypes,
 } from "../enums";
 import type { TElemsList, TExtendsArray, TMessageType } from "../types";
 
@@ -79,6 +80,16 @@ interface ITabsAuthors {
   regalia: string;
 }
 
+interface IVideoDB {
+  id: number;
+  type: EEntityType;
+  filename: string;
+  poster: string;
+  duration: number;
+  title: string;
+  description: string;
+}
+
 interface IVideo {
   id: number;
   type: EEntityType;
@@ -90,6 +101,11 @@ interface IVideo {
   title: string;
   authors: ITabsAuthors[];
   description: string;
+}
+
+interface IVideoTypesDB {
+  id: number;
+  videoType: EVideoTypes;
 }
 
 interface ITest {
@@ -223,7 +239,9 @@ export type {
   IGuess,
   ITheme,
   ITabsAuthors,
+  IVideoDB,
   IVideo,
+  IVideoTypesDB,
   ITest,
   ITestQuestion,
   ITestAnswer,

@@ -7,17 +7,18 @@ import {
   Param,
   Delete,
 } from "@nestjs/common";
-import { VideoService } from "./video.service";
+import { VideosService } from "./videos.service";
 import { CreateVideoDto } from "./dto/create-video.dto";
 import { UpdateVideoDto } from "./dto/update-video.dto";
 
-@Controller("video")
-export class VideoController {
-  constructor(private readonly videoService: VideoService) {}
+@Controller("videos")
+export class VideosController {
+  constructor(private readonly videoService: VideosService) {}
 
   @Post()
   create(@Body() createVideoDto: CreateVideoDto) {
-    return this.videoService.create(createVideoDto);
+    console.log("Post create()? @Body", createVideoDto);
+    // return this.videoService.create(createVideoDto);
   }
 
   @Get()
@@ -27,7 +28,7 @@ export class VideoController {
 
   @Get(":id")
   findOne(@Param("id") id: string) {
-    return this.videoService.findOne(+id);
+    //return this.videoService.findOne(+id);
   }
 
   @Patch(":id")

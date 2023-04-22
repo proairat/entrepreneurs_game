@@ -19,15 +19,12 @@
     </el-menu-item>
     <el-menu-item
       index="2"
-      @click="() => menuItemHandler('AppTest2')"
+      @click="() => menuItemHandler('AppDashboardVideos')"
     >
       <el-icon><VideoCamera /></el-icon>
       <template #title>Видео</template>
     </el-menu-item>
-    <el-menu-item
-      index="3"
-      @click="() => menuItemHandler('AppTest3')"
-    >
+    <el-menu-item index="3" @click="() => menuItemHandler('AppTest3')">
       <el-icon><Finished /></el-icon>
       <template #title>Тесты</template>
     </el-menu-item>
