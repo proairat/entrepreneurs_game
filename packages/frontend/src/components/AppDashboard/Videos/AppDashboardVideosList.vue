@@ -12,11 +12,6 @@
       </div>
     </template>
   </el-table-v2>
-  <div class="flex items-center justify-center">
-    <PrimaryButton @click="insertVideoDataHandler"
-      >Внести данные о видео</PrimaryButton
-    >
-  </div>
 </template>
 
 <script setup lang="tsx">
@@ -91,41 +86,6 @@ const columns: Column<any>[] = [
     align: "center",
   },
 ];
-
-function insertVideoDataHandler() {
-  console.log("insertVideoDataHandler is working");
-  let { data, onFetchResponse, onFetchError } = useFetchComposable({
-    method: "POST",
-    urlConst: "/videos",
-  });
-  onFetchResponse(() => {
-    /*
-    if (data.value.response === "OK") {
-      deleteFromList(cellData.rowData);
-      if (tableData.length && cellData.rowData.state === EEntityState.Active) {
-        updateActiveModule({
-          entityId: tableData[0].id,
-          stateForFindElem: EEntityState.Default,
-          stateForFindIndex: EEntityState.Default,
-          stateForClickIndex: EEntityState.Active,
-        });
-      }
-      ElMessage({
-        message: `Запись успешно удалена!`,
-        type: "success",
-      });
-    }
-    */
-  });
-  onFetchError((err) => {
-    /*
-    ElMessage({
-      message: `Произошла ошибка при удалении записи: ${err}`,
-      type: "error",
-    });
-    */
-  });
-}
 </script>
 
 <style scoped lang="scss">

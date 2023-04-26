@@ -3,8 +3,9 @@
     <AppTitle>Управление видео</AppTitle>
   </AppTitleLine>
   <AppDashboardVideosList />
-  <!--<AppDashboardVideosForm />-->
-  <AppDashboardVideosDialog />
+  <AppSteps />
+  <AppDashboardVideosForm />
+  <!--<AppDashboardVideosDialog />-->
 </template>
 
 <script lang="ts">
