@@ -1,6 +1,6 @@
 import { Injectable } from "@nestjs/common";
-import { CreateModuleAdvancedDto } from "./dto/create-module-advanced.dto";
-import { UpdateModuleAdvancedDto } from "./dto/update-module-advanced.dto";
+import { CreateModuleAdvancedDto } from "../dto/create-module-advanced.dto";
+import { UpdateModuleAdvancedDto } from "../dto/update-module-advanced.dto";
 
 @Injectable()
 export class ModuleAdvancedService {

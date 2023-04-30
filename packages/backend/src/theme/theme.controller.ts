@@ -8,8 +8,8 @@ import {
   Delete,
 } from "@nestjs/common";
 import { ThemeService } from "./theme.service";
-import { CreateThemeDto } from "./dto/create-theme.dto";
-import { UpdateThemeDto } from "./dto/update-theme.dto";
+import { CreateThemeDto } from "../dto/create-theme.dto";
+import { UpdateThemeDto } from "../dto/update-theme.dto";
 
 @Controller("theme")
 export class ThemeController {

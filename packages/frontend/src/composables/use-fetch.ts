@@ -3,14 +3,14 @@ import { BASE_URL } from "@/API";
 
 export function useFetchComposable({
   urlConst,
-  urlVar,
-  method,
-  body,
+  urlVar = "",
+  method = "GET",
+  body = null,
 }: {
   urlConst: string;
-  urlVar: string;
-  method: string;
-  body: BodyInit | null;
+  urlVar?: string;
+  method?: string;
+  body?: BodyInit | null;
 }) {
   const url = `${BASE_URL}${urlConst}${urlVar}`;
   const { data, onFetchError, onFetchResponse, onFetchFinally } = useFetch(

@@ -1,6 +1,6 @@
 import { Injectable } from "@nestjs/common";
-import { CreateTabsAuthorDto } from "./dto/create-tabs-author.dto";
-import { UpdateTabsAuthorDto } from "./dto/update-tabs-author.dto";
+import { CreateTabsAuthorDto } from "../dto/create-tabs-author.dto";
+import { UpdateTabsAuthorDto } from "../dto/update-tabs-author.dto";
 
 @Injectable()
 export class TabsAuthorsService {

@@ -21,7 +21,7 @@ import { useDashboardStore } from "@/stores";
 import { onMounted, ref, watch, onUnmounted } from "vue";
 import { storeToRefs } from "pinia";
 import type { Column } from "element-plus";
-import { EEntityState } from "share/types/enums";
+import { EEntityState, EServerResponses } from "share/types/enums";
 import cloneDeep from "lodash/cloneDeep";
 import pickBy from "lodash/pickBy";
 import { useFetchComposable } from "@/composables/use-fetch";
@@ -173,7 +173,7 @@ function deleteHandler(cellData: CellRendererParams<any>) {
     body: null,
   });
   onFetchResponse(() => {
-    if (data.value.response === "OK") {
+    if (data.value.response === EServerResponses.MODULES_REMOVE_SUCCESSFUL) {
       deleteFromList(cellData.rowData);
       if (tableData.length && cellData.rowData.state === EEntityState.Active) {
         updateActiveModule({

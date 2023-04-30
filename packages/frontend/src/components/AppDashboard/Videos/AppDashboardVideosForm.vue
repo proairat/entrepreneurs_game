@@ -1,0 +1,398 @@
+<template>
+  <div class="entry-personal-data el-message-wrapper-main">
+    Введите данные видео
+  </div>
+  <el-form
+    ref="ruleFormRef"
+    :model="formModel"
+    :rules="rules"
+    :size="formSize"
+    :status-icon="true"
+    label-width="200px"
+  >
+    <el-form-item prop="title" label="Название видеоролика">
+      <el-input
+        v-model="formModel.title"
+        type="text"
+        placeholder="Название видеоролика"
+      />
+    </el-form-item>
+    <!--
+    <AppDashboardVideosUpload
+      :method="method.toLowerCase()"
+      :isCheckFileReadyPass="isCheckFileReadyPass"
+      :class="appendTo"
+      @message-event="messageEventHandler"
+      @upload-file-error="uploadFileErrorHandler"
+      textForTriggerButton="Выберите постер к видео"
+    />
+    <AppDashboardVideosUpload
+      :method="method.toLowerCase()"
+      :isCheckFileReadyPass="isCheckFileReadyPass"
+      :class="appendTo"
+      @message-event="messageEventHandler"
+      @upload-file-error="uploadFileErrorHandler"
+      textForTriggerButton="Выберите видеофайл"
+    />-->
+    <template v-for="author in authors" :key="author.id">
+      <el-divider />
+      <el-form-item
+        :prop="`surname${author.id}`"
+        label="Фамилия"
+        :rules="[
+          {
+            required: true,
+            message: 'Пожалуйста, введите фамилию автора видеоролика',
+            trigger: 'change',
+          },
+        ]"
+      >
+        <el-input
+          v-model="formModel[`surname${author.id}`]"
+          placeholder="Фамилия"
+        />
+      </el-form-item>
+      <el-form-item
+        :prop="`name${author.id}`"
+        label="Имя"
+        :rules="[
+          {
+            required: true,
+            message: 'Пожалуйста, введите имя автора видеоролика',
+            trigger: 'change',
+          },
+        ]"
+      >
+        <el-input v-model="formModel[`name${author.id}`]" placeholder="Имя" />
+      </el-form-item>
+      <el-form-item
+        :prop="`patronymic${author.id}`"
+        label="Отчество"
+        :rules="[
+          {
+            required: true,
+            message: 'Пожалуйста, введите отчество автора видеоролика',
+            trigger: 'change',
+          },
+        ]"
+      >
+        <el-input
+          v-model="formModel[`patronymic${author.id}`]"
+          placeholder="Отчество"
+        />
+      </el-form-item>
+    </template>
+    <el-form-item>
+      <InfoButton
+        @click="infoButtonHandler"
+        class="mr-3"
+        height-class="h-10"
+        font-size-class="text-sm"
+        >Добавить ещё одного автора</InfoButton
+      >
+      <DangerButton
+        @click="dangerButtonHandler"
+        height-class="h-10"
+        font-size-class="text-sm"
+        >Удалить лишние поля автора</DangerButton
+      >
+    </el-form-item>
+    <div class="create-module-card__outer">
+      <PrimaryButton @click="checkFormReadyHandler(ruleFormRef)">
+        Внести данные о видео
+      </PrimaryButton>
+    </div>
+    <AppPadding :padding="{ paddingBottom: '1.5rem' }" />
+  </el-form>
+  <AppSpinner v-if="isSpinnerVisible" />
+</template>
+
+<script setup lang="ts">
+import { reactive, ref, watch } from "vue";
+import type { FormInstance, FormRules } from "element-plus";
+import { useFetchComposable } from "@/composables/use-fetch";
+import { ElMessage } from "element-plus";
+import { useDashboardStore } from "@/stores";
+import type {
+  IModule,
+  IElMessageUploadFile,
+  IAuthor,
+} from "share/types/interfaces";
+import { EServerResponses } from "share/types/enums";
+
+const authors = ref([
+  {
+    id: 1,
+    surname: "",
+    name: "",
+    patronymic: "",
+  },
+]);
+
+const dashboardStore = useDashboardStore();
+const { updateRowJustInserted } = dashboardStore;
+const formSize = ref("large");
+const ruleFormRef = ref<FormInstance>();
+const formModel = reactive({
+  title: "",
+  surname1: "",
+  name1: "",
+  patronymic1: "",
+} as Record<string | "title", string>);
+
+const submitResult = ref({
+  formReady: false,
+  fileReady: false,
+});
+const isCheckFileReadyPass = ref(false);
+const isSpinnerVisible = ref(false);
+const appendTo = "el-message-wrapper-main";
+const elMessageRef = ref<IElMessageUploadFile>({
+  message: "Файл не выбран",
+  type: "error",
+  appendTo: `.${appendTo}`,
+  idMessage: 1,
+  shPayload: "",
+});
+const rules = reactive<FormRules>({
+  title: [
+    {
+      required: true,
+      message: "Пожалуйста, введите название видеоролика",
+      trigger: "change",
+    },
+  ],
+});
+const method = ref("POST");
+
+function checkFormReadyHandler(formEl: FormInstance | undefined) {
+  if (!formEl) return;
+  formEl.validate((valid) => {
+    if (valid) {
+      submitFormFields();
+    } else {
+      ElMessage({
+        message: "Не заполнены поля формы",
+        type: "error",
+        appendTo: `.${appendTo}`,
+      });
+    }
+  });
+}
+
+function checkFileReadyHandler() {
+  if (elMessageRef.value.idMessage === 1) {
+    // 1 - Файл не выбран
+    ElMessage(elMessageRef.value);
+  }
+
+  if (elMessageRef.value.idMessage === 2) {
+    // 2 - Файл выбран
+  }
+}
+
+function submitFormFields() {
+  console.log("submitFormFields()");
+
+  interface IAuthors {
+    [index: string]: string;
+  }
+
+  type TReturnObj = Pick<IAuthors, "title"> & {
+    authors: Array<IAuthor>;
+  };
+
+  function transformObject(obj: IAuthors): TReturnObj {
+    const returnObj: TReturnObj = {
+      title: "",
+      authors: [],
+    };
+
+    returnObj.title = obj.title;
+
+    for (const key of Object.keys(obj)) {
+      if (key.startsWith("surname")) {
+        const num = key.slice(7);
+        const nameKey = `name${num}`;
+        const patronymicKey = `patronymic${num}`;
+
+        if (obj[nameKey] && obj[patronymicKey]) {
+          const surname = obj[key];
+          const name = obj[nameKey];
+          const patronymic = obj[patronymicKey];
+          returnObj.authors.push({
+            id: +num,
+            surname: surname,
+            name: name,
+            patronymic: patronymic,
+          });
+        }
+      }
+    }
+
+    return returnObj;
+  }
+
+  const transformedFormModel = transformObject(formModel);
+  const formData = new FormData();
+
+  formData.append("title", transformedFormModel.title);
+
+  transformedFormModel.authors.forEach((author, i) => {
+    formData.append(`authors[${i}][id]`, String(author.id));
+    formData.append(`authors[${i}][surname]`, author.surname);
+    formData.append(`authors[${i}][name]`, author.name);
+    formData.append(`authors[${i}][patronymic]`, author.patronymic);
+  });
+
+  let { data, onFetchResponse, onFetchError } = useFetchComposable({
+    urlConst: "/videos",
+    method: "POST",
+    body: formData,
+  });
+
+  isSpinnerVisible.value = true;
+
+  onFetchResponse(() => {
+    console.log("onFetchResponse() => data.value", data.value);
+    if (data.value.response === EServerResponses.VIDEOS_CREATE_SUCCESSFUL) {
+      isSpinnerVisible.value = false;
+      ElMessage({
+        message: "Данные о видео успешно загружены! Переходим ко второму шагу.",
+        type: "success",
+        appendTo: `.${appendTo}`,
+      });
+      ruleFormRef.value?.resetFields();
+    }
+  });
+
+  onFetchError((err) => {
+    ElMessage({
+      message: `Произошла ошибка при загрузке полей формы!: ${err}`,
+      type: "error",
+      appendTo: `.${appendTo}`,
+    });
+    ruleFormRef.value?.resetFields();
+    isSpinnerVisible.value = false;
+  });
+}
+
+function uploadFileErrorHandler(isError: boolean) {
+  if (isError) {
+    isSpinnerVisible.value = false;
+  }
+}
+
+function messageEventHandler(elMessage: IElMessageUploadFile) {
+  Object.assign(elMessageRef.value, elMessage);
+}
+
+function infoButtonHandler() {
+  const lastId = authors.value[authors.value.length - 1].id;
+  const newId = lastId + 1;
+  authors.value.push({
+    id: newId,
+    surname: "",
+    name: "",
+    patronymic: "",
+  });
+  formModel[`surname${newId}`] = "";
+  formModel[`name${newId}`] = "";
+  formModel[`patronymic${newId}`] = "";
+}
+
+function dangerButtonHandler() {
+  if (authors.value.length > 1) {
+    const lastId = authors.value[authors.value.length - 1].id;
+    authors.value.pop();
+    delete formModel[`surname${lastId}`];
+    delete formModel[`name${lastId}`];
+    delete formModel[`patronymic${lastId}`];
+  } else {
+    ElMessage({
+      message: "У видео должен быть хотя бы один автор",
+      type: "warning",
+      appendTo: `.${appendTo}`,
+    });
+  }
+}
+
+watch(
+  isSpinnerVisible,
+  () => {
+    if (isSpinnerVisible.value) {
+      window.scrollBy(0, window.innerHeight);
+    }
+  },
+  { flush: "post" }
+);
+
+watch(
+  authors,
+  () => {
+    window.scrollBy(0, window.innerHeight);
+  },
+  { deep: true, flush: "post" }
+);
+</script>
+
+<style scoped lang="scss">
+.entry-personal-data {
+  padding: 1.5rem 0;
+  text-align: center;
+  font-size: $text-size-h5;
+}
+
+.el-input {
+  background-color: transparent;
+
+  &:deep(.el-input__wrapper) {
+    padding-right: 1rem;
+    padding-left: 1rem;
+  }
+
+  &:deep(.el-input__inner) {
+    padding-left: 0;
+    padding-right: 0;
+    &:focus {
+      box-shadow: none;
+    }
+  }
+  &:deep(.el-input__inner:-webkit-autofill) {
+    -webkit-box-shadow: inset 0 0 0 50px #fff;
+    box-shadow: inset 0 0 0 50px #fff;
+  }
+}
+
+.el-form-item {
+  margin-bottom: 1.5rem;
+}
+
+:deep(.el-textarea__inner) {
+  font-size: 1rem;
+  min-height: 6rem !important;
+  padding: 0.5rem 1rem;
+}
+
+.create-module-card {
+  &__outer {
+    display: flex;
+    justify-content: center;
+  }
+}
+.el-message-wrapper-main {
+  position: relative;
+}
+
+:deep(.el-message--error) {
+  position: absolute;
+}
+
+:deep(.el-message--success) {
+  position: absolute;
+}
+
+:deep(.el-message--warning) {
+  position: absolute;
+}
+</style>

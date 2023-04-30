@@ -18,7 +18,7 @@ import {
   EntityCreatorExtendedMap,
   EntityCreatorExtendedArray,
 } from "@/classes";
-import type { TElemsList } from "share/types/types";
+import type { TElemsList, TExtendsArrayCombination } from "share/types/types";
 import { modules, modulesAdvanced, themes, videos, tests } from "@/fetch";
 import { EEntityState } from "share/types/enums";
 
@@ -49,14 +49,14 @@ const eduElementVideos = getEduElement(new EntityCreator<IVideo>(), videos);
 const eduElementTests = getEduElement(new EntityCreator<ITest>(), tests);
 
 const eduElementModulesExtended = getEduElementExtended(
-  new EntityCreatorExtendedArray<IModule>(
-    ref(eduElementModules.getList()).value as IModule[]
+  new EntityCreatorExtendedArray<TExtendsArrayCombination>(
+    ref(eduElementModules.getList()).value as TExtendsArrayCombination[]
   )
 ) as IEduElementEntityArray<IModule>;
 
 const eduElementModulesAdvancedExtended = getEduElementExtended(
-  new EntityCreatorExtendedArray<IModuleAdvanced>(
-    ref(eduElementModulesAdvanced.getList()).value as IModuleAdvanced[]
+  new EntityCreatorExtendedArray<TExtendsArrayCombination>(
+    ref(eduElementModulesAdvanced.getList()).value as TExtendsArrayCombination[]
   )
 ) as IEduElementEntityArray<IModuleAdvanced>;
 

@@ -1,10 +1,10 @@
 <template>
   <div
     :class="{
-      'padding-top': isIncludes(EPadding.Top),
-      'padding-right': isIncludes(EPadding.Right),
-      'padding-bottom': isIncludes(EPadding.Bottom),
-      'padding-left': isIncludes(EPadding.Left),
+      'padding-top': isIncludes(props, EPadding.Top),
+      'padding-right': isIncludes(props, EPadding.Right),
+      'padding-bottom': isIncludes(props, EPadding.Bottom),
+      'padding-left': isIncludes(props, EPadding.Left),
     }"
   ></div>
 </template>
@@ -16,9 +16,11 @@ const props = defineProps<{
   padding: Record<EPadding, string>;
 }>();
 
-const keys = Object.keys(props.padding);
-
-function isIncludes(padding: EPadding) {
+function isIncludes(
+  props: Readonly<{ padding: Record<EPadding, string> }>,
+  padding: EPadding
+) {
+  const keys = Object.keys(props.padding);
   return keys.includes(padding) ? true : false;
 }
 </script>

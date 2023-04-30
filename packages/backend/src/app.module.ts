@@ -7,10 +7,12 @@ import { ModulesModule } from "./modules/modules.module";
 import { ModuleAdvancedModule } from "./module-advanced/module-advanced.module";
 import { ThemeModule } from "./theme/theme.module";
 import { TabsAuthorsModule } from "./tabs-authors/tabs-authors.module";
-import { VideoModule } from "./video/video.module";
+import { VideosModule } from "./videos/videos.module";
 import { TestModule } from "./test/test.module";
 import { TestQuestionModule } from "./test-question/test-question.module";
 import { TestAnswerModule } from "./test-answer/test-answer.module";
+import { VideoTypesSeeder } from "./videos/seeders/videoTypesSeeder";
+import { VideoTypes } from "./entities/video-types.entity";
 
 @Module({
   imports: [
@@ -19,7 +21,7 @@ import { TestAnswerModule } from "./test-answer/test-answer.module";
     ModuleAdvancedModule,
     ThemeModule,
     TabsAuthorsModule,
-    VideoModule,
+    VideosModule,
     TestModule,
     TestQuestionModule,
     TestAnswerModule,
@@ -34,8 +36,15 @@ import { TestAnswerModule } from "./test-answer/test-answer.module";
       autoLoadEntities: true,
       synchronize: true,
     }),
+    TypeOrmModule.forFeature([VideoTypes]),
   ],
   controllers: [AppController],
-  providers: [AppService],
+  providers: [AppService, VideoTypesSeeder],
 })
-export class AppModule {}
+export class AppModule {
+  constructor(private readonly videoTypesSeeder: VideoTypesSeeder) {}
+
+  async onApplicationBootstrap() {
+    await this.videoTypesSeeder.seed();
+  }
+}

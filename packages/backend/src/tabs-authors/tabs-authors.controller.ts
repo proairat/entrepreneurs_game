@@ -8,8 +8,8 @@ import {
   Delete,
 } from "@nestjs/common";
 import { TabsAuthorsService } from "./tabs-authors.service";
-import { CreateTabsAuthorDto } from "./dto/create-tabs-author.dto";
-import { UpdateTabsAuthorDto } from "./dto/update-tabs-author.dto";
+import { CreateTabsAuthorDto } from "../dto/create-tabs-author.dto";
+import { UpdateTabsAuthorDto } from "../dto/update-tabs-author.dto";
 
 @Controller("tabs-authors")
 export class TabsAuthorsController {
