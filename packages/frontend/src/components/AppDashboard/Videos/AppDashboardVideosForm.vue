@@ -17,13 +17,6 @@
         placeholder="Название видеоролика"
       />
     </el-form-item>
-    <el-form-item prop="author" label="Автор видеоролика">
-      <el-input
-        v-model="formModel.author"
-        type="text"
-        placeholder="Название видеоролика"
-      />
-    </el-form-item>
     <!--
     <AppDashboardVideosUpload
       :method="method.toLowerCase()"
@@ -41,11 +34,6 @@
       @upload-file-error="uploadFileErrorHandler"
       textForTriggerButton="Выберите видеофайл"
     />-->
-    <div class="create-module-card__outer">
-      <PrimaryButton @click="checkFormReadyHandler(ruleFormRef)">
-        Внести данные о видео
-      </PrimaryButton>
-    </div>
     <template v-for="author in authors" :key="author.id">
       <el-divider />
       <el-form-item
@@ -75,10 +63,7 @@
           },
         ]"
       >
-        <el-input 
-          v-model="formModel[`name${author.id}`]" 
-          placeholder="Имя" 
-        />
+        <el-input v-model="formModel[`name${author.id}`]" placeholder="Имя" />
       </el-form-item>
       <el-form-item
         :prop="`patronymic${author.id}`"
@@ -112,24 +97,37 @@
         >Удалить лишние поля автора</DangerButton
       >
     </el-form-item>
+    <div class="create-module-card__outer">
+      <PrimaryButton @click="checkFormReadyHandler(ruleFormRef)">
+        Внести данные о видео
+      </PrimaryButton>
+    </div>
+    <AppPadding :padding="{ paddingBottom: '1.5rem' }" />
   </el-form>
   <AppSpinner v-if="isSpinnerVisible" />
 </template>
 
 <script setup lang="ts">
 import { reactive, ref, watch } from "vue";
-import type { FormItemProp, FormInstance, FormRules } from "element-plus";
+import type { FormInstance, FormRules } from "element-plus";
 import { useFetchComposable } from "@/composables/use-fetch";
 import { ElMessage } from "element-plus";
 import { useDashboardStore } from "@/stores";
-import type { IModule, IElMessageUploadFile } from "share/types/interfaces";
+import type {
+  IModule,
+  IElMessageUploadFile,
+  IAuthor,
+} from "share/types/interfaces";
+import { EServerResponses } from "share/types/enums";
 
-const authors = ref([{ 
-  id: 1, 
-  surname: "", 
-  name: "", 
-  patronymic: "" 
-}]);
+const authors = ref([
+  {
+    id: 1,
+    surname: "",
+    name: "",
+    patronymic: "",
+  },
+]);
 
 const dashboardStore = useDashboardStore();
 const { updateRowJustInserted } = dashboardStore;
@@ -137,19 +135,14 @@ const formSize = ref("large");
 const ruleFormRef = ref<FormInstance>();
 const formModel = reactive({
   title: "",
-  author: "",
   surname1: "",
   name1: "",
   patronymic1: "",
-});
+} as Record<string | "title", string>);
 
 const submitResult = ref({
   formReady: false,
   fileReady: false,
-});
-const overallResult = ref({
-  formResult: "",
-  fileResult: "",
 });
 const isCheckFileReadyPass = ref(false);
 const isSpinnerVisible = ref(false);
@@ -169,13 +162,6 @@ const rules = reactive<FormRules>({
       trigger: "change",
     },
   ],
-  author: [
-    {
-      required: true,
-      message: "Пожалуйста, введите автора видеоролика",
-      trigger: "change",
-    },
-  ],
 });
 const method = ref("POST");
 
@@ -183,7 +169,6 @@ function checkFormReadyHandler(formEl: FormInstance | undefined) {
   if (!formEl) return;
   formEl.validate((valid) => {
     if (valid) {
-      console.log("Проверка пройдена, отправляем данные на сервер");
       submitFormFields();
     } else {
       ElMessage({
@@ -208,12 +193,57 @@ function checkFileReadyHandler() {
 
 function submitFormFields() {
   console.log("submitFormFields()");
+
+  interface IAuthors {
+    [index: string]: string;
+  }
+
+  type TReturnObj = Pick<IAuthors, "title"> & {
+    authors: Array<IAuthor>;
+  };
+
+  function transformObject(obj: IAuthors): TReturnObj {
+    const returnObj: TReturnObj = {
+      title: "",
+      authors: [],
+    };
+
+    returnObj.title = obj.title;
+
+    for (const key of Object.keys(obj)) {
+      if (key.startsWith("surname")) {
+        const num = key.slice(7);
+        const nameKey = `name${num}`;
+        const patronymicKey = `patronymic${num}`;
+
+        if (obj[nameKey] && obj[patronymicKey]) {
+          const surname = obj[key];
+          const name = obj[nameKey];
+          const patronymic = obj[patronymicKey];
+          returnObj.authors.push({
+            id: +num,
+            surname: surname,
+            name: name,
+            patronymic: patronymic,
+          });
+        }
+      }
+    }
+
+    return returnObj;
+  }
+
+  const transformedFormModel = transformObject(formModel);
   const formData = new FormData();
 
-  for (let item of Object.entries(formModel)) {
-    const [name, value] = item;
-    formData.append(name, value);
-  }
+  formData.append("title", transformedFormModel.title);
+
+  transformedFormModel.authors.forEach((author, i) => {
+    formData.append(`authors[${i}][id]`, String(author.id));
+    formData.append(`authors[${i}][surname]`, author.surname);
+    formData.append(`authors[${i}][name]`, author.name);
+    formData.append(`authors[${i}][patronymic]`, author.patronymic);
+  });
 
   let { data, onFetchResponse, onFetchError } = useFetchComposable({
     urlConst: "/videos",
@@ -221,10 +251,18 @@ function submitFormFields() {
     body: formData,
   });
 
-  /*
+  isSpinnerVisible.value = true;
+
   onFetchResponse(() => {
-    if (data.value.response === "OK") {
-      overallResult.value.formResult = data.value.response;
+    console.log("onFetchResponse() => data.value", data.value);
+    if (data.value.response === EServerResponses.VIDEOS_CREATE_SUCCESSFUL) {
+      isSpinnerVisible.value = false;
+      ElMessage({
+        message: "Данные о видео успешно загружены! Переходим ко второму шагу.",
+        type: "success",
+        appendTo: `.${appendTo}`,
+      });
+      ruleFormRef.value?.resetFields();
     }
   });
 
@@ -235,57 +273,18 @@ function submitFormFields() {
       appendTo: `.${appendTo}`,
     });
     ruleFormRef.value?.resetFields();
-    
-    overallResult.value.formResult = "";
     isSpinnerVisible.value = false;
   });
-  */
 }
 
 function uploadFileErrorHandler(isError: boolean) {
   if (isError) {
-    overallResult.value.fileResult = "";
     isSpinnerVisible.value = false;
   }
 }
 
 function messageEventHandler(elMessage: IElMessageUploadFile) {
   Object.assign(elMessageRef.value, elMessage);
-}
-
-function insertVideoDataHandler() {
-  console.log("insertVideoDataHandler is working");
-  let { data, onFetchResponse, onFetchError } = useFetchComposable({
-    method: "POST",
-    urlConst: "/videos",
-  });
-  onFetchResponse(() => {
-    /*
-    if (data.value.response === "OK") {
-      deleteFromList(cellData.rowData);
-      if (tableData.length && cellData.rowData.state === EEntityState.Active) {
-        updateActiveModule({
-          entityId: tableData[0].id,
-          stateForFindElem: EEntityState.Default,
-          stateForFindIndex: EEntityState.Default,
-          stateForClickIndex: EEntityState.Active,
-        });
-      }
-      ElMessage({
-        message: `Запись успешно удалена!`,
-        type: "success",
-      });
-    }
-    */
-  });
-  onFetchError((err) => {
-    /*
-    ElMessage({
-      message: `Произошла ошибка при удалении записи: ${err}`,
-      type: "error",
-    });
-    */
-  });
 }
 
 function infoButtonHandler() {
@@ -304,7 +303,11 @@ function infoButtonHandler() {
 
 function dangerButtonHandler() {
   if (authors.value.length > 1) {
+    const lastId = authors.value[authors.value.length - 1].id;
     authors.value.pop();
+    delete formModel[`surname${lastId}`];
+    delete formModel[`name${lastId}`];
+    delete formModel[`patronymic${lastId}`];
   } else {
     ElMessage({
       message: "У видео должен быть хотя бы один автор",
@@ -315,65 +318,22 @@ function dangerButtonHandler() {
 }
 
 watch(
+  isSpinnerVisible,
+  () => {
+    if (isSpinnerVisible.value) {
+      window.scrollBy(0, window.innerHeight);
+    }
+  },
+  { flush: "post" }
+);
+
+watch(
   authors,
   () => {
     window.scrollBy(0, window.innerHeight);
   },
   { deep: true, flush: "post" }
 );
-
-watch(
-  overallResult,
-  () => {
-    if (
-      overallResult.value.fileResult === "OK" &&
-      overallResult.value.formResult === "OK"
-    ) {
-      isSpinnerVisible.value = false;
-      ElMessage({
-        message: "Карточка модуля успешно создана!",
-        type: "success",
-        appendTo: `.${appendTo}`,
-      });
-      ruleFormRef.value?.resetFields();
-
-      overallResult.value.formResult = "";
-      overallResult.value.fileResult = "";
-    }
-  },
-  { deep: true }
-);
-
-watch(
-  elMessageRef,
-  () => {
-    overallResult.value.fileResult = elMessageRef.value.shPayload;
-  },
-  { deep: true }
-);
-
-/*
-  if (submitResult.value.formReady && submitResult.value.fileReady) {
-    const eventSource = new EventSource("http://localhost/modules/stream");
-    eventSource.onopen = () => {
-      console.log("Произошло открытие потока в AppDashboardForm.vue");
-    };
-    eventSource.onmessage = (event) => {
-      const data: IModule = JSON.parse(event.data);
-      updateRowJustInserted(data);
-      eventSource.close();
-    };
-    eventSource.onerror = (e) => {
-      console.error("error occured in EventSource...");
-      eventSource.close();
-    };
-    
-    isCheckFileReadyPass.value = true;
-    isSpinnerVisible.value = true;
-  } else {
-    isCheckFileReadyPass.value = false;
-  }
-*/
 </script>
 
 <style scoped lang="scss">

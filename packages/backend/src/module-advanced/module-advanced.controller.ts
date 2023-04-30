@@ -8,8 +8,8 @@ import {
   Delete,
 } from "@nestjs/common";
 import { ModuleAdvancedService } from "./module-advanced.service";
-import { CreateModuleAdvancedDto } from "./dto/create-module-advanced.dto";
-import { UpdateModuleAdvancedDto } from "./dto/update-module-advanced.dto";
+import { CreateModuleAdvancedDto } from "../dto/create-module-advanced.dto";
+import { UpdateModuleAdvancedDto } from "../dto/update-module-advanced.dto";
 
 @Controller("module-advanced")
 export class ModuleAdvancedController {

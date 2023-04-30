@@ -1,7 +1,14 @@
 import { ApiProperty } from "@nestjs/swagger";
 import { EEntityType } from "@app/enums";
 import type { IVideoDB } from "share/types/interfaces";
-import { Column, Entity, PrimaryGeneratedColumn } from "typeorm";
+import {
+  Column,
+  Entity,
+  JoinTable,
+  ManyToMany,
+  PrimaryGeneratedColumn,
+} from "typeorm";
+import { Authors } from "./authors.entity";
 
 @Entity()
 export class Videos implements IVideoDB {
@@ -36,7 +43,7 @@ export class Videos implements IVideoDB {
   @Column()
   duration: number;
 
-  @ApiProperty({ description: "Title of video", nullable: true })
+  @ApiProperty({ description: "Title of video", nullable: false })
   @Column()
   title: string;
 
@@ -44,18 +51,28 @@ export class Videos implements IVideoDB {
   @Column()
   description: string;
 
-  constructor(
-    filename = "",
-    poster = "",
-    duration = 0,
-    title = "",
-    description = ""
-  ) {
+  @ManyToMany((type) => Authors, (authors) => authors.videos, {
+    cascade: true,
+  })
+  @JoinTable({
+    name: "videos_authors",
+    joinColumn: {
+      name: "videos_id",
+      referencedColumnName: "id",
+    },
+    inverseJoinColumn: {
+      name: "authors_id",
+      referencedColumnName: "id",
+    },
+  })
+  authors!: Authors[];
+
+  constructor(title: string) {
     this.type = EEntityType.Videos;
-    this.filename = filename;
-    this.poster = poster;
-    this.duration = duration;
+    this.filename = "";
+    this.poster = "";
+    this.duration = 0;
     this.title = title;
-    this.description = description;
+    this.description = "";
   }
 }

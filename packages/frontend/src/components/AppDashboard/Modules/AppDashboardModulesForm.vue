@@ -40,6 +40,7 @@ import { useFetchComposable } from "@/composables/use-fetch";
 import { ElMessage } from "element-plus";
 import { useDashboardStore } from "@/stores";
 import type { IModule, IElMessageUploadFile } from "share/types/interfaces";
+import { EServerResponses } from "share/types/enums";
 
 const dashboardStore = useDashboardStore();
 const { updateRowJustInserted } = dashboardStore;
@@ -132,7 +133,10 @@ function submitFormFields() {
   });
 
   onFetchResponse(() => {
-    if (data.value.response === "OK") {
+    if (
+      data.value.response ===
+      EServerResponses.MODULES_UPLOAD_FILE_AND_PASS_VALIDATION_POST_BODY_SUCCESSFUL
+    ) {
       overallResult.value.formResult = data.value.response;
     }
   });
@@ -166,8 +170,10 @@ watch(
   overallResult,
   () => {
     if (
-      overallResult.value.fileResult === "OK" &&
-      overallResult.value.formResult === "OK"
+      overallResult.value.fileResult ===
+        EServerResponses.MODULES_UPLOAD_FILE_AND_PASS_VALIDATION_POST_FILE_SUCCESSFUL &&
+      overallResult.value.formResult ===
+        EServerResponses.MODULES_UPLOAD_FILE_AND_PASS_VALIDATION_POST_BODY_SUCCESSFUL
     ) {
       isSpinnerVisible.value = false;
       ElMessage({

@@ -108,6 +108,13 @@ interface IVideoTypesDB {
   videoType: EVideoTypes;
 }
 
+interface IAuthor {
+  id: number;
+  surname: string;
+  name: string;
+  patronymic: string;
+}
+
 interface ITest {
   id: number;
   type: EEntityType;
@@ -242,6 +249,7 @@ export type {
   IVideoDB,
   IVideo,
   IVideoTypesDB,
+  IAuthor,
   ITest,
   ITestQuestion,
   ITestAnswer,

@@ -3,7 +3,7 @@ import { EVideoTypes } from "@app/enums";
 import type { IVideoTypesDB } from "share/types/interfaces";
 import { Column, Entity, PrimaryGeneratedColumn } from "typeorm";
 
-@Entity()
+@Entity("video-types")
 export class VideoTypes implements IVideoTypesDB {
   @ApiProperty({ description: "VideoType identifier", nullable: false })
   @PrimaryGeneratedColumn({

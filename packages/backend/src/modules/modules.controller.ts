@@ -14,7 +14,7 @@ import {
   Put,
 } from "@nestjs/common";
 import { ModulesService } from "./modules.service";
-import { UpdateModuleDto } from "./dto/update-module.dto";
+import { UpdateModuleDto } from "../dto/update-module.dto";
 import { FileInterceptor } from "@nestjs/platform-express";
 import { diskStorage } from "multer";
 import { extname } from "path";

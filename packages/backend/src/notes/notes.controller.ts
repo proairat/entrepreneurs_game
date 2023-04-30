@@ -11,8 +11,8 @@ import {
   ParseIntPipe,
 } from "@nestjs/common";
 import { NotesService } from "./notes.service";
-import { CreateNoteDto } from "./dto/create-note.dto";
-import { UpdateNoteDto } from "./dto/update-note.dto";
+import { CreateNoteDto } from "../dto/create-note.dto";
+import { UpdateNoteDto } from "../dto/update-note.dto";
 import {
   ApiOperation,
   ApiParam,
@@ -20,7 +20,7 @@ import {
   ApiResponse,
   ApiTags,
 } from "@nestjs/swagger";
-import { Note } from "./entities/note.entity";
+import { Note } from "../entities/note.entity";
 
 @ApiTags("Notes")
 @Controller("notes")

@@ -12,7 +12,7 @@ import { TestModule } from "./test/test.module";
 import { TestQuestionModule } from "./test-question/test-question.module";
 import { TestAnswerModule } from "./test-answer/test-answer.module";
 import { VideoTypesSeeder } from "./videos/seeders/videoTypesSeeder";
-import { VideoTypes } from "./videos/entities/videoTypes.entity";
+import { VideoTypes } from "./entities/video-types.entity";
 
 @Module({
   imports: [

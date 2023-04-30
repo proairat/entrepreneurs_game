@@ -1,10 +1,10 @@
 import { Injectable } from "@nestjs/common";
 import { InjectRepository } from "@nestjs/typeorm";
 import { Repository } from "typeorm";
-import { UpdateModuleDto } from "./dto/update-module.dto";
-import { Modules } from "./entities/modules.entity";
+import { UpdateModuleDto } from "../dto/update-module.dto";
+import { Modules } from "../entities/modules.entity";
 import { isEmpty, isNull } from "lodash";
-import { EEntityState } from "@app/enums";
+import { EEntityState, EServerResponses } from "@app/enums";
 import { IModule, IModuleBody, IModuleFile } from "@app/interfaces";
 import { EventEmitter } from "events";
 import { Observable } from "rxjs";
@@ -49,13 +49,18 @@ export class ModulesService {
       let updateModuleDto: {
         [index: string]: string;
       };
+      let response: EServerResponses;
       const id = this.cache.has("id") ? this.cache.get("id") : undefined;
       if (isFile(p)) {
         updateModuleDto = { filename: p.filename };
         this.flags.file = true;
+        response =
+          EServerResponses.MODULES_UPLOAD_FILE_AND_PASS_VALIDATION_POST_FILE_SUCCESSFUL;
       } else {
         updateModuleDto = { header: p.header };
         this.flags.body = true;
+        response =
+          EServerResponses.MODULES_UPLOAD_FILE_AND_PASS_VALIDATION_POST_BODY_SUCCESSFUL;
       }
       if (id) {
         await this.update(id, updateModuleDto);
@@ -68,7 +73,7 @@ export class ModulesService {
           this.cache.delete("id");
         }
       }
-      return { response: "OK" };
+      return { response };
     };
     if (!isEmpty(file)) {
       return await updateEntity<IModuleFile>({
@@ -95,12 +100,17 @@ export class ModulesService {
       let updateModuleDto: {
         [index: string]: string;
       };
+      let response: EServerResponses;
       if (isFile(p)) {
         updateModuleDto = { filename: p.filename };
         this.flags.file = true;
+        response =
+          EServerResponses.MODULES_UPLOAD_FILE_AND_PASS_VALIDATION_PUT_FILE_SUCCESSFUL;
       } else {
         updateModuleDto = { header: p.header };
         this.flags.body = true;
+        response =
+          EServerResponses.MODULES_UPLOAD_FILE_AND_PASS_VALIDATION_PUT_BODY_SUCCESSFUL;
       }
       if (id) {
         await this.update(id, updateModuleDto);
@@ -112,7 +122,7 @@ export class ModulesService {
           this.flags.file = false;
         }
       }
-      return { response: "OK" };
+      return { response };
     };
     if (!isEmpty(file)) {
       return await updateEntity<IModuleFile>({
@@ -160,9 +170,11 @@ export class ModulesService {
       .getOne();
   }
 
-  async remove(id: number): Promise<{ response: string }> {
+  async remove(id: number): Promise<{ response: EServerResponses }> {
     const { affected } = await this.modulesRepository.delete(id);
-    return affected ? { response: "OK" } : { response: "error" };
+    return affected
+      ? { response: EServerResponses.MODULES_REMOVE_SUCCESSFUL }
+      : { response: EServerResponses.MODULES_REMOVE_ERROR };
   }
 
   streamEvents(

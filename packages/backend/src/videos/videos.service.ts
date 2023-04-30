@@ -1,16 +1,18 @@
 import { Injectable } from "@nestjs/common";
 import { InjectRepository } from "@nestjs/typeorm";
 import { Repository } from "typeorm";
-import { UpdateVideoDto } from "./dto/update-video.dto";
-import { UpdateVideoTypeDto } from "./dto/update-video-type.dto";
-import { Videos } from "./entities/videos.entity";
-import { VideoTypes } from "./entities/videoTypes.entity";
+import { UpdateVideoDto } from "../dto/update-video.dto";
+import { UpdateVideoTypeDto } from "../dto/update-video-type.dto";
+import { CreateVideoDto } from "../dto/create-video.dto";
+import { Videos } from "../entities/videos.entity";
+import { VideoTypes } from "../entities/video-types.entity";
 import { isEmpty, isNull } from "lodash";
-import { EEntityState } from "@app/enums";
+import { EEntityState, EServerResponses } from "@app/enums";
 import { IModule, IModuleBody, IModuleFile } from "@app/interfaces";
 import { EventEmitter } from "events";
 import { Observable } from "rxjs";
 import { Socket } from "net";
+import { Authors } from "src/entities/authors.entity";
 
 @Injectable()
 export class VideosService {
@@ -23,20 +25,43 @@ export class VideosService {
 
   constructor(
     @InjectRepository(Videos)
-    private readonly modulesRepository: Repository<Videos>,
-    @InjectRepository(VideoTypes)
-    private readonly chtototamRepository: Repository<VideoTypes>
+    private readonly videosRepository: Repository<Videos>,
+    @InjectRepository(Authors)
+    private readonly authorsRepository: Repository<Authors>
   ) {}
 
   //async create({ alt = "Карточка модуля!" }: UpdateVideoDto): Promise<number> {
-  async create(): Promise<number> {
+  async create(formData: CreateVideoDto): Promise<{ response: string }> {
+    const video = new Videos(formData.title);
+    const authors: Authors[] = [];
+
+    for (const author of formData.authors) {
+      const authorRecord = new Authors(
+        author.surname,
+        author.name,
+        author.patronymic
+      );
+
+      authors.push(authorRecord);
+      const { id } = await this.authorsRepository.save(authorRecord);
+    }
+
+    video.authors = authors;
+
+    const { id } = await this.videosRepository.save(video);
+
+    return id
+      ? { response: EServerResponses.VIDEOS_CREATE_SUCCESSFUL }
+      : { response: EServerResponses.VIDEOS_CREATE_ERROR };
+
+    // return id;
+
     //const video = new Videos();
     // module.title = title;
     // module.duration = duration;
     // module.footer = footer;
-    //const { id } = await this.modulesRepository.save(video);
+    //const { id } = await this.videosRepository.save(video);
     //return id;
-    return 100;
   }
 
   /*
@@ -75,7 +100,7 @@ export class VideosService {
           this.cache.delete("id");
         }
       }
-      return { response: "OK" };
+      return { response: EServerResponses.OK };
     };
     if (!isEmpty(file)) {
       return await updateEntity<IModuleFile>({
@@ -119,7 +144,7 @@ export class VideosService {
           this.flags.file = false;
         }
       }
-      return { response: "OK" };
+      return { response: EServerResponses.OK };
     };
     if (!isEmpty(file)) {
       return await updateEntity<IModuleFile>({
@@ -138,7 +163,7 @@ export class VideosService {
 
   /*
   async findAll(): Promise<Videos[]> {
-    return await this.modulesRepository.find();
+    return await this.videosRepository.find();
   }
   */
 
@@ -147,12 +172,12 @@ export class VideosService {
   }
 
   async findOneByState(state: EEntityState): Promise<Videos | null> {
-    // return await this.modulesRepository.findOneBy({ state });
+    // return await this.videosRepository.findOneBy({ state });
     return null;
   }
 
   async findOneById(id: number): Promise<Videos | null> {
-    //return await this.modulesRepository.findOneBy({ id });
+    //return await this.videosRepository.findOneBy({ id });
     return null;
   }
 
@@ -163,13 +188,13 @@ export class VideosService {
       //  const opa: keyof UpdateVideoDto = key;
       //  row[opa] = value;
       //});
-      //await this.modulesRepository.save(row);
+      //await this.videosRepository.save(row);
     }
   }
 
   /*
   async getLastInsertedRow() {
-    return await this.modulesRepository
+    return await this.videosRepository
       .createQueryBuilder()
       .select("m.id")
       .from(Videos, "m")
@@ -178,10 +203,11 @@ export class VideosService {
   }
   */
 
-  async remove(id: number): Promise<{ response: string }> {
-    //const { affected } = await this.modulesRepository.delete(id);
-    //return affected ? { response: "OK" } : { response: "error" };
-    return { response: "OK" };
+  async remove(id: number): Promise<{ response: EServerResponses }> {
+    const { affected } = await this.videosRepository.delete(id);
+    return affected
+      ? { response: EServerResponses.VIDEOS_REMOVE_SUCCESSFUL }
+      : { response: EServerResponses.VIDEOS_REMOVE_ERROR };
   }
 
   streamEvents(

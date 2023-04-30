@@ -32,7 +32,9 @@
     <AppSpinner v-if="isSpinnerVisible" />
     <template #footer>
       <span class="dialog-footer">
-        <LightButton @click="isDialogFormVisible = false">Отмена</LightButton>
+        <LightButton @click="isDialogFormVisible = false" class="mr-3"
+          >Отмена</LightButton
+        >
         <PrimaryButton
           @click="checkFormReadyHandler(ruleFormRef), checkFileReadyHandler()"
           >Обновить карточку модуля</PrimaryButton
@@ -50,6 +52,7 @@ import type { FormItemProp, FormInstance, FormRules } from "element-plus";
 import { useFetchComposable } from "@/composables/use-fetch";
 import { ElMessage } from "element-plus";
 import type { IModule, IElMessageUploadFile } from "share/types/interfaces";
+import { EServerResponses } from "share/types/enums";
 
 const dashboardStore = useDashboardStore();
 const { isDialogFormVisible, dialogFormTitle, activeModule } =
@@ -146,7 +149,10 @@ function submitFormFields() {
   });
 
   onFetchResponse(() => {
-    if (data.value.response === "OK") {
+    if (
+      data.value.response ===
+      EServerResponses.MODULES_UPLOAD_FILE_AND_PASS_VALIDATION_PUT_BODY_SUCCESSFUL
+    ) {
       overallResult.value.formResult = data.value.response;
     }
   });
@@ -180,8 +186,10 @@ watch(
   overallResult,
   () => {
     if (
-      overallResult.value.fileResult === "OK" &&
-      overallResult.value.formResult === "OK"
+      overallResult.value.fileResult ===
+        EServerResponses.MODULES_UPLOAD_FILE_AND_PASS_VALIDATION_PUT_FILE_SUCCESSFUL &&
+      overallResult.value.formResult ===
+        EServerResponses.MODULES_UPLOAD_FILE_AND_PASS_VALIDATION_PUT_BODY_SUCCESSFUL
     ) {
       isSpinnerVisible.value = false;
       ElMessage({
