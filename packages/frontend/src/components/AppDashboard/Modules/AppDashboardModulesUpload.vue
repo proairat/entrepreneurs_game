@@ -37,7 +37,7 @@ export default {
 };
 </script>
 
-<script lang="ts" setup>
+<script setup lang="ts">
 import { ref, watch, useAttrs } from "vue";
 import {
   ElMessage,

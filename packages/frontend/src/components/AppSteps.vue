@@ -1,19 +1,24 @@
 <template>
-  <el-steps :active="active" finish-status="success">
+  <el-steps :active="videoStep" finish-status="success">
     <el-step title="Шаг 1" />
     <el-step title="Шаг 2" />
     <el-step title="Шаг 3" />
   </el-steps>
-
-  <el-button style="margin-top: 12px" @click="next">Следующий шаг</el-button>
+  <!--<el-button style="margin-top: 12px" @click="next">Следующий шаг</el-button>-->
 </template>
 
-<script lang="ts" setup>
-import { ref } from "vue";
+<script setup lang="ts">
+import { storeToRefs } from "pinia";
+import { useDashboardStore } from "@/stores";
 
-const active = ref(0);
+const dashboardStore = useDashboardStore();
+const { videoStep } = storeToRefs(dashboardStore);
 
+console.log("AppSteps -> videoStep", videoStep.value);
+
+/*
 const next = () => {
-  if (active.value++ > 2) active.value = 0;
+  if (videoStep.value++ > 2) videoStep.value = 0;
 };
+*/
 </script>

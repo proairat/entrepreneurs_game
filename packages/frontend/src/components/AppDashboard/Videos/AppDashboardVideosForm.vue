@@ -8,7 +8,7 @@
     :rules="rules"
     :size="formSize"
     :status-icon="true"
-    label-width="200px"
+    label-width="250px"
   >
     <el-form-item prop="title" label="Название видеоролика">
       <el-input
@@ -17,28 +17,11 @@
         placeholder="Название видеоролика"
       />
     </el-form-item>
-    <!--
-    <AppDashboardVideosUpload
-      :method="method.toLowerCase()"
-      :isCheckFileReadyPass="isCheckFileReadyPass"
-      :class="appendTo"
-      @message-event="messageEventHandler"
-      @upload-file-error="uploadFileErrorHandler"
-      textForTriggerButton="Выберите постер к видео"
-    />
-    <AppDashboardVideosUpload
-      :method="method.toLowerCase()"
-      :isCheckFileReadyPass="isCheckFileReadyPass"
-      :class="appendTo"
-      @message-event="messageEventHandler"
-      @upload-file-error="uploadFileErrorHandler"
-      textForTriggerButton="Выберите видеофайл"
-    />-->
     <template v-for="author in authors" :key="author.id">
       <el-divider />
       <el-form-item
         :prop="`surname${author.id}`"
-        label="Фамилия"
+        label="Фамилия автора видеоролика"
         :rules="[
           {
             required: true,
@@ -49,12 +32,12 @@
       >
         <el-input
           v-model="formModel[`surname${author.id}`]"
-          placeholder="Фамилия"
+          placeholder="Фамилия автора видеоролика"
         />
       </el-form-item>
       <el-form-item
         :prop="`name${author.id}`"
-        label="Имя"
+        label="Имя автора видеоролика"
         :rules="[
           {
             required: true,
@@ -63,11 +46,14 @@
           },
         ]"
       >
-        <el-input v-model="formModel[`name${author.id}`]" placeholder="Имя" />
+        <el-input
+          v-model="formModel[`name${author.id}`]"
+          placeholder="Имя автора видеоролика"
+        />
       </el-form-item>
       <el-form-item
         :prop="`patronymic${author.id}`"
-        label="Отчество"
+        label="Отчество автора видеоролика"
         :rules="[
           {
             required: true,
@@ -78,7 +64,7 @@
       >
         <el-input
           v-model="formModel[`patronymic${author.id}`]"
-          placeholder="Отчество"
+          placeholder="Отчество автора видеоролика"
         />
       </el-form-item>
     </template>
@@ -102,7 +88,7 @@
         Внести данные о видео
       </PrimaryButton>
     </div>
-    <AppPadding :padding="{ paddingBottom: '1.5rem' }" />
+    <AppMargin :margin="{ marginBottom: '1.5rem' }" />
   </el-form>
   <AppSpinner v-if="isSpinnerVisible" />
 </template>
@@ -113,24 +99,11 @@ import type { FormInstance, FormRules } from "element-plus";
 import { useFetchComposable } from "@/composables/use-fetch";
 import { ElMessage } from "element-plus";
 import { useDashboardStore } from "@/stores";
-import type {
-  IModule,
-  IElMessageUploadFile,
-  IAuthor,
-} from "share/types/interfaces";
+import type { IElMessageUploadFile, IAuthor } from "share/types/interfaces";
 import { EServerResponses } from "share/types/enums";
 
-const authors = ref([
-  {
-    id: 1,
-    surname: "",
-    name: "",
-    patronymic: "",
-  },
-]);
-
 const dashboardStore = useDashboardStore();
-const { updateRowJustInserted } = dashboardStore;
+const { updateVideoStep } = dashboardStore;
 const formSize = ref("large");
 const ruleFormRef = ref<FormInstance>();
 const formModel = reactive({
@@ -139,7 +112,14 @@ const formModel = reactive({
   name1: "",
   patronymic1: "",
 } as Record<string | "title", string>);
-
+const authors = ref([
+  {
+    id: 1,
+    surname: "",
+    name: "",
+    patronymic: "",
+  },
+]);
 const submitResult = ref({
   formReady: false,
   fileReady: false,
@@ -254,7 +234,6 @@ function submitFormFields() {
   isSpinnerVisible.value = true;
 
   onFetchResponse(() => {
-    console.log("onFetchResponse() => data.value", data.value);
     if (data.value.response === EServerResponses.VIDEOS_CREATE_SUCCESSFUL) {
       isSpinnerVisible.value = false;
       ElMessage({
@@ -262,6 +241,9 @@ function submitFormFields() {
         type: "success",
         appendTo: `.${appendTo}`,
       });
+      setTimeout(() => {
+        updateVideoStep(1);
+      }, 3000);
       ruleFormRef.value?.resetFields();
     }
   });

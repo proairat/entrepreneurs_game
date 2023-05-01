@@ -1,12 +1,12 @@
 <template>
-  <div v-bind="$attrs"></div>
+  <div class="el-message-wrapper-main"></div>
+  <AppMargin :margin="{ marginTop: '1.5rem' }" />
   <el-upload
     ref="upload"
     :method="props.method"
     :action="URL_MODULES_UPLOAD"
     list-type="picture"
     :limit="1"
-    :data="props.additionalData"
     :auto-upload="false"
     :on-remove="handleRemove"
     :on-exceed="handleExceed"
@@ -28,16 +28,14 @@
       <InfoButton> {{ textForTriggerButton }} </InfoButton>
     </template>
   </el-upload>
+  <AppMargin :margin="{ marginTop: '0.625rem' }" />
+  <div class="create-video-card__outer">
+    <PrimaryButton> Загрузить обложку на сервер </PrimaryButton>
+  </div>
 </template>
 
-<script lang="ts">
-export default {
-  inheritAttrs: false,
-};
-</script>
-
-<script lang="ts" setup>
-import { ref, watch, useAttrs, computed } from "vue";
+<script setup lang="ts">
+import { ref, computed } from "vue";
 import {
   ElMessage,
   genFileId,
@@ -48,32 +46,10 @@ import {
 import { URL_MODULES_UPLOAD } from "@/API";
 import type { IElMessageUploadFile } from "share/types/interfaces";
 
-/**
- * Состояния, передаваемые родительскому компоненту
- * 1 - Файл не выбран
- * 2 - Файл выбран
- * 3 - Файл успешно загружен
- *  */
-
-const { class: appendTo } = useAttrs();
+const appendTo = "el-message-wrapper-main";
 const props = defineProps<{
-  isCheckFileReadyPass: boolean;
   method: string;
-  additionalData?: { id: string };
   textForTriggerButton?: string;
-}>();
-const emits = defineEmits<{
-  (
-    e: "message-event",
-    value: {
-      message: string;
-      type: string;
-      appendTo: string;
-      idMessage: number;
-      shPayload: any;
-    }
-  ): void;
-  (e: "upload-file-error", isError: boolean): void;
 }>();
 const textForTriggerButton = computed(() =>
   props.textForTriggerButton ? props.textForTriggerButton : "Выберите файл"
@@ -121,7 +97,6 @@ const handleError: UploadProps["onError"] = (error: Error) => {
   emitObjFunc({
     appendTo: `.${appendTo}`,
   });
-  emits("upload-file-error", true);
 };
 const handleChange: UploadProps["onChange"] = (uploadFile) => {
   if (uploadFile.status === "ready") {
@@ -154,7 +129,6 @@ function emitObjFunc(obj: any) {
   emitsObj.value.appendTo = appendTo;
   emitsObj.value.idMessage = idMessage;
   emitsObj.value.shPayload = shPayload;
-  emits("message-event", emitsObj.value);
 }
 
 function isComplianceWithRestrictions(file: UploadRawFile) {
@@ -179,6 +153,7 @@ function isComplianceWithRestrictions(file: UploadRawFile) {
   return true;
 }
 
+/*
 watch(
   () => props.isCheckFileReadyPass,
   () => {
@@ -190,17 +165,13 @@ watch(
     }
   }
 );
+*/
 
 emitObjFunc({ appendTo: `.${appendTo}` });
-emits("upload-file-error", false);
 </script>
 
 <style scoped lang="scss">
 .el-message-wrapper-main {
-  position: relative;
-}
-
-.el-message-wrapper-dialog {
   position: relative;
 }
 
@@ -214,5 +185,12 @@ emits("upload-file-error", false);
 
 :deep(.el-message--warning) {
   position: absolute;
+}
+
+.create-video-card {
+  &__outer {
+    display: flex;
+    justify-content: center;
+  }
 }
 </style>
