@@ -57,6 +57,13 @@ enum EPadding {
   Left = "paddingLeft",
 }
 
+enum EMargin {
+  Top = "marginTop",
+  Right = "marginRight",
+  Bottom = "marginBottom",
+  Left = "marginLeft",
+}
+
 enum EVideoTypes {
   MP4 = "MP4",
   FLV = "FLV",
@@ -84,6 +91,7 @@ export {
   EGuess,
   EProgressCaption,
   EPadding,
+  EMargin,
   EVideoTypes,
   EServerResponses, 
 };

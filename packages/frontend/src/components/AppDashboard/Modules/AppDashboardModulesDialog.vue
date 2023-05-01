@@ -44,7 +44,7 @@
   </el-dialog>
 </template>
 
-<script lang="ts" setup>
+<script setup lang="ts">
 import { useDashboardStore } from "@/stores";
 import { storeToRefs } from "pinia";
 import { reactive, ref, watch } from "vue";

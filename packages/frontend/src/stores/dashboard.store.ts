@@ -52,23 +52,7 @@ export const useDashboardStore = defineStore("dashboard", () => {
   const rowJustInserted = ref({} as IModule);
   const isDialogFormVisible = ref(false);
   const dialogFormTitle = ref("");
-
-  function updateActiveModule(updateArray: IUpdateArray) {
-    eduElementModulesExtended.updateElemByState(updateArray);
-    activeModule.value = getActiveModule();
-  }
-
-  function updateRowJustInserted(row: IModule) {
-    rowJustInserted.value = row;
-  }
-
-  function toggleIsDialogFormVisible(value: boolean) {
-    isDialogFormVisible.value = value;
-  }
-
-  function updateDialogFormTitle(title: string) {
-    dialogFormTitle.value = title;
-  }
+  const videoStep = ref(0);
 
   function getModulesList() {
     return ref(eduElementModules.getList()).value as IModule[];
@@ -84,12 +68,33 @@ export const useDashboardStore = defineStore("dashboard", () => {
     ) as IModule;
   }
 
+  function updateActiveModule(updateArray: IUpdateArray) {
+    eduElementModulesExtended.updateElemByState(updateArray);
+    activeModule.value = getActiveModule();
+  }
+
+  function updateRowJustInserted(row: IModule) {
+    rowJustInserted.value = row;
+  }
+
+  function updateDialogFormTitle(title: string) {
+    dialogFormTitle.value = title;
+  }
+
   function updateElemFields(elem: TExtendsArray) {
     eduElementModulesExtended.updateElemFields(elem);
   }
 
+  function updateVideoStep(value: number) {
+    videoStep.value = value;
+  }
+
   function deleteFromList(elem: TExtendsArray) {
     eduElementModulesExtended.deleteFromList(elem);
+  }
+
+  function toggleIsDialogFormVisible(value: boolean) {
+    isDialogFormVisible.value = value;
   }
 
   return {
@@ -97,13 +102,15 @@ export const useDashboardStore = defineStore("dashboard", () => {
     rowJustInserted,
     isDialogFormVisible,
     dialogFormTitle,
+    videoStep,
+    getModulesList,
+    getVideosList,
     updateActiveModule,
     updateRowJustInserted,
-    toggleIsDialogFormVisible,
     updateDialogFormTitle,
-    getModulesList,
     updateElemFields,
+    updateVideoStep,
     deleteFromList,
-    getVideosList,
+    toggleIsDialogFormVisible,
   };
 });

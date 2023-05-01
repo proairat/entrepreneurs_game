@@ -87,9 +87,9 @@ const columns: Column<any>[] = [
           Редактировать
         </SuccessButton>
         <AppPopover
-          onClickDangerButton={changeVisibilityHandler}
-          onClickCancelButton={changeVisibilityHandler}
-          onClickDeleteButton={() => deleteHandler(cellData)}
+          onClick-danger-button={changeVisibilityHandler}
+          onClick-cancel-button={changeVisibilityHandler}
+          onClick-delete-button={() => deleteHandler(cellData)}
           visible={visible.value[cellData.rowData.id]}
           visibleKey={cellData.rowData.id}
         ></AppPopover>
