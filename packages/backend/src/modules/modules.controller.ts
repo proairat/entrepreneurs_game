@@ -23,7 +23,7 @@ import { v4 as uuid } from "uuid";
 import { HttpException, HttpStatus } from "@nestjs/common";
 import { Observable } from "rxjs";
 import { Socket } from "net";
-import { IModule } from "@app/interfaces";
+import { IModule } from "@app/types/interfaces";
 
 const multerOptions = {
   storage: diskStorage({
@@ -32,7 +32,7 @@ const multerOptions = {
       const uploadPath = "./assets/modules/cardCover";
       // Create folder if doesn't exist
       if (!existsSync(uploadPath)) {
-        mkdirSync(uploadPath);
+        mkdirSync(uploadPath, { recursive: true });
       }
       cb(null, uploadPath);
     },

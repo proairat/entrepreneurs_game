@@ -31,7 +31,7 @@
 
 <script setup lang="ts">
 import { useEntranceTestsStore } from "@/stores";
-import { getImageUrlAwaitImport } from "@/helpers/commonFunctions";
+import { getImageUrlAwaitImport } from "share/helpers/commonFunctions";
 import { EPercent } from "share/types/enums";
 
 const props = defineProps<{

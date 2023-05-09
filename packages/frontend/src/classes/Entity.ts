@@ -13,7 +13,8 @@ class Entity<T> implements IEduCommonElement<T> {
     }
     return this.list;
   }
-  public addToList(fromDB: T[] | TElemsList<number, T>): void {
+
+  public fillTheList(fromDB: T[] | TElemsList<number, T>): void {
     if (
       Array.isArray(this.list) &&
       fromDB instanceof Array &&
@@ -36,6 +37,14 @@ class Entity<T> implements IEduCommonElement<T> {
       }
     }
   }
+
+  public addToList(elem: T) {
+    if (Array.isArray(this.list)) {
+      this.list.push(elem);
+    }
+    return this.list;
+  }
+
   public getList() {
     return this.list;
   }

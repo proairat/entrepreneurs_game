@@ -83,11 +83,12 @@ interface ITabsAuthors {
 interface IVideoDB {
   id: number;
   type: EEntityType;
-  filename: string;
-  poster: string;
+  filenamePoster: string;
+  filenameVideo: string;
   duration: number;
   title: string;
   description: string;
+  state: EEntityState;
 }
 
 interface IVideo {
@@ -110,6 +111,7 @@ interface IVideoTypesDB {
 
 interface IAuthor {
   id: number;
+  type: EEntityType;
   surname: string;
   name: string;
   patronymic: string;
@@ -196,7 +198,8 @@ interface IEduCommonElement<T> {
   createList(
     param: T[] | TElemsList<number, T>
   ): T[] | TElemsList<number, T> | undefined;
-  addToList(param: T[] | TElemsList<number, T>): void;
+  fillTheList(param: T[] | TElemsList<number, T>): void;
+  addToList(param: T):void;
   getList(): T[] | TElemsList<number, T> | undefined;
 }
 
@@ -233,7 +236,7 @@ interface IModuleBody {
   header: string 
 };
 
-interface IModuleFile { 
+interface IFile { 
   filename: string 
 };
 
@@ -264,5 +267,5 @@ export type {
   IEduElementEntityMap,
   IElMessageUploadFile,
   IModuleBody,
-  IModuleFile,
+  IFile,
 };

@@ -72,7 +72,7 @@ export default {
 import { Disclosure, DisclosureButton, DisclosurePanel } from "@headlessui/vue";
 import { XMarkIcon, Bars3Icon } from "@heroicons/vue/24/outline";
 import { ref, h, watch } from "vue";
-import { getImageUrlAwaitImport } from "@/helpers/commonFunctions";
+import { getImageUrlAwaitImport } from "share/helpers/commonFunctions";
 import type { INavigation } from "share/types/interfaces";
 import { useNavbarStore } from "@/stores";
 import { storeToRefs } from "pinia";

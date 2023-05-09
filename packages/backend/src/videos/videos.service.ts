@@ -7,21 +7,17 @@ import { CreateVideoDto } from "../dto/create-video.dto";
 import { Videos } from "../entities/videos.entity";
 import { VideoTypes } from "../entities/video-types.entity";
 import { isEmpty, isNull } from "lodash";
-import { EEntityState, EServerResponses } from "@app/enums";
-import { IModule, IModuleBody, IModuleFile } from "@app/interfaces";
+import { EEntityState, EEntityType, EServerResponses } from "@app/types/enums";
+import { IModule, IModuleBody, IFile, IVideoDB } from "@app/types/interfaces";
 import { EventEmitter } from "events";
 import { Observable } from "rxjs";
 import { Socket } from "net";
 import { Authors } from "src/entities/authors.entity";
+import { removeObjectProperty } from "@app/helpers/commonFunctions";
 
 @Injectable()
 export class VideosService {
-  private cache: Map<string, number> = new Map<string, number>();
   private eventEmitter: EventEmitter = new EventEmitter();
-  private flags: { body: boolean; file: boolean } = {
-    body: false,
-    file: false,
-  };
 
   constructor(
     @InjectRepository(Videos)
@@ -31,7 +27,10 @@ export class VideosService {
   ) {}
 
   //async create({ alt = "Карточка модуля!" }: UpdateVideoDto): Promise<number> {
-  async create(formData: CreateVideoDto): Promise<{ response: string }> {
+  async create(formData: CreateVideoDto): Promise<{
+    videoRow: Omit<Videos, "authors">;
+    response: EServerResponses;
+  }> {
     const video = new Videos(formData.title);
     const authors: Authors[] = [];
 
@@ -49,105 +48,58 @@ export class VideosService {
     video.authors = authors;
 
     const { id } = await this.videosRepository.save(video);
+    const videoRow = removeObjectProperty<Videos, "authors">("authors")(video);
 
     return id
-      ? { response: EServerResponses.VIDEOS_CREATE_SUCCESSFUL }
-      : { response: EServerResponses.VIDEOS_CREATE_ERROR };
+      ? { videoRow, response: EServerResponses.VIDEOS_CREATE_SUCCESSFUL }
+      : { videoRow, response: EServerResponses.VIDEOS_CREATE_ERROR };
+  }
 
-    // return id;
+  async uploadFileAndPassValidationPost(
+    body: CreateVideoDto,
+    file: Express.Multer.File
+  ) {
+    console.log("file????", file);
+    console.log("body????", body);
 
-    //const video = new Videos();
-    // module.title = title;
-    // module.duration = duration;
-    // module.footer = footer;
-    //const { id } = await this.videosRepository.save(video);
-    //return id;
+    if (!isEmpty(file)) {
+      await this.update(body.id, { filenamePoster: file.filename });
+
+      return {
+        response:
+          EServerResponses.VIDEOS_UPLOAD_FILE_AND_PASS_VALIDATION_POST_FILE_SUCCESSFUL,
+      };
+    }
   }
 
   /*
-  async uploadFileAndPassValidationPost(
-    body: UpdateVideoDto,
-    file: Express.Multer.File
-  ) {
-    function isFile(entity: IModuleBody | IModuleFile): entity is IModuleFile {
-      return (entity as IModuleFile).filename !== undefined;
-    }
-
-    if (!this.cache.has("id")) {
-      this.cache.set("id", await this.create({}));
-    }
-
-    const updateEntity = async <T extends IModuleFile | IModuleBody>(p: T) => {
-      let updateModuleDto: {
-        [index: string]: string;
-      };
-      const id = this.cache.has("id") ? this.cache.get("id") : undefined;
-      if (isFile(p)) {
-        updateModuleDto = { filename: p.filename };
-        this.flags.file = true;
-      } else {
-        updateModuleDto = { header: p.header };
-        this.flags.body = true;
-      }
-      if (id) {
-        await this.update(id, updateModuleDto);
-      }
-      if (this.flags.body && this.flags.file) {
-        if (id) {
-          this.eventEmitter.emit("message", await this.findOneById(id));
-          this.flags.body = false;
-          this.flags.file = false;
-          this.cache.delete("id");
-        }
-      }
-      return { response: EServerResponses.OK };
-    };
-    if (!isEmpty(file)) {
-      return await updateEntity<IModuleFile>({
-        filename: file.filename ?? "no value",
-      });
-    }
-    if (!isEmpty(body)) {
-      return await updateEntity<IModuleBody>({
-        header: body.header ?? "no value",
-      });
-    }
-  }
-
   async uploadFileAndPassValidationPut(
     body: UpdateVideoDto & { id?: number },
     file: Express.Multer.File
   ) {
-    function isFile(entity: IModuleBody | IModuleFile): entity is IModuleFile {
-      return (entity as IModuleFile).filename !== undefined;
+    function isFile(entity: IModuleBody | IFile): entity is IFile {
+      return (entity as IFile).filename !== undefined;
     }
 
     const id = body.id;
-    const updateEntity = async <T extends IModuleFile | IModuleBody>(p: T) => {
+    const updateEntity = async <T extends IFile | IModuleBody>(p: T) => {
       let updateModuleDto: {
         [index: string]: string;
       };
       if (isFile(p)) {
         updateModuleDto = { filename: p.filename };
-        this.flags.file = true;
+        
       } else {
         updateModuleDto = { header: p.header };
-        this.flags.body = true;
+        
       }
       if (id) {
         await this.update(id, updateModuleDto);
       }
-      if (this.flags.body && this.flags.file) {
-        if (id) {
-          this.eventEmitter.emit("message", await this.findOneById(id));
-          this.flags.body = false;
-          this.flags.file = false;
-        }
-      }
       return { response: EServerResponses.OK };
     };
     if (!isEmpty(file)) {
-      return await updateEntity<IModuleFile>({
+      return await updateEntity<IFile>({
         filename: file.filename ?? "no value",
       });
     }
@@ -161,14 +113,8 @@ export class VideosService {
   }
   */
 
-  /*
   async findAll(): Promise<Videos[]> {
     return await this.videosRepository.find();
-  }
-  */
-
-  async findAll(): Promise<any> {
-    return "findAll";
   }
 
   async findOneByState(state: EEntityState): Promise<Videos | null> {
@@ -177,18 +123,13 @@ export class VideosService {
   }
 
   async findOneById(id: number): Promise<Videos | null> {
-    //return await this.videosRepository.findOneBy({ id });
-    return null;
+    return await this.videosRepository.findOneBy({ id });
   }
 
-  async update(id: number, updateModuleDto: UpdateVideoDto) {
+  async update(id: number, toUpdate: Partial<Videos>) {
     const row = await this.findOneById(id);
     if (!isNull(row)) {
-      //Object.entries(updateModuleDto).map(([key, value]: [any, any]) => {
-      //  const opa: keyof UpdateVideoDto = key;
-      //  row[opa] = value;
-      //});
-      //await this.videosRepository.save(row);
+      await this.videosRepository.save({ ...row, ...toUpdate });
     }
   }
 

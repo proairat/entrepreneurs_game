@@ -4,15 +4,17 @@
   <el-upload
     ref="upload"
     :method="props.method"
-    :action="URL_MODULES_UPLOAD"
+    :action="URL_VIDEOS_UPLOAD"
     list-type="picture"
     :limit="1"
     :auto-upload="false"
+    v-model:file-list="fileList"
     :on-remove="handleRemove"
     :on-exceed="handleExceed"
     :on-success="handleSuccess"
     :on-error="handleError"
     :on-change="handleChange"
+    :data="additionalData"
   >
     <!--
     <template #tip>
@@ -30,8 +32,13 @@
   </el-upload>
   <AppMargin :margin="{ marginTop: '0.625rem' }" />
   <div class="create-video-card__outer">
-    <PrimaryButton> Загрузить обложку на сервер </PrimaryButton>
+    <PrimaryButton @click="checkFileReadyHandler">
+      Загрузить обложку на сервер
+    </PrimaryButton>
   </div>
+  <pre>
+    {{ fileList }}
+  </pre>
 </template>
 
 <script setup lang="ts">
@@ -42,10 +49,18 @@ import {
   type UploadInstance,
   type UploadProps,
   type UploadRawFile,
+  type UploadUserFile,
 } from "element-plus";
-import { URL_MODULES_UPLOAD } from "@/API";
-import type { IElMessageUploadFile } from "share/types/interfaces";
+import { URL_VIDEOS_UPLOAD } from "@/API";
+import { useDashboardStore } from "@/stores";
+import { storeToRefs } from "pinia";
+import type { IElMessageUploadFile, IVideo } from "share/types/interfaces";
 
+const dashboardStore = useDashboardStore();
+const { getVideosList, addToVideosList } = dashboardStore;
+const { activeVideo } = storeToRefs(dashboardStore);
+
+const fileList = ref<UploadUserFile[]>([]);
 const appendTo = "el-message-wrapper-main";
 const props = defineProps<{
   method: string;
@@ -63,11 +78,13 @@ const emitsObj = ref<IElMessageUploadFile>({
 });
 const upload = ref<UploadInstance>();
 const handleRemove: UploadProps["onRemove"] = () => {
+  console.log("handleRemove");
   emitObjFunc({
     appendTo: `.${appendTo}`,
   });
 };
 const handleExceed: UploadProps["onExceed"] = (files) => {
+  console.log("handleExceed");
   const file = files[0] as UploadRawFile;
   file.uid = genFileId();
   upload.value!.clearFiles();
@@ -80,6 +97,7 @@ const handleExceed: UploadProps["onExceed"] = (files) => {
   }
 };
 const handleSuccess: UploadProps["onSuccess"] = (response) => {
+  console.log("handleSuccess");
   emitObjFunc({
     message: "Файл успешно загружен!",
     type: "success",
@@ -89,6 +107,7 @@ const handleSuccess: UploadProps["onSuccess"] = (response) => {
   });
 };
 const handleError: UploadProps["onError"] = (error: Error) => {
+  console.log("handleError");
   ElMessage({
     message: `Файл не был загружен. Произошла ошибка: ${error}`,
     type: "error",
@@ -99,6 +118,8 @@ const handleError: UploadProps["onError"] = (error: Error) => {
   });
 };
 const handleChange: UploadProps["onChange"] = (uploadFile) => {
+  console.log("handleChange");
+  console.log("uploadFile", uploadFile);
   if (uploadFile.status === "ready") {
     if (isComplianceWithRestrictions(uploadFile.raw as UploadRawFile)) {
       emitObjFunc({
@@ -115,6 +136,7 @@ const handleChange: UploadProps["onChange"] = (uploadFile) => {
     }
   }
 };
+const additionalData = ref<Pick<IVideo, "id">>({ id: 0 });
 
 function emitObjFunc(obj: any) {
   const {
@@ -151,6 +173,20 @@ function isComplianceWithRestrictions(file: UploadRawFile) {
     return false;
   }
   return true;
+}
+
+function checkFileReadyHandler() {
+  console.log("AppDashboardVideosUpload.vue -> checkFileReadyHandler()");
+  additionalData.value = { id: activeVideo.value.id };
+  if (fileList.value.length) {
+    upload.value!.submit();
+  } else {
+    ElMessage({
+      message: "Файл не выбран",
+      type: "error",
+      appendTo: `.${appendTo}`,
+    });
+  }
 }
 
 /*

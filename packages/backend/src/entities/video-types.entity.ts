@@ -1,6 +1,6 @@
 import { ApiProperty } from "@nestjs/swagger";
-import { EVideoTypes } from "@app/enums";
-import type { IVideoTypesDB } from "share/types/interfaces";
+import { EVideoTypes } from "@app/types/enums";
+import type { IVideoTypesDB } from "@app/types/interfaces";
 import { Column, Entity, PrimaryGeneratedColumn } from "typeorm";
 
 @Entity("video-types")

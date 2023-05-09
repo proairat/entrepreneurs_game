@@ -1,5 +1,5 @@
 import { defineStore } from "pinia";
-import { shuffle } from "@/helpers/commonFunctions";
+import { shuffle } from "share/helpers/commonFunctions";
 import { EEntityState, EGuess } from "share/types/enums";
 import { ref } from "vue";
 import { entranceTests, entranceTestsQuestions } from "@/fetch";
@@ -26,7 +26,7 @@ function getEduElement<T>(
   const eduElement = creator.getEduElement();
   if (fromDB) {
     eduElement.createList(fromDB);
-    eduElement.addToList(fromDB);
+    eduElement.fillTheList(fromDB);
   }
   return eduElement;
 }

@@ -1,4 +1,4 @@
-import { EEntityState } from "@app/enums";
+import { EEntityState } from "@app/types/enums";
 
 export class CreateModuleDto {
   filename!: string;

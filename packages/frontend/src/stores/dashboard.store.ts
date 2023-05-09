@@ -4,6 +4,7 @@ import type {
   IModule,
   IEduElementEntityArray,
   IUpdateArray,
+  IVideoDB,
 } from "share/types/interfaces";
 import {
   Creator,
@@ -16,7 +17,7 @@ import type {
   TExtendsArray,
   TExtendsArrayCombination,
 } from "share/types/types";
-import { modulesFromDatabase } from "@/fetch";
+import { modulesFromDatabase, videosFromDatabase } from "@/fetch";
 import { EEntityState } from "share/types/enums";
 
 function getEduElement<T>(
@@ -26,7 +27,7 @@ function getEduElement<T>(
   const eduElement = creator.getEduElement();
   if (fromDB) {
     eduElement.createList(fromDB);
-    eduElement.addToList(fromDB);
+    eduElement.fillTheList(fromDB);
   }
   return eduElement;
 }
@@ -40,16 +41,26 @@ const eduElementModules = getEduElement(
   new EntityCreator<TExtendsArrayCombination>(),
   modulesFromDatabase
 );
+const eduElementVideos = getEduElement(
+  new EntityCreator<TExtendsArrayCombination>(),
+  videosFromDatabase
+);
 
 const eduElementModulesExtended = getEduElementExtended(
   new EntityCreatorExtendedArray<TExtendsArrayCombination>(
     ref(eduElementModules.getList()).value as TExtendsArrayCombination[]
   )
 ) as IEduElementEntityArray<IModule>;
+const eduElementVideosExtended = getEduElementExtended(
+  new EntityCreatorExtendedArray<TExtendsArrayCombination>(
+    ref(eduElementVideos.getList()).value as TExtendsArrayCombination[]
+  )
+) as IEduElementEntityArray<IVideoDB>;
 
 export const useDashboardStore = defineStore("dashboard", () => {
   const activeModule = ref(getActiveModule());
-  const rowJustInserted = ref({} as IModule);
+  const activeVideo = ref(getActiveVideo());
+  const rowModuleJustInserted = ref({} as IModule);
   const isDialogFormVisible = ref(false);
   const dialogFormTitle = ref("");
   const videoStep = ref(0);
@@ -59,7 +70,11 @@ export const useDashboardStore = defineStore("dashboard", () => {
   }
 
   function getVideosList() {
-    return [];
+    return ref(eduElementVideos.getList()).value as IVideoDB[];
+  }
+
+  function addToVideosList(param: IVideoDB) {
+    return eduElementVideos.addToList(param);
   }
 
   function getActiveModule() {
@@ -68,13 +83,24 @@ export const useDashboardStore = defineStore("dashboard", () => {
     ) as IModule;
   }
 
+  function getActiveVideo() {
+    return eduElementVideosExtended.getElemByState(
+      EEntityState.Active
+    ) as IVideoDB;
+  }
+
   function updateActiveModule(updateArray: IUpdateArray) {
     eduElementModulesExtended.updateElemByState(updateArray);
     activeModule.value = getActiveModule();
   }
 
+  function updateActiveVideo(updateArray: IUpdateArray) {
+    eduElementVideosExtended.updateElemByState(updateArray);
+    activeVideo.value = getActiveVideo();
+  }
+
   function updateRowJustInserted(row: IModule) {
-    rowJustInserted.value = row;
+    rowModuleJustInserted.value = row;
   }
 
   function updateDialogFormTitle(title: string) {
@@ -99,13 +125,16 @@ export const useDashboardStore = defineStore("dashboard", () => {
 
   return {
     activeModule,
-    rowJustInserted,
+    activeVideo,
+    rowModuleJustInserted,
     isDialogFormVisible,
     dialogFormTitle,
     videoStep,
     getModulesList,
     getVideosList,
+    addToVideosList,
     updateActiveModule,
+    updateActiveVideo,
     updateRowJustInserted,
     updateDialogFormTitle,
     updateElemFields,

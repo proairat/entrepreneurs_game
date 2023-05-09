@@ -39,7 +39,7 @@ const {
   updateElemFields,
   deleteFromList,
 } = dashboardStore;
-const { rowJustInserted, activeModule } = storeToRefs(dashboardStore);
+const { rowModuleJustInserted, activeModule } = storeToRefs(dashboardStore);
 const tableData = getModulesList();
 const visible = ref<Record<number, boolean>>({});
 let flag1 = false;
@@ -101,16 +101,17 @@ const columns: Column<any>[] = [
 ];
 
 watch(
-  rowJustInserted,
-  (updatedRowJustInserted) => {
-    if (updatedRowJustInserted.id !== activeModule.value?.id) {
-      tableData.push(cloneDeep(updatedRowJustInserted));
-      visible.value[updatedRowJustInserted.id] = false;
+  rowModuleJustInserted,
+  (updatedModuleRowJustInserted) => {
+    if (updatedModuleRowJustInserted.id !== activeModule.value?.id) {
+      tableData.push(cloneDeep(updatedModuleRowJustInserted));
+      visible.value[updatedModuleRowJustInserted.id] = false;
+      console.log("Tonight getModulesList", getModulesList());
     }
-    updateElemFields(updatedRowJustInserted);
+    updateElemFields(updatedModuleRowJustInserted);
     if (tableData.length === 1) {
       updateActiveModule({
-        entityId: updatedRowJustInserted.id,
+        entityId: updatedModuleRowJustInserted.id,
         stateForFindElem: EEntityState.Default,
         stateForFindIndex: EEntityState.Default,
         stateForClickIndex: EEntityState.Active,
