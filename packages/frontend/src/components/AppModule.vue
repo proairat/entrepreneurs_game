@@ -45,7 +45,7 @@
 import { EEntityState, EEntityType } from "share/types/enums";
 import { computed, h, resolveComponent } from "vue";
 import { useModulesStore } from "@/stores";
-import { getImageUrlAwaitImport } from "@/helpers/commonFunctions";
+import { getImageUrlAwaitImport } from "share/helpers/commonFunctions";
 
 /**
  * Due to the limitations of defineProps in TS, no "IModule" interface is used

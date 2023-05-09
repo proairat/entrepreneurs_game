@@ -36,6 +36,15 @@ class EntityExtendedArray<T extends TExtendsArrayCombination>
     this.list = list;
   }
 
+  /**
+   * updateElemByState()
+   * 1. Вначале с помощью stateForFindElem ищется элемент с указанным состоянием в списке элементов.
+   * 2. Далее с помощью entityId ищется индекс нажатого (назначаемого) элемента в списке элементов.
+   * 3. Далее с помощью stateForFindIndex назначается новое состояние для элемента найденного на шаге 1.
+   * 4. Далее с помощью stateForClickIndex назначается новое состояние для элемента найденного на шаге 2.
+   *
+   * @param updateArray: IUpdateArray
+   */
   public updateElemByState(updateArray: IUpdateArray): void {
     if (Array.isArray(this.list)) {
       const thisList = this.list;

@@ -21,7 +21,7 @@
 import { useTestsStore } from "@/stores";
 import { EEntityState } from "share/types/enums";
 import { storeToRefs } from "pinia";
-import { shuffle } from "@/helpers/commonFunctions";
+import { shuffle } from "share/helpers/commonFunctions";
 import type { ITestAnswer } from "share/types/interfaces";
 import { ref, watch } from "vue";
 

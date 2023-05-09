@@ -16,10 +16,7 @@ import type { Tfns } from "share/types/types";
  *
  * removeObjectProperty('password')(user) //=> { id: 100, name: 'John Smith' }
  */
-const removeObjectProperty =
-  (prop: string): Record<string, any> =>
-  ({ [prop]: _, ...rest }) =>
-    rest;
+const removeObjectProperty = <T extends object, K extends keyof T>(prop: K) => (obj: T): Omit<T, K> => (({ [prop]: _, ...rest }) => rest)(obj);
 
 function FuzzySearch(
   str: string,
@@ -75,7 +72,9 @@ function getURLPathNameDigit(url: string): string | null {
  */
 async function getImageUrlAwaitImport(name: string, extension = "svg") {
   try {
-    const dynamicImport = await import(`@/assets/img/${name}.${extension}`);
+    
+    // const dynamicImport = await import(`@/assets/img/${name}.${extension}`);
+    const dynamicImport = await import(`../../frontend/src/assets/${name}.${extension}`);
     return dynamicImport.default;
   } catch (err) {
     console.error("We are know about error and try to address it", err);

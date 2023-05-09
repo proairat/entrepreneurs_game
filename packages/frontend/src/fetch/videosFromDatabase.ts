@@ -1,33 +1,33 @@
 import { EEntityState } from "share/types/enums";
 import { useFetchComposable } from "@/composables/use-fetch";
-import type { IModule } from "share/types/interfaces";
+import type { IVideoDB } from "share/types/interfaces";
 
 /**
- * MODULES
+ * VIDEOS
  */
-let modulesFromDatabase: IModule[] | undefined = [];
+let videosFromDatabase: IVideoDB[] | undefined = [];
 
 async function fetchData() {
   const { data, onFetchResponse, onFetchError } = useFetchComposable({
-    urlConst: "/modules",
+    urlConst: "/videos",
     method: "GET",
   });
   await new Promise((resolve) => {
     onFetchResponse(() => {
-      modulesFromDatabase = data.value;
+      videosFromDatabase = data.value;
       resolve("");
     });
   });
   onFetchError((err) => {
-    console.error(`Произошла ошибка при загрузке модулей из базы данных${err}`);
+    console.error(`Произошла ошибка при загрузке видео из базы данных ${err}`);
   });
 }
 
 await fetchData();
 
-if (modulesFromDatabase.length) {
+if (videosFromDatabase.length) {
   // в данном случае, первый элемент набора становится активным
-  modulesFromDatabase[0].state = EEntityState.Active;
+  videosFromDatabase[0].state = EEntityState.Active;
 }
 
-export { modulesFromDatabase };
+export { videosFromDatabase };

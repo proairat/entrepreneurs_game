@@ -12,7 +12,7 @@ export default {
 
 <script setup lang="ts">
 import { ref } from "vue";
-import { getImageUrlAwaitImport } from "@/helpers/commonFunctions";
+import { getImageUrlAwaitImport } from "share/helpers/commonFunctions";
 
 const icons = ref([
   { id: 1, src: await getImageUrlAwaitImport("gosuslugi") },

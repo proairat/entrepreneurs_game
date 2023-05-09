@@ -1,6 +1,6 @@
 import { ApiProperty } from "@nestjs/swagger";
-import { EEntityType, EEntityState } from "@app/enums";
-import type { IModule } from "share/types/interfaces";
+import { EEntityState, EEntityType } from "@app/types/enums";
+import type { IModule } from "@app/types/interfaces";
 import { Column, Entity, PrimaryGeneratedColumn } from "typeorm";
 
 @Entity()

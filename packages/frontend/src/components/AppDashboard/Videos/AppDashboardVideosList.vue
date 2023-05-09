@@ -16,13 +16,12 @@
 
 <script setup lang="tsx">
 import { TableV2FixedDir } from "element-plus";
-import { URL_MODULES_IMAGES } from "@/API";
+import { URL_VIDEOS_IMAGES } from "@/API";
 import { useDashboardStore } from "@/stores";
 import { onMounted, ref, watch, onUnmounted } from "vue";
 import { storeToRefs } from "pinia";
 import type { Column } from "element-plus";
 import { EEntityState } from "share/types/enums";
-import cloneDeep from "lodash/cloneDeep";
 import pickBy from "lodash/pickBy";
 import { useFetchComposable } from "@/composables/use-fetch";
 import { ElMessage } from "element-plus";
@@ -40,7 +39,7 @@ const {
   deleteFromList,
   getVideosList,
 } = dashboardStore;
-const { rowJustInserted, activeModule } = storeToRefs(dashboardStore);
+const { rowModuleJustInserted, activeModule } = storeToRefs(dashboardStore);
 const tableData = getVideosList();
 const visible = ref<Record<number, boolean>>({});
 
@@ -70,7 +69,7 @@ const columns: Column<any>[] = [
     width: 150,
     align: "center",
     cellRenderer: ({ cellData: filename }) => (
-      <img src={`${URL_MODULES_IMAGES}/${filename}`} class="tune-image" />
+      <img src={`${URL_VIDEOS_IMAGES}/${filename}`} class="tune-image" />
     ),
   },
   {

@@ -29,7 +29,7 @@ function getEduElement<T>(
   const eduElement = creator.getEduElement();
   if (fromDB) {
     eduElement.createList(fromDB);
-    eduElement.addToList(fromDB);
+    eduElement.fillTheList(fromDB);
   }
   return eduElement;
 }

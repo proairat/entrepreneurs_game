@@ -7,11 +7,37 @@ import {
   Param,
   Delete,
   UseInterceptors,
+  UploadedFile,
+  ParseFilePipeBuilder,
 } from "@nestjs/common";
 import { VideosService } from "./videos.service";
 import { CreateVideoDto } from "../dto/create-video.dto";
 import { UpdateVideoDto } from "../dto/update-video.dto";
 import { FileInterceptor } from "@nestjs/platform-express";
+import { diskStorage } from "multer";
+import { extname } from "path";
+import { existsSync, mkdirSync } from "fs";
+import { v4 as uuid } from "uuid";
+import { Videos } from "src/entities/videos.entity";
+
+const multerOptions = {
+  storage: diskStorage({
+    // Destination storage path details
+    destination: (req: any, file: any, cb: any) => {
+      const uploadPath = "./assets/videos/cardCover";
+      // Create folder if doesn't exist
+      if (!existsSync(uploadPath)) {
+        mkdirSync(uploadPath, { recursive: true });
+      }
+      cb(null, uploadPath);
+    },
+    // File modification details
+    filename: (req: any, file: any, cb: any) => {
+      // Calling the callback passing the random name generated with the original extension name
+      cb(null, `${uuid()}${extname(file.originalname)}`);
+    },
+  }),
+};
 
 @Controller("videos")
 export class VideosController {
@@ -21,6 +47,25 @@ export class VideosController {
   @UseInterceptors(FileInterceptor("file"))
   create(@Body() CreateVideoDto: CreateVideoDto) {
     return this.videoService.create(CreateVideoDto);
+  }
+
+  @Post("upload")
+  @UseInterceptors(FileInterceptor("file", multerOptions))
+  uploadFileAndPassValidationPost(
+    @Body() body: CreateVideoDto,
+    @UploadedFile(
+      new ParseFilePipeBuilder()
+        .addFileTypeValidator({
+          fileType: "png|svg",
+        })
+        .addMaxSizeValidator({
+          maxSize: 3145728, // 3 Mb
+        })
+        .build()
+    )
+    file: Express.Multer.File
+  ) {
+    return this.videoService.uploadFileAndPassValidationPost(body, file);
   }
 
   @Get()
@@ -34,7 +79,7 @@ export class VideosController {
   }
 
   @Patch(":id")
-  update(@Param("id") id: string, @Body() updateVideoDto: UpdateVideoDto) {
+  update(@Param("id") id: string, @Body() updateVideoDto: Videos) {
     return this.videoService.update(+id, updateVideoDto);
   }
 

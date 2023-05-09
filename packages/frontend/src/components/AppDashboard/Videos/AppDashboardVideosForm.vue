@@ -1,6 +1,6 @@
 <template>
   <div class="entry-personal-data el-message-wrapper-main">
-    Введите данные видео
+    Введите данные карточки видео
   </div>
   <el-form
     ref="ruleFormRef"
@@ -85,7 +85,7 @@
     </el-form-item>
     <div class="create-module-card__outer">
       <PrimaryButton @click="checkFormReadyHandler(ruleFormRef)">
-        Внести данные о видео
+        Создать карточку видео
       </PrimaryButton>
     </div>
     <AppMargin :margin="{ marginBottom: '1.5rem' }" />
@@ -100,10 +100,11 @@ import { useFetchComposable } from "@/composables/use-fetch";
 import { ElMessage } from "element-plus";
 import { useDashboardStore } from "@/stores";
 import type { IElMessageUploadFile, IAuthor } from "share/types/interfaces";
-import { EServerResponses } from "share/types/enums";
+import { EEntityState, EEntityType, EServerResponses } from "share/types/enums";
 
 const dashboardStore = useDashboardStore();
-const { updateVideoStep } = dashboardStore;
+const { updateVideoStep, updateActiveVideo, getVideosList, addToVideosList } =
+  dashboardStore;
 const formSize = ref("large");
 const ruleFormRef = ref<FormInstance>();
 const formModel = reactive({
@@ -205,6 +206,7 @@ function submitFormFields() {
             surname: surname,
             name: name,
             patronymic: patronymic,
+            type: EEntityType.TabsAuthors,
           });
         }
       }
@@ -245,6 +247,23 @@ function submitFormFields() {
         updateVideoStep(1);
       }, 3000);
       ruleFormRef.value?.resetFields();
+      addToVideosList(data.value.videoRow);
+
+      if (getVideosList().length === 1) {
+        updateActiveVideo({
+          entityId: data.value.videoRow.id,
+          stateForFindElem: EEntityState.Default,
+          stateForFindIndex: EEntityState.Active,
+          stateForClickIndex: EEntityState.Active,
+        });
+      } else {
+        updateActiveVideo({
+          entityId: data.value.videoRow.id,
+          stateForFindElem: EEntityState.Active,
+          stateForFindIndex: EEntityState.Default,
+          stateForClickIndex: EEntityState.Active,
+        });
+      }
     }
   });
 

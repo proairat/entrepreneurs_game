@@ -1,6 +1,6 @@
 import { ApiProperty } from "@nestjs/swagger";
-import { EEntityType } from "@app/enums";
-import type { IVideoDB } from "share/types/interfaces";
+import { EEntityState, EEntityType } from "@app/types/enums";
+import type { IVideoDB } from "@app/types/interfaces";
 import {
   Column,
   Entity,
@@ -26,15 +26,15 @@ export class Videos implements IVideoDB {
   })
   type: EEntityType.Videos;
 
-  @ApiProperty({ description: "Filename", nullable: true })
+  @ApiProperty({ description: "Filename of poster for video", nullable: true })
   @Column({
     length: 700,
   })
-  filename: string;
+  filenamePoster: string;
 
-  @ApiProperty({ description: "Poster for video", nullable: true })
+  @ApiProperty({ description: "Filename of video", nullable: true })
   @Column()
-  poster: string;
+  filenameVideo: string;
 
   @ApiProperty({
     description: "Duration of video of module",
@@ -50,6 +50,14 @@ export class Videos implements IVideoDB {
   @ApiProperty({ description: "Description of video", nullable: true })
   @Column()
   description: string;
+
+  @ApiProperty({ description: "State", nullable: true })
+  @Column({
+    type: "enum",
+    enum: EEntityState,
+    default: EEntityState.Default,
+  })
+  state: EEntityState;
 
   @ManyToMany((type) => Authors, (authors) => authors.videos, {
     cascade: true,
@@ -69,10 +77,11 @@ export class Videos implements IVideoDB {
 
   constructor(title: string) {
     this.type = EEntityType.Videos;
-    this.filename = "";
-    this.poster = "";
+    this.filenamePoster = "";
+    this.filenameVideo = "";
     this.duration = 0;
     this.title = title;
     this.description = "";
+    this.state = EEntityState.Default;
   }
 }

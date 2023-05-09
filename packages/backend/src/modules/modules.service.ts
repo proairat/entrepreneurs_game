@@ -4,8 +4,8 @@ import { Repository } from "typeorm";
 import { UpdateModuleDto } from "../dto/update-module.dto";
 import { Modules } from "../entities/modules.entity";
 import { isEmpty, isNull } from "lodash";
-import { EEntityState, EServerResponses } from "@app/enums";
-import { IModule, IModuleBody, IModuleFile } from "@app/interfaces";
+import { EEntityState, EServerResponses } from "@app/types/enums";
+import { IModule, IModuleBody, IFile } from "@app/types/interfaces";
 import { EventEmitter } from "events";
 import { Observable } from "rxjs";
 import { Socket } from "net";
@@ -37,15 +37,15 @@ export class ModulesService {
     body: UpdateModuleDto,
     file: Express.Multer.File
   ) {
-    function isFile(entity: IModuleBody | IModuleFile): entity is IModuleFile {
-      return (entity as IModuleFile).filename !== undefined;
+    function isFile(entity: IModuleBody | IFile): entity is IFile {
+      return (entity as IFile).filename !== undefined;
     }
 
     if (!this.cache.has("id")) {
       this.cache.set("id", await this.create({}));
     }
 
-    const updateEntity = async <T extends IModuleFile | IModuleBody>(p: T) => {
+    const updateEntity = async <T extends IFile | IModuleBody>(p: T) => {
       let updateModuleDto: {
         [index: string]: string;
       };
@@ -76,7 +76,7 @@ export class ModulesService {
       return { response };
     };
     if (!isEmpty(file)) {
-      return await updateEntity<IModuleFile>({
+      return await updateEntity<IFile>({
         filename: file.filename ?? "no value",
       });
     }
@@ -91,12 +91,12 @@ export class ModulesService {
     body: UpdateModuleDto & { id?: number },
     file: Express.Multer.File
   ) {
-    function isFile(entity: IModuleBody | IModuleFile): entity is IModuleFile {
-      return (entity as IModuleFile).filename !== undefined;
+    function isFile(entity: IModuleBody | IFile): entity is IFile {
+      return (entity as IFile).filename !== undefined;
     }
 
     const id = body.id;
-    const updateEntity = async <T extends IModuleFile | IModuleBody>(p: T) => {
+    const updateEntity = async <T extends IFile | IModuleBody>(p: T) => {
       let updateModuleDto: {
         [index: string]: string;
       };
@@ -125,7 +125,7 @@ export class ModulesService {
       return { response };
     };
     if (!isEmpty(file)) {
-      return await updateEntity<IModuleFile>({
+      return await updateEntity<IFile>({
         filename: file.filename ?? "no value",
       });
     }

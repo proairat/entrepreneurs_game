@@ -1,4 +1,4 @@
-import { removeObjectProperty } from "./commonFunctions";
+import { removeObjectProperty } from "share/helpers/commonFunctions";
 export { fakeBackend };
 
 // array in local storage for registered users
