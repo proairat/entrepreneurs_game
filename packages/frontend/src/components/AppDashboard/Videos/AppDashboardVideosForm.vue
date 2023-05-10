@@ -70,21 +70,26 @@
     </template>
     <el-form-item>
       <InfoButton
-        @click="infoButtonHandler"
+        :disabled="disabled"
         class="mr-3"
         height-class="h-10"
         font-size-class="text-sm"
+        @click="infoButtonHandler"
         >Добавить ещё одного автора</InfoButton
       >
       <DangerButton
-        @click="dangerButtonHandler"
+        :disabled="disabled"
         height-class="h-10"
         font-size-class="text-sm"
+        @click="dangerButtonHandler"
         >Удалить лишние поля автора</DangerButton
       >
     </el-form-item>
     <div class="create-module-card__outer">
-      <PrimaryButton @click="checkFormReadyHandler(ruleFormRef)">
+      <PrimaryButton
+        :disabled="disabled"
+        @click="checkFormReadyHandler(ruleFormRef)"
+      >
         Создать карточку видео
       </PrimaryButton>
     </div>
@@ -95,12 +100,12 @@
 
 <script setup lang="ts">
 import { reactive, ref, watch } from "vue";
-import type { FormInstance, FormRules } from "element-plus";
+import { EEntityState, EEntityType, EServerResponses } from "share/types/enums";
 import { useFetchComposable } from "@/composables/use-fetch";
 import { ElMessage } from "element-plus";
 import { useDashboardStore } from "@/stores";
-import type { IElMessageUploadFile, IAuthor } from "share/types/interfaces";
-import { EEntityState, EEntityType, EServerResponses } from "share/types/enums";
+import type { FormInstance, FormRules } from "element-plus";
+import type { IAuthor } from "share/types/interfaces";
 
 const dashboardStore = useDashboardStore();
 const { updateVideoStep, updateActiveVideo, getVideosList, addToVideosList } =
@@ -121,20 +126,8 @@ const authors = ref([
     patronymic: "",
   },
 ]);
-const submitResult = ref({
-  formReady: false,
-  fileReady: false,
-});
-const isCheckFileReadyPass = ref(false);
 const isSpinnerVisible = ref(false);
 const appendTo = "el-message-wrapper-main";
-const elMessageRef = ref<IElMessageUploadFile>({
-  message: "Файл не выбран",
-  type: "error",
-  appendTo: `.${appendTo}`,
-  idMessage: 1,
-  shPayload: "",
-});
 const rules = reactive<FormRules>({
   title: [
     {
@@ -145,11 +138,13 @@ const rules = reactive<FormRules>({
   ],
 });
 const method = ref("POST");
+const disabled = ref(false);
 
 function checkFormReadyHandler(formEl: FormInstance | undefined) {
   if (!formEl) return;
   formEl.validate((valid) => {
-    if (valid) {
+    if (valid && !disabled.value) {
+      disabled.value = true;
       submitFormFields();
     } else {
       ElMessage({
@@ -161,19 +156,9 @@ function checkFormReadyHandler(formEl: FormInstance | undefined) {
   });
 }
 
-function checkFileReadyHandler() {
-  if (elMessageRef.value.idMessage === 1) {
-    // 1 - Файл не выбран
-    ElMessage(elMessageRef.value);
-  }
-
-  if (elMessageRef.value.idMessage === 2) {
-    // 2 - Файл выбран
-  }
-}
-
 function submitFormFields() {
-  console.log("submitFormFields()");
+  const transformedFormModel = transformObject(formModel);
+  const formData = new FormData();
 
   interface IAuthors {
     [index: string]: string;
@@ -215,9 +200,6 @@ function submitFormFields() {
     return returnObj;
   }
 
-  const transformedFormModel = transformObject(formModel);
-  const formData = new FormData();
-
   formData.append("title", transformedFormModel.title);
 
   transformedFormModel.authors.forEach((author, i) => {
@@ -229,7 +211,7 @@ function submitFormFields() {
 
   let { data, onFetchResponse, onFetchError } = useFetchComposable({
     urlConst: "/videos",
-    method: "POST",
+    method: method.value,
     body: formData,
   });
 
@@ -276,16 +258,6 @@ function submitFormFields() {
     ruleFormRef.value?.resetFields();
     isSpinnerVisible.value = false;
   });
-}
-
-function uploadFileErrorHandler(isError: boolean) {
-  if (isError) {
-    isSpinnerVisible.value = false;
-  }
-}
-
-function messageEventHandler(elMessage: IElMessageUploadFile) {
-  Object.assign(elMessageRef.value, elMessage);
 }
 
 function infoButtonHandler() {

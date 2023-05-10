@@ -2,8 +2,16 @@
   <div class="wrapper-div">
     <button
       type="button"
-      class="py-2 px-4 inline-block text-center rounded bg-yellow-300 border border-yellow-300 hover:text-gray-900 hover:bg-yellow-400 hover:ring-0 hover:border-yellow-400 focus:bg-yellow-400 focus:border-yellow-400 focus:outline-none focus:ring-0"
-      :class="[fontSizeClass, heightClass, colorClass]"
+      class="py-2 px-4 inline-block text-center rounded"
+      :class="[
+        fontSizeClass,
+        heightClass,
+        colorClass,
+        disabled
+          ? 'bg-yellow-100 cursor-not-allowed'
+          : 'bg-yellow-300 border border-yellow-300 hover:text-gray-900 hover:bg-yellow-400 hover:ring-0 hover:border-yellow-400 focus:bg-yellow-400 focus:border-yellow-400 focus:outline-none focus:ring-0',
+      ]"
+      :disabled="disabled"
     >
       <slot></slot>
     </button>
@@ -17,6 +25,7 @@ const props = defineProps<{
   fontSizeClass?: string;
   heightClass?: string;
   colorClass?: string;
+  disabled?: boolean;
 }>();
 
 const fontSizeClass = computed(() =>
@@ -28,6 +37,7 @@ const heightClass = computed(() =>
 const colorClass = computed(() =>
   props.colorClass ? props.colorClass : "text-gray-800"
 );
+const disabled = computed(() => props.disabled ?? false);
 </script>
 
 <style scoped lang="scss">
