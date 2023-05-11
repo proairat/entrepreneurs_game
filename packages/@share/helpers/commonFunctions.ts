@@ -1,5 +1,7 @@
 // import { computed } from "vue";
-import type { Tfns } from "share/types/types";
+import type { Tfns } from "../types/types";
+import { EUploadType } from "../types/enums";
+import { URL_VIDEOS_UPLOAD_POSTER, URL_VIDEOS_UPLOAD_VIDEO_FILE } from "../api/API";
 // import cloneDeep from "lodash/cloneDeep";
 
 /**
@@ -154,6 +156,37 @@ function groupByKey(key: string) {
     }, {});
 }
 
+function getUploadParams(uploadItem: EUploadType) {
+  const params = {
+    [EUploadType.VIDEO_POSTER]: {
+      action: URL_VIDEOS_UPLOAD_POSTER,
+      allowTypes: ["image/svg+xml", "image/png"],
+      fileSize: 3,
+      textForTriggerButton: "Выберите обложку видеоролика",
+      textForUploadButton: "Загрузить обложку видеоролика на сервер",
+      messageFileType: "Тип файла должен быть либо PNG, либо SVG",
+      messageFileSize: "Размер файла не должен превышать 3 Мбайт",
+      messageHandleSuccess: "Обложка видеоролика успешно загружена! Переходим к третьему шагу.",
+      messageHandleError: "Обложка видеоролика не была загружена",
+      updateVideoStep: 2,
+    },
+    [EUploadType.VIDEO_VIDEO_FILE]: {
+      action: URL_VIDEOS_UPLOAD_VIDEO_FILE,
+      allowTypes: ['video/mpeg', 'video/mp4'],
+      fileSize: 800,
+      textForTriggerButton: "Выберите видеоролик",
+      textForUploadButton: "Загрузить видеоролик на сервер",
+      messageFileType: "Тип файла должен быть либо MPEG, либо MP4",
+      messageFileSize: "Размер файла не должен превышать 800 Мбайт",
+      messageHandleSuccess: "Видеоролик успешно загружен! Все шаги пройдены.",
+      messageHandleError: "Видеоролик не был загружен",
+      updateVideoStep: 3,
+    },
+  };
+
+  return params[uploadItem];
+}
+
 export {
   FuzzySearch,
   FulfillRequests,
@@ -165,4 +198,5 @@ export {
   compose,
   isObjectEmpty,
   groupByKey,
+  getUploadParams,
 };

@@ -46,7 +46,7 @@ import {
   type UploadProps,
   type UploadRawFile,
 } from "element-plus";
-import { URL_MODULES_UPLOAD } from "@/API";
+import { URL_MODULES_UPLOAD } from "share/api/API";
 import type { IElMessageUploadFile } from "share/types/interfaces";
 
 /**
