@@ -1,5 +1,5 @@
 import { useFetch } from "@vueuse/core";
-import { BASE_URL } from "@/API";
+import { BASE_URL } from "share/api/API";
 
 export function useFetchComposable({
   urlConst,

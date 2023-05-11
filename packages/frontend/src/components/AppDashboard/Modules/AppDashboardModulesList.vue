@@ -16,7 +16,7 @@
 
 <script setup lang="tsx">
 import { TableV2FixedDir } from "element-plus";
-import { URL_MODULES_IMAGES } from "@/API";
+import { URL_MODULES_IMAGES } from "share/api/API";
 import { useDashboardStore } from "@/stores";
 import { onMounted, ref, watch, onUnmounted } from "vue";
 import { storeToRefs } from "pinia";

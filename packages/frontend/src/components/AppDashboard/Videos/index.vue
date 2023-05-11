@@ -7,12 +7,14 @@
   <AppDashboardVideosForm v-if="videoStep === 0" />
   <AppDashboardVideosUpload
     v-if="videoStep === 1"
+    :type="EUploadType.VIDEO_POSTER"
     method="post"
-    textForTriggerButton="Выберите обложку видеоролика"
   />
-  <!--<AppTestDescription v-if="step === 0" />
-  <AppTestContent v-if="step === 1" />
-  <AppTestResult v-if="step === 2" />-->
+  <AppDashboardVideosUpload
+    v-if="videoStep === 2"
+    :type="EUploadType.VIDEO_VIDEO_FILE"
+    method="post"
+  />
   <!--<AppDashboardVideosDialog />-->
 </template>
 
@@ -25,6 +27,7 @@ export default {
 <script setup lang="ts">
 import { storeToRefs } from "pinia";
 import { useDashboardStore } from "@/stores";
+import { EUploadType } from "share/types/enums";
 
 const dashboardStore = useDashboardStore();
 const { videoStep } = storeToRefs(dashboardStore);

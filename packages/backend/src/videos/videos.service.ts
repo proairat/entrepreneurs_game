@@ -55,19 +55,30 @@ export class VideosService {
       : { videoRow, response: EServerResponses.VIDEOS_CREATE_ERROR };
   }
 
-  async uploadFileAndPassValidationPost(
+  async postUploadPoster(
     body: CreateVideoDto,
     file: Express.Multer.File
   ) {
-    console.log("file????", file);
-    console.log("body????", body);
-
     if (!isEmpty(file)) {
       await this.update(body.id, { filenamePoster: file.filename });
 
       return {
         response:
-          EServerResponses.VIDEOS_UPLOAD_FILE_AND_PASS_VALIDATION_POST_FILE_SUCCESSFUL,
+          EServerResponses.VIDEOS_POST_UPLOAD_POSTER_SUCCESSFUL,
+      };
+    }
+  }
+
+  async postUploadVideoFile(
+    body: CreateVideoDto,
+    file: Express.Multer.File
+  ) {
+    if (!isEmpty(file)) {
+      await this.update(body.id, { filenameVideo: file.filename });
+
+      return {
+        response:
+          EServerResponses.VIDEOS_POST_UPLOAD_VIDEO_FILE_SUCCESSFUL,
       };
     }
   }

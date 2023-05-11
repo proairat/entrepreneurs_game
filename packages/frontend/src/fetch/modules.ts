@@ -2,7 +2,7 @@
 import { EEntityState, EEntityType } from "share/types/enums";
 import { useFetchComposable } from "@/composables/use-fetch";
 import type { IModule } from "share/types/interfaces";
-import { URL_MODULES_IMAGES } from "@/API";
+import { URL_MODULES_IMAGES } from "share/api/API";
 
 /**
  * MODULES

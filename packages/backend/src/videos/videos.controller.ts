@@ -20,11 +20,30 @@ import { existsSync, mkdirSync } from "fs";
 import { v4 as uuid } from "uuid";
 import { Videos } from "src/entities/videos.entity";
 
-const multerOptions = {
+const uploadPosterMulterOptions = {
   storage: diskStorage({
     // Destination storage path details
     destination: (req: any, file: any, cb: any) => {
-      const uploadPath = "./assets/videos/cardCover";
+      const uploadPath = "./assets/videos/poster";
+      // Create folder if doesn't exist
+      if (!existsSync(uploadPath)) {
+        mkdirSync(uploadPath, { recursive: true });
+      }
+      cb(null, uploadPath);
+    },
+    // File modification details
+    filename: (req: any, file: any, cb: any) => {
+      // Calling the callback passing the random name generated with the original extension name
+      cb(null, `${uuid()}${extname(file.originalname)}`);
+    },
+  }),
+};
+
+const uploadVideoFileMulterOptions = {
+  storage: diskStorage({
+    // Destination storage path details
+    destination: (req: any, file: any, cb: any) => {
+      const uploadPath = "./assets/videos/video-file";
       // Create folder if doesn't exist
       if (!existsSync(uploadPath)) {
         mkdirSync(uploadPath, { recursive: true });
@@ -49,9 +68,9 @@ export class VideosController {
     return this.videoService.create(CreateVideoDto);
   }
 
-  @Post("upload")
-  @UseInterceptors(FileInterceptor("file", multerOptions))
-  uploadFileAndPassValidationPost(
+  @Post("upload-poster")
+  @UseInterceptors(FileInterceptor("file", uploadPosterMulterOptions))
+  postUploadPoster(
     @Body() body: CreateVideoDto,
     @UploadedFile(
       new ParseFilePipeBuilder()
@@ -65,7 +84,26 @@ export class VideosController {
     )
     file: Express.Multer.File
   ) {
-    return this.videoService.uploadFileAndPassValidationPost(body, file);
+    return this.videoService.postUploadPoster(body, file);
+  }
+
+  @Post("upload-video-file")
+  @UseInterceptors(FileInterceptor("file", uploadVideoFileMulterOptions))
+  postUploadVideoFile(
+    @Body() body: CreateVideoDto,
+    @UploadedFile(
+      new ParseFilePipeBuilder()
+        .addFileTypeValidator({
+          fileType: "mpeg|mp4",
+        })
+        .addMaxSizeValidator({
+          maxSize: 838860800, // 800 Mb
+        })
+        .build()
+    )
+    file: Express.Multer.File
+  ) {
+    return this.videoService.postUploadVideoFile(body, file);
   }
 
   @Get()

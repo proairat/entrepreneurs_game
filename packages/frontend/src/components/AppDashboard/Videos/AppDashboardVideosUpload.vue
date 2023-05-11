@@ -4,7 +4,7 @@
   <el-upload
     ref="upload"
     :method="props.method"
-    :action="URL_VIDEOS_UPLOAD"
+    :action="uploadParams.action"
     list-type="picture"
     :limit="1"
     :auto-upload="false"
@@ -12,6 +12,7 @@
     :on-exceed="handleExceed"
     :on-success="handleSuccess"
     :on-error="handleError"
+    :on-change="handleChange"
     :data="additionalData"
   >
     <!--
@@ -25,20 +26,22 @@
     </template>
     -->
     <template #trigger>
-      <InfoButton :disabled="disabled"> {{ textForTriggerButton }} </InfoButton>
+      <InfoButton :disabled="disabled">
+        {{ uploadParams.textForTriggerButton }}
+      </InfoButton>
     </template>
   </el-upload>
   <AppMargin :margin="{ marginTop: '0.625rem' }" />
   <div class="create-video-card__outer">
     <PrimaryButton :disabled="disabled" @click="checkFileReadyHandler">
-      Загрузить обложку на сервер
+      {{ uploadParams.textForUploadButton }}
     </PrimaryButton>
   </div>
   <AppSpinner v-if="isSpinnerVisible" />
 </template>
 
 <script setup lang="ts">
-import { ref, computed } from "vue";
+import { ref } from "vue";
 import {
   ElMessage,
   genFileId,
@@ -47,9 +50,10 @@ import {
   type UploadRawFile,
   type UploadUserFile,
 } from "element-plus";
-import { URL_VIDEOS_UPLOAD } from "@/API";
 import { useDashboardStore } from "@/stores";
 import { storeToRefs } from "pinia";
+import { getUploadParams } from "share/helpers/commonFunctions";
+import type { EUploadType } from "share/types/enums";
 import type { IVideo } from "share/types/interfaces";
 
 const dashboardStore = useDashboardStore();
@@ -60,11 +64,8 @@ const fileList = ref<UploadUserFile[]>([]);
 const appendTo = "el-message-wrapper-main";
 const props = defineProps<{
   method: string;
-  textForTriggerButton?: string;
+  type: EUploadType;
 }>();
-const textForTriggerButton = computed(() =>
-  props.textForTriggerButton ? props.textForTriggerButton : "Выберите файл"
-);
 const upload = ref<UploadInstance>();
 const handleExceed: UploadProps["onExceed"] = (files) => {
   const file = files[0] as UploadRawFile;
@@ -76,39 +77,49 @@ const handleExceed: UploadProps["onExceed"] = (files) => {
 };
 const handleSuccess: UploadProps["onSuccess"] = () => {
   ElMessage({
-    message: `Обложка видеоролика успешно загружена! Переходим к третьему шагу.`,
+    message: uploadParams.messageHandleSuccess,
     type: "success",
     appendTo: `.${appendTo}`,
   });
   setTimeout(() => {
-    updateVideoStep(2);
+    updateVideoStep(uploadParams.updateVideoStep);
   }, 3000);
   isSpinnerVisible.value = false;
 };
 const handleError: UploadProps["onError"] = (error: Error) => {
   ElMessage({
-    message: `Файл не был загружен. Произошла ошибка: ${error}`,
+    message: `${uploadParams.messageHandleError}. Произошла ошибка: ${error}`,
     type: "error",
     appendTo: `.${appendTo}`,
   });
+  disabled.value = false;
   isSpinnerVisible.value = false;
+};
+const handleChange: UploadProps["onChange"] = (uploadFile) => {
+  if (
+    uploadFile.status === "ready" &&
+    !isComplianceWithRestrictions(uploadFile.raw as UploadRawFile)
+  ) {
+    upload.value!.clearFiles();
+  }
 };
 const additionalData = ref<Pick<IVideo, "id">>({ id: 0 });
 const isSpinnerVisible = ref(false);
+const uploadParams = getUploadParams(props.type);
 
 function isComplianceWithRestrictions(file: UploadRawFile) {
-  const allowTypes = ["image/svg+xml", "image/png"];
+  const allowTypes = uploadParams.allowTypes;
   if (!allowTypes.includes(file.type)) {
     ElMessage({
-      message: "Тип файла должен быть либо PNG, либо SVG",
+      message: uploadParams.messageFileType,
       type: "error",
       appendTo: `.${appendTo}`,
     });
     return false;
   }
-  if (file.size / 1024 / 1024 > 3) {
+  if (file.size / 1024 / 1024 > uploadParams.fileSize) {
     ElMessage({
-      message: "Размер файла не должен превышать 3 Мбайт",
+      message: uploadParams.messageFileSize,
       type: "error",
       appendTo: `.${appendTo}`,
     });
@@ -118,6 +129,7 @@ function isComplianceWithRestrictions(file: UploadRawFile) {
 }
 
 function checkFileReadyHandler() {
+  console.log('AppDashboardVideosUpload -> checkFileReadyHandler()');
   additionalData.value = { id: activeVideo.value.id };
   if (fileList.value.length && !disabled.value) {
     disabled.value = true;
