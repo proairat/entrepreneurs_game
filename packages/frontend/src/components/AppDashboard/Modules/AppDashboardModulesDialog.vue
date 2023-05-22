@@ -57,7 +57,8 @@ import { EServerResponses } from "share/types/enums";
 const dashboardStore = useDashboardStore();
 const { isDialogFormVisible, dialogFormTitle, activeModule } =
   storeToRefs(dashboardStore);
-const { updateRowJustInserted, toggleIsDialogFormVisible } = dashboardStore;
+const { updateRowModuleJustInserted, toggleIsDialogFormVisible } =
+  dashboardStore;
 const formSize = ref("large");
 const ruleFormRef = ref<FormInstance>();
 const formModel = reactive({
@@ -226,7 +227,7 @@ watch(
       };
       eventSource.onmessage = (event) => {
         const data: IModule = JSON.parse(event.data);
-        updateRowJustInserted(data);
+        updateRowModuleJustInserted(data);
         eventSource.close();
       };
       eventSource.onerror = (e) => {

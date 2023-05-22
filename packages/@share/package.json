@@ -1,6 +1,6 @@
 {
   "name": "share",
-  "version": "1.0.0",
+  "version": "1.2.3",
   "description": "Shareable for frontend and backend of Entrepreneurs game platform",
   "author": "Shayakhmetov Airat Irekovich",
   "main": "index.ts",

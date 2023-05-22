@@ -147,7 +147,7 @@
 </template>
 
 <script setup lang="ts">
-import { getImageUrlAwaitImport } from "share/helpers/commonFunctions";
+import { getImageUrlAwaitImport } from "@/helpers/frontendFunctions";
 const logo = await getImageUrlAwaitImport("academic-cap");
 </script>
 

@@ -28,57 +28,80 @@ export class VideosService {
 
   //async create({ alt = "Карточка модуля!" }: UpdateVideoDto): Promise<number> {
   async create(formData: CreateVideoDto): Promise<{
-    videoRow: Omit<Videos, "authors">;
+    videoRow: Omit<Videos, "authors"> | EServerResponses.VIDEOS_CREATE_ERROR;
     response: EServerResponses;
   }> {
-    const video = new Videos(formData.title);
-    const authors: Authors[] = [];
-
-    for (const author of formData.authors) {
-      const authorRecord = new Authors(
-        author.surname,
-        author.name,
-        author.patronymic
-      );
-
-      authors.push(authorRecord);
-      const { id } = await this.authorsRepository.save(authorRecord);
-    }
-
-    video.authors = authors;
-
-    const { id } = await this.videosRepository.save(video);
-    const videoRow = removeObjectProperty<Videos, "authors">("authors")(video);
-
-    return id
-      ? { videoRow, response: EServerResponses.VIDEOS_CREATE_SUCCESSFUL }
-      : { videoRow, response: EServerResponses.VIDEOS_CREATE_ERROR };
-  }
-
-  async postUploadPoster(
-    body: CreateVideoDto,
-    file: Express.Multer.File
-  ) {
-    if (!isEmpty(file)) {
-      await this.update(body.id, { filenamePoster: file.filename });
+    try {
+      const video = new Videos(formData.title);
+      const authors: Authors[] = [];
+      for (const author of formData.authors) {
+        const authorRecord = new Authors(
+          author.surname,
+          author.name,
+          author.patronymic
+        );
+        authors.push(authorRecord);
+        const { id } = await this.authorsRepository.save(authorRecord);
+      }
+      video.authors = authors;
+      const { id } = await this.videosRepository.save(video);
 
       return {
-        response:
-          EServerResponses.VIDEOS_POST_UPLOAD_POSTER_SUCCESSFUL,
+        videoRow: removeObjectProperty<Videos, "authors">("authors")(video),
+        response: EServerResponses.VIDEOS_CREATE_SUCCESSFUL,
+      };
+    } catch {
+      return {
+        videoRow: EServerResponses.VIDEOS_CREATE_ERROR,
+        response: EServerResponses.VIDEOS_CREATE_ERROR,
       };
     }
   }
 
-  async postUploadVideoFile(
-    body: CreateVideoDto,
-    file: Express.Multer.File
-  ) {
-    if (!isEmpty(file)) {
-      await this.update(body.id, { filenameVideo: file.filename });
+  async postUploadPoster(body: CreateVideoDto, file: Express.Multer.File) {
+    try {
+      if (!isEmpty(file)) {
+        const { videoRow, response} = await this.update(body.id, { filenamePoster: file.filename });
+
+        switch (response){
+          case EServerResponses.VIDEOS_UPDATE_SUCCESSFUL:
+            return {
+              videoRow,
+              response: EServerResponses.VIDEOS_POST_UPLOAD_POSTER_SUCCESSFUL
+            }
+          case EServerResponses.VIDEOS_UPDATE_IS_NULL:
+            return {
+              videoRow: EServerResponses.VIDEOS_POST_UPLOAD_POSTER_IS_NULL,
+              response: EServerResponses.VIDEOS_POST_UPLOAD_POSTER_IS_NULL,
+            }
+          case EServerResponses.VIDEOS_UPDATE_ERROR:
+            return {
+              videoRow: EServerResponses.VIDEOS_POST_UPLOAD_POSTER_ERROR,
+              response: EServerResponses.VIDEOS_POST_UPLOAD_POSTER_ERROR,
+            }
+        }
+      } else {
+
+        return {
+          videoRow: EServerResponses.VIDEOS_POST_UPLOAD_POSTER_EMPTY_FILE,
+          response: EServerResponses.VIDEOS_POST_UPLOAD_POSTER_EMPTY_FILE,
+        };
+      }
+    } catch {
 
       return {
-        response:
-          EServerResponses.VIDEOS_POST_UPLOAD_VIDEO_FILE_SUCCESSFUL,
+        videoRow: EServerResponses.VIDEOS_POST_UPLOAD_POSTER_ERROR,
+        response: EServerResponses.VIDEOS_POST_UPLOAD_POSTER_ERROR,
+      };
+    }
+  }
+
+  async postUploadVideoFile(body: CreateVideoDto, file: Express.Multer.File) {
+    if (!isEmpty(file)) {
+      await this.update(body.id, { filenameVideo: file.filename });
+      return {
+        videoRow: EServerResponses.VIDEOS_POST_UPLOAD_VIDEO_FILE_SUCCESSFUL,
+        response: EServerResponses.VIDEOS_POST_UPLOAD_VIDEO_FILE_SUCCESSFUL,
       };
     }
   }
@@ -138,9 +161,26 @@ export class VideosService {
   }
 
   async update(id: number, toUpdate: Partial<Videos>) {
-    const row = await this.findOneById(id);
-    if (!isNull(row)) {
-      await this.videosRepository.save({ ...row, ...toUpdate });
+    try {
+      const row = await this.findOneById(id);
+      if (!isNull(row)) {
+        return {
+          videoRow: await this.videosRepository.save({ ...row, ...toUpdate }),
+          response: EServerResponses.VIDEOS_UPDATE_SUCCESSFUL,
+        };
+      } else {
+
+        return {
+          videoRow: EServerResponses.VIDEOS_UPDATE_IS_NULL,
+          response: EServerResponses.VIDEOS_UPDATE_IS_NULL,
+        };
+      }
+    } catch {
+
+      return {
+        videoRow: EServerResponses.VIDEOS_UPDATE_ERROR,
+        response: EServerResponses.VIDEOS_UPDATE_ERROR,
+      };
     }
   }
 

@@ -100,6 +100,13 @@ class EntityExtendedArray<T extends TExtendsArrayCombination>
       super.delete(findIndex, this.list);
     }
   }
+
+  public updateList(elemToUpdate: T): void {
+    if (Array.isArray(this.list)) {
+      const findIndex = super.findIndex(elemToUpdate.id, this.list);
+      this.list.splice(findIndex, 1, elemToUpdate);
+    }
+  }
 }
 
 export { EntityExtendedArray };

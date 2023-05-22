@@ -1,5 +1,5 @@
 import { defineStore } from "pinia";
-import { ref } from "vue";
+import { isProxy, isReactive, isRef, ref } from "vue";
 import type {
   IModule,
   IEduElementEntityArray,
@@ -19,6 +19,7 @@ import type {
 } from "share/types/types";
 import { modulesFromDatabase, videosFromDatabase } from "@/fetch";
 import { EEntityState } from "share/types/enums";
+import cloneDeep from "lodash/cloneDeep";
 
 function getEduElement<T>(
   creator: Creator<T>,
@@ -53,7 +54,7 @@ const eduElementModulesExtended = getEduElementExtended(
 ) as IEduElementEntityArray<IModule>;
 const eduElementVideosExtended = getEduElementExtended(
   new EntityCreatorExtendedArray<TExtendsArrayCombination>(
-    ref(eduElementVideos.getList()).value as TExtendsArrayCombination[]
+    eduElementVideos.getList() as TExtendsArrayCombination[]
   )
 ) as IEduElementEntityArray<IVideoDB>;
 
@@ -61,20 +62,21 @@ export const useDashboardStore = defineStore("dashboard", () => {
   const activeModule = ref(getActiveModule());
   const activeVideo = ref(getActiveVideo());
   const rowModuleJustInserted = ref({} as IModule);
+  const rowVideoJustInserted = ref({} as IVideoDB);
   const isDialogFormVisible = ref(false);
   const dialogFormTitle = ref("");
   const videoStep = ref(0);
-
+  
   function getModulesList() {
     return ref(eduElementModules.getList()).value as IModule[];
   }
 
   function getVideosList() {
-    return ref(eduElementVideos.getList()).value as IVideoDB[];
+    return eduElementVideos.getList() as IVideoDB[];
   }
 
   function addToVideosList(param: IVideoDB) {
-    return eduElementVideos.addToList(param);
+    return eduElementVideos.addToList(cloneDeep(param));
   }
 
   function getActiveModule() {
@@ -99,8 +101,16 @@ export const useDashboardStore = defineStore("dashboard", () => {
     activeVideo.value = getActiveVideo();
   }
 
-  function updateRowJustInserted(row: IModule) {
+  function updateRowModuleJustInserted(row: IModule) {
     rowModuleJustInserted.value = row;
+  }
+
+  function updateVideoList(elemToUpdate: IVideoDB) {
+    eduElementVideosExtended.updateList(cloneDeep(elemToUpdate));
+  }
+
+  function updateRowVideoJustInserted(row: IVideoDB) {
+    rowVideoJustInserted.value = cloneDeep(row);
   }
 
   function updateDialogFormTitle(title: string) {
@@ -127,6 +137,7 @@ export const useDashboardStore = defineStore("dashboard", () => {
     activeModule,
     activeVideo,
     rowModuleJustInserted,
+    rowVideoJustInserted,
     isDialogFormVisible,
     dialogFormTitle,
     videoStep,
@@ -135,11 +146,13 @@ export const useDashboardStore = defineStore("dashboard", () => {
     addToVideosList,
     updateActiveModule,
     updateActiveVideo,
-    updateRowJustInserted,
+    updateRowModuleJustInserted,
+    updateRowVideoJustInserted,
     updateDialogFormTitle,
     updateElemFields,
     updateVideoStep,
     deleteFromList,
     toggleIsDialogFormVisible,
+    updateVideoList,
   };
 });
