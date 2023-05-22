@@ -53,11 +53,17 @@ import {
 import { useDashboardStore } from "@/stores";
 import { storeToRefs } from "pinia";
 import { getUploadParams } from "share/helpers/commonFunctions";
-import type { EUploadType } from "share/types/enums";
+import {
+  EEntityState,
+  EEntityType,
+  EServerResponses,
+  type EUploadType,
+} from "share/types/enums";
 import type { IVideo } from "share/types/interfaces";
 
 const dashboardStore = useDashboardStore();
-const { updateVideoStep } = dashboardStore;
+const { updateVideoStep, getVideosList, updateVideoList, updateActiveVideo } =
+  dashboardStore;
 const { activeVideo } = storeToRefs(dashboardStore);
 const disabled = ref(false);
 const fileList = ref<UploadUserFile[]>([]);
@@ -75,16 +81,25 @@ const handleExceed: UploadProps["onExceed"] = (files) => {
     upload.value!.handleStart(file);
   }
 };
-const handleSuccess: UploadProps["onSuccess"] = () => {
-  ElMessage({
-    message: uploadParams.messageHandleSuccess,
-    type: "success",
-    appendTo: `.${appendTo}`,
-  });
-  setTimeout(() => {
-    updateVideoStep(uploadParams.updateVideoStep);
-  }, 3000);
-  isSpinnerVisible.value = false;
+const handleSuccess: UploadProps["onSuccess"] = ({ videoRow, response }) => {
+  if (response === EServerResponses.VIDEOS_POST_UPLOAD_POSTER_SUCCESSFUL) {
+    updateVideoList(videoRow);
+    updateActiveVideo({
+      entityId: videoRow.id,
+      stateForFindElem: EEntityState.Default,
+      stateForFindIndex: EEntityState.Active,
+      stateForClickIndex: EEntityState.Active,
+    });
+    ElMessage({
+      message: uploadParams.messageHandleSuccess,
+      type: "success",
+      appendTo: `.${appendTo}`,
+    });
+    setTimeout(() => {
+      updateVideoStep(uploadParams.updateVideoStep);
+    }, 3000);
+    isSpinnerVisible.value = false;
+  }
 };
 const handleError: UploadProps["onError"] = (error: Error) => {
   ElMessage({
@@ -129,7 +144,6 @@ function isComplianceWithRestrictions(file: UploadRawFile) {
 }
 
 function checkFileReadyHandler() {
-  console.log('AppDashboardVideosUpload -> checkFileReadyHandler()');
   additionalData.value = { id: activeVideo.value.id };
   if (fileList.value.length && !disabled.value) {
     disabled.value = true;

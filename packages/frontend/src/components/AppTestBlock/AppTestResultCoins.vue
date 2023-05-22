@@ -18,7 +18,7 @@
 <script setup lang="ts">
 import { useNavbarStore } from "@/stores";
 import { storeToRefs } from "pinia";
-import { getImageUrlAwaitImport } from "share/helpers/commonFunctions";
+import { getImageUrlAwaitImport } from "@/helpers/frontendFunctions";
 import { EPercent } from "share/types/enums";
 import { computed } from "vue";
 

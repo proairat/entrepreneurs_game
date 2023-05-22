@@ -1,4 +1,3 @@
-// import { computed } from "vue";
 import type { Tfns } from "../types/types";
 import { EUploadType } from "../types/enums";
 import { URL_VIDEOS_UPLOAD_POSTER, URL_VIDEOS_UPLOAD_VIDEO_FILE } from "../api/API";
@@ -61,26 +60,6 @@ function getURLParamValue(url: string, param: string) {
 function getURLPathNameDigit(url: string): string | null {
   const result = new URL(url).pathname.match(/[0-9]+/);
   return Array.isArray(result) ? result[0] : null;
-}
-
-/**
- * Функция для получения пути к изображению по названию изображения
- *
- * @param {string} name - название файла с изображением
- * @param {string} extension - расширение файла
- * @returns {string | undefined} путь к файлу изображения
- *
- * getImageUrlAwaitImport('academic-cap')
- */
-async function getImageUrlAwaitImport(name: string, extension = "svg") {
-  try {
-    
-    // const dynamicImport = await import(`@/assets/img/${name}.${extension}`);
-    const dynamicImport = await import(`../../frontend/src/assets/${name}.${extension}`);
-    return dynamicImport.default;
-  } catch (err) {
-    console.error("We are know about error and try to address it", err);
-  }
 }
 
 /**
@@ -192,7 +171,6 @@ export {
   FulfillRequests,
   getURLParamValue,
   getURLPathNameDigit,
-  getImageUrlAwaitImport,
   removeObjectProperty,
   shuffle,
   compose,

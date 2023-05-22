@@ -199,7 +199,7 @@ interface IEduCommonElement<T> {
     param: T[] | TElemsList<number, T>
   ): T[] | TElemsList<number, T> | undefined;
   fillTheList(param: T[] | TElemsList<number, T>): void;
-  addToList(param: T):void;
+  addToList(param: T): T[] | TElemsList<number, T> | undefined;
   getList(): T[] | TElemsList<number, T> | undefined;
 }
 
@@ -208,6 +208,7 @@ interface IEduElementEntityArray<T> {
   getElemByState(state: EEntityState): T | undefined;
   updateElemFields(elem: TExtendsArray): void;
   deleteFromList(elem: TExtendsArray): void;
+  updateList(elemToUpdate: T): void;
 }
 
 interface IEduElementEntityMap<T> {

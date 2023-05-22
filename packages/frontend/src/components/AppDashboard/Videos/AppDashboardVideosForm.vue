@@ -105,11 +105,17 @@ import { useFetchComposable } from "@/composables/use-fetch";
 import { ElMessage } from "element-plus";
 import { useDashboardStore } from "@/stores";
 import type { FormInstance, FormRules } from "element-plus";
-import type { IAuthor } from "share/types/interfaces";
+import type { IAuthor, IVideoDB } from "share/types/interfaces";
+import cloneDeep from "lodash/cloneDeep";
 
 const dashboardStore = useDashboardStore();
-const { updateVideoStep, updateActiveVideo, getVideosList, addToVideosList } =
-  dashboardStore;
+const {
+  updateVideoStep,
+  updateActiveVideo,
+  getVideosList,
+  addToVideosList,
+  updateRowVideoJustInserted,
+} = dashboardStore;
 const formSize = ref("large");
 const ruleFormRef = ref<FormInstance>();
 const formModel = reactive({
@@ -218,8 +224,15 @@ function submitFormFields() {
   isSpinnerVisible.value = true;
 
   onFetchResponse(() => {
-    if (data.value.response === EServerResponses.VIDEOS_CREATE_SUCCESSFUL) {
-      isSpinnerVisible.value = false;
+    const {
+      response,
+      videoRow,
+    }: { response: EServerResponses; videoRow: IVideoDB } = data.value;
+
+    isSpinnerVisible.value = false;
+    ruleFormRef.value?.resetFields();
+ 
+    if (response === EServerResponses.VIDEOS_CREATE_SUCCESSFUL) {
       ElMessage({
         message: "Данные о видео успешно загружены! Переходим ко второму шагу.",
         type: "success",
@@ -229,23 +242,31 @@ function submitFormFields() {
         updateVideoStep(1);
       }, 3000);
       ruleFormRef.value?.resetFields();
-      addToVideosList(data.value.videoRow);
-
+      addToVideosList(videoRow);
+      updateRowVideoJustInserted(videoRow);
       if (getVideosList().length === 1) {
         updateActiveVideo({
-          entityId: data.value.videoRow.id,
+          entityId: videoRow.id,
           stateForFindElem: EEntityState.Default,
           stateForFindIndex: EEntityState.Active,
           stateForClickIndex: EEntityState.Active,
         });
       } else {
         updateActiveVideo({
-          entityId: data.value.videoRow.id,
+          entityId: videoRow.id,
           stateForFindElem: EEntityState.Active,
           stateForFindIndex: EEntityState.Default,
           stateForClickIndex: EEntityState.Active,
         });
       }
+    }
+    if (response === EServerResponses.VIDEOS_CREATE_ERROR) {
+      ElMessage({
+        message: "Произошла ошибка при создании карточки видео",
+        type: "error",
+        appendTo: `.${appendTo}`,
+      });
+      disabled.value = false;
     }
   });
 
@@ -255,8 +276,9 @@ function submitFormFields() {
       type: "error",
       appendTo: `.${appendTo}`,
     });
-    ruleFormRef.value?.resetFields();
     isSpinnerVisible.value = false;
+    ruleFormRef.value?.resetFields();
+    disabled.value = false;
   });
 }
 
@@ -307,6 +329,7 @@ watch(
   },
   { deep: true, flush: "post" }
 );
+
 </script>
 
 <style scoped lang="scss">

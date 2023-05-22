@@ -1,5 +1,5 @@
 import type { IEduCommonElement } from "share/types/interfaces";
-import type { TElemsList } from "share/types/types";
+import type { TElemsList, TExtendsArray, TExtendsMap } from "share/types/types";
 
 class Entity<T> implements IEduCommonElement<T> {
   list: T[] | TElemsList<number, T> | undefined;
@@ -38,9 +38,9 @@ class Entity<T> implements IEduCommonElement<T> {
     }
   }
 
-  public addToList(elem: T) {
+  public addToList(elemToAdd: T) {
     if (Array.isArray(this.list)) {
-      this.list.push(elem);
+      this.list.push(elemToAdd);
     }
     return this.list;
   }

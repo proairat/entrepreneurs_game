@@ -2,8 +2,8 @@
   <VideoPlayer
     class="video-player vjs-big-play-centered"
     controls
-    :src="getVideoSrc"
-    :poster="getVideoPoster"
+    :src="props.getVideoSrc"
+    :poster="props.getVideoPoster"
     :loop="true"
     :volume="0.6"
     aspectRatio="16:9"
@@ -21,34 +21,19 @@
     @canplaythrough="handleEvent($event)"
     @timeupdate="handleEvent(player?.currentTime())"
   />
-  <AppTitleLine>
-    <AppTitle>{{ getVideoTitle }}</AppTitle>
-  </AppTitleLine>
-  <AppVideoTabs
-    :video-authors="getVideoAuthors"
-    :video-description="getVideoDescription"
-  />
 </template>
 
 <script setup lang="ts">
+import { shallowRef } from "vue";
 import type { VideoJsPlayer } from "video.js";
 import { VideoPlayer } from "@videojs-player/vue";
 import "video.js/dist/video-js.css";
-import { useModulesStore } from "@/stores";
-import { storeToRefs } from "pinia";
-import { computed, shallowRef } from "vue";
 
-const modulesStore = useModulesStore();
-const { activeVideo } = storeToRefs(modulesStore);
-const getVideoTitle = computed(() => activeVideo.value.title);
-const getVideoSrc = computed(
-  () => new URL(activeVideo.value.filename, import.meta.url).href
-);
-const getVideoPoster = computed(
-  () => new URL(activeVideo.value.poster, import.meta.url).href
-);
-const getVideoAuthors = computed(() => activeVideo.value.authors);
-const getVideoDescription = computed(() => activeVideo.value.description);
+const props = defineProps<{
+  getVideoSrc?: string;
+  getVideoPoster?: string;
+}>();
+
 const player = shallowRef<VideoJsPlayer>();
 const handleMounted = (payload: any) => {
   player.value = payload.player;

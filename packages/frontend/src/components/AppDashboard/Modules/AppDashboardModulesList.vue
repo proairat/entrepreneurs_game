@@ -100,26 +100,13 @@ const columns: Column<any>[] = [
   },
 ];
 
-watch(
-  rowModuleJustInserted,
-  (updatedModuleRowJustInserted) => {
-    if (updatedModuleRowJustInserted.id !== activeModule.value?.id) {
-      tableData.push(cloneDeep(updatedModuleRowJustInserted));
-      visible.value[updatedModuleRowJustInserted.id] = false;
-      console.log("Tonight getModulesList", getModulesList());
-    }
-    updateElemFields(updatedModuleRowJustInserted);
-    if (tableData.length === 1) {
-      updateActiveModule({
-        entityId: updatedModuleRowJustInserted.id,
-        stateForFindElem: EEntityState.Default,
-        stateForFindIndex: EEntityState.Default,
-        stateForClickIndex: EEntityState.Active,
-      });
-    }
-  },
-  { deep: true }
-);
+onMounted(() => {
+  document.addEventListener("click", handleClickOutside);
+});
+
+onUnmounted(() => {
+  document.removeEventListener("click", handleClickOutside);
+});
 
 function editHandler(id: number) {
   toggleIsDialogFormVisible(true);
@@ -158,14 +145,6 @@ function handleClickOutside(event: MouseEvent) {
   }
 }
 
-onMounted(() => {
-  document.addEventListener("click", handleClickOutside);
-});
-
-onUnmounted(() => {
-  document.removeEventListener("click", handleClickOutside);
-});
-
 function deleteHandler(cellData: CellRendererParams<any>) {
   let { data, onFetchResponse, onFetchError } = useFetchComposable({
     urlConst: "/modules",
@@ -197,6 +176,26 @@ function deleteHandler(cellData: CellRendererParams<any>) {
     });
   });
 }
+
+watch(
+  rowModuleJustInserted,
+  (updatedModuleRowJustInserted) => {
+    if (updatedModuleRowJustInserted.id !== activeModule.value?.id) {
+      tableData.push(cloneDeep(updatedModuleRowJustInserted));
+      visible.value[updatedModuleRowJustInserted.id] = false;
+    }
+    updateElemFields(updatedModuleRowJustInserted);
+    if (tableData.length === 1) {
+      updateActiveModule({
+        entityId: updatedModuleRowJustInserted.id,
+        stateForFindElem: EEntityState.Default,
+        stateForFindIndex: EEntityState.Default,
+        stateForClickIndex: EEntityState.Active,
+      });
+    }
+  },
+  { deep: true }
+);
 </script>
 
 <style scoped lang="scss">

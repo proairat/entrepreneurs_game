@@ -43,7 +43,7 @@ import type { IModule, IElMessageUploadFile } from "share/types/interfaces";
 import { EServerResponses } from "share/types/enums";
 
 const dashboardStore = useDashboardStore();
-const { updateRowJustInserted } = dashboardStore;
+const { updateRowModuleJustInserted } = dashboardStore;
 const formSize = ref("large");
 const ruleFormRef = ref<FormInstance>();
 const formModel = reactive({
@@ -209,7 +209,7 @@ watch(
       };
       eventSource.onmessage = (event) => {
         const data: IModule = JSON.parse(event.data);
-        updateRowJustInserted(data);
+        updateRowModuleJustInserted(data);
         eventSource.close();
       };
       eventSource.onerror = (e) => {

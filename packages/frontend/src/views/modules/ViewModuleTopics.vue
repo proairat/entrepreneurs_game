@@ -16,7 +16,7 @@
           <AppTitleLine>
             <AppTitle>{{ getThemeTitle }}</AppTitle>
           </AppTitleLine>
-          <AppVideo />
+          <AppVideoBlock />
         </div>
       </div>
     </div>

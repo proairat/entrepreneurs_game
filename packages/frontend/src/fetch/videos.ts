@@ -12,8 +12,8 @@ videos.set(1, [
   {
     id: 1,
     type: EEntityType.Videos,
-    filename: "../assets/video/srcs/1.mp4",
-    poster: "../assets/video/posters/1.png",
+    filename: "/src/assets/video/srcs/1.mp4",
+    poster: "/src/assets/video/posters/1.png",
     videoType: "",
     state: EEntityState.Active,
     title: "Введение в курс",
@@ -33,8 +33,8 @@ videos.set(1, [
   {
     id: 2,
     type: EEntityType.Videos,
-    filename: "../assets/video/srcs/2.mp4",
-    poster: "../assets/video/posters/2.png",
+    filename: "/src/assets/video/srcs/2.mp4",
+    poster: "/src/assets/video/posters/2.png",
     videoType: "",
     state: EEntityState.Default,
     title: `Урок 1 "Бизнеc как профессия"`,
@@ -55,8 +55,8 @@ videos.set(1, [
   {
     id: 3,
     type: EEntityType.Videos,
-    filename: "../assets/video/srcs/3.mp4",
-    poster: "../assets/video/posters/3.png",
+    filename: "/src/assets/video/srcs/3.mp4",
+    poster: "/src/assets/video/posters/3.png",
     videoType: "",
     state: EEntityState.Default,
     title: `Урок 2 "С чего начать новый бизнес?"`,
@@ -76,8 +76,8 @@ videos.set(1, [
   {
     id: 4,
     type: EEntityType.Videos,
-    filename: "../assets/video/srcs/4.mp4",
-    poster: "../assets/video/posters/4.png",
+    filename: "/src/assets/video/srcs/4.mp4",
+    poster: "/src/assets/video/posters/4.png",
     videoType: "",
     state: EEntityState.Default,
     title: `Урок 3 "Бизнес-модель"`,
