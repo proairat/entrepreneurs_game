@@ -5,7 +5,7 @@ import type {
   IUpdateMapElements,
 } from "share/types/interfaces";
 import type { TElemsList, TExtendsMap } from "share/types/types";
-import { BaseEduElement } from "@/classes/BaseEduElement";
+import { BaseEduElement } from "@/classes";
 
 class EntityExtendedMap<T extends TExtendsMap>
   extends BaseEduElement

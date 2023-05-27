@@ -1,6 +1,5 @@
 import type { IEduCommonElement } from "share/types/interfaces";
-import { Creator } from "@/classes/Creator";
-import { Entity } from "@/classes/Entity";
+import { Creator, Entity } from "@/classes";
 
 class EntityCreator<C> extends Creator<C> {
   public factoryMethod(): IEduCommonElement<C> {

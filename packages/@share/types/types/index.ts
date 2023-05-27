@@ -17,7 +17,7 @@ type Tfn<T> = (...params: Array<T>) => T;
 type Tfns<T> = Array<Tfn<T>>;
 type TElemsList<K, V> = Map<K, Array<V>>;
 type TExtendsArray = IModule | IModuleAdvanced | IEntranceTest;
-type TExtendsArrayCombination = IModule & IModuleAdvanced & IEntranceTest & IVideoDB;
+type TExtendsDashboardArray = IModule | IVideoDB;
 type TExtendsMap =
   | ITheme
   | IVideo
@@ -28,4 +28,12 @@ type TExtendsMap =
 type TMessageType = "success" | "warning" | "info" | "error";
 type TModuleBodyFile = IModuleBody & IFile;
 
-export type { Tfns, TElemsList, TExtendsArray, TExtendsArrayCombination, TExtendsMap, TMessageType, TModuleBodyFile };
+export type { 
+  Tfns, 
+  TElemsList, 
+  TExtendsArray, 
+  TExtendsDashboardArray,
+  TExtendsMap, 
+  TMessageType, 
+  TModuleBodyFile 
+};

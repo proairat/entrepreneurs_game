@@ -1,12 +1,13 @@
 import type {
   EAlert,
   EEntityState,
+  EEntityStateDashboard,
   EEntityType,
   EGuess,
   EProgressCaption,
   EVideoTypes,
 } from "../enums";
-import type { TElemsList, TExtendsArray, TMessageType } from "../types";
+import type { TElemsList, TExtendsArray, TExtendsDashboardArray, TMessageType } from "../types";
 
 interface IUser {
   surname: string;
@@ -88,7 +89,7 @@ interface IVideoDB {
   duration: number;
   title: string;
   description: string;
-  state: EEntityState;
+  state: EEntityStateDashboard;
 }
 
 interface IVideo {
@@ -180,6 +181,13 @@ interface IUpdateArray {
   stateForClickIndex: EEntityState;
 }
 
+interface IUpdateArrayDashboard {
+  entityId: number;
+  stateForFindElem: EEntityStateDashboard;
+  stateForFindIndex: EEntityStateDashboard;
+  stateForClickIndex: EEntityStateDashboard;
+}
+
 interface IUpdateMapElem {
   entityIdForListByEntityId: number;
   entityIdForClickIndex: number;
@@ -203,11 +211,30 @@ interface IEduCommonElement<T> {
   getList(): T[] | TElemsList<number, T> | undefined;
 }
 
+interface IEduCommonElementDashboard<T> {
+  createTheList(fromDB: T[]): T[] | undefined;
+  fillTheList(fromDB: T[]): void;
+  addElemToTheList(elemToAdd: T): T[] | undefined;
+  getTheList(): T[] | undefined;
+  findElemInTheListByState(state: EEntityStateDashboard): T | undefined;
+  findIndexInTheListById(id: number): number | undefined;
+  filterTheList(state: EEntityStateDashboard): T[] | undefined;
+  deleteAnElementFromTheList(index: number, count: number): T[] | undefined;
+}
+
 interface IEduElementEntityArray<T> {
   updateElemByState(updateArray: IUpdateArray): void;
   getElemByState(state: EEntityState): T | undefined;
   updateElemFields(elem: TExtendsArray): void;
   deleteFromList(elem: TExtendsArray): void;
+  updateList(elemToUpdate: T): void;
+}
+
+interface IEduElementEntityArrayDashboard<T> {
+  updateElemByState(updateArray: IUpdateArrayDashboard): void;
+  getElemByState(state: EEntityStateDashboard): T | undefined;
+  updateElemFields(elem: TExtendsDashboardArray): void;
+  deleteFromList(elem: TExtendsDashboardArray): void;
   updateList(elemToUpdate: T): void;
 }
 
@@ -261,10 +288,13 @@ export type {
   IEntranceTestQuestion,
   IProgressCaption,
   IUpdateArray,
+  IUpdateArrayDashboard,
   IUpdateMapElem,
   IUpdateMapElements,
   IEduCommonElement,
+  IEduCommonElementDashboard,
   IEduElementEntityArray,
+  IEduElementEntityArrayDashboard,
   IEduElementEntityMap,
   IElMessageUploadFile,
   IModuleBody,
