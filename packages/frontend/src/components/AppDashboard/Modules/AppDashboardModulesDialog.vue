@@ -32,11 +32,11 @@
     <AppSpinner v-if="isSpinnerVisible" />
     <template #footer>
       <span class="dialog-footer">
-        <LightButton @click="isDialogFormVisible = false" class="mr-3"
+        <LightButton @click-button="isDialogFormVisible = false" class="mr-3"
           >Отмена</LightButton
         >
         <PrimaryButton
-          @click="checkFormReadyHandler(ruleFormRef), checkFileReadyHandler()"
+          @click-button="checkFormReadyHandler(ruleFormRef), checkFileReadyHandler()"
           >Обновить карточку модуля</PrimaryButton
         >
       </span>
