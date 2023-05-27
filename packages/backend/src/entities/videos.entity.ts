@@ -1,5 +1,5 @@
 import { ApiProperty } from "@nestjs/swagger";
-import { EEntityState, EEntityType } from "@app/types/enums";
+import { EEntityStateDashboard, EEntityType } from "@app/types/enums";
 import type { IVideoDB } from "@app/types/interfaces";
 import {
   Column,
@@ -54,10 +54,10 @@ export class Videos implements IVideoDB {
   @ApiProperty({ description: "State", nullable: true })
   @Column({
     type: "enum",
-    enum: EEntityState,
-    default: EEntityState.Default,
+    enum: EEntityStateDashboard,
+    default: EEntityStateDashboard.Undefined,
   })
-  state: EEntityState;
+  state: EEntityStateDashboard;
 
   @ManyToMany((type) => Authors, (authors) => authors.videos, {
     cascade: true,
@@ -82,6 +82,6 @@ export class Videos implements IVideoDB {
     this.duration = 0;
     this.title = title;
     this.description = "";
-    this.state = EEntityState.Default;
+    this.state = EEntityStateDashboard.Undefined;
   }
 }
