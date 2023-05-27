@@ -7,7 +7,10 @@ import { CreateVideoDto } from "../dto/create-video.dto";
 import { Videos } from "../entities/videos.entity";
 import { VideoTypes } from "../entities/video-types.entity";
 import { isEmpty, isNull } from "lodash";
-import { EEntityState, EEntityType, EServerResponses } from "@app/types/enums";
+import {
+  EEntityStateDashboard,
+  EServerResponses,
+} from "@app/types/enums";
 import { IModule, IModuleBody, IFile, IVideoDB } from "@app/types/interfaces";
 import { EventEmitter } from "events";
 import { Observable } from "rxjs";
@@ -61,34 +64,34 @@ export class VideosService {
   async postUploadPoster(body: CreateVideoDto, file: Express.Multer.File) {
     try {
       if (!isEmpty(file)) {
-        const { videoRow, response} = await this.update(body.id, { filenamePoster: file.filename });
+        const { videoRow, response } = await this.update(body.id, {
+          filenamePoster: file.filename,
+        });
 
-        switch (response){
+        switch (response) {
           case EServerResponses.VIDEOS_UPDATE_SUCCESSFUL:
             return {
               videoRow,
-              response: EServerResponses.VIDEOS_POST_UPLOAD_POSTER_SUCCESSFUL
-            }
+              response: EServerResponses.VIDEOS_POST_UPLOAD_POSTER_SUCCESSFUL,
+            };
           case EServerResponses.VIDEOS_UPDATE_IS_NULL:
             return {
               videoRow: EServerResponses.VIDEOS_POST_UPLOAD_POSTER_IS_NULL,
               response: EServerResponses.VIDEOS_POST_UPLOAD_POSTER_IS_NULL,
-            }
+            };
           case EServerResponses.VIDEOS_UPDATE_ERROR:
             return {
               videoRow: EServerResponses.VIDEOS_POST_UPLOAD_POSTER_ERROR,
               response: EServerResponses.VIDEOS_POST_UPLOAD_POSTER_ERROR,
-            }
+            };
         }
       } else {
-
         return {
           videoRow: EServerResponses.VIDEOS_POST_UPLOAD_POSTER_EMPTY_FILE,
           response: EServerResponses.VIDEOS_POST_UPLOAD_POSTER_EMPTY_FILE,
         };
       }
     } catch {
-
       return {
         videoRow: EServerResponses.VIDEOS_POST_UPLOAD_POSTER_ERROR,
         response: EServerResponses.VIDEOS_POST_UPLOAD_POSTER_ERROR,
@@ -97,11 +100,40 @@ export class VideosService {
   }
 
   async postUploadVideoFile(body: CreateVideoDto, file: Express.Multer.File) {
-    if (!isEmpty(file)) {
-      await this.update(body.id, { filenameVideo: file.filename });
+    try {
+      if (!isEmpty(file)) {
+        const { videoRow, response } = await this.update(body.id, {
+          filenameVideo: file.filename,
+        });
+
+        switch (response) {
+          case EServerResponses.VIDEOS_UPDATE_SUCCESSFUL:
+            return {
+              videoRow,
+              response:
+                EServerResponses.VIDEOS_POST_UPLOAD_VIDEO_FILE_SUCCESSFUL,
+            };
+          case EServerResponses.VIDEOS_UPDATE_IS_NULL:
+            return {
+              videoRow: EServerResponses.VIDEOS_POST_UPLOAD_VIDEO_FILE_IS_NULL,
+              response: EServerResponses.VIDEOS_POST_UPLOAD_VIDEO_FILE_IS_NULL,
+            };
+          case EServerResponses.VIDEOS_UPDATE_ERROR:
+            return {
+              videoRow: EServerResponses.VIDEOS_POST_UPLOAD_VIDEO_FILE_ERROR,
+              response: EServerResponses.VIDEOS_POST_UPLOAD_VIDEO_FILE_ERROR,
+            };
+        }
+      } else {
+        return {
+          videoRow: EServerResponses.VIDEOS_POST_UPLOAD_VIDEO_FILE_EMPTY_FILE,
+          response: EServerResponses.VIDEOS_POST_UPLOAD_VIDEO_FILE_EMPTY_FILE,
+        };
+      }
+    } catch {
       return {
-        videoRow: EServerResponses.VIDEOS_POST_UPLOAD_VIDEO_FILE_SUCCESSFUL,
-        response: EServerResponses.VIDEOS_POST_UPLOAD_VIDEO_FILE_SUCCESSFUL,
+        videoRow: EServerResponses.VIDEOS_POST_UPLOAD_VIDEO_FILE_ERROR,
+        response: EServerResponses.VIDEOS_POST_UPLOAD_VIDEO_FILE_ERROR,
       };
     }
   }
@@ -151,7 +183,7 @@ export class VideosService {
     return await this.videosRepository.find();
   }
 
-  async findOneByState(state: EEntityState): Promise<Videos | null> {
+  async findOneByState(state: EEntityStateDashboard): Promise<Videos | null> {
     // return await this.videosRepository.findOneBy({ state });
     return null;
   }
@@ -169,14 +201,12 @@ export class VideosService {
           response: EServerResponses.VIDEOS_UPDATE_SUCCESSFUL,
         };
       } else {
-
         return {
           videoRow: EServerResponses.VIDEOS_UPDATE_IS_NULL,
           response: EServerResponses.VIDEOS_UPDATE_IS_NULL,
         };
       }
     } catch {
-
       return {
         videoRow: EServerResponses.VIDEOS_UPDATE_ERROR,
         response: EServerResponses.VIDEOS_UPDATE_ERROR,
