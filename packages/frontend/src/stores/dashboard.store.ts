@@ -1,62 +1,58 @@
 import { defineStore } from "pinia";
-import { isProxy, isReactive, isRef, ref } from "vue";
+import { ref } from "vue";
 import type {
   IModule,
-  IEduElementEntityArray,
-  IUpdateArray,
   IVideoDB,
+  IUpdateArrayDashboard,
+  IEduElementEntityArrayDashboard,
 } from "share/types/interfaces";
 import {
-  Creator,
-  CreatorExtended,
-  EntityCreator,
-  EntityCreatorExtendedArray,
+  CreatorDashboard,
+  CreatorExtendedDashboard,
+  EntityCreatorDashboard,
+  EntityCreatorExtendedArrayDashboard,
 } from "@/classes";
-import type {
-  TElemsList,
-  TExtendsArray,
-  TExtendsArrayCombination,
-} from "share/types/types";
+import type { TExtendsDashboardArray } from "share/types/types";
 import { modulesFromDatabase, videosFromDatabase } from "@/fetch";
-import { EEntityState } from "share/types/enums";
+import { EEntityStateDashboard } from "share/types/enums";
 import cloneDeep from "lodash/cloneDeep";
 
 function getEduElement<T>(
-  creator: Creator<T>,
-  fromDB: T[] | TElemsList<number, T> | undefined
+  creator: CreatorDashboard<T>,
+  fromDB: T[] | undefined
 ) {
   const eduElement = creator.getEduElement();
   if (fromDB) {
-    eduElement.createList(fromDB);
+    eduElement.createTheList(fromDB);
     eduElement.fillTheList(fromDB);
   }
   return eduElement;
 }
 
-function getEduElementExtended<T>(creator: CreatorExtended<T>) {
+function getEduElementExtended<T>(creator: CreatorExtendedDashboard<T>) {
   const eduElement = creator.getEduElement();
   return eduElement;
 }
 
 const eduElementModules = getEduElement(
-  new EntityCreator<TExtendsArrayCombination>(),
+  new EntityCreatorDashboard<TExtendsDashboardArray>(),
   modulesFromDatabase
 );
 const eduElementVideos = getEduElement(
-  new EntityCreator<TExtendsArrayCombination>(),
+  new EntityCreatorDashboard<TExtendsDashboardArray>(),
   videosFromDatabase
 );
 
 const eduElementModulesExtended = getEduElementExtended(
-  new EntityCreatorExtendedArray<TExtendsArrayCombination>(
-    ref(eduElementModules.getList()).value as TExtendsArrayCombination[]
+  new EntityCreatorExtendedArrayDashboard<TExtendsDashboardArray>(
+    ref(eduElementModules.getTheList()).value as TExtendsDashboardArray[]
   )
-) as IEduElementEntityArray<IModule>;
+) as IEduElementEntityArrayDashboard<IModule>;
 const eduElementVideosExtended = getEduElementExtended(
-  new EntityCreatorExtendedArray<TExtendsArrayCombination>(
-    eduElementVideos.getList() as TExtendsArrayCombination[]
+  new EntityCreatorExtendedArrayDashboard<TExtendsDashboardArray>(
+    eduElementVideos.getTheList() as TExtendsDashboardArray[]
   )
-) as IEduElementEntityArray<IVideoDB>;
+) as IEduElementEntityArrayDashboard<IVideoDB>;
 
 export const useDashboardStore = defineStore("dashboard", () => {
   const activeModule = ref(getActiveModule());
@@ -66,37 +62,37 @@ export const useDashboardStore = defineStore("dashboard", () => {
   const isDialogFormVisible = ref(false);
   const dialogFormTitle = ref("");
   const videoStep = ref(0);
-  
+
   function getModulesList() {
-    return ref(eduElementModules.getList()).value as IModule[];
+    return ref(eduElementModules.getTheList()).value as IModule[];
   }
 
   function getVideosList() {
-    return eduElementVideos.getList() as IVideoDB[];
+    return eduElementVideos.getTheList() as IVideoDB[];
   }
 
   function addToVideosList(param: IVideoDB) {
-    return eduElementVideos.addToList(cloneDeep(param));
+    return eduElementVideos.addElemToTheList(cloneDeep(param));
   }
 
   function getActiveModule() {
     return eduElementModulesExtended.getElemByState(
-      EEntityState.Active
+      EEntityStateDashboard.Active
     ) as IModule;
   }
 
   function getActiveVideo() {
     return eduElementVideosExtended.getElemByState(
-      EEntityState.Active
+      EEntityStateDashboard.Active
     ) as IVideoDB;
   }
 
-  function updateActiveModule(updateArray: IUpdateArray) {
+  function updateActiveModule(updateArray: IUpdateArrayDashboard) {
     eduElementModulesExtended.updateElemByState(updateArray);
     activeModule.value = getActiveModule();
   }
 
-  function updateActiveVideo(updateArray: IUpdateArray) {
+  function updateActiveVideo(updateArray: IUpdateArrayDashboard) {
     eduElementVideosExtended.updateElemByState(updateArray);
     activeVideo.value = getActiveVideo();
   }
@@ -117,7 +113,7 @@ export const useDashboardStore = defineStore("dashboard", () => {
     dialogFormTitle.value = title;
   }
 
-  function updateElemFields(elem: TExtendsArray) {
+  function updateElemFields(elem: TExtendsDashboardArray) {
     eduElementModulesExtended.updateElemFields(elem);
   }
 
@@ -125,7 +121,7 @@ export const useDashboardStore = defineStore("dashboard", () => {
     videoStep.value = value;
   }
 
-  function deleteFromList(elem: TExtendsArray) {
+  function deleteFromList(elem: TExtendsDashboardArray) {
     eduElementModulesExtended.deleteFromList(elem);
   }
 

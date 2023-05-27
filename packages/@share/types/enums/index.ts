@@ -14,6 +14,16 @@ enum EEntityState {
   Undefined = "undefined",
 }
 
+enum EEntityStateDashboard {
+  Active = "active",
+  Default = "default",
+  Ordinary = "ordinary",
+  Undefined = "undefined",
+  After_create_video_card ="after_create_video_card",
+  After_create_video_poster = 'after_create_video_poster',
+  After_create_video_file = 'after_create_video_file',
+}
+
 enum EEntityType {
   Modules = "modules",
   ModulesAdvanced = "modulesAdvanced",
@@ -87,6 +97,9 @@ enum EServerResponses {
   VIDEOS_POST_UPLOAD_POSTER_IS_NULL = "VIDEOS_POST_UPLOAD_POSTER_IS_NULL",
   VIDEOS_POST_UPLOAD_POSTER_ERROR = "VIDEOS_POST_UPLOAD_POSTER_ERROR",
   VIDEOS_POST_UPLOAD_VIDEO_FILE_SUCCESSFUL = "VIDEOS_POST_UPLOAD_VIDEO_FILE_SUCCESSFUL",
+  VIDEOS_POST_UPLOAD_VIDEO_FILE_EMPTY_FILE = "VIDEOS_POST_UPLOAD_VIDEO_FILE_EMPTY_FILE",
+  VIDEOS_POST_UPLOAD_VIDEO_FILE_IS_NULL = "VIDEOS_POST_UPLOAD_VIDEO_FILE_IS_NULL",
+  VIDEOS_POST_UPLOAD_VIDEO_FILE_ERROR = "VIDEOS_POST_UPLOAD_VIDEO_FILE_ERROR",
   VIDEOS_REMOVE_SUCCESSFUL = "VIDEOS_REMOVE_SUCCESSFUL",
   VIDEOS_REMOVE_ERROR = "VIDEOS_REMOVE_ERROR",
 }
@@ -99,6 +112,7 @@ enum EUploadType {
 export {
   EAlert,
   EEntityState,
+  EEntityStateDashboard,
   EEntityType,
   EPercent,
   EGuess,

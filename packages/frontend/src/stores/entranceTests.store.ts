@@ -10,7 +10,7 @@ import {
   EntityCreatorExtendedArray,
   EntityCreatorExtendedMap,
 } from "@/classes";
-import type { TElemsList, TExtendsArrayCombination } from "share/types/types";
+import type { TElemsList, TExtendsArray } from "share/types/types";
 import type {
   IEduElementEntityArray,
   IEduElementEntityMap,
@@ -47,8 +47,8 @@ const eduElementEntranceTestsQuestions = getEduElement(
 );
 
 const eduElementEntranceTestsExtended = getEduElementExtended(
-  new EntityCreatorExtendedArray<TExtendsArrayCombination>(
-    ref(eduElementEntranceTests.getList()).value as TExtendsArrayCombination[]
+  new EntityCreatorExtendedArray<TExtendsArray>(
+    ref(eduElementEntranceTests.getList()).value as TExtendsArray[]
   )
 ) as IEduElementEntityArray<IEntranceTest>;
 

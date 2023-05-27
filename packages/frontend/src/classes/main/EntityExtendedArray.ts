@@ -6,12 +6,8 @@ import type {
   IModuleAdvanced,
   IUpdateArray,
 } from "share/types/interfaces";
-import type {
-  TExtendsArray,
-  TExtendsArrayCombination,
-  TModuleBodyFile,
-} from "share/types/types";
-import { BaseEduElement } from "@/classes/BaseEduElement";
+import type { TExtendsArray, TModuleBodyFile } from "share/types/types";
+import { BaseEduElement } from "@/classes";
 
 function isIModule(entity: TExtendsArray): entity is IModule {
   return (entity as IModule).type === EEntityType.Modules;
@@ -25,7 +21,7 @@ function isIEntranceTest(entity: TExtendsArray): entity is IEntranceTest {
   return (entity as IEntranceTest).type === EEntityType.EntranceTests;
 }
 
-class EntityExtendedArray<T extends TExtendsArrayCombination>
+class EntityExtendedArray<T extends TExtendsArray>
   extends BaseEduElement
   implements IEduElementEntityArray<T>
 {
@@ -46,16 +42,14 @@ class EntityExtendedArray<T extends TExtendsArrayCombination>
    * @param updateArray: IUpdateArray
    */
   public updateElemByState(updateArray: IUpdateArray): void {
-    if (Array.isArray(this.list)) {
-      const thisList = this.list;
-      const findElem = this.getElemByState(updateArray.stateForFindElem);
-      if (Array.isArray(thisList) && findElem) {
-        const findIndex = super.findIndex(findElem.id, thisList);
-        const clickIndex = super.findIndex(updateArray.entityId, thisList);
-        if (findIndex !== -1 && clickIndex !== -1) {
-          thisList[findIndex]["state"] = updateArray.stateForFindIndex;
-          thisList[clickIndex]["state"] = updateArray.stateForClickIndex;
-        }
+    const thisList = this.list;
+    const findElem = this.getElemByState(updateArray.stateForFindElem);
+    if (Array.isArray(thisList) && findElem) {
+      const findIndex = super.findIndex(findElem.id, thisList);
+      const clickIndex = super.findIndex(updateArray.entityId, thisList);
+      if (findIndex !== -1 && clickIndex !== -1) {
+        thisList[findIndex]["state"] = updateArray.stateForFindIndex;
+        thisList[clickIndex]["state"] = updateArray.stateForClickIndex;
       }
     }
   }
@@ -67,21 +61,19 @@ class EntityExtendedArray<T extends TExtendsArrayCombination>
   }
 
   public updateElemFields(elem: TExtendsArray): void {
-    if (Array.isArray(this.list)) {
-      const thisList = this.list;
+    if (Array.isArray(this.list) && isIModule(elem)) {
+      const thisList = this.list as IModule[];
       const findIndex = super.findIndex(elem.id, thisList);
-      if (isIModule(elem)) {
-        const subsample: TModuleBodyFile = {
-          header: elem.header,
-          filename: elem.filename,
-        };
-        Object.entries(subsample).forEach(
-          ([key, value]: [string, TModuleBodyFile[keyof TModuleBodyFile]]) => {
-            const opa = key as keyof TModuleBodyFile;
-            thisList[findIndex][opa] = value;
-          }
-        );
-      }
+      const subsample: TModuleBodyFile = {
+        header: elem.header,
+        filename: elem.filename,
+      };
+      Object.entries(subsample).forEach(
+        ([key, value]: [string, TModuleBodyFile[keyof TModuleBodyFile]]) => {
+          const opa = key as keyof TModuleBodyFile;
+          thisList[findIndex][opa] = value;
+        }
+      );
 
       if (isIModuleAdvanced(elem)) {
         elem;
@@ -103,8 +95,11 @@ class EntityExtendedArray<T extends TExtendsArrayCombination>
 
   public updateList(elemToUpdate: T): void {
     if (Array.isArray(this.list)) {
+      console.log("updateList() -> elemToUpdate", elemToUpdate);
       const findIndex = super.findIndex(elemToUpdate.id, this.list);
+      console.log("updateList() -> findIndex", findIndex);
       this.list.splice(findIndex, 1, elemToUpdate);
+      console.log("updateList() -> this.list", this.list);
     }
   }
 }
