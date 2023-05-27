@@ -21,7 +21,7 @@ import { useDashboardStore } from "@/stores";
 import { onMounted, ref, watch, onUnmounted } from "vue";
 import { storeToRefs } from "pinia";
 import type { Column } from "element-plus";
-import { EEntityState, EServerResponses } from "share/types/enums";
+import { EEntityStateDashboard, EServerResponses } from "share/types/enums";
 import cloneDeep from "lodash/cloneDeep";
 import pickBy from "lodash/pickBy";
 import { useFetchComposable } from "@/composables/use-fetch";
@@ -81,7 +81,7 @@ const columns: Column<any>[] = [
     cellRenderer: (cellData) => (
       <>
         <SuccessButton
-          onClick={() => editHandler(cellData.rowData.id)}
+          onClick-button={() => editHandler(cellData.rowData.id)}
           class="mr-3"
         >
           Редактировать
@@ -113,9 +113,9 @@ function editHandler(id: number) {
   updateDialogFormTitle(`Строка №${id}`);
   updateActiveModule({
     entityId: id,
-    stateForFindElem: EEntityState.Active,
-    stateForFindIndex: EEntityState.Default,
-    stateForClickIndex: EEntityState.Active,
+    stateForFindElem: EEntityStateDashboard.Active,
+    stateForFindIndex: EEntityStateDashboard.Default,
+    stateForClickIndex: EEntityStateDashboard.Active,
   });
 }
 
@@ -155,12 +155,12 @@ function deleteHandler(cellData: CellRendererParams<any>) {
   onFetchResponse(() => {
     if (data.value.response === EServerResponses.MODULES_REMOVE_SUCCESSFUL) {
       deleteFromList(cellData.rowData);
-      if (tableData.length && cellData.rowData.state === EEntityState.Active) {
+      if (tableData.length && cellData.rowData.state === EEntityStateDashboard.Active) {
         updateActiveModule({
           entityId: tableData[0].id,
-          stateForFindElem: EEntityState.Default,
-          stateForFindIndex: EEntityState.Default,
-          stateForClickIndex: EEntityState.Active,
+          stateForFindElem: EEntityStateDashboard.Default,
+          stateForFindIndex: EEntityStateDashboard.Default,
+          stateForClickIndex: EEntityStateDashboard.Active,
         });
       }
       ElMessage({
@@ -188,9 +188,9 @@ watch(
     if (tableData.length === 1) {
       updateActiveModule({
         entityId: updatedModuleRowJustInserted.id,
-        stateForFindElem: EEntityState.Default,
-        stateForFindIndex: EEntityState.Default,
-        stateForClickIndex: EEntityState.Active,
+        stateForFindElem: EEntityStateDashboard.Default,
+        stateForFindIndex: EEntityStateDashboard.Default,
+        stateForClickIndex: EEntityStateDashboard.Active,
       });
     }
   },
