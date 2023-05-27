@@ -24,7 +24,7 @@
     />
     <div class="create-module-card__outer">
       <PrimaryButton
-        @click="checkFormReadyHandler(ruleFormRef), checkFileReadyHandler()"
+        @click-button="checkFormReadyHandler(ruleFormRef), checkFileReadyHandler()"
       >
         Создать карточку модуля
       </PrimaryButton>

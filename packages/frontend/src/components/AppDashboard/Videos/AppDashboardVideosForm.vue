@@ -74,21 +74,21 @@
         class="mr-3"
         height-class="h-10"
         font-size-class="text-sm"
-        @click="infoButtonHandler"
+        @click-button="infoButtonHandler"
         >Добавить ещё одного автора</InfoButton
       >
       <DangerButton
         :disabled="disabled"
         height-class="h-10"
         font-size-class="text-sm"
-        @click="dangerButtonHandler"
+        @click-button="dangerButtonHandler"
         >Удалить лишние поля автора</DangerButton
       >
     </el-form-item>
     <div class="create-module-card__outer">
       <PrimaryButton
         :disabled="disabled"
-        @click="checkFormReadyHandler(ruleFormRef)"
+        @click-button="checkFormReadyHandler(ruleFormRef)"
       >
         Создать карточку видео
       </PrimaryButton>
@@ -100,7 +100,11 @@
 
 <script setup lang="ts">
 import { reactive, ref, watch } from "vue";
-import { EEntityState, EEntityType, EServerResponses } from "share/types/enums";
+import {
+  EEntityStateDashboard,
+  EEntityType,
+  EServerResponses,
+} from "share/types/enums";
 import { useFetchComposable } from "@/composables/use-fetch";
 import { ElMessage } from "element-plus";
 import { useDashboardStore } from "@/stores";
@@ -231,7 +235,7 @@ function submitFormFields() {
 
     isSpinnerVisible.value = false;
     ruleFormRef.value?.resetFields();
- 
+
     if (response === EServerResponses.VIDEOS_CREATE_SUCCESSFUL) {
       ElMessage({
         message: "Данные о видео успешно загружены! Переходим ко второму шагу.",
@@ -245,19 +249,25 @@ function submitFormFields() {
       addToVideosList(videoRow);
       updateRowVideoJustInserted(videoRow);
       if (getVideosList().length === 1) {
+        console.log(
+          "Студентка-практикантка входила в класс не смело getVideosList()",
+          getVideosList()
+        );
+        console.log("Таня videoRow");
         updateActiveVideo({
           entityId: videoRow.id,
-          stateForFindElem: EEntityState.Default,
-          stateForFindIndex: EEntityState.Active,
-          stateForClickIndex: EEntityState.Active,
+          stateForFindElem: EEntityStateDashboard.Undefined,
+          stateForFindIndex: EEntityStateDashboard.After_create_video_card,
+          stateForClickIndex: EEntityStateDashboard.After_create_video_card,
         });
       } else {
         updateActiveVideo({
           entityId: videoRow.id,
-          stateForFindElem: EEntityState.Active,
-          stateForFindIndex: EEntityState.Default,
-          stateForClickIndex: EEntityState.Active,
+          stateForFindElem: EEntityStateDashboard.Active,
+          stateForFindIndex: EEntityStateDashboard.Default,
+          stateForClickIndex: EEntityStateDashboard.Active,
         });
+        console.log("Несколько элементов в getVideosList()", getVideosList());
       }
     }
     if (response === EServerResponses.VIDEOS_CREATE_ERROR) {
@@ -329,7 +339,6 @@ watch(
   },
   { deep: true, flush: "post" }
 );
-
 </script>
 
 <style scoped lang="scss">

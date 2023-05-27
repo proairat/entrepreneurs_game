@@ -12,6 +12,7 @@
           : 'bg-yellow-300 border border-yellow-300 hover:text-gray-900 hover:bg-yellow-400 hover:ring-0 hover:border-yellow-400 focus:bg-yellow-400 focus:border-yellow-400 focus:outline-none focus:ring-0',
       ]"
       :disabled="disabled"
+      @click="emits('click-button')"
     >
       <slot></slot>
     </button>
@@ -26,6 +27,9 @@ const props = defineProps<{
   heightClass?: string;
   colorClass?: string;
   disabled?: boolean;
+}>();
+const emits = defineEmits<{
+  (e: "click-button"): void;
 }>();
 
 const fontSizeClass = computed(() =>

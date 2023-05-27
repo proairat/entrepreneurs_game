@@ -8,12 +8,12 @@
     <template #default>
       <p class="mb-3">Вы уверены, что хотите удалить карточку модуля?</p>
       <div class="flex justify-around">
-        <LightButton @click="cancelButtonHandler">Отмена</LightButton>
-        <DangerButton @click="deleteButtonHandler">Удалить</DangerButton>
+        <LightButton @click-button="cancelButtonHandler">Отмена</LightButton>
+        <DangerButton @click-button="deleteButtonHandler">Удалить</DangerButton>
       </div>
     </template>
     <template #reference>
-      <DangerButton @click="dangerButtonHandler">Удалить</DangerButton>
+      <DangerButton @click-button="dangerButtonHandler">Удалить</DangerButton>
     </template>
   </el-popover>
 </template>
