@@ -37,10 +37,15 @@ class EntityExtendedArrayDashboard<T extends TExtendsDashboardArray>
   public updateElemByState(updateArray: IUpdateArrayDashboard): void {
     const thisList = this.list;
     const findElem = this.getElemByState(updateArray.stateForFindElem);
-    if (Array.isArray(thisList) && findElem) {
+    if (Array.isArray(thisList) && findElem !== undefined) {
       const findIndex = super.findIndexInTheListById(findElem.id);
       const clickIndex = super.findIndexInTheListById(updateArray.entityId);
-      if (findIndex && findIndex !== -1 && clickIndex && clickIndex !== -1) {
+      if (
+        findIndex !== undefined &&
+        findIndex !== -1 &&
+        clickIndex !== undefined &&
+        clickIndex !== -1
+      ) {
         thisList[findIndex]["state"] = updateArray.stateForFindIndex;
         thisList[clickIndex]["state"] = updateArray.stateForClickIndex;
       }
@@ -57,7 +62,7 @@ class EntityExtendedArrayDashboard<T extends TExtendsDashboardArray>
     if (Array.isArray(this.list) && isIModule(elem)) {
       const thisList = this.list as IModule[];
       const findIndex = super.findIndexInTheListById(elem.id);
-      if (findIndex && findIndex !== -1) {
+      if (findIndex !== undefined && findIndex !== -1) {
         const subsample: TModuleBodyFile = {
           header: elem.header,
           filename: elem.filename,
@@ -75,7 +80,7 @@ class EntityExtendedArrayDashboard<T extends TExtendsDashboardArray>
   public deleteFromList(elem: TExtendsDashboardArray): void {
     if (Array.isArray(this.list) && this.list.length !== 0) {
       const findIndex = super.findIndexInTheListById(elem.id);
-      if (findIndex && findIndex !== -1) {
+      if (findIndex !== undefined && findIndex !== -1) {
         super.deleteAnElementFromTheList(findIndex);
       }
     }
@@ -83,12 +88,9 @@ class EntityExtendedArrayDashboard<T extends TExtendsDashboardArray>
 
   public updateList(elemToUpdate: T): void {
     if (Array.isArray(this.list)) {
-      console.log("updateList() -> elemToUpdate", elemToUpdate);
       const findIndex = super.findIndexInTheListById(elemToUpdate.id);
-      if (findIndex && findIndex !== -1) {
-        console.log("updateList() -> findIndex", findIndex);
-        this.list.splice(findIndex, 1, elemToUpdate);
-        console.log("updateList() -> this.list", this.list);
+      if (findIndex !== undefined && findIndex !== -1) {
+        super.replaceAnElementFromTheList(findIndex, elemToUpdate);
       }
     }
   }

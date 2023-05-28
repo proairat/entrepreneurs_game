@@ -56,7 +56,7 @@ const eduElementVideosExtended = getEduElementExtended(
 
 export const useDashboardStore = defineStore("dashboard", () => {
   const activeModule = ref(getActiveModule());
-  const activeVideo = ref(getActiveVideo());
+  const currentVideo = ref(getActiveVideo());
   const rowModuleJustInserted = ref({} as IModule);
   const rowVideoJustInserted = ref({} as IVideoDB);
   const isDialogFormVisible = ref(false);
@@ -87,14 +87,18 @@ export const useDashboardStore = defineStore("dashboard", () => {
     ) as IVideoDB;
   }
 
+  function getCurrentVideoByState(state: EEntityStateDashboard) {
+    return eduElementVideosExtended.getElemByState(state) as IVideoDB;
+  }
+
   function updateActiveModule(updateArray: IUpdateArrayDashboard) {
     eduElementModulesExtended.updateElemByState(updateArray);
     activeModule.value = getActiveModule();
   }
 
-  function updateActiveVideo(updateArray: IUpdateArrayDashboard) {
+  function updateCurrentVideoByState(updateArray: IUpdateArrayDashboard) {
     eduElementVideosExtended.updateElemByState(updateArray);
-    activeVideo.value = getActiveVideo();
+    currentVideo.value = getCurrentVideoByState(updateArray.stateForClickIndex);
   }
 
   function updateRowModuleJustInserted(row: IModule) {
@@ -131,7 +135,7 @@ export const useDashboardStore = defineStore("dashboard", () => {
 
   return {
     activeModule,
-    activeVideo,
+    currentVideo,
     rowModuleJustInserted,
     rowVideoJustInserted,
     isDialogFormVisible,
@@ -141,7 +145,7 @@ export const useDashboardStore = defineStore("dashboard", () => {
     getVideosList,
     addToVideosList,
     updateActiveModule,
-    updateActiveVideo,
+    updateCurrentVideoByState,
     updateRowModuleJustInserted,
     updateRowVideoJustInserted,
     updateDialogFormTitle,

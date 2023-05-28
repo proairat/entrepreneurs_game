@@ -1,5 +1,5 @@
 import type { Tfns } from "../types/types";
-import { EUploadType } from "../types/enums";
+import { EEntityStateDashboard, EUploadType } from "../types/enums";
 import { URL_VIDEOS_UPLOAD_POSTER, URL_VIDEOS_UPLOAD_VIDEO_FILE } from "../api/API";
 // import cloneDeep from "lodash/cloneDeep";
 
@@ -148,6 +148,9 @@ function getUploadParams(uploadItem: EUploadType) {
       messageHandleSuccess: "Обложка видеоролика успешно загружена! Переходим к третьему шагу.",
       messageHandleError: "Обложка видеоролика не была загружена",
       updateVideoStep: 2,
+      stateForFindElem: EEntityStateDashboard.After_create_video_card,
+      stateForFindIndex: EEntityStateDashboard.After_create_video_poster,
+      stateForClickIndex: EEntityStateDashboard.After_create_video_poster,
     },
     [EUploadType.VIDEO_VIDEO_FILE]: {
       action: URL_VIDEOS_UPLOAD_VIDEO_FILE,
@@ -160,6 +163,9 @@ function getUploadParams(uploadItem: EUploadType) {
       messageHandleSuccess: "Видеоролик успешно загружен! Все шаги пройдены.",
       messageHandleError: "Видеоролик не был загружен",
       updateVideoStep: 3,
+      stateForFindElem: EEntityStateDashboard.After_create_video_poster,
+      stateForFindIndex: EEntityStateDashboard.After_create_video_file,
+      stateForClickIndex: EEntityStateDashboard.After_create_video_file,
     },
   };
 

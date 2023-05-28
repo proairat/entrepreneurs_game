@@ -7,10 +7,7 @@ import { CreateVideoDto } from "../dto/create-video.dto";
 import { Videos } from "../entities/videos.entity";
 import { VideoTypes } from "../entities/video-types.entity";
 import { isEmpty, isNull } from "lodash";
-import {
-  EEntityStateDashboard,
-  EServerResponses,
-} from "@app/types/enums";
+import { EEntityStateDashboard, EServerResponses } from "@app/types/enums";
 import { IModule, IModuleBody, IFile, IVideoDB } from "@app/types/interfaces";
 import { EventEmitter } from "events";
 import { Observable } from "rxjs";
@@ -66,6 +63,7 @@ export class VideosService {
       if (!isEmpty(file)) {
         const { videoRow, response } = await this.update(body.id, {
           filenamePoster: file.filename,
+          state: EEntityStateDashboard.After_create_video_poster,
         });
 
         switch (response) {
@@ -104,6 +102,7 @@ export class VideosService {
       if (!isEmpty(file)) {
         const { videoRow, response } = await this.update(body.id, {
           filenameVideo: file.filename,
+          state: EEntityStateDashboard.After_create_video_file,
         });
 
         switch (response) {

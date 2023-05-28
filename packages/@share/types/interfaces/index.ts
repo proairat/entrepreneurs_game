@@ -219,6 +219,7 @@ interface IEduCommonElementDashboard<T> {
   findElemInTheListByState(state: EEntityStateDashboard): T | undefined;
   findIndexInTheListById(id: number): number | undefined;
   filterTheList(state: EEntityStateDashboard): T[] | undefined;
+  replaceAnElementFromTheList(index: number, elemToReplace: T): T[] | undefined;
   deleteAnElementFromTheList(index: number, count: number): T[] | undefined;
 }
 

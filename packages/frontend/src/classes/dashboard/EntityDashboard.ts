@@ -55,6 +55,15 @@ class EntityDashboard<T extends TExtendsDashboardArray>
     }
   }
 
+  public replaceAnElementFromTheList(
+    index: number,
+    elemToReplace: T
+  ): T[] | undefined {
+    if (Array.isArray(this.list)) {
+      return this.list.splice(index, 1, elemToReplace);
+    }
+  }
+
   public deleteAnElementFromTheList(index: number, count = 1): T[] | undefined {
     if (Array.isArray(this.list)) {
       return this.list.splice(index, count);

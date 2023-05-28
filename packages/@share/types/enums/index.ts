@@ -20,8 +20,9 @@ enum EEntityStateDashboard {
   Ordinary = "ordinary",
   Undefined = "undefined",
   After_create_video_card ="after_create_video_card",
-  After_create_video_poster = 'after_create_video_poster',
-  After_create_video_file = 'after_create_video_file',
+  After_create_video_poster = "after_create_video_poster",
+  After_create_video_file = "after_create_video_file",
+  Published = "published",
 }
 
 enum EEntityType {

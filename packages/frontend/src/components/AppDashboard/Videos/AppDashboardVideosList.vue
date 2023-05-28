@@ -22,10 +22,10 @@ import {
   URL_VIDEOS_VIDEO_FILE_IMAGES,
 } from "share/api/API";
 import { useDashboardStore } from "@/stores";
-import { onMounted, ref, watch, onUnmounted, isRef, isReactive, isProxy, unref, toValue } from "vue";
+import { onMounted, ref, watch, onUnmounted } from "vue";
 import { storeToRefs } from "pinia";
 import type { Column } from "element-plus";
-import { EEntityState, EServerResponses } from "share/types/enums";
+import { EEntityStateDashboard, EServerResponses } from "share/types/enums";
 import pickBy from "lodash/pickBy";
 import { useFetchComposable } from "@/composables/use-fetch";
 import { ElMessage } from "element-plus";
@@ -44,14 +44,16 @@ const {
   deleteFromList,
   getVideosList,
 } = dashboardStore;
-const { rowVideoJustInserted, activeVideo } = storeToRefs(dashboardStore);
+const { rowVideoJustInserted, currentVideo } = storeToRefs(dashboardStore);
 const tableData = ref(cloneDeep(getVideosList()));
 const visible = ref<Record<number, boolean>>({});
 let flag1 = false;
 let flag2 = false;
 let num = 111;
 
-tableData.value.forEach((item) => (visible.value[item.id] = false));
+if (tableData.value.length) {
+  tableData.value.forEach((item) => (visible.value[item.id] = false));
+}
 
 const columns: Column<any>[] = [
   {
@@ -98,7 +100,7 @@ const columns: Column<any>[] = [
     width: 400,
     align: "center",
     cellRenderer: ({ rowData }) =>
-      rowData.filenamePoster ? (
+      rowData.filenameVideo ? (
         <AppVideoPlayer
           class="tune-video"
           getVideoPoster={`${URL_VIDEOS_POSTER_IMAGES}/${rowData.filenamePoster}`}
@@ -118,10 +120,11 @@ const columns: Column<any>[] = [
     width: 300,
     align: "center",
     cellRenderer: (cellData) =>
-      cellData.rowData.filenamePoster ? (
+      cellData.rowData.filenamePoster && cellData.rowData.filenameVideo ? (
         <>
+          <div>{cellData.rowData.id}</div>
           <SuccessButton
-            onClick={() => editHandler(cellData.rowData.id)}
+            onClick-button={() => editHandler(cellData.rowData.id)}
             class="mr-3"
           >
             Редактировать
@@ -149,13 +152,14 @@ onUnmounted(() => {
 });
 
 function editHandler(id: number) {
+  console.log("editHandler() -> id", id);
   toggleIsDialogFormVisible(true);
   updateDialogFormTitle(`Строка №${id}`);
   updateActiveModule({
     entityId: id,
-    stateForFindElem: EEntityState.Active,
-    stateForFindIndex: EEntityState.Default,
-    stateForClickIndex: EEntityState.Active,
+    stateForFindElem: EEntityStateDashboard.Active,
+    stateForFindIndex: EEntityStateDashboard.Default,
+    stateForClickIndex: EEntityStateDashboard.Active,
   });
 }
 
@@ -186,6 +190,7 @@ function handleClickOutside(event: MouseEvent) {
 }
 
 function deleteHandler(cellData: CellRendererParams<any>) {
+  console.log("deleteHandler()");
   let { data, onFetchResponse, onFetchError } = useFetchComposable({
     urlConst: "/modules",
     urlVar: `/${cellData.rowData.id}`,
@@ -197,13 +202,13 @@ function deleteHandler(cellData: CellRendererParams<any>) {
       deleteFromList(cellData.rowData);
       if (
         tableData.value.length &&
-        cellData.rowData.state === EEntityState.Active
+        cellData.rowData.state === EEntityStateDashboard.Active
       ) {
         updateActiveModule({
           entityId: tableData.value[0].id,
-          stateForFindElem: EEntityState.Default,
-          stateForFindIndex: EEntityState.Default,
-          stateForClickIndex: EEntityState.Active,
+          stateForFindElem: EEntityStateDashboard.Default,
+          stateForFindIndex: EEntityStateDashboard.Default,
+          stateForClickIndex: EEntityStateDashboard.Active,
         });
       }
       ElMessage({
@@ -221,20 +226,25 @@ function deleteHandler(cellData: CellRendererParams<any>) {
 }
 
 watch(
-  activeVideo,
+  currentVideo,
   (updatedActiveVideo) => {
-    console.log("13 Call updatedActiveVideo", updatedActiveVideo);
     if (updatedActiveVideo.filenamePoster) {
-      console.log("А вот и постер обновлён");
-      console.log("Выведем тэйблдату", tableData.value);
-      console.log("Выведем гетВидеоЛист", getVideosList());
-      const findIndexWithDesiredId = tableData.value.findIndex((item) => item.id === updatedActiveVideo.id);
-      if (findIndexWithDesiredId !== -1){
-        tableData.value[findIndexWithDesiredId].filenamePoster = updatedActiveVideo.filenamePoster;
-        console.log('Закомментированный код');
+      const findIndexWithDesiredId = tableData.value.findIndex(
+        (item) => item.id === updatedActiveVideo.id
+      );
+      if (findIndexWithDesiredId !== -1) {
+        tableData.value[findIndexWithDesiredId].filenamePoster =
+          updatedActiveVideo.filenamePoster;
       }
-    } else {
-      console.log("Состояние изменилось с undefined");
+    }
+    if (updatedActiveVideo.filenameVideo) {
+      const findIndexWithDesiredId = tableData.value.findIndex(
+        (item) => item.id === updatedActiveVideo.id
+      );
+      if (findIndexWithDesiredId !== -1) {
+        tableData.value[findIndexWithDesiredId].filenameVideo =
+          updatedActiveVideo.filenameVideo;
+      }
     }
   },
   { deep: true }
@@ -244,7 +254,8 @@ watch(
   rowVideoJustInserted,
   (updatedVideoRowJustInserted) => {
     tableData.value.push(cloneDeep(updatedVideoRowJustInserted));
-    console.log('14 Почему он должен меняться? -> updatedVideoRowJustInserted', updatedVideoRowJustInserted);
+    visible.value[updatedVideoRowJustInserted.id] = false;
+
     /*
     if (updatedVideoRowJustInserted.id !== activeModule.value?.id) {
       tableData.value.push(cloneDeep(updatedVideoRowJustInserted));
