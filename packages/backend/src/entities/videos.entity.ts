@@ -82,6 +82,6 @@ export class Videos implements IVideoDB {
     this.duration = 0;
     this.title = title;
     this.description = "";
-    this.state = EEntityStateDashboard.Undefined;
+    this.state = EEntityStateDashboard.After_create_video_card;
   }
 }

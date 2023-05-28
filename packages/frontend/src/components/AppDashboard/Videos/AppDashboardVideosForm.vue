@@ -115,7 +115,7 @@ import cloneDeep from "lodash/cloneDeep";
 const dashboardStore = useDashboardStore();
 const {
   updateVideoStep,
-  updateActiveVideo,
+  updateCurrentVideoByState,
   getVideosList,
   addToVideosList,
   updateRowVideoJustInserted,
@@ -249,19 +249,14 @@ function submitFormFields() {
       addToVideosList(videoRow);
       updateRowVideoJustInserted(videoRow);
       if (getVideosList().length === 1) {
-        console.log(
-          "Студентка-практикантка входила в класс не смело getVideosList()",
-          getVideosList()
-        );
-        console.log("Таня videoRow");
-        updateActiveVideo({
+        updateCurrentVideoByState({
           entityId: videoRow.id,
           stateForFindElem: EEntityStateDashboard.Undefined,
           stateForFindIndex: EEntityStateDashboard.After_create_video_card,
           stateForClickIndex: EEntityStateDashboard.After_create_video_card,
         });
       } else {
-        updateActiveVideo({
+        updateCurrentVideoByState({
           entityId: videoRow.id,
           stateForFindElem: EEntityStateDashboard.Active,
           stateForFindIndex: EEntityStateDashboard.Default,

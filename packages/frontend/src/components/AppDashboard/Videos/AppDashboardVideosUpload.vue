@@ -33,7 +33,7 @@
   </el-upload>
   <AppMargin :margin="{ marginTop: '0.625rem' }" />
   <div class="create-video-card__outer">
-    <PrimaryButton :disabled="disabled" @click="checkFileReadyHandler">
+    <PrimaryButton :disabled="disabled" @click-button="checkFileReadyHandler">
       {{ uploadParams.textForUploadButton }}
     </PrimaryButton>
   </div>
@@ -54,17 +54,19 @@ import { useDashboardStore } from "@/stores";
 import { storeToRefs } from "pinia";
 import { getUploadParams } from "share/helpers/commonFunctions";
 import {
-  EEntityState,
-  EEntityType,
   EServerResponses,
   type EUploadType,
 } from "share/types/enums";
-import type { IVideo } from "share/types/interfaces";
+import type { IVideo, IVideoDB } from "share/types/interfaces";
 
 const dashboardStore = useDashboardStore();
-const { updateVideoStep, getVideosList, updateVideoList, updateActiveVideo } =
-  dashboardStore;
-const { activeVideo } = storeToRefs(dashboardStore);
+const {
+  updateVideoStep,
+  updateVideoList,
+  updateCurrentVideoByState,
+  getVideosList,
+} = dashboardStore;
+const { currentVideo } = storeToRefs(dashboardStore);
 const disabled = ref(false);
 const fileList = ref<UploadUserFile[]>([]);
 const appendTo = "el-message-wrapper-main";
@@ -76,19 +78,30 @@ const upload = ref<UploadInstance>();
 const handleExceed: UploadProps["onExceed"] = (files) => {
   const file = files[0] as UploadRawFile;
   file.uid = genFileId();
-  upload.value!.clearFiles();
+  // upload.value!.clearFiles(); // почему-то не очищает fileList
+  fileList.value.length = 0;
   if (isComplianceWithRestrictions(file)) {
     upload.value!.handleStart(file);
   }
 };
-const handleSuccess: UploadProps["onSuccess"] = ({ videoRow, response }) => {
-  if (response === EServerResponses.VIDEOS_POST_UPLOAD_POSTER_SUCCESSFUL) {
+const handleSuccess: UploadProps["onSuccess"] = ({
+  response,
+  videoRow,
+}: {
+  response: EServerResponses;
+  videoRow: IVideoDB;
+}) => {
+  isSpinnerVisible.value = false;
+  if (
+    response === EServerResponses.VIDEOS_POST_UPLOAD_POSTER_SUCCESSFUL ||
+    response === EServerResponses.VIDEOS_POST_UPLOAD_VIDEO_FILE_SUCCESSFUL
+  ) {
     updateVideoList(videoRow);
-    updateActiveVideo({
+    updateCurrentVideoByState({
       entityId: videoRow.id,
-      stateForFindElem: EEntityState.Default,
-      stateForFindIndex: EEntityState.Active,
-      stateForClickIndex: EEntityState.Active,
+      stateForFindElem: uploadParams.stateForFindElem,
+      stateForFindIndex: uploadParams.stateForFindIndex,
+      stateForClickIndex: uploadParams.stateForClickIndex,
     });
     ElMessage({
       message: uploadParams.messageHandleSuccess,
@@ -98,7 +111,6 @@ const handleSuccess: UploadProps["onSuccess"] = ({ videoRow, response }) => {
     setTimeout(() => {
       updateVideoStep(uploadParams.updateVideoStep);
     }, 3000);
-    isSpinnerVisible.value = false;
   }
 };
 const handleError: UploadProps["onError"] = (error: Error) => {
@@ -115,7 +127,8 @@ const handleChange: UploadProps["onChange"] = (uploadFile) => {
     uploadFile.status === "ready" &&
     !isComplianceWithRestrictions(uploadFile.raw as UploadRawFile)
   ) {
-    upload.value!.clearFiles();
+    // upload.value!.clearFiles(); // почему-то не очищает fileList после обновления версии element-plus
+    fileList.value.length = 0;
   }
 };
 const additionalData = ref<Pick<IVideo, "id">>({ id: 0 });
@@ -144,7 +157,7 @@ function isComplianceWithRestrictions(file: UploadRawFile) {
 }
 
 function checkFileReadyHandler() {
-  additionalData.value = { id: activeVideo.value.id };
+  additionalData.value = { id: currentVideo.value.id };
   if (fileList.value.length && !disabled.value) {
     disabled.value = true;
     upload.value!.submit();

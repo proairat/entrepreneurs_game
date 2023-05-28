@@ -155,7 +155,10 @@ function deleteHandler(cellData: CellRendererParams<any>) {
   onFetchResponse(() => {
     if (data.value.response === EServerResponses.MODULES_REMOVE_SUCCESSFUL) {
       deleteFromList(cellData.rowData);
-      if (tableData.length && cellData.rowData.state === EEntityStateDashboard.Active) {
+      if (
+        tableData.length &&
+        cellData.rowData.state === EEntityStateDashboard.Active
+      ) {
         updateActiveModule({
           entityId: tableData[0].id,
           stateForFindElem: EEntityStateDashboard.Default,

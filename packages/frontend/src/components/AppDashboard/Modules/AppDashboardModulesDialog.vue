@@ -36,7 +36,9 @@
           >Отмена</LightButton
         >
         <PrimaryButton
-          @click-button="checkFormReadyHandler(ruleFormRef), checkFileReadyHandler()"
+          @click-button="
+            checkFormReadyHandler(ruleFormRef), checkFileReadyHandler()
+          "
           >Обновить карточку модуля</PrimaryButton
         >
       </span>
