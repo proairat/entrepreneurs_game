@@ -1,20 +1,19 @@
 import { useFetch } from "@vueuse/core";
-import { BASE_URL } from "share/api/API";
+import { EHttpMethods } from "share/types/enums";
 
 export function useFetchComposable({
-  urlConst,
-  urlVar = "",
-  method = "GET",
+  url,
+  urlVar,
+  method = EHttpMethods.GET,
   body = null,
 }: {
-  urlConst: string;
+  url: string;
   urlVar?: string;
-  method?: string;
+  method?: EHttpMethods;
   body?: BodyInit | null;
 }) {
-  const url = `${BASE_URL}${urlConst}${urlVar}`;
   const { data, onFetchError, onFetchResponse, onFetchFinally } = useFetch(
-    url,
+    urlVar ? `${url}${urlVar}` : url,
     { method, body },
     {
       refetch: true,

@@ -49,7 +49,9 @@ class EntityDashboard<T extends TExtendsDashboardArray>
     }
   }
 
-  public filterTheList(state: EEntityStateDashboard): T[] | undefined {
+  public filterElemsInTheListByState(
+    state: EEntityStateDashboard
+  ): T[] | undefined {
     if (Array.isArray(this.list)) {
       return this.list.filter((item: T) => item.state === state);
     }

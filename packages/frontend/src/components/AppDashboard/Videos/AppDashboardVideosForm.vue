@@ -103,6 +103,7 @@ import { reactive, ref, watch } from "vue";
 import {
   EEntityStateDashboard,
   EEntityType,
+  EHttpMethods,
   EServerResponses,
 } from "share/types/enums";
 import { useFetchComposable } from "@/composables/use-fetch";
@@ -110,13 +111,12 @@ import { ElMessage } from "element-plus";
 import { useDashboardStore } from "@/stores";
 import type { FormInstance, FormRules } from "element-plus";
 import type { IAuthor, IVideoDB } from "share/types/interfaces";
-import cloneDeep from "lodash/cloneDeep";
+import { BASE_URL_VIDEOS } from "share/api/API";
 
 const dashboardStore = useDashboardStore();
 const {
   updateVideoStep,
   updateCurrentVideoByState,
-  getVideosList,
   addToVideosList,
   updateRowVideoJustInserted,
 } = dashboardStore;
@@ -147,7 +147,6 @@ const rules = reactive<FormRules>({
     },
   ],
 });
-const method = ref("POST");
 const disabled = ref(false);
 
 function checkFormReadyHandler(formEl: FormInstance | undefined) {
@@ -220,8 +219,8 @@ function submitFormFields() {
   });
 
   let { data, onFetchResponse, onFetchError } = useFetchComposable({
-    urlConst: "/videos",
-    method: method.value,
+    url: BASE_URL_VIDEOS,
+    method: EHttpMethods.POST,
     body: formData,
   });
 
@@ -233,10 +232,10 @@ function submitFormFields() {
       videoRow,
     }: { response: EServerResponses; videoRow: IVideoDB } = data.value;
 
-    isSpinnerVisible.value = false;
-    ruleFormRef.value?.resetFields();
-
     if (response === EServerResponses.VIDEOS_CREATE_SUCCESSFUL) {
+      isSpinnerVisible.value = false;
+      ruleFormRef.value?.resetFields();
+
       ElMessage({
         message: "Данные о видео успешно загружены! Переходим ко второму шагу.",
         type: "success",
@@ -248,22 +247,12 @@ function submitFormFields() {
       ruleFormRef.value?.resetFields();
       addToVideosList(videoRow);
       updateRowVideoJustInserted(videoRow);
-      if (getVideosList().length === 1) {
-        updateCurrentVideoByState({
-          entityId: videoRow.id,
-          stateForFindElem: EEntityStateDashboard.Undefined,
-          stateForFindIndex: EEntityStateDashboard.After_create_video_card,
-          stateForClickIndex: EEntityStateDashboard.After_create_video_card,
-        });
-      } else {
-        updateCurrentVideoByState({
-          entityId: videoRow.id,
-          stateForFindElem: EEntityStateDashboard.Active,
-          stateForFindIndex: EEntityStateDashboard.Default,
-          stateForClickIndex: EEntityStateDashboard.Active,
-        });
-        console.log("Несколько элементов в getVideosList()", getVideosList());
-      }
+      updateCurrentVideoByState({
+        entityId: videoRow.id,
+        stateForFindElem: EEntityStateDashboard.Undefined,
+        stateForFindIndex: EEntityStateDashboard.After_create_video_card,
+        stateForClickIndex: EEntityStateDashboard.After_create_video_card,
+      });
     }
     if (response === EServerResponses.VIDEOS_CREATE_ERROR) {
       ElMessage({
@@ -277,7 +266,7 @@ function submitFormFields() {
 
   onFetchError((err) => {
     ElMessage({
-      message: `Произошла ошибка при загрузке полей формы!: ${err}`,
+      message: `Произошла ошибка при загрузке полей формы: ${err}`,
       type: "error",
       appendTo: `.${appendTo}`,
     });

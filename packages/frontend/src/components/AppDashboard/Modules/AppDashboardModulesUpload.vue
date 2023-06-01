@@ -3,7 +3,7 @@
   <el-upload
     ref="upload"
     :method="props.method"
-    :action="URL_MODULES_UPLOAD"
+    :action="BASE_URL_MODULES_UPLOAD"
     list-type="picture"
     :limit="1"
     :data="props.additionalData"
@@ -46,7 +46,7 @@ import {
   type UploadProps,
   type UploadRawFile,
 } from "element-plus";
-import { URL_MODULES_UPLOAD } from "share/api/API";
+import { BASE_URL_MODULES_UPLOAD } from "share/api/API";
 import type { IElMessageUploadFile } from "share/types/interfaces";
 
 /**

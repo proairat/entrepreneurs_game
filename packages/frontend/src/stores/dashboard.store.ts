@@ -62,6 +62,7 @@ export const useDashboardStore = defineStore("dashboard", () => {
   const isDialogFormVisible = ref(false);
   const dialogFormTitle = ref("");
   const videoStep = ref(0);
+  const tableData = ref(cloneDeep(getVideosList()));
 
   function getModulesList() {
     return ref(eduElementModules.getTheList()).value as IModule[];
@@ -141,8 +142,10 @@ export const useDashboardStore = defineStore("dashboard", () => {
     isDialogFormVisible,
     dialogFormTitle,
     videoStep,
+    tableData,
     getModulesList,
     getVideosList,
+    getCurrentVideoByState,
     addToVideosList,
     updateActiveModule,
     updateCurrentVideoByState,

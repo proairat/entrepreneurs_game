@@ -22,12 +22,17 @@
 <script setup lang="ts">
 import { computed } from "vue";
 
-const props = defineProps<{
-  fontSizeClass?: string;
-  heightClass?: string;
-  colorClass?: string;
-  disabled?: boolean;
-}>();
+const props = withDefaults(
+  defineProps<{
+    fontSizeClass?: string;
+    heightClass?: string;
+    colorClass?: string;
+    disabled?: boolean;
+  }>(),
+  {
+    disabled: false,
+  }
+);
 const emits = defineEmits<{
   (e: "click-button"): void;
 }>();

@@ -19,6 +19,7 @@ declare module "@vue/runtime-core" {
     AppDashboardModulesUpload: typeof import("./src/components/AppDashboard/Modules/AppDashboardModulesUpload.vue")["default"];
     AppDashboardVideosDialog: typeof import("./src/components/AppDashboard/Videos/AppDashboardVideosDialog.vue")["default"];
     AppDashboardVideosForm: typeof import("./src/components/AppDashboard/Videos/AppDashboardVideosForm.vue")["default"];
+    AppDashboardVideosFullyFilled: typeof import("./src/components/AppDashboard/Videos/AppDashboardVideosFullyFilled.vue")["default"];
     AppDashboardVideosList: typeof import("./src/components/AppDashboard/Videos/AppDashboardVideosList.vue")["default"];
     AppDashboardVideosUpload: typeof import("./src/components/AppDashboard/Videos/AppDashboardVideosUpload.vue")["default"];
     AppEntranceTestAnswer: typeof import("./src/components/AppEntranceTestBlock/AppEntranceTestAnswer.vue")["default"];
