@@ -12,20 +12,24 @@
       </div>
     </template>
   </el-table-v2>
-  <div v-for="item in tableData" :key="item.id">Content = {{ item }}</div>
 </template>
 
 <script setup lang="tsx">
 import { TableV2FixedDir } from "element-plus";
 import {
-  URL_VIDEOS_POSTER_IMAGES,
-  URL_VIDEOS_VIDEO_FILE_IMAGES,
+  BASE_URL_MODULES,
+  BASE_URL_ASSETS_VIDEOS_POSTER,
+  BASE_URL_ASSETS_VIDEOS_VIDEO_FILE,
 } from "share/api/API";
 import { useDashboardStore } from "@/stores";
 import { onMounted, ref, watch, onUnmounted } from "vue";
 import { storeToRefs } from "pinia";
 import type { Column } from "element-plus";
-import { EEntityStateDashboard, EServerResponses } from "share/types/enums";
+import {
+  EEntityStateDashboard,
+  EHttpMethods,
+  EServerResponses,
+} from "share/types/enums";
 import pickBy from "lodash/pickBy";
 import { useFetchComposable } from "@/composables/use-fetch";
 import { ElMessage } from "element-plus";
@@ -36,16 +40,15 @@ import AppVideoPlayer from "@/components/AppVideoBlock/AppVideoPlayer.vue";
 import cloneDeep from "lodash/cloneDeep";
 
 const dashboardStore = useDashboardStore();
+const { rowVideoJustInserted, currentVideo, tableData } =
+  storeToRefs(dashboardStore);
 const {
   toggleIsDialogFormVisible,
   updateActiveModule,
   updateDialogFormTitle,
   updateElemFields,
   deleteFromList,
-  getVideosList,
 } = dashboardStore;
-const { rowVideoJustInserted, currentVideo } = storeToRefs(dashboardStore);
-const tableData = ref(cloneDeep(getVideosList()));
 const visible = ref<Record<number, boolean>>({});
 let flag1 = false;
 let flag2 = false;
@@ -82,12 +85,12 @@ const columns: Column<any>[] = [
     cellRenderer: ({ cellData: filenamePoster }) =>
       filenamePoster ? (
         <img
-          src={`${URL_VIDEOS_POSTER_IMAGES}/${filenamePoster}`}
+          src={`${BASE_URL_ASSETS_VIDEOS_POSTER}/${filenamePoster}`}
           class="tune-image"
         />
       ) : (
         <img
-          src={`${URL_VIDEOS_POSTER_IMAGES}/404-error.gif`}
+          src={`${BASE_URL_ASSETS_VIDEOS_POSTER}/404-error.gif`}
           class="tune-image"
         />
       ),
@@ -103,12 +106,12 @@ const columns: Column<any>[] = [
       rowData.filenameVideo ? (
         <AppVideoPlayer
           class="tune-video"
-          getVideoPoster={`${URL_VIDEOS_POSTER_IMAGES}/${rowData.filenamePoster}`}
-          getVideoSrc={`${URL_VIDEOS_VIDEO_FILE_IMAGES}/${rowData.filenameVideo}`}
+          getVideoPoster={`${BASE_URL_ASSETS_VIDEOS_POSTER}/${rowData.filenamePoster}`}
+          getVideoSrc={`${BASE_URL_ASSETS_VIDEOS_VIDEO_FILE}/${rowData.filenameVideo}`}
         />
       ) : (
         <img
-          src={`${URL_VIDEOS_POSTER_IMAGES}/404-error.gif`}
+          src={`${BASE_URL_ASSETS_VIDEOS_POSTER}/404-error.gif`}
           class="tune-image"
         />
       ),
@@ -122,7 +125,6 @@ const columns: Column<any>[] = [
     cellRenderer: (cellData) =>
       cellData.rowData.filenamePoster && cellData.rowData.filenameVideo ? (
         <>
-          <div>{cellData.rowData.id}</div>
           <SuccessButton
             onClick-button={() => editHandler(cellData.rowData.id)}
             class="mr-3"
@@ -192,9 +194,9 @@ function handleClickOutside(event: MouseEvent) {
 function deleteHandler(cellData: CellRendererParams<any>) {
   console.log("deleteHandler()");
   let { data, onFetchResponse, onFetchError } = useFetchComposable({
-    urlConst: "/modules",
+    url: BASE_URL_MODULES,
     urlVar: `/${cellData.rowData.id}`,
-    method: "DELETE",
+    method: EHttpMethods.DELETE,
     body: null,
   });
   onFetchResponse(() => {
@@ -227,24 +229,17 @@ function deleteHandler(cellData: CellRendererParams<any>) {
 
 watch(
   currentVideo,
-  (updatedActiveVideo) => {
-    if (updatedActiveVideo.filenamePoster) {
-      const findIndexWithDesiredId = tableData.value.findIndex(
-        (item) => item.id === updatedActiveVideo.id
-      );
-      if (findIndexWithDesiredId !== -1) {
-        tableData.value[findIndexWithDesiredId].filenamePoster =
-          updatedActiveVideo.filenamePoster;
-      }
-    }
-    if (updatedActiveVideo.filenameVideo) {
-      const findIndexWithDesiredId = tableData.value.findIndex(
-        (item) => item.id === updatedActiveVideo.id
-      );
-      if (findIndexWithDesiredId !== -1) {
-        tableData.value[findIndexWithDesiredId].filenameVideo =
-          updatedActiveVideo.filenameVideo;
-      }
+  (updatedCurrentVideo) => {
+    const findIndexWithDesiredId = tableData.value.findIndex(
+      (item) => item.id === updatedCurrentVideo.id
+    );
+
+    if (findIndexWithDesiredId !== -1) {
+      tableData.value[findIndexWithDesiredId].filenamePoster =
+        updatedCurrentVideo.filenamePoster;
+      tableData.value[findIndexWithDesiredId].filenameVideo =
+        updatedCurrentVideo.filenameVideo;
+      tableData.value[findIndexWithDesiredId].state = updatedCurrentVideo.state;
     }
   },
   { deep: true }

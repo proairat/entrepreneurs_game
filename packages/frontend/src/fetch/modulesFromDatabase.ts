@@ -1,6 +1,7 @@
 import { EEntityState } from "share/types/enums";
 import { useFetchComposable } from "@/composables/use-fetch";
 import type { IModule } from "share/types/interfaces";
+import { BASE_URL_MODULES } from "share/api/API";
 
 /**
  * MODULES
@@ -9,8 +10,7 @@ let modulesFromDatabase: IModule[] | undefined = [];
 
 async function fetchData() {
   const { data, onFetchResponse, onFetchError } = useFetchComposable({
-    urlConst: "/modules",
-    method: "GET",
+    url: BASE_URL_MODULES,
   });
   await new Promise((resolve) => {
     onFetchResponse(() => {

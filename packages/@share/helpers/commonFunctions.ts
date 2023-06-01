@@ -1,6 +1,6 @@
 import type { Tfns } from "../types/types";
 import { EEntityStateDashboard, EUploadType } from "../types/enums";
-import { URL_VIDEOS_UPLOAD_POSTER, URL_VIDEOS_UPLOAD_VIDEO_FILE } from "../api/API";
+import { BASE_URL_VIDEOS_UPLOAD_POSTER, BASE_URL_VIDEOS_UPLOAD_VIDEO_FILE } from "../api/API";
 // import cloneDeep from "lodash/cloneDeep";
 
 /**
@@ -138,7 +138,7 @@ function groupByKey(key: string) {
 function getUploadParams(uploadItem: EUploadType) {
   const params = {
     [EUploadType.VIDEO_POSTER]: {
-      action: URL_VIDEOS_UPLOAD_POSTER,
+      action: BASE_URL_VIDEOS_UPLOAD_POSTER,
       allowTypes: ["image/svg+xml", "image/png"],
       fileSize: 3,
       textForTriggerButton: "Выберите обложку видеоролика",
@@ -153,7 +153,7 @@ function getUploadParams(uploadItem: EUploadType) {
       stateForClickIndex: EEntityStateDashboard.After_create_video_poster,
     },
     [EUploadType.VIDEO_VIDEO_FILE]: {
-      action: URL_VIDEOS_UPLOAD_VIDEO_FILE,
+      action: BASE_URL_VIDEOS_UPLOAD_VIDEO_FILE,
       allowTypes: ['video/mpeg', 'video/mp4'],
       fileSize: 800,
       textForTriggerButton: "Выберите видеоролик",

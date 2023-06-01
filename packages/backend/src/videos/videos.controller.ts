@@ -9,6 +9,7 @@ import {
   UseInterceptors,
   UploadedFile,
   ParseFilePipeBuilder,
+  Put,
 } from "@nestjs/common";
 import { VideosService } from "./videos.service";
 import { CreateVideoDto } from "../dto/create-video.dto";
@@ -62,15 +63,25 @@ const uploadVideoFileMulterOptions = {
 export class VideosController {
   constructor(private readonly videoService: VideosService) {}
 
-  @Post()
-  @UseInterceptors(FileInterceptor("file"))
-  create(@Body() CreateVideoDto: CreateVideoDto) {
-    return this.videoService.create(CreateVideoDto);
+  @Get()
+  findAll() {
+    return this.videoService.findAll();
   }
 
-  @Post("upload-poster")
+  @Get(":id")
+  findOne(@Param("id") id: string) {
+    //return this.videoService.findOne(+id);
+  }
+
+  @Post()
+  @UseInterceptors(FileInterceptor("file"))
+  create(@Body() formData: CreateVideoDto) {
+    return this.videoService.create(formData);
+  }
+
+  @Put("upload-video-poster")
   @UseInterceptors(FileInterceptor("file", uploadPosterMulterOptions))
-  postUploadPoster(
+  uploadPoster(
     @Body() body: CreateVideoDto,
     @UploadedFile(
       new ParseFilePipeBuilder()
@@ -84,12 +95,12 @@ export class VideosController {
     )
     file: Express.Multer.File
   ) {
-    return this.videoService.postUploadPoster(body, file);
+    return this.videoService.uploadPoster(body, file);
   }
 
-  @Post("upload-video-file")
+  @Put("upload-video-file")
   @UseInterceptors(FileInterceptor("file", uploadVideoFileMulterOptions))
-  postUploadVideoFile(
+  uploadVideoFile(
     @Body() body: CreateVideoDto,
     @UploadedFile(
       new ParseFilePipeBuilder()
@@ -103,17 +114,13 @@ export class VideosController {
     )
     file: Express.Multer.File
   ) {
-    return this.videoService.postUploadVideoFile(body, file);
+    return this.videoService.uploadVideoFile(body, file);
   }
 
-  @Get()
-  findAll() {
-    return this.videoService.findAll();
-  }
-
-  @Get(":id")
-  findOne(@Param("id") id: string) {
-    //return this.videoService.findOne(+id);
+  @Put("update-video-state")
+  @UseInterceptors(FileInterceptor("file"))
+  updateVideoState(@Body() formData: Pick<Videos, "id" | "state">) {
+    return this.videoService.updateVideoState(formData);
   }
 
   @Patch(":id")

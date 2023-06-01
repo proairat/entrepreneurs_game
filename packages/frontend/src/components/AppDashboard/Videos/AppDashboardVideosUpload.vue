@@ -37,6 +37,7 @@
       {{ uploadParams.textForUploadButton }}
     </PrimaryButton>
   </div>
+  <AppMargin :margin="{ marginBottom: '1.5rem' }" />
   <AppSpinner v-if="isSpinnerVisible" />
 </template>
 
@@ -53,19 +54,12 @@ import {
 import { useDashboardStore } from "@/stores";
 import { storeToRefs } from "pinia";
 import { getUploadParams } from "share/helpers/commonFunctions";
-import {
-  EServerResponses,
-  type EUploadType,
-} from "share/types/enums";
+import { EServerResponses, type EUploadType } from "share/types/enums";
 import type { IVideo, IVideoDB } from "share/types/interfaces";
 
 const dashboardStore = useDashboardStore();
-const {
-  updateVideoStep,
-  updateVideoList,
-  updateCurrentVideoByState,
-  getVideosList,
-} = dashboardStore;
+const { updateVideoStep, updateVideoList, updateCurrentVideoByState } =
+  dashboardStore;
 const { currentVideo } = storeToRefs(dashboardStore);
 const disabled = ref(false);
 const fileList = ref<UploadUserFile[]>([]);
@@ -78,7 +72,7 @@ const upload = ref<UploadInstance>();
 const handleExceed: UploadProps["onExceed"] = (files) => {
   const file = files[0] as UploadRawFile;
   file.uid = genFileId();
-  // upload.value!.clearFiles(); // почему-то не очищает fileList
+  // upload.value!.clearFiles(); // почему-то не очищает fileList после обновления версии element-plus
   fileList.value.length = 0;
   if (isComplianceWithRestrictions(file)) {
     upload.value!.handleStart(file);
@@ -93,8 +87,8 @@ const handleSuccess: UploadProps["onSuccess"] = ({
 }) => {
   isSpinnerVisible.value = false;
   if (
-    response === EServerResponses.VIDEOS_POST_UPLOAD_POSTER_SUCCESSFUL ||
-    response === EServerResponses.VIDEOS_POST_UPLOAD_VIDEO_FILE_SUCCESSFUL
+    response === EServerResponses.VIDEOS_UPLOAD_POSTER_SUCCESSFUL ||
+    response === EServerResponses.VIDEOS_UPLOAD_VIDEO_FILE_SUCCESSFUL
   ) {
     updateVideoList(videoRow);
     updateCurrentVideoByState({

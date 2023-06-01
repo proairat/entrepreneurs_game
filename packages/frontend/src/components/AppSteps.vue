@@ -14,8 +14,6 @@ import { useDashboardStore } from "@/stores";
 const dashboardStore = useDashboardStore();
 const { videoStep } = storeToRefs(dashboardStore);
 
-console.log("AppSteps -> videoStep", videoStep.value);
-
 /*
 const next = () => {
   if (videoStep.value++ > 2) videoStep.value = 0;

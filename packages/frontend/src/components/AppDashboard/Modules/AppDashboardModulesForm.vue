@@ -42,7 +42,8 @@ import { useFetchComposable } from "@/composables/use-fetch";
 import { ElMessage } from "element-plus";
 import { useDashboardStore } from "@/stores";
 import type { IModule, IElMessageUploadFile } from "share/types/interfaces";
-import { EServerResponses } from "share/types/enums";
+import { EHttpMethods, EServerResponses } from "share/types/enums";
+import { BASE_URL_MODULES_UPLOAD } from "share/api/API";
 
 const dashboardStore = useDashboardStore();
 const { updateRowModuleJustInserted } = dashboardStore;
@@ -78,7 +79,7 @@ const rules = reactive<FormRules>({
     },
   ],
 });
-const method = ref("POST");
+const method = ref(EHttpMethods.POST);
 
 function validateFormHandler(
   props: FormItemProp,
@@ -128,8 +129,7 @@ function submitFormFields() {
   }
 
   let { data, onFetchResponse, onFetchError } = useFetchComposable({
-    urlConst: "/modules",
-    urlVar: "/upload",
+    url: BASE_URL_MODULES_UPLOAD,
     method: method.value,
     body: formData,
   });

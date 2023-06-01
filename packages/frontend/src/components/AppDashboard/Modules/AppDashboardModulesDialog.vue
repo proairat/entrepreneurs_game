@@ -54,7 +54,8 @@ import type { FormItemProp, FormInstance, FormRules } from "element-plus";
 import { useFetchComposable } from "@/composables/use-fetch";
 import { ElMessage } from "element-plus";
 import type { IModule, IElMessageUploadFile } from "share/types/interfaces";
-import { EServerResponses } from "share/types/enums";
+import { EHttpMethods, EServerResponses } from "share/types/enums";
+import { BASE_URL_MODULES_UPLOAD } from "share/api/API";
 
 const dashboardStore = useDashboardStore();
 const { isDialogFormVisible, dialogFormTitle, activeModule } =
@@ -93,7 +94,7 @@ const rules = reactive<FormRules>({
     },
   ],
 });
-const method = ref("PUT");
+const method = ref(EHttpMethods.PUT);
 
 function validateFormHandler(
   props: FormItemProp,
@@ -145,8 +146,7 @@ function submitFormFields() {
   }
 
   let { data, onFetchResponse, onFetchError } = useFetchComposable({
-    urlConst: "/modules",
-    urlVar: "/upload",
+    url: BASE_URL_MODULES_UPLOAD,
     method: method.value,
     body: formData,
   });

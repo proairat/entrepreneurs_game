@@ -8,13 +8,14 @@
   <AppDashboardVideosUpload
     v-if="videoStep === 1"
     :type="EUploadType.VIDEO_POSTER"
-    method="post"
+    method="put"
   />
   <AppDashboardVideosUpload
     v-if="videoStep === 2"
     :type="EUploadType.VIDEO_VIDEO_FILE"
-    method="post"
+    method="put"
   />
+  <AppDashboardVideosFullyFilled v-if="videoStep === 3" />
   <!--<AppDashboardVideosDialog />-->
 </template>
 

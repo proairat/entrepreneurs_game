@@ -16,12 +16,19 @@
 
 <script setup lang="tsx">
 import { TableV2FixedDir } from "element-plus";
-import { URL_MODULES_IMAGES } from "share/api/API";
+import {
+  BASE_URL_MODULES,
+  BASE_URL_ASSETS_MODULES_CARDCOVER,
+} from "share/api/API";
 import { useDashboardStore } from "@/stores";
 import { onMounted, ref, watch, onUnmounted } from "vue";
 import { storeToRefs } from "pinia";
 import type { Column } from "element-plus";
-import { EEntityStateDashboard, EServerResponses } from "share/types/enums";
+import {
+  EEntityStateDashboard,
+  EHttpMethods,
+  EServerResponses,
+} from "share/types/enums";
 import cloneDeep from "lodash/cloneDeep";
 import pickBy from "lodash/pickBy";
 import { useFetchComposable } from "@/composables/use-fetch";
@@ -71,7 +78,10 @@ const columns: Column<any>[] = [
     width: 150,
     align: "center",
     cellRenderer: ({ cellData: filename }) => (
-      <img src={`${URL_MODULES_IMAGES}/${filename}`} class="tune-image" />
+      <img
+        src={`${BASE_URL_ASSETS_MODULES_CARDCOVER}/${filename}`}
+        class="tune-image"
+      />
     ),
   },
   {
@@ -147,9 +157,9 @@ function handleClickOutside(event: MouseEvent) {
 
 function deleteHandler(cellData: CellRendererParams<any>) {
   let { data, onFetchResponse, onFetchError } = useFetchComposable({
-    urlConst: "/modules",
+    url: BASE_URL_MODULES,
     urlVar: `/${cellData.rowData.id}`,
-    method: "DELETE",
+    method: EHttpMethods.DELETE,
     body: null,
   });
   onFetchResponse(() => {
