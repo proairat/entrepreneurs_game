@@ -1,6 +1,6 @@
 <template>
   <AppTitleLine>
-    <AppTitle>Управление видео</AppTitle>
+    <AppTitle>Управление видеороликами</AppTitle>
   </AppTitleLine>
   <AppDashboardVideosList />
   <AppSteps />

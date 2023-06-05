@@ -22,18 +22,18 @@ export default {
 import { ref } from "vue";
 import AppDashboardModules from "@/components/AppDashboard/Modules/index.vue";
 import AppDashboardVideos from "@/components/AppDashboard/Videos/index.vue";
-import AppTest3 from "@/components/AppDashboard/AppTest3.vue";
+import AppDashboardTests from "@/components/AppDashboard/Tests/index.vue";
+import AppDashboardSettings from "@/components/AppDashboard/Settings/index.vue";
 
 const currentTab = ref("AppDashboardVideos");
-
 const tabs = {
   AppDashboardModules,
   AppDashboardVideos,
-  AppTest3,
+  AppDashboardTests,
+  AppDashboardSettings,
 };
 
 function clickMenuItemHandler(component: string) {
-  console.log("clickMenuItemHandler!");
   currentTab.value = component;
 }
 </script>

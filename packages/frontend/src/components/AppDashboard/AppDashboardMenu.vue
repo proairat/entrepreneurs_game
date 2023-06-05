@@ -1,7 +1,7 @@
 <template>
   <el-radio-group v-model="isCollapse" style="margin-bottom: 20px">
-    <el-radio-button :label="false">expand</el-radio-button>
-    <el-radio-button :label="true">collapse</el-radio-button>
+    <el-radio-button :label="false">Свернуть</el-radio-button>
+    <el-radio-button :label="true">Развернуть</el-radio-button>
   </el-radio-group>
   <el-menu
     default-active="2"
@@ -24,11 +24,17 @@
       <el-icon><VideoCamera /></el-icon>
       <template #title>Видео</template>
     </el-menu-item>
-    <el-menu-item index="3" @click="() => menuItemHandler('AppTest3')">
+    <el-menu-item 
+      index="3" 
+      @click="() => menuItemHandler('AppDashboardTests')"
+    >
       <el-icon><Finished /></el-icon>
       <template #title>Тесты</template>
     </el-menu-item>
-    <el-menu-item index="4">
+    <el-menu-item 
+      index="4"
+      @click="()=> menuItemHandler('AppDashboardSettings')"
+    >
       <el-icon><setting /></el-icon>
       <template #title>Настройки</template>
     </el-menu-item>
