@@ -1,4 +1,4 @@
-const BASE_URL = "http://localhost";
+const BASE_URL = "http://localhost:3000";
 const BASE_URL_MODULES = `${BASE_URL}/modules`;
 const BASE_URL_VIDEOS = `${BASE_URL}/videos`;
 const BASE_URL_ASSETS = `${BASE_URL}/assets`;
