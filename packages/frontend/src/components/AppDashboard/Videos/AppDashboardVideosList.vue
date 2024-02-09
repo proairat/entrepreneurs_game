@@ -20,6 +20,7 @@ import {
   BASE_URL_MODULES,
   BASE_URL_ASSETS_VIDEOS_POSTER,
   BASE_URL_ASSETS_VIDEOS_VIDEO_FILE,
+  BASE_URL_ASSETS,
 } from "share/api/API";
 import { useDashboardStore } from "@/stores";
 import { onMounted, ref, watch, onUnmounted } from "vue";
@@ -90,7 +91,7 @@ const columns: Column<any>[] = [
         />
       ) : (
         <img
-          src={`${BASE_URL_ASSETS_VIDEOS_POSTER}/404-error.gif`}
+          src={`${BASE_URL_ASSETS}/image-not-found.png`}
           class="tune-image"
         />
       ),
@@ -111,7 +112,7 @@ const columns: Column<any>[] = [
         />
       ) : (
         <img
-          src={`${BASE_URL_ASSETS_VIDEOS_POSTER}/404-error.gif`}
+          src={`${BASE_URL_ASSETS}/image-not-found.png`}
           class="tune-image"
         />
       ),

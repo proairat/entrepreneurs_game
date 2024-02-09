@@ -23,7 +23,7 @@ export class ModulesService {
     private readonly modulesRepository: Repository<Modules>
   ) {}
 
-  async create({ alt = "Карточка модуля!" }: UpdateModuleDto): Promise<number> {
+  async create({ alt = "Карточка модуля" }: UpdateModuleDto): Promise<number> {
     const module = new Modules();
     module.alt = alt;
     // module.title = title;

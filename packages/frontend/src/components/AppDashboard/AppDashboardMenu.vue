@@ -4,7 +4,7 @@
     <el-radio-button :label="true">Развернуть</el-radio-button>
   </el-radio-group>
   <el-menu
-    default-active="2"
+    default-active="1"
     class="el-menu-vertical-demo"
     :collapse="isCollapse"
     @open="handleOpen"
@@ -24,16 +24,13 @@
       <el-icon><VideoCamera /></el-icon>
       <template #title>Видео</template>
     </el-menu-item>
-    <el-menu-item 
-      index="3" 
-      @click="() => menuItemHandler('AppDashboardTests')"
-    >
+    <el-menu-item index="3" @click="() => menuItemHandler('AppDashboardTests')">
       <el-icon><Finished /></el-icon>
       <template #title>Тесты</template>
     </el-menu-item>
-    <el-menu-item 
+    <el-menu-item
       index="4"
-      @click="()=> menuItemHandler('AppDashboardSettings')"
+      @click="() => menuItemHandler('AppDashboardSettings')"
     >
       <el-icon><setting /></el-icon>
       <template #title>Настройки</template>
