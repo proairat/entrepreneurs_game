@@ -25,7 +25,7 @@ import AppDashboardVideos from "@/components/AppDashboard/Videos/index.vue";
 import AppDashboardTests from "@/components/AppDashboard/Tests/index.vue";
 import AppDashboardSettings from "@/components/AppDashboard/Settings/index.vue";
 
-const currentTab = ref("AppDashboardVideos");
+const currentTab = ref("AppDashboardModules");
 const tabs = {
   AppDashboardModules,
   AppDashboardVideos,
